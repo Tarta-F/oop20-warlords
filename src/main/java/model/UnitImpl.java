@@ -34,13 +34,13 @@ public class UnitImpl implements Unit {
     }
 
     @Override
-    public void setSpeed(int speed) {
+    public void setSpeed(final int speed) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void setDamage(int damage) {
+    public void setDamage(final int damage) {
         // TODO Auto-generated method stub
 
     }

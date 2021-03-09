@@ -1,9 +1,5 @@
 package model;
 
-import java.util.List;
-
-
-
 public interface Unit /*extends Entity*/ {
 
     void movement();
