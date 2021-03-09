@@ -1,25 +1,15 @@
 package model;
 
+import java.util.Optional;
+
 public interface Unit /*extends Entity*/ {
-
-    void movement();
-    void spawn();
-    void death();
+    int getWaitingTime();
     int getHP();
-    int getUnitSpeed();
-    void setSpeed(int speed);
-    void setDamage(int damage);
-   // void setPath(List<MapTile> path);
+    int getStep();
+    int getDamage();
+    PlayerType getPlayer();
     UnitType getUnitType();
-    void despawn();
+    Optional<Unit> getTarget();
+    void walk();
+   // void setPath(List<MapTile> path);
 }
-
-
-
-
-/* prova */
-
-
-/* prova 2*/
-
-/* prova 4*/
