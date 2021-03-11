@@ -2,7 +2,7 @@ package model;
 
 public enum PlayerType {
 
-    PLAYER1(Direction.DX), PLAYER2(Direction.SX);
+    PLAYER1(Direction.RIGHT), PLAYER2(Direction.LEFT);
 
     PlayerType(Direction direction) {
         this.direction = direction;
