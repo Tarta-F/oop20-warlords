@@ -10,7 +10,7 @@ public interface Field {
     void addUnit(int laneIndex, Unit unit);
     List<Lane> getLanes();
     Optional<Integer> getScore(PlayerType player);
-    Map<Unit,Pair<Integer,Integer>> getUnits();
+    Map<Unit, Pair<Integer, Integer>> getUnits();
 
 //          PER IL CONTROLLER :
 //  Integer getSelectedLane(PlayerType player); 

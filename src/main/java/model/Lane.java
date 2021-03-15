@@ -8,9 +8,9 @@ import utilities.Pair;
 
 public interface Lane {
     int getLaneNumber();
-    void addUnit(final Unit u);
+    void addUnit(Unit u);
     Set<Unit> getUnitsAtPosition(int position);
-    Map<Unit,Pair<Integer,Integer>> getUnits();
+    Map<Unit, Pair<Integer, Integer>> getUnits();
     int getLenght();
     Optional<Integer> getScore(PlayerType player);
     /*
