@@ -1,12 +1,16 @@
 package model;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
+import utilities.Pair;
 
 public interface Lane {
     int getLaneNumber();
     void addUnit(final Unit u);
     Set<Unit> getUnitsAtPosition(int position);
+    Map<Unit,Pair<Integer,Integer>> getUnits();
     int getLenght();
     Optional<Integer> getScore(PlayerType player);
     /*
@@ -15,6 +19,5 @@ public interface Lane {
      */
     void update(); 
     // Map<Unit,Integer> getUnits();
-    // Set<Pair<<Unit,Integer>> getUnits();
 
 }
