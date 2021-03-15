@@ -24,6 +24,9 @@ public interface Unit {
     /**@return unit DMG taken*/
     int getDamage();
 
+    /**@param damage to be taken by this unit*/
+    void damage(int damage);
+
     /**@return unit player ID*/
     PlayerType getPlayer();
 

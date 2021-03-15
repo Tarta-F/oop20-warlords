@@ -16,24 +16,12 @@ import utilities.Pair;
 public class FieldImpl implements Field {
 
     private final List<Lane> lanes;
-    private final Map<PlayerType, Integer> score;
 
     public FieldImpl(final int cellsNumber, final int laneNumber) {
         this.lanes = Stream.generate(() -> cellsNumber)
                 .limit(laneNumber)
                 .map(LaneImpl::new)
                 .collect(Collectors.toList());
-        this.score = new HashMap<>();
-        this.resetScore();
-    }
-
-    private void resetScore() {
-        this.score.put(PlayerType.PLAYER1, 0);
-        this.score.put(PlayerType.PLAYER2, 0);
-    }
-
-    private void scored(final PlayerType player) {
-        this.score.put(player, this.score.get(player) + 1);
     }
 
     /**
@@ -59,7 +47,9 @@ public class FieldImpl implements Field {
      */
     @Override
     public Optional<Integer> getScore(final PlayerType player) {
-        return Optional.of(this.score.get(player));
+        return this.lanes.stream()
+                .map(l -> l.getScore(player).get())
+                .reduce((s1, s2) -> s1 + s2);
     }
 
     /**
@@ -68,7 +58,8 @@ public class FieldImpl implements Field {
     @Override
     public Map<Unit, Pair<Integer, Integer>> getUnits() {
         final Map<Unit, Pair<Integer, Integer>> units = new HashMap<>();
-        this.lanes.forEach(l -> l.getUnits().entrySet().forEach(e -> units.put(e.getKey(), new Pair<>(e.getValue(), lanes.indexOf(l)))));
+        this.lanes.forEach(l -> l.getUnits().entrySet()
+                .forEach(e -> units.put(e.getKey(), new Pair<>(e.getValue(), lanes.indexOf(l)))));
         return units;
     }
 

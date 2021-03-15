@@ -63,4 +63,8 @@ public class UnitImpl implements Unit {
         return null;
     }
 
+    @Override
+    public void damage(int damage) {
+    }
+
 }
