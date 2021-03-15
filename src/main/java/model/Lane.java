@@ -4,13 +4,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import utilities.Pair;
-
 public interface Lane {
-    int getLaneNumber();
+
     void addUnit(Unit u);
     Set<Unit> getUnitsAtPosition(int position);
-    Map<Unit, Pair<Integer, Integer>> getUnits();
+    Map<Unit, Integer> getUnits();
     int getLenght();
     Optional<Integer> getScore(PlayerType player);
     /*
