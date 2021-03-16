@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Optional;
 //import java.util.List;
 //import java.util.Map;
 //import constants.ConstantsGame;
@@ -58,13 +57,14 @@ public class UnitImpl implements Unit {
         return this.unitType;
     }
 
-    public Optional<Unit> getTarget() {
-        //da settare in base alla tile
-        return null;
+    @Override
+    public void attack(final Unit unit) {
     }
 
     @Override
     public void damage(int damage) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

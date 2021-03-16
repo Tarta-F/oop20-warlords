@@ -82,16 +82,16 @@ public class LaneImpl implements Lane {
      */
     @Override
     public void update() {
-        this.units.entrySet().forEach(e -> {
-            final Unit unit = e.getKey();
-            if (e.getValue() == this.getGoal(unit.getPlayer())) {
-                this.score(unit.getPlayer());
-            } else if (unit.getTarget().isPresent()) {
-                unit.getTarget().get().damage(unit.getDamage());
-            } else {
-                unit.walk();
-            }
-        });
+//        this.units.entrySet().forEach(e -> {
+//            final Unit unit = e.getKey();
+//            if (e.getValue() == this.getGoal(unit.getPlayer())) {
+//                this.score(unit.getPlayer());
+//            } else if (unit.getTarget().isPresent()) {
+//                unit.getTarget().get().damage(unit.getDamage());
+//            } else {
+//                unit.walk();
+//            }
+//        });
     }
 
 }

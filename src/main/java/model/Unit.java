@@ -33,6 +33,6 @@ public interface Unit {
     /**@return unit type*/
     UnitType getUnitType();
 
-    /**@return a possible target next the unit*/
-    Optional<Unit> getTarget();
+    /**@param unit the target to be hitten*/
+    void attack(Unit unit);
 }
