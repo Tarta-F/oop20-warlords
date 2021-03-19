@@ -9,10 +9,6 @@ import java.util.stream.Stream;
 
 import utilities.Pair;
 
-/**
- * IDEA: USARE SINGLETON PER FIELD, DATO CHE CE NE SARÀ UNA SOLA ISTANZA.
- *
- */
 public class FieldImpl implements Field {
 
     private final List<Lane> lanes;
@@ -48,7 +44,7 @@ public class FieldImpl implements Field {
     @Override
     public Optional<Integer> getScore(final PlayerType player) {
         return this.lanes.stream()
-                .map(l -> l.getScore(player).get())
+                .map(l -> l.getScore(player))
                 .reduce((s1, s2) -> s1 + s2);
     }
 

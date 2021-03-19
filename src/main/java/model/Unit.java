@@ -1,6 +1,4 @@
 package model;
-
-import java.util.Optional;
 //import java.util.Map;(Bisogna creare la map tile se la utiliziamo)
 //import java.util.List;
 

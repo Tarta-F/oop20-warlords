@@ -6,11 +6,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import utilities.Counter;
+
 public class LaneImpl implements Lane {
 
     private final int lenght;
     private final Map<Unit, Integer> units;
-    private final Map<PlayerType, Integer> scores;
+    private final Map<PlayerType, Counter> scores;
 
     public LaneImpl(final int lenght) {
         this.lenght = lenght;
@@ -20,8 +22,8 @@ public class LaneImpl implements Lane {
     }
 
     private void resetScore() {
-        this.scores.put(PlayerType.PLAYER1, 0);
-        this.scores.put(PlayerType.PLAYER2, 0);
+        this.scores.put(PlayerType.PLAYER1, new Counter());
+        this.scores.put(PlayerType.PLAYER2, new Counter());
     }
 
     private int getGoal(final PlayerType player) {
@@ -29,7 +31,11 @@ public class LaneImpl implements Lane {
     }
 
     private void score(final PlayerType player) {
-        this.scores.put(player, this.scores.get(player) + 1);
+        this.scores.get(player).increment();
+    }
+
+    private Optional<Unit> searchTarget(final Unit unit) {
+        return null;
     }
 
     /**
@@ -73,8 +79,8 @@ public class LaneImpl implements Lane {
      * @return the numbers of units that have received the enemy base by this lane, if there are any
      */
     @Override
-    public Optional<Integer> getScore(final PlayerType player) {
-        return Optional.of(this.scores.get(player));
+    public Integer getScore(final PlayerType player) {
+        return this.scores.get(player).getValue();
     }
 
     /**
@@ -82,16 +88,17 @@ public class LaneImpl implements Lane {
      */
     @Override
     public void update() {
-//        this.units.entrySet().forEach(e -> {
-//            final Unit unit = e.getKey();
-//            if (e.getValue() == this.getGoal(unit.getPlayer())) {
+        this.units.entrySet().forEach(e -> {
+            final Unit unit = e.getKey();
+            final Optional<Unit> target = this.searchTarget(unit);
+            if (target.isEmpty()) {
 //                this.score(unit.getPlayer());
 //            } else if (unit.getTarget().isPresent()) {
 //                unit.getTarget().get().damage(unit.getDamage());
 //            } else {
 //                unit.walk();
-//            }
-//        });
+            }
+        });
     }
 
 }

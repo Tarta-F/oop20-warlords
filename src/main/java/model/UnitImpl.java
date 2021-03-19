@@ -10,7 +10,7 @@ package model;
 public class UnitImpl implements Unit {
 
     private int hp, dmg, range, timer;
-    //private boolean alive; (metterlo qui, o farlo gestire alla field)
+    private boolean alive;
     private UnitType unitType;
     private PlayerType player;
     private Direction direction;
@@ -64,7 +64,9 @@ public class UnitImpl implements Unit {
     @Override
     public void damage(int damage) {
         // TODO Auto-generated method stub
-        
+        /**
+         * Usa metodo private che se hp<=0 mette alive a false
+         */
     }
 
 }
