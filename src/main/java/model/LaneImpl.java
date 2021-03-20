@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import utilities.counters.Counter;
 import utilities.counters.CounterImpl;
@@ -40,8 +41,12 @@ public class LaneImpl implements Lane {
     }
 
     private Optional<Unit> searchTarget(final Unit unit) {
-        // TODO 
-        return null;
+        int position = this.getUnits().get(unit);
+        return Stream.iterate(position, i -> i + (unit.getPlayer() == PlayerType.PLAYER1 ? 1 : -1))
+                .limit(unit.getRange() + 1)
+                .flatMap(p -> this.getUnitsAtPosition(p).stream())
+                .filter(u -> u.getPlayer() != unit.getPlayer())
+                .findFirst();
     }
 
 

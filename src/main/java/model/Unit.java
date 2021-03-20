@@ -16,6 +16,9 @@ public interface Unit {
     /**@return unit HP*/
     int getHP();
 
+    /**@return unit range attack*/
+    int getRange();
+
     /**@return unit step ahead*/
     int getStep();
 
