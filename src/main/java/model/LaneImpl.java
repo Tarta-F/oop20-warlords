@@ -6,12 +6,15 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import utilities.Counter;
+import utilities.counters.Counter;
+import utilities.counters.CounterImpl;
+import utilities.counters.LimitMultiCounter;
+import utilities.counters.LimitMultiCounterImpl;
 
 public class LaneImpl implements Lane {
 
     private final int lenght;
-    private final Map<Unit, Integer> units;
+    private final Map<Unit, LimitMultiCounter> units;
     private final Map<PlayerType, Counter> scores;
 
     public LaneImpl(final int lenght) {
@@ -22,28 +25,36 @@ public class LaneImpl implements Lane {
     }
 
     private void resetScore() {
-        this.scores.put(PlayerType.PLAYER1, new Counter());
-        this.scores.put(PlayerType.PLAYER2, new Counter());
+        this.scores.put(PlayerType.PLAYER1, new CounterImpl());
+        this.scores.put(PlayerType.PLAYER2, new CounterImpl());
     }
 
-    private int getGoal(final PlayerType player) {
-        return player == PlayerType.PLAYER1 ? this.lenght - 1 : 0;
-    }
+//    private boolean goalReached(final Unit unit) {
+//        return this.units.get(unit) == 
+//                (unit.getPlayer() == PlayerType.PLAYER1 ? 
+//                 this.lenght - 1 : 0);
+//    }
 
     private void score(final PlayerType player) {
         this.scores.get(player).increment();
     }
 
     private Optional<Unit> searchTarget(final Unit unit) {
+        // TODO 
         return null;
     }
 
+
+    private void move(final Unit unit) {
+        this.units.get(unit).multiIncrement(unit.getStep());
+    }
+
     /**
-     * @param u unit to be added
+     * @param unit unit to be added
      */
     @Override
-    public void addUnit(final Unit u) {
-        this.units.put(u, u.getPlayer() == PlayerType.PLAYER1 ? 0 : this.lenght - 1);
+    public void addUnit(final Unit unit) {
+        this.units.put(unit, new LimitMultiCounterImpl(this.lenght));
     }
 
     /**
@@ -52,7 +63,7 @@ public class LaneImpl implements Lane {
      */
     @Override
     public Set<Unit> getUnitsAtPosition(final int position) {
-        return this.units.entrySet().stream()
+        return this.getUnits().entrySet().stream()
                 .filter(e -> e.getValue() == position)
                 .map(e -> e.getKey())
                 .collect(Collectors.toSet());
@@ -63,11 +74,17 @@ public class LaneImpl implements Lane {
      */
     @Override
     public Map<Unit, Integer> getUnits() {
-        return this.units;
+        Map<Unit, Integer> map = new HashMap<>();
+        this.units.entrySet().forEach(e -> {
+            final Unit unit = e.getKey();
+            final int nSteps = e.getValue().getValue();
+            map.put(unit, unit.getPlayer() == PlayerType.PLAYER1 ? nSteps : this.lenght - nSteps);
+        });
+        return map;
     }
 
     /**
-     * @return the lenght of lane
+     * @return the lenght of the lane
      */
     @Override
     public int getLenght() {
@@ -84,21 +101,22 @@ public class LaneImpl implements Lane {
     }
 
     /**
-     * Updates every unit in this lane with walk, attack or despawn.
+     * Updates every unit in this lane with attack, score or move.
      */
     @Override
     public void update() {
         this.units.entrySet().forEach(e -> {
             final Unit unit = e.getKey();
             final Optional<Unit> target = this.searchTarget(unit);
-            if (target.isEmpty()) {
-//                this.score(unit.getPlayer());
-//            } else if (unit.getTarget().isPresent()) {
-//                unit.getTarget().get().damage(unit.getDamage());
-//            } else {
-//                unit.walk();
+            if (target.isPresent()) {
+                unit.attack(target.get());
+            } else if (this.units.get(unit).isOver()) {
+                this.score(unit.getPlayer());
+            } else {
+                this.move(unit);
             }
         });
     }
+
 
 }

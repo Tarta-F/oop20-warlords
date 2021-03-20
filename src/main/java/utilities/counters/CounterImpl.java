@@ -1,23 +1,25 @@
-package utilities;
+package utilities.counters;
 
-public class Counter {
+public class CounterImpl implements Counter {
 
     private int value;
 
-    public Counter() {
+    public CounterImpl() {
         this.value = 0;
     }
 
     /**
-     *  Increments the value of the counter.
+     * 
      */
+    @Override
     public void increment() {
-       this.value++;
+        this.value++;
     }
 
     /**
-     * @return the value of this counter.
+     * 
      */
+    @Override
     public int getValue() {
         return this.value;
     }
