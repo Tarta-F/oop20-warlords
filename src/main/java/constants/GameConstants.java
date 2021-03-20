@@ -3,7 +3,7 @@ package constants;
 /**
  * This class contain the various constants that we use in the game.
  */
-public final class ConstantsGame {
+public final class GameConstants {
 
     // SWORDSMEN
     /**HP of the unit type SWORDMEN. */
@@ -44,5 +44,20 @@ public final class ConstantsGame {
     /**TIMER(time for re_spawn) of the unit type ARCHER. */
     public static final int ARCHER_TIMER = 1000;
 
-    private ConstantsGame() { }
+    /** Lane number for testing. */
+    public static final int ONE_LANE = 1;
+
+    /** Lane number for easy mode. */
+    public static final int THREE_LANES = 3;
+
+    /** Lane number for normal mode. */
+    public static final int FOUR_LANES = 4;
+
+    /** Lane number for hard mode. */
+    public static final int FIVE_LANES = 5;
+
+    /** Cell number for each lane. */
+    public static final int CELLS_NUM = 20;
+
+    private GameConstants() { }
 }
