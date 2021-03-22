@@ -63,6 +63,5 @@ public final class GameConstants {
     /**Movement of the unit. */
     public static final int STEP = 1;
 
-    //PROVA
     private GameConstants() { }
 }
