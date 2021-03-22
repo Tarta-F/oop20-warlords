@@ -64,10 +64,4 @@ public final class GameConstants {
     public static final int STEP = 1;
 
     private GameConstants() { }
-
-<<<<<<< HEAD
-    
-=======
-    //prova
->>>>>>> cbc9d00b8905a4b5dc71625a1b4c40e6462cd1c2
 }
