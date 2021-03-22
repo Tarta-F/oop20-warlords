@@ -9,9 +9,6 @@ public interface Unit {
     //Metodo da implementare?
     //void setPath(List<MapTile> path);
 
-    /**Method to implement the unit movement.*/
-    void walk();
-
     /**@return unit time re_spawn*/
     int getWaitingTime();
 
@@ -33,6 +30,6 @@ public interface Unit {
     /**@return unit type*/
     UnitType getUnitType();
 
-    /**@param unit the target to be hitten*/
+    /**@param enemy target hitten*/
     void attack(Unit unit);
 }

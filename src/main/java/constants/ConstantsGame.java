@@ -16,6 +16,7 @@ public final class ConstantsGame {
 
     /**TIMER(time for re_spawn) of the unit type SWORDSMEN. */
       public static final int SWORDSMEN_TIMER = 1000;
+     
 
     // SPEARMEN
     /**HP of the unit type SPEARMEN. */
@@ -44,5 +45,9 @@ public final class ConstantsGame {
     /**TIMER(time for re_spawn) of the unit type ARCHER. */
     public static final int ARCHER_TIMER = 1000;
 
+    //Da metterne altri, se si vuole implementare il movimento diverso per tutte le unita'
+    /**Movement of the unit*/
+    public static final int STEP = 1;
+    
     private ConstantsGame() { }
 }

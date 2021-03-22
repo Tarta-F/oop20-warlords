@@ -9,8 +9,8 @@ package model;
  */
 public class UnitImpl implements Unit {
 
-    private int hp, dmg, range, timer;
-    //private boolean alive; (metterlo qui, o farlo gestire alla field)
+    private int hp, dmg, range, timer, step;
+    private boolean alive;
     private UnitType unitType;
     private PlayerType player;
     private Direction direction;
@@ -23,13 +23,10 @@ public class UnitImpl implements Unit {
         this.dmg = unitType.getDamage();
         this.range = unitType.getRange();
         this.timer = unitType.getTimer();
+        this.step = unitType.getStep();
         this.player = player;
         this.direction = player.getDirection();
-        //this.alive = false;
-    }
-
-    public void walk() {
-        //metodo per il movimento
+        this.alive = false;
     }
 
     public int getWaitingTime() {
@@ -45,8 +42,7 @@ public class UnitImpl implements Unit {
     }
 
     public int getStep() {
-        //metodo per il movimento
-        return 0;
+        return step;
     }
 
     public PlayerType getPlayer() {
@@ -59,12 +55,16 @@ public class UnitImpl implements Unit {
 
     @Override
     public void attack(final Unit unit) {
+        unit.damage(this.dmg);
     }
 
     @Override
     public void damage(int damage) {
-        // TODO Auto-generated method stub
-        
-    }
+        this.hp = this.hp - damage;
+        /*if(this.hp <= 0) {
+         *      //notificare l'observer per cancellazione unita'
+                this.alive = false;
+            }*/
+        }
 
 }
