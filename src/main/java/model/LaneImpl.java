@@ -53,7 +53,7 @@ public class LaneImpl implements Lane {
      */
     @Override
     public void addUnit(final Unit unit) {
-        this.units.put(unit, new LimitMultiCounterImpl(this.lenght));
+        this.units.put(unit, new LimitMultiCounterImpl(this.lenght - 1));
     }
 
     /**
@@ -77,7 +77,7 @@ public class LaneImpl implements Lane {
         this.units.entrySet().forEach(e -> {
             final Unit unit = e.getKey();
             final int nSteps = e.getValue().getValue();
-            map.put(unit, unit.getPlayer() == PlayerType.PLAYER1 ? nSteps : this.lenght - nSteps);
+            map.put(unit, unit.getPlayer() == PlayerType.PLAYER1 ? nSteps : this.lenght - nSteps - 1);
         });
         return map;
     }
@@ -111,6 +111,10 @@ public class LaneImpl implements Lane {
                 unit.attack(target.get());
             } else if (this.units.get(unit).isOver()) {
                 this.score(unit.getPlayer());
+                /*
+                 *TODO
+                 * REMOVE UNIT / DESPANW
+                 */
             } else {
                 this.move(unit);
             }

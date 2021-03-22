@@ -12,8 +12,12 @@ import utilities.Pair;
 public class FieldImpl implements Field {
 
     private final List<Lane> lanes;
+    private final int cellsNumber;
+    private final int laneNumber;
 
     public FieldImpl(final int cellsNumber, final int laneNumber) {
+        this.cellsNumber = cellsNumber;
+        this.laneNumber = laneNumber;
         this.lanes = Stream.generate(() -> cellsNumber)
                 .limit(laneNumber)
                 .map(LaneImpl::new)
@@ -23,9 +27,10 @@ public class FieldImpl implements Field {
     /**
      * @param laneIndex the lane in wich insert the unit
      * @param unit the unit to be inserted
+     * @throws throws an Exception if the laneIndex doesn't exist
      */
     @Override
-    public void addUnit(final int laneIndex, final Unit unit) {
+    public void addUnit(final int laneIndex, final Unit unit) throws IllegalArgumentException {
         if (laneIndex < 0 || laneIndex >= this.lanes.size()) {
             throw new IllegalArgumentException("The lane selected doesn't exist.");
         }
@@ -67,6 +72,22 @@ public class FieldImpl implements Field {
      */
     public void update() {
         this.lanes.forEach(l -> l.update());
+    }
+
+    /**
+     * @return the number of lanes created
+     */
+    @Override
+    public int getLaneNumber() {
+        return this.laneNumber;
+    }
+
+    /**
+     * @return the leght of each lane
+     */
+    @Override
+    public int getCellsNumber() {
+        return this.cellsNumber;
     }
 
 

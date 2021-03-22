@@ -13,6 +13,8 @@ public interface Field {
     Optional<Integer> getScore(PlayerType player);
     Map<Unit, Pair<Integer, Integer>> getUnits();
     void update();
+    int getLaneNumber();
+    int getCellsNumber();
 
 }
 
