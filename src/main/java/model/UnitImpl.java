@@ -46,7 +46,7 @@ public class UnitImpl implements Unit {
 
     public int getStep() {
         //metodo per il movimento
-        return 0;
+        return 1;
     }
 
     public PlayerType getPlayer() {

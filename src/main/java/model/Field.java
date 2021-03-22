@@ -12,6 +12,7 @@ public interface Field {
     List<Lane> getLanes();
     Optional<Integer> getScore(PlayerType player);
     Map<Unit, Pair<Integer, Integer>> getUnits();
+    void update();
 
 }
 

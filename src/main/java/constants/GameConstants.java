@@ -57,7 +57,7 @@ public final class GameConstants {
     public static final int FIVE_LANES = 5;
 
     /** Cell number for each lane. */
-    public static final int CELLS_NUM = 20;
+    public static final int CELLS_NUM = 15;
 
     private GameConstants() { }
 }

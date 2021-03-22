@@ -26,6 +26,9 @@ public class FieldImpl implements Field {
      */
     @Override
     public void addUnit(final int laneIndex, final Unit unit) {
+        if (laneIndex < 0 || laneIndex >= this.lanes.size()) {
+            throw new IllegalArgumentException("The lane selected doesn't exist.");
+        }
         this.lanes.get(laneIndex).addUnit(unit);
     }
 
@@ -57,6 +60,13 @@ public class FieldImpl implements Field {
         this.lanes.forEach(l -> l.getUnits().entrySet()
                 .forEach(e -> units.put(e.getKey(), new Pair<>(e.getValue(), lanes.indexOf(l)))));
         return units;
+    }
+
+    /**
+     * Update all the lanes.
+     */
+    public void update() {
+        this.lanes.forEach(l -> l.update());
     }
 
 

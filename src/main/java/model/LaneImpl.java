@@ -30,12 +30,6 @@ public class LaneImpl implements Lane {
         this.scores.put(PlayerType.PLAYER2, new CounterImpl());
     }
 
-//    private boolean goalReached(final Unit unit) {
-//        return this.units.get(unit) == 
-//                (unit.getPlayer() == PlayerType.PLAYER1 ? 
-//                 this.lenght - 1 : 0);
-//    }
-
     private void score(final PlayerType player) {
         this.scores.get(player).increment();
     }
