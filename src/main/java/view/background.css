@@ -1,4 +1,16 @@
 #background{
     -fx-background-image: url("/erba.jpg");
-
+	
 }
+
+#menu{
+	
+	-fx-background-image: url("/menu.png");
+}
+
+#menuButton{
+		-fx-background-radius: 6;
+		-fx-font-weight: bold;
+		-fx-text-fill: #FFFFFF;
+		-fx-background-color: linear-gradient(#000000, #696969);
+}	
