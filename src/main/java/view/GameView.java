@@ -18,7 +18,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import view.Exit;
-import view.Exit;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -164,23 +163,23 @@ public class GameView extends Application {
         timer.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         timer.setAlignment(Pos.CENTER);
         timer.setId("timer");
-        
+
         //HP player1
         int HP1=8;
-        Label player1 = new Label("PLAYER 1 HP: "+HP1);
+        Label player1 = new Label("PLAYER 1 HP: " + HP1);
         player1.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         player1.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         player1.setAlignment(Pos.CENTER);
         player1.setId("timer");
-        
+
         //HP player2
         int HP2=8;
-        Label player2 = new Label("PLAYER 2 HP: "+HP2);
+        Label player2 = new Label("PLAYER 2 HP: " + HP2);
         player2.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         player2.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         player2.setAlignment(Pos.CENTER);
         player2.setId("timer");
-        
+
 
         //layout
         HBox topMenu = new HBox(sw / ViewConstants.DIVISOR_25);
