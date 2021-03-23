@@ -10,11 +10,6 @@ public interface Lane {
     Map<Unit, Integer> getUnits();
     int getLenght();
     Integer getScore(PlayerType player);
-    /*
-     * Per ogni truppa controlla se ha un target, altrimenti la sposta
-     * Se arriva alla fine -> Remove Unit (Despawn + rimuovi HP)
-     */
     void update(); 
-    // Map<Unit,Integer> getUnits();
 
 }

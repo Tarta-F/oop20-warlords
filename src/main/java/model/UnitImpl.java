@@ -26,7 +26,7 @@ public class UnitImpl implements Unit {
         this.step = unitType.getStep();
         this.player = player;
         this.direction = player.getDirection();
-        this.alive = false;
+        this.alive = true;
     }
 
     public int getWaitingTime() {
@@ -61,15 +61,20 @@ public class UnitImpl implements Unit {
     @Override
     public void damage(final int damage) {
         this.hp = this.hp - damage;
-        /*if(this.hp <= 0) {
-         *      //notificare l'observer per cancellazione unita'
+        if(this.hp <= 0) {
+              //TODO notificare l'observer per cancellazione unita'
                 this.alive = false;
-            }*/
+            }
         }
 
     @Override
     public int getRange() {
         return this.range;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return this.alive;
     }
 
 }

@@ -30,7 +30,7 @@ public class FieldImpl implements Field {
      * @throws throws an Exception if the laneIndex doesn't exist
      */
     @Override
-    public void addUnit(final int laneIndex, final Unit unit) throws IllegalArgumentException {
+    public void addUnit(final int laneIndex, final Unit unit) {
         if (laneIndex < 0 || laneIndex >= this.lanes.size()) {
             throw new IllegalArgumentException("The lane selected doesn't exist.");
         }

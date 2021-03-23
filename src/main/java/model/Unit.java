@@ -33,4 +33,6 @@ public interface Unit {
 
     /**@param unit target hitten*/
     void attack(Unit unit);
+
+    boolean isAlive();
 }
