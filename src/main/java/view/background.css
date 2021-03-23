@@ -1,8 +1,6 @@
 #background{
-
 	
-
-    -fx-background-image: url("/GrassBackground.jpg");
+	-fx-background-image: url("/GrassBackground.jpg");
 }
 
 #menu{
