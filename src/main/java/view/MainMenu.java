@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import view.Exit;
 
 public class MainMenu extends Application{ 
 
@@ -32,6 +33,13 @@ public class MainMenu extends Application{
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
+        
+        window = primaryStage;
+        
+        window.setOnCloseRequest(e -> {
+           e.consume();
+           closeProgram();
+        });
         
         //ViewConstants.DIVISOR
         
@@ -58,17 +66,13 @@ public class MainMenu extends Application{
         
         Button campaign = new Button("CAMPAIGN");
         campaign.setPrefSize(sw/15, sh/15);
-        campaign.setId("menuButton");
         Button versus = new Button("VERSUS");
         versus.setPrefSize(sw/15, sh/15);
-        versus.setId("menuButton");
         Button tutorials = new Button("TUTORIALS");
         tutorials.setPrefSize(sw/15, sh/15);
-        tutorials.setId("menuButton");
         Button exit = new Button("EXIT");
         exit.setPrefSize(sw/15, sh/15);
-        exit.setId("menuButton");
-        
+        exit.setOnAction(e -> closeProgram());
         
         
         //layout
@@ -98,15 +102,21 @@ public class MainMenu extends Application{
         borderPane.setId("menu");
         
         Scene scene = new Scene(borderPane,  sw/1.5, sh/1.5);
-        scene.getStylesheets().addAll(this.getClass().getResource("background.css").toExternalForm());
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        primaryStage.setResizable(false);
+        scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
+        window.setScene(scene);
+        window.show();
+        window.setResizable(false);
         
-        
-    
-    
-    
     }
+        /**Method to close the program with a confirm box.*/
+        private void closeProgram() {
+        boolean answer= Exit.display("quitting", "Do you want to quit?");
+        if (answer) {
+              window.close();
+            }
+        }
+    
+    
+    
 
 }

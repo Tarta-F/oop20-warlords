@@ -8,9 +8,17 @@
 	-fx-background-image: url("/menu.png");
 }
 
-#menuButton{
+.button{
 		-fx-background-radius: 6;
 		-fx-font-weight: bold;
 		-fx-text-fill: #FFFFFF;
 		-fx-background-color: linear-gradient(#000000, #696969);
 }	
+
+#timer
+{
+	-fx-text-fill: #FFFFFF;
+	-fx-background-radius: 6;
+	-fx-font-weight: bold;
+	-fx-background-color: rgba(0, 0, 0, 0.5);
+}

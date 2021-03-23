@@ -159,22 +159,38 @@ public class GameView extends Application {
 
 
         //label temporanea(qui ci andrebbe il timer)
-        Label prova = new Label("zac negro");
-        prova.setPrefHeight(sh / ViewConstants.DIVISOR_15);
-        prova.setPrefWidth(sw / ViewConstants.DIVISOR_10);
-        prova.setAlignment(Pos.CENTER);
-
-
+        Label timer = new Label("TIMER");
+        timer.setPrefHeight(sh / ViewConstants.DIVISOR_20);
+        timer.setPrefWidth(sw / ViewConstants.DIVISOR_15);
+        timer.setAlignment(Pos.CENTER);
+        timer.setId("timer");
+        
+        //HP player1
+        int HP1=8;
+        Label player1 = new Label("PLAYER 1 HP: "+HP1);
+        player1.setPrefHeight(sh / ViewConstants.DIVISOR_20);
+        player1.setPrefWidth(sw / ViewConstants.DIVISOR_15);
+        player1.setAlignment(Pos.CENTER);
+        player1.setId("timer");
+        
+        //HP player2
+        int HP2=8;
+        Label player2 = new Label("PLAYER 2 HP: "+HP2);
+        player2.setPrefHeight(sh / ViewConstants.DIVISOR_20);
+        player2.setPrefWidth(sw / ViewConstants.DIVISOR_15);
+        player2.setAlignment(Pos.CENTER);
+        player2.setId("timer");
+        
 
         //layout
         HBox topMenu = new HBox(sw / ViewConstants.DIVISOR_25);
         topMenu.setAlignment(Pos.CENTER);
-        topMenu.getChildren().addAll(unit1player1, unit2player1, unit3player1, prova, unit1player2, unit2player2, unit3player2);
+        topMenu.getChildren().addAll(unit1player1, unit2player1, unit3player1, timer, unit1player2, unit2player2, unit3player2);
         topMenu.setPadding(new Insets(sh / ViewConstants.DIVISOR_30, 0, 0, 0));
 
         HBox bottomMenu = new HBox(sw / ViewConstants.DIVISOR_30);
-        bottomMenu.getChildren().addAll(menu, exit);
-        bottomMenu.setAlignment(Pos.BASELINE_RIGHT);
+        bottomMenu.getChildren().addAll(player1, menu, exit, player2);
+        bottomMenu.setAlignment(Pos.CENTER);
 
         VBox leftMenu = new VBox(sh / ViewConstants.DIVISOR_20);
         leftMenu.setAlignment(Pos.CENTER);
@@ -210,7 +226,7 @@ public class GameView extends Application {
         borderpane.setRight(rightMenu);
         borderpane.setCenter(gridPane);
         Scene scene = new Scene(borderpane, sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
-        scene.getStylesheets().addAll(this.getClass().getResource("background.css").toExternalForm());
+        scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         window.setScene(scene);
 
         window.show();

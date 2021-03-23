@@ -34,9 +34,20 @@ public class Exit {
         Label label = new Label();
         label.setText(message);
         label.setAlignment(Pos.CENTER);
-
-        Button yesButton = new Button("yes");
-        Button noButton = new Button("no");
+        label.setPrefSize(sw/10, sh/25);;
+        label.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
+                + "    -fx-background-radius: 6;\r\n"
+                + "    -fx-font-weight: bold;\r\n"
+                + "    -fx-background-color: rgba(0, 0, 0, 0.5);");
+        
+        
+        Button yesButton = new Button("YES");
+        yesButton.setStyle( " -fx-background-radius: 6; -fx-font-weight: bold; -fx-text-fill: #FFFFFF; -fx-background-color: linear-gradient(#000000, #696969);");
+        yesButton.setPrefSize(sw/25, sh/25);;
+        
+        Button noButton = new Button("NO");
+        noButton.setStyle( " -fx-background-radius: 6; -fx-font-weight: bold; -fx-text-fill: #FFFFFF; -fx-background-color: linear-gradient(#000000, #696969);");
+        noButton.setPrefSize(sw/25, sh/25);;
         
         yesButton.setOnAction(e -> {
             answer = true;
@@ -51,7 +62,7 @@ public class Exit {
         VBox layout = new VBox (10);
         layout.getChildren().addAll(label,yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
-        
+        layout.setStyle("-fx-background-color: grey;");
         Scene scene = new Scene (layout,sw/4, sh/4);    
         window.setScene(scene);            
         window.setResizable(false);
