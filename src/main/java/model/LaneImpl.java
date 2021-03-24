@@ -34,15 +34,60 @@ public class LaneImpl implements Lane {
         this.scores.get(player).increment();
     }
 
-    private Optional<Unit> searchTarget(final Unit unit) {
-        int position = this.getUnits().get(unit);
-        return Stream.iterate(position, i -> i + (unit.getPlayer() == PlayerType.PLAYER1 ? 1 : -1))
-                .limit(unit.getRange() + 1)
-                .flatMap(p -> this.getUnitsAtPosition(p).stream())
-                .filter(u -> u.getPlayer() != unit.getPlayer())
-                .findFirst();
+    private boolean isLegalPosition(final int position) {
+        return (position >= 0 && position < this.lenght);
     }
 
+    private Optional<Unit> searchTarget(final Unit unit) {
+//        int n;
+//        int pos = this.getUnits().get(unit);
+//        int sign = unit.getPlayer() == PlayerType.PLAYER1 ? 1 : -1;
+//
+//        for (n = 0; n < unit.getRange(); n++) {
+//            for (var ent : this.getUnitsAtPosition(pos + (sign * n))) {
+//                if (ent.getPlayer() != unit.getPlayer()) {
+//                    target = ent;
+//                    break;
+//                }
+//            }
+//            if (target != null) {
+//                break;
+//            }
+//        }
+
+//        Unit target = null;
+//        int direction = unit.getPlayer() == PlayerType.PLAYER1 ? 1 : -1;
+//        var list = Stream.iterate(this.getUnits().get(unit), i -> i + direction)
+//                .limit(unit.getRange() + 1)  //  + 1 for the current position
+//                .filter(this::isLegalPosition)
+//                .sorted((a, b) -> a - b)
+//                .collect(Collectors.toList());
+//
+//        Iterator<Unit> it;
+//        for (int pos : list) {
+//            it = this.getUnitsAtPosition(pos).stream()
+//                    .filter(u -> u.getPlayer() != unit.getPlayer())
+//                    .iterator();
+//            if (it.hasNext()) {
+//                target = it.next();
+//                break;
+//            }
+//        }
+//
+//        return Optional.of(target);
+
+
+        return Stream.iterate(this.getUnits().get(unit), i -> i + (unit.getPlayer() == PlayerType.PLAYER1 ? 1 : -1))
+                .limit(unit.getRange() + 1)  //  + 1 for the current position
+                .filter(this::isLegalPosition)
+                .flatMap(p -> this.getUnitsAtPosition(p).stream())
+                .filter(u -> u.getPlayer() != unit.getPlayer())
+                .findFirst(); 
+    }
+
+//TODO     private void despawn(final Unit unit) {
+//        this.units.remove(unit);
+//    }
 
     private void move(final Unit unit) {
         this.units.get(unit).multiIncrement(unit.getStep());
@@ -59,9 +104,13 @@ public class LaneImpl implements Lane {
     /**
      * @param position 
      * @return the set of the units in this position
+     * @throws IllegalArgumentException in case of the position is out of the lane
      */
     @Override
     public Set<Unit> getUnitsAtPosition(final int position) {
+        if (!this.isLegalPosition(position)) {
+            throw new IllegalArgumentException("The entered position is out of the lane limits");
+        }
         return this.getUnits().entrySet().stream()
                 .filter(e -> e.getValue() == position)
                 .map(e -> e.getKey())
@@ -76,8 +125,10 @@ public class LaneImpl implements Lane {
         Map<Unit, Integer> map = new HashMap<>();
         this.units.entrySet().forEach(e -> {
             final Unit unit = e.getKey();
-            final int nSteps = e.getValue().getValue();
-            map.put(unit, unit.getPlayer() == PlayerType.PLAYER1 ? nSteps : this.lenght - nSteps - 1);
+            if (unit.isAlive()) {
+                final int nSteps = e.getValue().getValue();
+                map.put(unit, unit.getPlayer() == PlayerType.PLAYER1 ? nSteps : this.lenght - nSteps - 1);
+            }
         });
         return map;
     }
@@ -101,22 +152,33 @@ public class LaneImpl implements Lane {
 
     /**
      * Updates every unit in this lane with attack, score or move.
+     * PROBLEMI :
+     * -TODO Quando una truppa muore o fa score deve essere rimossa ma non può essere fatto nel ciclo
      */
     @Override
     public void update() {
         this.units.entrySet().forEach(e -> {
             final Unit unit = e.getKey();
-            final Optional<Unit> target = this.searchTarget(unit);
-            if (target.isPresent()) {
-                unit.attack(target.get());
-            } else if (this.units.get(unit).isOver()) {
-                this.score(unit.getPlayer());
-                /*
-                 *TODO
-                 * REMOVE UNIT / DESPANW
-                 */
-            } else {
-                this.move(unit);
+
+            /**
+             * TODO
+             * PER PROVA
+             */
+            if (unit.getHP() > 0) {
+                final Optional<Unit> target = this.searchTarget(unit);
+                if (target.isPresent()) {
+                    unit.attack(target.get());
+                } else if (this.units.get(unit).isOver()) {
+                    this.score(unit.getPlayer());
+                    /*
+                     *TODO
+                     * REMOVE UNIT / DESPANW
+                     * 
+                    this.despawn(unit);
+                     */
+                } else {
+                    this.move(unit);
+                }
             }
         });
     }
