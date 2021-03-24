@@ -272,8 +272,8 @@ public class GameView extends Application {
         for (int i = 0; i < ViewConstants.GRID_COLUMNS; i++) {
             for (int j = 0; j < ViewConstants.GRID_LINES; j++) {
                 ImageView ground = new ImageView(groundImage);
-                ground.setFitWidth(sw / ViewConstants.DIVISOR_25);
-                ground.setFitHeight(sh / ViewConstants.DIVISOR_10);
+                ground.setFitWidth(sw / ViewConstants.DIVISOR_27);
+                ground.setFitHeight(sh /ViewConstants.DIVISOR_10);
                 GridPane.setConstraints(ground, i, j);
                 gridPane.getChildren().add(ground);
             }

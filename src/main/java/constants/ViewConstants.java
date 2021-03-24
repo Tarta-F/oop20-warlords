@@ -31,15 +31,18 @@ public final class ViewConstants {
 
     /**DIVISOR used in view for the resolution of elements. */
     public static final int DIVISOR_25 = 25;
-
+    
+    /**DIVISOR used in view for the resolution of elements. */
+    public static final int DIVISOR_27 = 27;
+    
     /**DIVISOR used in view for the resolution of elements. */
     public static final int DIVISOR_30 = 30;
 
     /**Number of LINES in the battlefield grid, used in GameView. */
-    public static final int GRID_LINES = 3;
+    public static final int GRID_LINES = 5;
 
     /**Number of COLUMNS in the battlefield grid, used in GameView. */
-    public static final int GRID_COLUMNS = 14;
+    public static final int GRID_COLUMNS = 15;
 
     private ViewConstants() { }
 }
