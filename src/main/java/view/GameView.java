@@ -4,6 +4,10 @@ import constants.ViewConstants;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -49,6 +53,21 @@ public class GameView extends Application {
 
          window = primaryStage;
 
+        
+         // background image that adapt to the monitor resolution
+         Image gameBackG = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
+         //size
+         BackgroundSize backgroundSize = new BackgroundSize(sw/1.5, sh/1.5, false, false, false, false);
+         //position
+         BackgroundImage backgroundImage = new BackgroundImage(gameBackG, null, null, BackgroundPosition.CENTER, backgroundSize);
+         //new background
+         Background gameBackground = new Background(backgroundImage);
+         
+         
+         
+         
+         
+         
          /**Call for method "closeProgram".*/
          window.setOnCloseRequest(e -> {
              e.consume();
@@ -121,7 +140,27 @@ public class GameView extends Application {
         arrow5p1.setFitHeight(sh / ViewConstants.DIVISOR_20);
 
 
-        /**Set of ImageView for player 2 arrows.*/
+        
+        ImageView arrow1p2;
+        
+        int n=5;
+        
+        List<ImageView> listp2 = new ArrayList<>();
+        
+        for (int i=0; i<n; i++){
+         
+            arrow1p2= new ImageView(arrowImageP2);
+            arrow1p2.setFitWidth(sw / ViewConstants.DIVISOR_20);
+            arrow1p2.setFitHeight(sh / ViewConstants.DIVISOR_20);
+            listp2.add(arrow1p2);
+            
+        }
+        
+        listp2.get(2).setImage(arrowSelectedImageP2);
+        
+        
+        
+        /**Set of ImageView for player 2 arrows.
         ImageView arrow1p2 = new ImageView(arrowImageP2);
         arrow1p2.setFitWidth(sw / ViewConstants.DIVISOR_20);
         arrow1p2.setFitHeight(sh / ViewConstants.DIVISOR_20);
@@ -141,7 +180,7 @@ public class GameView extends Application {
         ImageView arrow5p2 = new ImageView(arrowImageP2);
         arrow5p2.setFitWidth(sw / ViewConstants.DIVISOR_20);
         arrow5p2.setFitHeight(sh / ViewConstants.DIVISOR_20);
-
+         */   
 
 
 
@@ -149,36 +188,63 @@ public class GameView extends Application {
         Button exit = new Button("Exit");
         exit.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         exit.setOnAction(e -> closeProgram());
-
+        exit.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
+                + "    -fx-background-radius: 6;\r\n"
+                + "    -fx-font-weight: bold;\r\n"
+                +"     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                +"      -fx-font-size:"+sw/150+";");
+        
         /**Creation button Menu.*/
         Button menu = new Button("Menu");
+        menu.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
+                + "    -fx-background-radius: 6;\r\n"
+                + "    -fx-font-weight: bold;\r\n"
+                +"     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                +"      -fx-font-size:"+sw/150+";");
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
-        //menu.setOnAction(e -> );
+      
 
 
 
         //label temporanea(qui ci andrebbe il timer)
         Label timer = new Label("TIMER");
+        timer.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
+                + "    -fx-background-radius: 6;\r\n"
+                + "    -fx-font-weight: bold;\r\n"
+                + "    -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
+                +"      -fx-font-size:"+sw/150+";");
+
         timer.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         timer.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         timer.setAlignment(Pos.CENTER);
-        timer.setId("timer");
+
 
         //HP player1
         int HP1=8;
         Label player1 = new Label("PLAYER 1 HP: " + HP1);
+        player1.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
+                + "    -fx-background-radius: 6;\r\n"
+                + "    -fx-font-weight: bold;\r\n"
+                + "    -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
+                +"      -fx-font-size:"+sw/150+";");
+
         player1.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         player1.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         player1.setAlignment(Pos.CENTER);
-        player1.setId("timer");
+
 
         //HP player2
         int HP2=8;
         Label player2 = new Label("PLAYER 2 HP: " + HP2);
+        player2.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
+                + "    -fx-background-radius: 6;\r\n"
+                + "    -fx-font-weight: bold;\r\n"
+                + "    -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
+                +"      -fx-font-size:"+sw/150+";");
+
         player2.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         player2.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         player2.setAlignment(Pos.CENTER);
-        player2.setId("timer");
 
 
         //layout
@@ -197,7 +263,7 @@ public class GameView extends Application {
 
         VBox rightMenu = new VBox(sh / ViewConstants.DIVISOR_20);
         rightMenu.setAlignment(Pos.CENTER);
-        rightMenu.getChildren().addAll(arrow1p2, arrow2p2, arrow3p2, arrow4p2, arrow5p2);
+        rightMenu.getChildren().addAll(listp2);
 
 
 
@@ -224,10 +290,9 @@ public class GameView extends Application {
         borderpane.setBottom(bottomMenu);
         borderpane.setRight(rightMenu);
         borderpane.setCenter(gridPane);
+        borderpane.setBackground(gameBackground);
         Scene scene = new Scene(borderpane, sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
-        scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         window.setScene(scene);
-
         window.show();
         window.setResizable(false);
     }

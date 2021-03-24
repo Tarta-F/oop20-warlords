@@ -36,7 +36,7 @@ public final class ViewConstants {
     public static final int DIVISOR_30 = 30;
 
     /**Number of LINES in the battlefield grid, used in GameView. */
-    public static final int GRID_LINES = 5;
+    public static final int GRID_LINES = 3;
 
     /**Number of COLUMNS in the battlefield grid, used in GameView. */
     public static final int GRID_COLUMNS = 14;

@@ -14,8 +14,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import view.Exit;
+import javafx.scene.layout.*;
 
 public class MainMenu extends Application { 
 
@@ -39,8 +41,19 @@ public class MainMenu extends Application {
            closeProgram();
         });
 
-        //ViewConstants.DIVISOR
-
+        // background image that adapt to the monitor resolution
+        Image backGMenu = new Image(this.getClass().getResourceAsStream("/menu.png"));
+        //size
+        BackgroundSize backgroundSize = new BackgroundSize(sw/1.5, sh/1.5, false, false, false, false);
+        //position
+        BackgroundImage backgroundImage = new BackgroundImage(backGMenu, null, null, BackgroundPosition.CENTER, backgroundSize);
+        //new background
+        Background background = new Background(backgroundImage);
+        
+        
+        
+        
+        
         //image
         Image logoImage  = new Image(this.getClass().getResourceAsStream("/logo.png"));
         ImageView logo = new ImageView(logoImage);
@@ -60,20 +73,49 @@ public class MainMenu extends Application {
 
         //buttons
         Button campaign = new Button("CAMPAIGN");
+        campaign.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
+                + "    -fx-background-radius: 6;\r\n"
+                + "    -fx-font-weight: bold;\r\n"
+                +"     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                +"      -fx-font-size:"+sw/150+";");
+        
         campaign.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
+      
         Button versus = new Button("VERSUS");
+        versus.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
+                + "    -fx-background-radius: 6;\r\n"
+                + "    -fx-font-weight: bold;\r\n"
+                +"     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                +"      -fx-font-size:"+sw/150+";");
+        
         versus.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
+
         Button tutorials = new Button("TUTORIALS");
+        tutorials.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
+                + "    -fx-background-radius: 6;\r\n"
+                + "    -fx-font-weight: bold;\r\n"
+                +"     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                +"      -fx-font-size:"+sw/150+";");
+        
         tutorials.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
-        Button exit = new Button("EXIT");
-        exit.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
-        exit.setOnAction(e -> closeProgram());
+        
+       
+        Button exitMenu = new Button("EXIT");
+        
+        exitMenu.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
+                + "    -fx-background-radius: 6;\r\n"
+                + "    -fx-font-weight: bold;\r\n"
+                +"     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                +"      -fx-font-size:"+sw/150+";");
+        
+        exitMenu.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
+        exitMenu.setOnAction(e -> closeProgram());
 
 
         //layout
         VBox menu = new VBox(sh / ViewConstants.DIVISOR_15);
         menu.setAlignment(Pos.CENTER);
-        menu.getChildren().addAll(logo, campaign, versus, tutorials, exit);
+        menu.getChildren().addAll(logo, campaign, versus, tutorials, exitMenu);
         menu.setPadding(new Insets(sh / ViewConstants.DIVISOR_30, 0, sh / ViewConstants.DIVISOR_30, 0));
 
         VBox sinistra = new VBox();
@@ -90,10 +132,8 @@ public class MainMenu extends Application {
         borderPane.setCenter(menu);
         borderPane.setLeft(sinistra);
         borderPane.setRight(destra);
-        borderPane.setId("menu");
-
+        borderPane.setBackground(background);
         Scene scene = new Scene(borderPane,  sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
-        scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         window.setScene(scene);
         window.show();
         window.setResizable(false);

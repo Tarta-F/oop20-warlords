@@ -39,14 +39,24 @@ public class Exit {
         label.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
                 + "    -fx-background-radius: 6;\r\n"
                 + "    -fx-font-weight: bold;\r\n"
-                + "    -fx-background-color: rgba(0, 0, 0, 0.5);");
+                + "    -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
+                +"      -fx-font-size:"+sw/150+";");
 
         Button yesButton = new Button("YES");
-        yesButton.setStyle(" -fx-background-radius: 6; -fx-font-weight: bold; -fx-text-fill: #FFFFFF; -fx-background-color: linear-gradient(#000000, #696969);");
+        yesButton.setStyle(" -fx-background-radius: 6; "
+                + "-fx-font-weight: bold;\r\n"
+                + "-fx-text-fill: #FFFFFF;\r\n"
+                + "-fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                +" -fx-font-size:"+sw/150+";");
         yesButton.setPrefSize(sw / ViewConstants.DIVISOR_25, sh / ViewConstants.DIVISOR_25);
 
         Button noButton = new Button("NO");
-        noButton.setStyle(" -fx-background-radius: 6; -fx-font-weight: bold; -fx-text-fill: #FFFFFF; -fx-background-color: linear-gradient(#000000, #696969);");
+        noButton.setStyle(" -fx-background-radius: 6; "
+                + "-fx-font-weight: bold;\r\n"
+                + "-fx-text-fill: #FFFFFF;\r\n"
+                + "-fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                +" -fx-font-size:"+sw/150+";");
+        
         noButton.setPrefSize(sw / ViewConstants.DIVISOR_25, sh / ViewConstants.DIVISOR_25);
 
         yesButton.setOnAction(e -> {
