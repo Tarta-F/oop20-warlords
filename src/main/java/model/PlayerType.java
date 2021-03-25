@@ -1,7 +1,7 @@
 package model;
 
-/** Players with corresponding unit directions.
- *
+/** 
+ *Players with corresponding unit directions.
  */
 public enum PlayerType {
 

@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Class enum for the unit direction.
+ * */
 public enum Direction {
 
     /**
