@@ -5,7 +5,11 @@ package model;
  */
 public class UnitImpl implements Unit {
 
-    private int hp, dmg, range, timer, step;
+    private int hp;
+    private int dmg;
+    private int range;
+    private int timer;
+    private int step;
     private boolean alive;
     private UnitType unitType;
     private PlayerType player;
