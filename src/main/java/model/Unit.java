@@ -1,11 +1,6 @@
 package model;
-//import java.util.Map;(Bisogna creare la map tile se la utiliziamo)
-//import java.util.List;
 
 public interface Unit {
-
-    //Metodo da implementare?
-    //void setPath(List<MapTile> path);
 
     /**@return unit time re_spawn*/
     int getWaitingTime();
@@ -34,5 +29,6 @@ public interface Unit {
     /**@param unit target hitten*/
     void attack(Unit unit);
 
+    /**@return if the unit is alive*/
     boolean isAlive();
 }

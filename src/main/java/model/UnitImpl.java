@@ -1,9 +1,5 @@
 package model;
 
-//import java.util.List;
-//import java.util.Map;
-//import constants.ConstantsGame;
-
 /**
  *Unit Implementation.
  */
@@ -29,50 +25,58 @@ public class UnitImpl implements Unit {
         this.alive = true;
     }
 
+    /**@return time of respawn.*/
     public int getWaitingTime() {
         return this.timer;
     }
 
+    /**@return health.*/
     public int getHP() {
         return this.hp;
     }
 
+    /**@return damage.*/
     public int getDamage() {
         return this.dmg;
     }
 
+    /**@return step.*/
     public int getStep() {
         return step;
     }
 
+    /**@return player.*/
     public PlayerType getPlayer() {
         return this.player;
     }
 
+    /**@return unit type.*/
     public UnitType getUnitType() {
         return this.unitType;
     }
 
-    @Override
+    /**@Override deal damage to another unit.
+     * @param unit Unit*/
     public void attack(final Unit unit) {
         unit.damage(this.dmg);
     }
 
-    @Override
+    /**@Override take damage from another unit
+     * @param damage int*/
     public void damage(final int damage) {
         this.hp = this.hp - damage;
-        if(this.hp <= 0) {
+        if (this.hp <= 0) {
               //TODO notificare l'observer per cancellazione unita'
                 this.alive = false;
             }
         }
 
-    @Override
+    /**@return unit range.*/
     public int getRange() {
         return this.range;
     }
 
-    @Override
+    /**@return status alive.*/
     public boolean isAlive() {
         return this.alive;
     }
