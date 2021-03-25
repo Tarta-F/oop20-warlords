@@ -37,6 +37,9 @@ public final class ViewConstants {
 
     /**DIVISOR used in view for the resolution of elements. */
     public static final int DIVISOR_30 = 30;
+    
+    /**DIVISOR used in view for the resolution of elements. */
+    public static final int DIVISOR_150 = 150;
 
     /**Number of LINES in the battlefield grid, used in GameView. */
     public static final int GRID_LINES = 5;
