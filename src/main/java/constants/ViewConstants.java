@@ -50,5 +50,14 @@ public final class ViewConstants {
     /**Number of ARROW in the battlefield grid per player, used in GameView. */
     public static final int N_ARROW = 5;
 
+    /**Number of BUTTON in the GameModeSelection. */
+    public static final int N_BUTTON_5 = 5;
+
+    /**Number of BUTTON in the GameModeSelection. */
+    public static final int N_BUTTON_6 = 6;
+
+    /**Number of BUTTON in the GameModeSelection. */
+    public static final int N_BUTTON_16 = 16;
+
     private ViewConstants() { }
 }
