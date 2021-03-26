@@ -15,8 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -261,112 +263,112 @@ public class GameView extends Application {
         window.show();
         window.setResizable(false);
 
-        scene.setOnKeyPressed(e -> {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
-                case W:
-                    if (counterLaneP1 == 0) {
-                        listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
-                        counterLaneP1 = listArrowP1.size() - 1;
-                        listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
-                    } else {
-                        listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
-                        counterLaneP1--;
-                        listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
-                    }
-                    break;
-                case S:
-                    if (counterLaneP1 == 4) {
-                        listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
-                        counterLaneP1 -= listArrowP1.size() - 1;
-                        listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
-                    } else {
-                        listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
-                        counterLaneP1++;
-                        listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
-                    }
-                    break;
-                case A:
-                    if (counterUnitP1 == 0) {
-                        listUnitP1.get(counterUnitP1).setImage(unit1Image);
-                        counterUnitP1 = listUnitP1.size() - 1;
-                        listUnitP1.get(counterUnitP1).setImage(unit3SelectedImage);
-                    } else if (counterUnitP1 == 1) {
-                        listUnitP1.get(counterUnitP1).setImage(unit2Image);
-                        counterUnitP1--;
-                        listUnitP1.get(counterUnitP1).setImage(unit1SelectedImage);
-                    } else {
-                        listUnitP1.get(counterUnitP1).setImage(unit3Image);
-                        counterUnitP1--;
-                        listUnitP1.get(counterUnitP1).setImage(unit2SelectedImage);
-                    }
-                    break;
-                case D:
-                    if (counterUnitP1 == 2) {
-                        listUnitP1.get(counterUnitP1).setImage(unit3Image);
-                        counterUnitP1 -= listUnitP1.size() - 1;
-                        listUnitP1.get(counterUnitP1).setImage(unit1SelectedImage);
-                    } else if (counterUnitP1 == 1) {
-                        listUnitP1.get(counterUnitP1).setImage(unit2Image);
-                        counterUnitP1++;
-                        listUnitP1.get(counterUnitP1).setImage(unit3SelectedImage);
-                    } else {
-                        listUnitP1.get(counterUnitP1).setImage(unit1Image);
-                        counterUnitP1++;
-                        listUnitP1.get(counterUnitP1).setImage(unit2SelectedImage);
-                    }
-                    break;
-                case UP:
-                    if (counterLaneP2 == 0) {
-                        listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
-                        counterLaneP2 = listArrowP2.size() - 1;
-                        listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
-                    } else {
-                        listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
-                        counterLaneP2--;
-                        listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
-                    }
-                    break;
-                case DOWN:
-                    if (counterLaneP2 == 4) {
-                        listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
-                        counterLaneP2 -= listArrowP2.size() - 1;
-                        listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
-                    } else {
-                        listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
-                        counterLaneP2++;
-                        listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
-                    }
-                    break;
-                case LEFT:
-                    if (counterUnitP2 == 0) {
-                        listUnitP2.get(counterUnitP2).setImage(unit1Image);
-                        counterUnitP2 = listUnitP2.size() - 1;
-                        listUnitP2.get(counterUnitP2).setImage(unit3SelectedImage);
-                    } else if (counterUnitP2 == 1) {
-                        listUnitP2.get(counterUnitP2).setImage(unit2Image);
-                        counterUnitP2--;
-                        listUnitP2.get(counterUnitP2).setImage(unit1SelectedImage);
-                    } else {
-                        listUnitP2.get(counterUnitP2).setImage(unit3Image);
-                        counterUnitP2--;
-                        listUnitP2.get(counterUnitP2).setImage(unit2SelectedImage);
-                    }
-                    break;
-                case RIGHT:
-                    if (counterUnitP2 == 2) {
-                        listUnitP2.get(counterUnitP2).setImage(unit3Image);
-                        counterUnitP2 -= listUnitP2.size() - 1;
-                        listUnitP2.get(counterUnitP2).setImage(unit1SelectedImage);
-                    } else if (counterUnitP2 == 1) {
-                        listUnitP2.get(counterUnitP2).setImage(unit2Image);
-                        counterUnitP2++;
-                        listUnitP2.get(counterUnitP2).setImage(unit3SelectedImage);
-                    } else {
-                        listUnitP2.get(counterUnitP2).setImage(unit1Image);
-                        counterUnitP2++;
-                        listUnitP2.get(counterUnitP2).setImage(unit2SelectedImage);
-                    }
-                    break;
+            case W:
+                if (counterLaneP1 == 0) {
+                    listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
+                    counterLaneP1 = listArrowP1.size() - 1;
+                    listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
+                } else {
+                    listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
+                    counterLaneP1--;
+                    listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
+                }
+                break;
+            case S:
+                if (counterLaneP1 == 4) {
+                    listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
+                    counterLaneP1 -= listArrowP1.size() - 1;
+                    listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
+                } else {
+                    listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
+                    counterLaneP1++;
+                    listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
+                }
+                break;
+            case A:
+                if (counterUnitP1 == 0) {
+                    listUnitP1.get(counterUnitP1).setImage(unit1Image);
+                    counterUnitP1 = listUnitP1.size() - 1;
+                    listUnitP1.get(counterUnitP1).setImage(unit3SelectedImage);
+                } else if (counterUnitP1 == 1) {
+                    listUnitP1.get(counterUnitP1).setImage(unit2Image);
+                    counterUnitP1--;
+                    listUnitP1.get(counterUnitP1).setImage(unit1SelectedImage);
+                } else {
+                    listUnitP1.get(counterUnitP1).setImage(unit3Image);
+                    counterUnitP1--;
+                    listUnitP1.get(counterUnitP1).setImage(unit2SelectedImage);
+                }
+                break;
+            case D:
+                if (counterUnitP1 == 2) {
+                    listUnitP1.get(counterUnitP1).setImage(unit3Image);
+                    counterUnitP1 -= listUnitP1.size() - 1;
+                    listUnitP1.get(counterUnitP1).setImage(unit1SelectedImage);
+                } else if (counterUnitP1 == 1) {
+                    listUnitP1.get(counterUnitP1).setImage(unit2Image);
+                    counterUnitP1++;
+                    listUnitP1.get(counterUnitP1).setImage(unit3SelectedImage);
+                } else {
+                    listUnitP1.get(counterUnitP1).setImage(unit1Image);
+                    counterUnitP1++;
+                    listUnitP1.get(counterUnitP1).setImage(unit2SelectedImage);
+                }
+                break;
+            case UP:
+                if (counterLaneP2 == 0) {
+                    listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
+                    counterLaneP2 = listArrowP2.size() - 1;
+                    listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
+                } else {
+                    listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
+                    counterLaneP2--;
+                    listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
+                }
+                break;
+            case DOWN:
+                if (counterLaneP2 == 4) {
+                    listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
+                    counterLaneP2 -= listArrowP2.size() - 1;
+                    listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
+                } else {
+                    listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
+                    counterLaneP2++;
+                    listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
+                }
+                break;
+            case LEFT:
+                if (counterUnitP2 == 0) {
+                    listUnitP2.get(counterUnitP2).setImage(unit1Image);
+                    counterUnitP2 = listUnitP2.size() - 1;
+                    listUnitP2.get(counterUnitP2).setImage(unit3SelectedImage);
+                } else if (counterUnitP2 == 1) {
+                    listUnitP2.get(counterUnitP2).setImage(unit2Image);
+                    counterUnitP2--;
+                    listUnitP2.get(counterUnitP2).setImage(unit1SelectedImage);
+                } else {
+                    listUnitP2.get(counterUnitP2).setImage(unit3Image);
+                    counterUnitP2--;
+                    listUnitP2.get(counterUnitP2).setImage(unit2SelectedImage);
+                }
+                break;
+            case RIGHT:
+                if (counterUnitP2 == 2) {
+                    listUnitP2.get(counterUnitP2).setImage(unit3Image);
+                    counterUnitP2 -= listUnitP2.size() - 1;
+                    listUnitP2.get(counterUnitP2).setImage(unit1SelectedImage);
+                } else if (counterUnitP2 == 1) {
+                    listUnitP2.get(counterUnitP2).setImage(unit2Image);
+                    counterUnitP2++;
+                    listUnitP2.get(counterUnitP2).setImage(unit3SelectedImage);
+                } else {
+                    listUnitP2.get(counterUnitP2).setImage(unit1Image);
+                    counterUnitP2++;
+                    listUnitP2.get(counterUnitP2).setImage(unit2SelectedImage);
+                }
+                break;
             default:
                 break;
             }

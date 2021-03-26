@@ -12,12 +12,12 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import view.Exit;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundPosition;
 
 public class MainMenu extends Application { 
 
@@ -44,16 +44,14 @@ public class MainMenu extends Application {
         // background image that adapt to the monitor resolution
         Image backGMenu = new Image(this.getClass().getResourceAsStream("/menu.png"));
         //size
-        BackgroundSize backgroundSize = new BackgroundSize(sw/1.5, sh/1.5, false, false, false, false);
+        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5, false, false, false, false);
         //position
         BackgroundImage backgroundImage = new BackgroundImage(backGMenu, null, null, BackgroundPosition.CENTER, backgroundSize);
         //new background
         Background background = new Background(backgroundImage);
-        
-        
-        
-        
-        
+
+
+
         //image
         Image logoImage  = new Image(this.getClass().getResourceAsStream("/logo.png"));
         ImageView logo = new ImageView(logoImage);
@@ -76,38 +74,37 @@ public class MainMenu extends Application {
         campaign.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
                 + "    -fx-background-radius: 6;\r\n"
                 + "    -fx-font-weight: bold;\r\n"
-                +"     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                +"      -fx-font-size:"+sw/150+";");
-        
+                + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+
         campaign.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
-      
+
         Button versus = new Button("VERSUS");
         versus.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
                 + "    -fx-background-radius: 6;\r\n"
                 + "    -fx-font-weight: bold;\r\n"
-                +"     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                +"      -fx-font-size:"+sw/150+";");
-        
+                + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+
         versus.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
 
         Button tutorials = new Button("TUTORIALS");
         tutorials.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
                 + "    -fx-background-radius: 6;\r\n"
                 + "    -fx-font-weight: bold;\r\n"
-                +"     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                +"      -fx-font-size:"+sw/150+";");
-        
+                + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+
         tutorials.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
-        
-       
+
+
         Button exitMenu = new Button("EXIT");
-        
         exitMenu.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
                 + "    -fx-background-radius: 6;\r\n"
                 + "    -fx-font-weight: bold;\r\n"
-                +"     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                +"      -fx-font-size:"+sw/150+";");
-        
+                + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
+                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+
         exitMenu.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
         exitMenu.setOnAction(e -> closeProgram());
 
