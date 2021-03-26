@@ -6,7 +6,7 @@ import model.PlayerType;
 /**
  * The controls for playing the game.
 * For each player there are 5 controls: LEFT and RIGHT for unit selection, UP and DOWN for 
-* unti selction and ADD for spawn the selected unit in the selected lane.
+* unit selection and ADD for spawn the selected unit in the selected lane.
  *
  */
 public enum InputType {
