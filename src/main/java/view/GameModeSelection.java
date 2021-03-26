@@ -57,7 +57,7 @@ public class GameModeSelection extends Application {
         Button scenarioButtons;
         List<Button> listaScenario = new ArrayList<>();
 
-        for (int i = 1; i < ViewConstants.N_BUTTON_5; i++) {
+        for (int i = 1; i < ViewConstants.N_BUTTON_5 - 1; i++) {
             scenarioButtons = new Button("SCENARIO: " + i);
             scenarioButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
             scenarioButtons.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
@@ -66,7 +66,6 @@ public class GameModeSelection extends Application {
                       + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
                       + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
             listaScenario.add(scenarioButtons);
-
         }
 
 
@@ -158,10 +157,10 @@ public class GameModeSelection extends Application {
         scenarioBox.getChildren().add(scenario);
         scenarioBox.getChildren().addAll(listaScenario);
 
-       HBox laneBox = new HBox(sw / ViewConstants.DIVISOR_15);
-       laneBox.setAlignment(Pos.CENTER);
-       laneBox.getChildren().add(lane);
-       laneBox.getChildren().addAll(listaLane);
+        HBox laneBox = new HBox(sw / ViewConstants.DIVISOR_15);
+        laneBox.setAlignment(Pos.CENTER);
+        laneBox.getChildren().add(lane);
+        laneBox.getChildren().addAll(listaLane);
 
         HBox timerBox = new HBox(sw / ViewConstants.DIVISOR_15);
         timerBox.setAlignment(Pos.CENTER);
