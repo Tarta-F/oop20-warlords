@@ -1,14 +1,12 @@
 package model.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import constants.GameConstants;
 import model.Lane;
@@ -23,8 +21,8 @@ public class LaneTest {
     private Lane lane = null;
     private static final int CLASH_POSITION = 6;
 
-    @Before
-    public void initLane() {
+    @BeforeEach
+    public final void initLane() {
         lane = new LaneImpl(GameConstants.CELLS_NUM);
     }
 
@@ -70,7 +68,7 @@ public class LaneTest {
     @Test
     public void testAttack() {
         final Unit unit1 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER1);
-        final Unit  unit2 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER2);
+        final Unit unit2 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER2);
 
         lane.addUnit(unit1);
         lane.addUnit(unit2);
@@ -85,10 +83,12 @@ public class LaneTest {
         assertEquals(Integer.valueOf(GameConstants.CELLS_NUM - 1 - CLASH_POSITION), lane.getUnits().get(unit2));
 
         lane.update();
+        /*
+         * Il comportamento delle unità da qui in poi è indefinito poichè non si sa quale si muoverà per prima e 
+         *  di conseguenza attaccherà per seconda.
+         */
 
-//        assertEquals(UnitType.SWORDSMEN.getHealth() - UnitType.SWORDSMEN.getDamage(), unit2.getHP());
-//        assertEquals(UnitType.SWORDSMEN.getHealth() - UnitType.SWORDSMEN.getDamage(), unit1.getHP());
-        assertEquals(Integer.valueOf(CLASH_POSITION + 1), lane.getUnits().get(unit1));                              // UNIT 1 SI MUOVE 
+/*        assertEquals(Integer.valueOf(CLASH_POSITION + 1), lane.getUnits().get(unit1));                              // UNIT 1 SI MUOVE 
         assertEquals(Integer.valueOf(GameConstants.CELLS_NUM - 1 - CLASH_POSITION), lane.getUnits().get(unit2));    // UNIT 2 TROVA UNIT 1 E ATTACCA, QUINDI NON SI MUOVE
 
         lane.update();
@@ -98,43 +98,25 @@ public class LaneTest {
         assertEquals(Integer.valueOf(CLASH_POSITION + 1), lane.getUnits().get(unit1));                                  // UNIT 1 NON SI MUOVE PERCHè ATTACCA
         assertEquals(Integer.valueOf(GameConstants.CELLS_NUM - 1 - CLASH_POSITION), lane.getUnits().get(unit2));    // UNIT 2 SI MUOVE
 
-        lane.update();
-
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 2 * UnitType.SWORDSMEN.getDamage(), unit2.getHP());
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 3 * UnitType.SWORDSMEN.getDamage(), unit1.getHP());
-
-        lane.update();
-
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 3 * UnitType.SWORDSMEN.getDamage(), unit2.getHP());
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 4 * UnitType.SWORDSMEN.getDamage(), unit1.getHP());
+        IntStream.range(2, CLASH_POSITION + 1).forEach(c -> {
+            lane.update();
+            assertEquals(UnitType.SWORDSMEN.getHealth() - c * UnitType.SWORDSMEN.getDamage(), unit2.getHP());
+            assertEquals(UnitType.SWORDSMEN.getHealth() - (c + 1) * UnitType.SWORDSMEN.getDamage(), unit1.getHP());
+            assertEquals(Integer.valueOf(CLASH_POSITION + 1), lane.getUnits().get(unit1));                                  // UNIT 1 NON SI MUOVE PERCHè ATTACCA
+            assertEquals(Integer.valueOf(GameConstants.CELLS_NUM - 1 - CLASH_POSITION), lane.getUnits().get(unit2));    // UNIT 2 SI MUOVE
+        });
 
         lane.update();
 
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 4 * UnitType.SWORDSMEN.getDamage(), unit2.getHP());
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 5 * UnitType.SWORDSMEN.getDamage(), unit1.getHP());
-
-        lane.update();
-
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 5 * UnitType.SWORDSMEN.getDamage(), unit2.getHP());
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 6 * UnitType.SWORDSMEN.getDamage(), unit1.getHP());
-
-        lane.update();
-
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 6 * UnitType.SWORDSMEN.getDamage(), unit2.getHP());
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 7 * UnitType.SWORDSMEN.getDamage(), unit1.getHP());
-
-        lane.update();
-
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 7 * UnitType.SWORDSMEN.getDamage(), unit2.getHP());
-        assertEquals(UnitType.SWORDSMEN.getHealth() - 8 * UnitType.SWORDSMEN.getDamage(), unit1.getHP());
-
+        assertEquals(0, unit1.getHP());
+        assertEquals(3, unit2.getHP());
 
         assertFalse(lane.getUnits().containsKey(unit1));
+
         lane.update();
-        assertFalse(lane.getUnits().containsKey(unit1));
-//
-//        assertEquals(UnitType.SWORDSMEN.getHealth() - 8 * UnitType.SWORDSMEN.getDamage(), unit2.getHP());
-//        assertEquals(0, unit1.getHP());
+
+        assertEquals(Integer.valueOf(GameConstants.CELLS_NUM - 2 - CLASH_POSITION), lane.getUnits().get(unit2));    // UNIT 2 SI MUOVE
+*/
     }
 
 //  assertEquals(Integer.valueOf(0), lane.getScore(PlayerType.PLAYER1));

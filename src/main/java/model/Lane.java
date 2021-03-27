@@ -10,6 +10,12 @@ public interface Lane {
     Map<Unit, Integer> getUnits();
     int getLenght();
     Integer getScore(PlayerType player);
+
+    /**
+     * Updates every unit in this lane with attack, score or move.
+     * PROBLEMI :
+     * -TODO Quando una truppa muore o fa score deve essere rimossa ma non può essere fatto nel ciclo
+     */
     void update(); 
 
 }
