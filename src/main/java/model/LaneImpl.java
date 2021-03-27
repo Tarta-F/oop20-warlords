@@ -39,44 +39,6 @@ public class LaneImpl implements Lane {
     }
 
     private Optional<Unit> searchTarget(final Unit unit) {
-//        int n;
-//        int pos = this.getUnits().get(unit);
-//        int sign = unit.getPlayer() == PlayerType.PLAYER1 ? 1 : -1;
-//
-//        for (n = 0; n < unit.getRange(); n++) {
-//            for (var ent : this.getUnitsAtPosition(pos + (sign * n))) {
-//                if (ent.getPlayer() != unit.getPlayer()) {
-//                    target = ent;
-//                    break;
-//                }
-//            }
-//            if (target != null) {
-//                break;
-//            }
-//        }
-
-//        Unit target = null;
-//        int direction = unit.getPlayer() == PlayerType.PLAYER1 ? 1 : -1;
-//        var list = Stream.iterate(this.getUnits().get(unit), i -> i + direction)
-//                .limit(unit.getRange() + 1)  //  + 1 for the current position
-//                .filter(this::isLegalPosition)
-//                .sorted((a, b) -> a - b)
-//                .collect(Collectors.toList());
-//
-//        Iterator<Unit> it;
-//        for (int pos : list) {
-//            it = this.getUnitsAtPosition(pos).stream()
-//                    .filter(u -> u.getPlayer() != unit.getPlayer())
-//                    .iterator();
-//            if (it.hasNext()) {
-//                target = it.next();
-//                break;
-//            }
-//        }
-//
-//        return Optional.of(target);
-
-
         return Stream.iterate(this.getUnits().get(unit), i -> i + (unit.getPlayer() == PlayerType.PLAYER1 ? 1 : -1))
                 .limit(unit.getRange() + 1)  //  + 1 for the current position
                 .filter(this::isLegalPosition)
@@ -119,6 +81,7 @@ public class LaneImpl implements Lane {
 
     /**
      * @return a map of unit with the corresponding position in this lane
+     * TODO TOGLI ISALIVE
      */
     @Override
     public Map<Unit, Integer> getUnits() {
@@ -150,13 +113,8 @@ public class LaneImpl implements Lane {
         return this.scores.get(player).getValue();
     }
 
-    /**
-     * Updates every unit in this lane with attack, score or move.
-     * PROBLEMI :
-     * -TODO Quando una truppa muore o fa score deve essere rimossa ma non può essere fatto nel ciclo
-     */
     @Override
-    public void update() {
+    public final void update() {
         this.units.entrySet().forEach(e -> {
             final Unit unit = e.getKey();
 
@@ -164,7 +122,7 @@ public class LaneImpl implements Lane {
              * TODO
              * PER PROVA
              */
-            if (unit.getHP() > 0) {
+            if (unit.isAlive()) {
                 final Optional<Unit> target = this.searchTarget(unit);
                 if (target.isPresent()) {
                     unit.attack(target.get());
