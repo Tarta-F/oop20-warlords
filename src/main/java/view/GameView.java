@@ -4,12 +4,14 @@ import constants.ViewConstants;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javafx.application.Application;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,14 +35,24 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 /**
  * This class is the BattleField game view.
  */
-public class GameView extends Application { 
+public class GameView extends Region { 
 
-    private Stage window;
+   private MainMenu scenaMenu;
+    
+    
+    
+    /**Taking screen size for the adaptation of the various elements of the view to the resolution of the screen.*/
+    final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    final int sw = (int) screen.getWidth();
+    final int sh = (int) screen.getHeight();
+
 
     private int counterLaneP1 = 2;
     private int counterLaneP2 = 2;
@@ -52,24 +64,14 @@ public class GameView extends Application {
     private List<ImageView> listUnitP1 = new ArrayList<>();
     private List<ImageView> listUnitP2 = new ArrayList<>();
 
-    public static void main(final String[] args) {
-        launch(args);
-    }
 
-    public final void start(final Stage primaryStage) throws Exception {
 
-        /**Taking screen size for the adaptation of the various elements of the view to the resolution of the screen.*/
-        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        final int sw = (int) screen.getWidth();
-        final int sh = (int) screen.getHeight();
+    public Parent createContent() throws IOException {
 
-        window = primaryStage;
 
-        /**Event for closing the program.*/
-        window.setOnCloseRequest(e -> {
-            e.consume();
-            closeProgram();
-        });
+
+        Pane pane = new Pane();
+
 
         /**Set of all images used.*/
         Image gameBackG = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
@@ -169,7 +171,15 @@ public class GameView extends Application {
                 + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
                 + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
-
+        menu.setOnAction(e ->{
+            scenaMenu = new MainMenu();
+            try {
+                pane.getChildren().setAll(scenaMenu.createContent());
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
 
 
 
@@ -251,19 +261,17 @@ public class GameView extends Application {
 
         /**Set position of the various elements created.*/
         BorderPane borderpane = new BorderPane();
-        borderpane.setId("background");
         borderpane.setTop(topMenu);
         borderpane.setLeft(leftMenu);
         borderpane.setBottom(bottomMenu);
         borderpane.setRight(rightMenu);
         borderpane.setCenter(gridPane);
         borderpane.setBackground(gameBackground);
-        Scene scene = new Scene(borderpane, sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
-        window.setScene(scene);
-        window.show();
-        window.setResizable(false);
+        borderpane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
+  
+        
 
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
+        borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
             case W:
                 if (counterLaneP1 == 0) {
@@ -373,14 +381,18 @@ public class GameView extends Application {
                 break;
             }
         });
+        
+        pane.getChildren().add(borderpane);
+        return pane;
     }
-
+    
     /**Method to close the program with a confirm box.*/
     private void closeProgram() {
-    Boolean answer = Exit.display("quitting", "Do you want to quit?");
+    boolean answer = Exit.display("quitting", "Do you want to quit?");
     if (answer) {
-          window.close();
+        System.exit(0);
         }
     }
+
 
 }
