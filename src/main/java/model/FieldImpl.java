@@ -1,5 +1,12 @@
 package model;
 
+import java.util.Collection;
+import java.util.Collections;
+
+/**
+ * @author acer
+ */
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +31,6 @@ public class FieldImpl implements Field {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * @param laneIndex the lane in wich insert the unit
-     * @param unit the unit to be inserted
-     * @throws throws an Exception if the laneIndex doesn't exist
-     */
     @Override
     public void addUnit(final int laneIndex, final Unit unit) {
         if (laneIndex < 0 || laneIndex >= this.lanes.size()) {
@@ -37,18 +39,12 @@ public class FieldImpl implements Field {
         this.lanes.get(laneIndex).addUnit(unit);
     }
 
-    /**
-     * @return a list of the lanes of the field
-     */
     @Override
     public List<Lane> getLanes() {
-        return this.lanes;
+        return Collections.unmodifiableList(this.lanes);
     }
 
-    /**
-     * @param player the player whose score to get
-     * @return the numbers of units that have received the enemy base, if there are any
-     */
+
     @Override
     public Optional<Integer> getScore(final PlayerType player) {
         return this.lanes.stream()
@@ -56,35 +52,25 @@ public class FieldImpl implements Field {
                 .reduce((s1, s2) -> s1 + s2);
     }
 
-    /**
-     * @return a map of the units with their corresponding position, rappresented by a pair (y= lane number)
-     */
     @Override
     public Map<Unit, Pair<Integer, Integer>> getUnits() {
         final Map<Unit, Pair<Integer, Integer>> units = new HashMap<>();
         this.lanes.forEach(l -> l.getUnits().entrySet()
                 .forEach(e -> units.put(e.getKey(), new Pair<>(e.getValue(), lanes.indexOf(l)))));
-        return units;
+        return Collections.unmodifiableMap(units);
     }
 
-    /**
-     * Update all the lanes.
-     */
+
+
     public void update() {
         this.lanes.forEach(l -> l.update());
     }
 
-    /**
-     * @return the number of lanes created
-     */
     @Override
     public int getLaneNumber() {
         return this.laneNumber;
     }
 
-    /**
-     * @return the leght of each lane
-     */
     @Override
     public int getCellsNumber() {
         return this.cellsNumber;

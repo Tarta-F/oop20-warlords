@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -55,19 +56,11 @@ public class LaneImpl implements Lane {
         this.units.get(unit).multiIncrement(unit.getStep());
     }
 
-    /**
-     * @param unit unit to be added
-     */
     @Override
     public void addUnit(final Unit unit) {
         this.units.put(unit, new LimitMultiCounterImpl(this.lenght - 1));
     }
 
-    /**
-     * @param position 
-     * @return the set of the units in this position
-     * @throws IllegalArgumentException in case of the position is out of the lane
-     */
     @Override
     public Set<Unit> getUnitsAtPosition(final int position) {
         if (!this.isLegalPosition(position)) {
@@ -76,12 +69,11 @@ public class LaneImpl implements Lane {
         return this.getUnits().entrySet().stream()
                 .filter(e -> e.getValue() == position)
                 .map(e -> e.getKey())
-                .collect(Collectors.toSet());
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     /**
-     * @return a map of unit with the corresponding position in this lane
-     * TODO TOGLI ISALIVE
+     * TODO TOGLI ISALIVE.
      */
     @Override
     public Map<Unit, Integer> getUnits() {
@@ -93,21 +85,14 @@ public class LaneImpl implements Lane {
                 map.put(unit, unit.getPlayer() == PlayerType.PLAYER1 ? nSteps : this.lenght - nSteps - 1);
             }
         });
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 
-    /**
-     * @return the lenght of the lane
-     */
     @Override
     public int getLenght() {
         return this.lenght;
     }
 
-    /**
-     * @param player the player whose score to get
-     * @return the numbers of units that have received the enemy base by this lane, if there are any
-     */
     @Override
     public Integer getScore(final PlayerType player) {
         return this.scores.get(player).getValue();
