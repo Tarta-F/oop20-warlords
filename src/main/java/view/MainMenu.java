@@ -54,22 +54,18 @@ public class MainMenu extends Application {
         public Parent createContent() throws IOException {
         
             
-         BorderPane borderPane = new BorderPane();
-         borderPane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);   
-        
-        // background image that adapt to the monitor resolution
-        Image backGMenu = new Image(this.getClass().getResourceAsStream("/menu.png"));
-        //size
-        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5, false, false, false, false);
-        //position
-        BackgroundImage backgroundImage = new BackgroundImage(backGMenu, null, null, BackgroundPosition.CENTER, backgroundSize);
-        //new background
-        Background background = new Background(backgroundImage);
-
-
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);   
+       
+        //background image
+        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/menu.png"));
+        ImageView menuBackGround = new ImageView(backgroundImg);
+        menuBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
+        menuBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
         //image
-        Image logoImage  = new Image(this.getClass().getResourceAsStream("/logo.png"));
+        
+         Image logoImage  = new Image(this.getClass().getResourceAsStream("/logo.png"));
         ImageView logo = new ImageView(logoImage);
         logo.setFitWidth(sw / ViewConstants.DIVISOR_4);
         logo.setFitHeight(sh / ViewConstants.DIVISOR_8);
@@ -160,11 +156,10 @@ public class MainMenu extends Application {
         destra.getChildren().add(logoSpearman);
         destra.setPadding(new Insets(0, sw / ViewConstants.DIVISOR_15, 0, 0));
 
-
+        borderPane.getChildren().add(menuBackGround);
         borderPane.setCenter(menu);
         borderPane.setLeft(sinistra);
         borderPane.setRight(destra);
-        borderPane.setBackground(background);
         return borderPane;
 
 

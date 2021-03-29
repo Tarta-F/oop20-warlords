@@ -71,10 +71,14 @@ public class GameView extends Region {
 
 
         Pane pane = new Pane();
-
+        
+        //background image
+        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
+        ImageView gameBackGround = new ImageView(backgroundImg);
+        gameBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
+        gameBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
         /**Set of all images used.*/
-        Image gameBackG = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
         Image unit1Image  = new Image(this.getClass().getResourceAsStream("/SwordsmenUnit.png"));
         Image unit2Image  = new Image(this.getClass().getResourceAsStream("/SpearmenUnit.png"));
         Image unit3Image = new Image(this.getClass().getResourceAsStream("/ArcherUnit.png"));
@@ -86,14 +90,6 @@ public class GameView extends Region {
         Image arrowSelectedImageP1 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer1.png"));
         Image arrowSelectedImageP2 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer2.png"));
         Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
-
-
-
-        /**Creation of the background image.*/
-        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5, false, false, false, false);
-        BackgroundImage backgroundImage = new BackgroundImage(gameBackG, null, null, BackgroundPosition.CENTER, backgroundSize);
-        Background gameBackground = new Background(backgroundImage);
-
 
 
         ImageView unitP1 = new ImageView(unit1SelectedImage);
@@ -266,7 +262,6 @@ public class GameView extends Region {
         borderpane.setBottom(bottomMenu);
         borderpane.setRight(rightMenu);
         borderpane.setCenter(gridPane);
-        borderpane.setBackground(gameBackground);
         borderpane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
   
         
@@ -381,7 +376,7 @@ public class GameView extends Region {
                 break;
             }
         });
-        
+        pane.getChildren().add(gameBackGround);
         pane.getChildren().add(borderpane);
         return pane;
     }

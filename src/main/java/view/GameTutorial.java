@@ -39,16 +39,12 @@ public class GameTutorial extends Region {
        
          Pane pane = new Pane();   
             
-        // background image that adapt to the monitor resolution
-        Image gameSettingsImage = new Image(this.getClass().getResourceAsStream("/GameSettingsTUTORIAL.png"));
-        //size
-        BackgroundSize backgroundSize = new BackgroundSize(sw/ViewConstants.DIVISOR_1_5, sh/ViewConstants.DIVISOR_1_5, false, false, false, false);
-        //position
-        BackgroundImage backgroundImage = new BackgroundImage(gameSettingsImage, null, null, BackgroundPosition.CENTER, backgroundSize);
-        //new background
-        Background background = new Background(backgroundImage);
 
-
+        //background image
+        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GameSettingsTUTORIAL.png"));
+        ImageView tutorialBackGround = new ImageView(backgroundImg);
+        tutorialBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
+        tutorialBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
        
 
         //back button
@@ -78,8 +74,8 @@ public class GameTutorial extends Region {
         
        BorderPane borderPane = new BorderPane ();
        borderPane.setBottom(backMenu);
-       borderPane.setBackground(background);
        borderPane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
+       pane.getChildren().add(tutorialBackGround);
        pane.getChildren().addAll(borderPane);
        return pane;
 

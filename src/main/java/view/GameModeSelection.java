@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -38,17 +39,11 @@ public class GameModeSelection extends Region {
 
         Pane pane = new Pane();  
 
-
-
-
-        // background image that adapt to the monitor resolution
-        Image gameSettingsImage = new Image(this.getClass().getResourceAsStream("/GameSettings.png"));
-        //size
-        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5, false, false, false, false);
-        //position
-        BackgroundImage backgroundImage = new BackgroundImage(gameSettingsImage, null, null, BackgroundPosition.CENTER, backgroundSize);
-        //new background
-        Background background = new Background(backgroundImage);
+        //background image
+        Image backgroundimg  = new Image(this.getClass().getResourceAsStream("/GameSettings.png"));
+        ImageView backG = new ImageView(backgroundimg);
+        backG.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
+        backG.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
 
         //scenario buttons 
@@ -191,9 +186,10 @@ public class GameModeSelection extends Region {
         backStartBox.getChildren().addAll(back, start);
         VBox vBox = new VBox(sh / ViewConstants.DIVISOR_15);
         vBox.setAlignment(Pos.CENTER);
-        vBox.setBackground(background);
+
         vBox.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
         vBox.getChildren().addAll(scenarioBox, laneBox, timerBox, backStartBox);
+        pane.getChildren().add(backG);
         pane.getChildren().addAll(vBox);
         return pane;
     }
