@@ -99,31 +99,50 @@ public class LaneImpl implements Lane {
     }
 
     @Override
-    public final void update() {
-        this.units.entrySet().forEach(e -> {
-            final Unit unit = e.getKey();
-
-            /**
-             * TODO
-             * PER PROVA
-             */
-            if (unit.isAlive()) {
-                final Optional<Unit> target = this.searchTarget(unit);
-                if (target.isPresent()) {
-                    unit.attack(target.get());
-                } else if (this.units.get(unit).isOver()) {
-                    this.score(unit.getPlayer());
-                    /*
-                     *TODO
-                     * REMOVE UNIT / DESPANW
-                     * 
-                    this.despawn(unit);
-                     */
-                } else {
-                    this.move(unit);
-                }
+    public void update() {
+        var unitsIterator = this.units.entrySet().iterator();
+        while (unitsIterator.hasNext()) {
+            var e = unitsIterator.next();
+            System.out.println(e.getKey().toString());
+            if (!e.getKey().isAlive()) {
+                unitsIterator.remove();
+                continue;
             }
-        });
+            final Optional<Unit> target = this.searchTarget(e.getKey());
+            if (target.isPresent()) {
+                e.getKey().attack(target.get());
+            } else if (e.getValue().isOver()) {
+                this.score(e.getKey().getPlayer());
+                unitsIterator.remove();
+            } else {
+                this.move(e.getKey());
+            }
+            //TODO
+        }
+//        this.units.entrySet().forEach(e -> {
+//            final Unit unit = e.getKey();
+//
+//            /**
+//             * TODO
+//             * PER PROVA
+//             */
+//            if (unit.isAlive()) {
+//                final Optional<Unit> target = this.searchTarget(unit);
+//                if (target.isPresent()) {
+//                    unit.attack(target.get());
+//                } else if (this.units.get(unit).isOver()) {
+//                    this.score(unit.getPlayer());
+//                    /*
+//                     *TODO
+//                     * REMOVE UNIT / DESPANW
+//                     * 
+//                    this.despawn(unit);
+//                     */
+//                } else {
+//                    this.move(unit);
+//                }
+//            }
+//        });
     }
 
 

@@ -60,8 +60,6 @@ public class FieldImpl implements Field {
         return Collections.unmodifiableMap(units);
     }
 
-
-
     public void update() {
         this.lanes.forEach(l -> l.update());
     }
