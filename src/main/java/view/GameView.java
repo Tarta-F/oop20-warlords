@@ -89,9 +89,21 @@ public class GameView extends Region {
         Image arrowImageP2 = new Image(this.getClass().getResourceAsStream("/ArrowPlayer2.png"));
         Image arrowSelectedImageP1 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer1.png"));
         Image arrowSelectedImageP2 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer2.png"));
+      
+        
+ 
+
         Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
+       
+        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5,sh / ViewConstants.DIVISOR_1_5, true, true, true, false);
+    
+        BackgroundImage backgroundImage = new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
 
-
+        Background background = new Background(backgroundImage);
+        
+        
+        
+        
         ImageView unitP1 = new ImageView(unit1SelectedImage);
         unitP1.setFitWidth(sw / ViewConstants.DIVISOR_20);
         unitP1.setFitHeight(sh / ViewConstants.DIVISOR_20);
@@ -224,11 +236,12 @@ public class GameView extends Region {
         topMenu.getChildren().addAll(listUnitP1);
         topMenu.getChildren().addAll(timer);
         topMenu.getChildren().addAll(listUnitP2);
-        topMenu.setPadding(new Insets(sh / ViewConstants.DIVISOR_30, 0, 0, 0));
+        topMenu.setPadding(new Insets(sh / ViewConstants.DIVISOR_60, 0, sh /ViewConstants.DIVISOR_60, 0));
 
         HBox bottomMenu = new HBox(sw / ViewConstants.DIVISOR_30);
         bottomMenu.getChildren().addAll(player1, menu, exit, player2);
         bottomMenu.setAlignment(Pos.CENTER);
+        bottomMenu.setPadding(new Insets(sh / ViewConstants.DIVISOR_60, 0, sh /ViewConstants.DIVISOR_60, 0));
 
         VBox leftMenu = new VBox(sh / ViewConstants.DIVISOR_20);
         leftMenu.setAlignment(Pos.CENTER);
@@ -242,13 +255,14 @@ public class GameView extends Region {
 
         /**Creation of the grid.*/
         GridPane gridPane = new GridPane();
+        gridPane.setBackground(background);
         for (int i = 0; i < ViewConstants.GRID_COLUMNS; i++) {
             for (int j = 0; j < ViewConstants.GRID_LINES; j++) {
-                ImageView ground = new ImageView(groundImage);
-                ground.setFitWidth(sw / ViewConstants.DIVISOR_27);
-                ground.setFitHeight(sh / ViewConstants.DIVISOR_10);
-                GridPane.setConstraints(ground, i, j);
-                gridPane.getChildren().add(ground);
+                ImageView vuoto = new ImageView();
+                vuoto.setFitWidth(sw / ViewConstants.DIVISOR_27);
+                vuoto.setFitHeight(sh / ViewConstants.DIVISOR_10);
+                GridPane.setConstraints(vuoto, i, j);
+                gridPane.getChildren().add(vuoto);
             }
         }
         gridPane.setAlignment(Pos.CENTER);
@@ -263,8 +277,7 @@ public class GameView extends Region {
         borderpane.setRight(rightMenu);
         borderpane.setCenter(gridPane);
         borderpane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
-  
-        
+
 
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {

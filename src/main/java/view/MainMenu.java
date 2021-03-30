@@ -36,7 +36,8 @@ public class MainMenu extends Application {
     public static void main(final String[] args) {
         launch(args);
     }
-
+    
+    @Override
     public final void start(final Stage primaryStage) throws Exception {
 
 
