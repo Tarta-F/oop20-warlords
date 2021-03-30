@@ -2,17 +2,22 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import constants.ViewConstants;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.layout.BackgroundImage;
@@ -20,37 +25,25 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundPosition;
 
-public class GameModeSelection extends Application { 
+public class GameModeSelection extends Region { 
 
-    private Stage window;
+    private MainMenu scenaMenu;
+    private GameView scenaGame;
 
-    public static void main(final String[] args) {
-        launch(args);
-    }
+    //screen size
+    final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    final int sw = (int) screen.getWidth();
+    final int sh = (int) screen.getHeight();
 
-    public final void start(final Stage primaryStage) throws Exception {
+    public Parent createContent() throws IOException {
 
-        //screen size
-        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        final int sw = (int) screen.getWidth();
-        final int sh = (int) screen.getHeight();
+        Pane pane = new Pane();  
 
-        window = primaryStage;
-
-        window.setOnCloseRequest(e -> {
-            e.consume();
-            closeProgram();
-         });
-
-
-        // background image that adapt to the monitor resolution
-        Image gameSettingsImage = new Image(this.getClass().getResourceAsStream("/GameSettings.png"));
-        //size
-        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5, false, false, false, false);
-        //position
-        BackgroundImage backgroundImage = new BackgroundImage(gameSettingsImage, null, null, BackgroundPosition.CENTER, backgroundSize);
-        //new background
-        Background background = new Background(backgroundImage);
+        //background image
+        Image backgroundimg  = new Image(this.getClass().getResourceAsStream("/GameSettings.png"));
+        ImageView backG = new ImageView(backgroundimg);
+        backG.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
+        backG.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
 
         //scenario buttons 
@@ -109,7 +102,17 @@ public class GameModeSelection extends Application {
                 + "    -fx-font-weight: bold;\r\n"
                 + "     -fx-background-color: linear-gradient(#FFFFFF, #696969);\r\n"
                 + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
-
+        back.setOnAction(e ->{
+            scenaMenu = new MainMenu();
+            
+            try {
+                pane.getChildren().setAll(scenaMenu.createContent());
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
+        
         Button start = new Button("START");
         start.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
         start.setStyle("    -fx-text-fill: #000000;\r\n"
@@ -117,7 +120,18 @@ public class GameModeSelection extends Application {
                 + "    -fx-font-weight: bold;\r\n"
                 + "     -fx-background-color: linear-gradient(#FFFFFF, #696969);\r\n"
                 + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
-
+       start.setOnAction(e ->{
+           scenaGame = new GameView();
+           
+           try {
+            pane.getChildren().setAll(scenaGame.createContent());
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+           
+           
+       }); 
 
         //label
         Label scenario = new Label("Scenario:");
@@ -170,23 +184,16 @@ public class GameModeSelection extends Application {
         HBox backStartBox = new HBox(sw / ViewConstants.DIVISOR_15);
         backStartBox.setPadding(new Insets(0, 0, 0, sw / ViewConstants.DIVISOR_30));
         backStartBox.getChildren().addAll(back, start);
-
         VBox vBox = new VBox(sh / ViewConstants.DIVISOR_15);
         vBox.setAlignment(Pos.CENTER);
+
+        vBox.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
         vBox.getChildren().addAll(scenarioBox, laneBox, timerBox, backStartBox);
-        vBox.setBackground(background);
-        Scene scene = new Scene(vBox, sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
-        window.setScene(scene);
-        window.show();
-        window.setResizable(false);
+        pane.getChildren().add(backG);
+        pane.getChildren().addAll(vBox);
+        return pane;
     }
 
-    /**Method to close the program with a confirm box.*/
-    private void closeProgram() {
-    boolean answer = Exit.display("quitting", "Do you want to quit?");
-    if (answer) {
-          window.close();
-        }
-    }
+
 }
 

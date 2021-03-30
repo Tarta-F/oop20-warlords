@@ -2,11 +2,13 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 
 import constants.ViewConstants;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -22,38 +24,48 @@ import javafx.scene.layout.BackgroundPosition;
 public class MainMenu extends Application { 
 
     private Stage window;
+    private GameTutorial scenaTutorial;
+    private GameModeSelection scenaGameModeSelection;
+    
+    //screen size
+    final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    final int sw = (int) screen.getWidth();
+    final int sh = (int) screen.getHeight();
 
+    
     public static void main(final String[] args) {
         launch(args);
     }
 
     public final void start(final Stage primaryStage) throws Exception {
 
-        //screen size
-        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        final int sw = (int) screen.getWidth();
-        final int sh = (int) screen.getHeight();
 
         window = primaryStage;
-
+        Scene scene = new Scene(createContent(), sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
+        window.setScene(scene);
+        window.show();
+        window.setResizable(false);
+        
         window.setOnCloseRequest(e -> {
            e.consume();
            closeProgram();
         });
-
-        // background image that adapt to the monitor resolution
-        Image backGMenu = new Image(this.getClass().getResourceAsStream("/menu.png"));
-        //size
-        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5, false, false, false, false);
-        //position
-        BackgroundImage backgroundImage = new BackgroundImage(backGMenu, null, null, BackgroundPosition.CENTER, backgroundSize);
-        //new background
-        Background background = new Background(backgroundImage);
-
-
+    }
+        public Parent createContent() throws IOException {
+        
+            
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);   
+       
+        //background image
+        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/menu.png"));
+        ImageView menuBackGround = new ImageView(backgroundImg);
+        menuBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
+        menuBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
         //image
-        Image logoImage  = new Image(this.getClass().getResourceAsStream("/logo.png"));
+        
+         Image logoImage  = new Image(this.getClass().getResourceAsStream("/logo.png"));
         ImageView logo = new ImageView(logoImage);
         logo.setFitWidth(sw / ViewConstants.DIVISOR_4);
         logo.setFitHeight(sh / ViewConstants.DIVISOR_8);
@@ -87,7 +99,17 @@ public class MainMenu extends Application {
                 + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
 
         versus.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
-
+        versus.setOnAction(e ->{
+            scenaGameModeSelection = new GameModeSelection();
+            
+            try {
+                borderPane.getChildren().setAll(scenaGameModeSelection.createContent());
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
+        
         Button tutorials = new Button("TUTORIALS");
         tutorials.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
                 + "    -fx-background-radius: 6;\r\n"
@@ -96,7 +118,16 @@ public class MainMenu extends Application {
                 + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
 
         tutorials.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
-
+        tutorials.setOnAction(e ->{
+             
+            try {
+                scenaTutorial = new GameTutorial();
+                borderPane.getChildren().setAll(scenaTutorial.createContent());
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
 
         Button exitMenu = new Button("EXIT");
         exitMenu.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
@@ -125,22 +156,19 @@ public class MainMenu extends Application {
         destra.getChildren().add(logoSpearman);
         destra.setPadding(new Insets(0, sw / ViewConstants.DIVISOR_15, 0, 0));
 
-        BorderPane borderPane = new BorderPane();
+        borderPane.getChildren().add(menuBackGround);
         borderPane.setCenter(menu);
         borderPane.setLeft(sinistra);
         borderPane.setRight(destra);
-        borderPane.setBackground(background);
-        Scene scene = new Scene(borderPane,  sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
-        window.setScene(scene);
-        window.show();
-        window.setResizable(false);
+        return borderPane;
+
 
     }
         /**Method to close the program with a confirm box.*/
         private void closeProgram() {
         boolean answer = Exit.display("quitting", "Do you want to quit?");
         if (answer) {
-              window.close();
+            System.exit(0);
             }
         }
 }
