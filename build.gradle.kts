@@ -35,6 +35,9 @@ val jUnitVersion = "5.7.1"
 dependencies {
     // Example library: Guava. Add what you need (and remove Guava if you don't use it)
      implementation("com.google.guava:guava:28.1-jre")
+     
+     // Import of commons lang3 for Pair class
+     implementation("org.apache.commons:commons-lang3:3.12.0")
 
     // JavaFX: comment out if you do not need them
     for (platform in supportedPlatforms) {
