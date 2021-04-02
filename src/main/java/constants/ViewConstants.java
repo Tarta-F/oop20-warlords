@@ -10,7 +10,7 @@ public final class ViewConstants {
 
     /**DIVISOR used in view for the resolution of elements. */
     public static final int DIVISOR_2 = 2;
-    
+
     /**DIVISOR used in view for the resolution of elements. */
     public static final int DIVISOR_3 = 3;
 

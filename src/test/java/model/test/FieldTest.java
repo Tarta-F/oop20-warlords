@@ -22,20 +22,21 @@ import org.apache.commons.lang3.tuple.Pair;;
 public class FieldTest {
 
     private Field field;
+    private Unit unit1;
+    private Unit unit2;
 
     @BeforeEach
     public final void initField() {
         this.field = new FieldImpl(GameConstants.CELLS_NUM, GameConstants.THREE_LANES);
-    }
-
-    @Test
-    public void testAddUnit() {
-        Unit unit1 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER1);
-        Unit unit2 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER2);
+        unit1 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER1);
+        unit2 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER2);
 
         field.addUnit(0, unit1);
         field.addUnit(1, unit2);
+    }
 
+    @Test
+    public void testAddAndGetUnit() {
         assertEquals(Pair.of(0, 0), field.getUnits().get(unit1));
         assertEquals(Pair.of(GameConstants.CELLS_NUM - 1, 1), field.getUnits().get(unit2));
 
@@ -59,7 +60,7 @@ public class FieldTest {
         try {
             field.addUnit(4, unit1);
             fail();
-        } catch (IllegalArgumentException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertNotNull(e.getMessage());
             assertFalse(e.getMessage().isEmpty());
         }
@@ -67,14 +68,9 @@ public class FieldTest {
     }
 
     @Test
-    public void getScore() {
-        Unit unit1 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER1);
-        Unit unit2 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER2);
-
-        field.addUnit(0, unit1);
-        field.addUnit(1, unit2);
-
-        IntStream.range(0, field.getCellsNumber() - 1).forEach(c -> field.update());
+    public void testGetScore() {
+        IntStream.range(0, field.getCellsNumber() - 1)
+                .forEach(c -> field.update());
         assertEquals(Pair.of(GameConstants.CELLS_NUM - 1, 0), field.getUnits().get(unit1));
         assertEquals(Pair.of(0, 1), field.getUnits().get(unit2));
 
@@ -82,11 +78,6 @@ public class FieldTest {
 
         assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1).get());
         assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1).get());
-
-    }
-
-    @Test
-    public void getUnits() {
 
     }
 

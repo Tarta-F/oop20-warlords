@@ -10,11 +10,11 @@ public enum PlayerType {
      */
     PLAYER1(Direction.RIGHT), PLAYER2(Direction.LEFT);
 
+    private final Direction direction;
+
     PlayerType(final Direction direction) {
         this.direction = direction;
     }
-
-    private final Direction direction;
 
     /**
      * @return direction of this player's unit

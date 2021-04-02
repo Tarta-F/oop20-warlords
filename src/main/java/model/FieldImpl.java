@@ -11,11 +11,13 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-public class FieldImpl implements Field {
+public final class FieldImpl implements Field {
 
     private final List<Lane> lanes;
     private final int cellsNumber;
     private final int laneNumber;
+
+    private static final String MESSAGE_OUT_OF_FIELD = "The entered lane is out of the limits";
 
     public FieldImpl(final int cellsNumber, final int laneNumber) {
         this.cellsNumber = cellsNumber;
@@ -29,7 +31,7 @@ public class FieldImpl implements Field {
     @Override
     public void addUnit(final int laneIndex, final Unit unit) {
         if (laneIndex < 0 || laneIndex >= this.lanes.size()) {
-            throw new IllegalArgumentException("The lane selected doesn't exist.");
+            throw new IndexOutOfBoundsException(MESSAGE_OUT_OF_FIELD);
         }
         this.lanes.get(laneIndex).addUnit(unit);
     }
