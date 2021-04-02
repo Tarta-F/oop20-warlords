@@ -165,19 +165,11 @@ public class GameView extends Region {
         Button exit = new Button("Exit");
         exit.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         exit.setOnAction(e -> closeProgram());
-        exit.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        exit.setStyle(Style.BOTTONI_1);
 
         /**Creation button Menu.*/
         Button menu = new Button("Menu");
-        menu.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        menu.setStyle(Style.BOTTONI_1);
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         menu.setOnAction(e ->{
             scenaMenu = new MainMenu();
@@ -193,11 +185,7 @@ public class GameView extends Region {
 
         //label temporanea(qui ci andrebbe il timer)
         Label timer = new Label("TIMER");
-        timer.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        timer.setStyle(Style.LABEL);
         timer.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         timer.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         timer.setAlignment(Pos.CENTER);
@@ -206,11 +194,7 @@ public class GameView extends Region {
         //HP player1
         int HP1=8;
         Label player1 = new Label("PLAYER 1 HP: " + HP1);
-        player1.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        player1.setStyle(Style.LABEL);
 
         player1.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         player1.setPrefWidth(sw / ViewConstants.DIVISOR_15);
@@ -220,11 +204,7 @@ public class GameView extends Region {
         //HP player2
         int HP2=8;
         Label player2 = new Label("PLAYER 2 HP: " + HP2);
-        player2.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        player2.setStyle(Style.LABEL);
         player2.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         player2.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         player2.setAlignment(Pos.CENTER);
