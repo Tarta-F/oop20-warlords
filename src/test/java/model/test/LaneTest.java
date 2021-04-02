@@ -3,6 +3,7 @@ package model.test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Set;
@@ -21,7 +22,7 @@ import model.UnitType;
 
 public class LaneTest {
 
-    private Lane lane = null;
+    private Lane lane;
     private Unit unit1;
     private Unit unit2;
     private static final int CLASH_POSITION = 6;
@@ -84,7 +85,6 @@ public class LaneTest {
 
     @Test
     public void testAttackAndDespawn() {
-
         IntStream.range(0, CLASH_POSITION).forEach(c -> {
             assertEquals(Integer.valueOf(c), lane.getUnits().get(unit1));
             assertEquals(Integer.valueOf(GameConstants.CELLS_NUM - 1 - c), lane.getUnits().get(unit2));
@@ -107,14 +107,13 @@ public class LaneTest {
         /*
          * A questo punto uno dei due deve essere morto. 
          */
-        assertFalse(!(unit1.isAlive() || unit2.isAlive()));
-        assertFalse(!(lane.getUnits().containsKey(unit1) || lane.getUnits().containsKey(unit2)));
+        assertTrue(unit1.isAlive() ^ unit2.isAlive());
+        assertTrue(lane.getUnits().containsKey(unit1) ^ lane.getUnits().containsKey(unit2));
 
     }
 
     @Test
     public void testScoreAndDespawn() {
-
         lane = new LaneImpl(GameConstants.CELLS_NUM);
         lane.addUnit(unit1);
 

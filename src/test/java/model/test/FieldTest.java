@@ -17,7 +17,7 @@ import model.PlayerType;
 import model.Unit;
 import model.UnitImpl;
 import model.UnitType;
-import org.apache.commons.lang3.tuple.Pair;;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class FieldTest {
 
