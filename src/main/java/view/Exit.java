@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import constants.ViewConstants;
 
 import javafx.scene.Scene;
@@ -13,14 +11,16 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 
 /**
+ * 
  * Class that implements the confirm box EXIT.
+ * 
  * */
 public final class Exit {
 
     private static boolean answer;
 
     private Exit() {
-        /**Not called.*/
+        /**Not called. */
     }
 
     /**
@@ -31,63 +31,51 @@ public final class Exit {
      * */
     public static boolean display(final String title, final String message) {
 
-        Stage window = new Stage();
+        final Stage window = new Stage();
 
-        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        final int sw = (int) screen.getWidth();
-        final int sh = (int) screen.getHeight(); 
-
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle(title);
-
-
-        Label label = new Label();
+        /**Label. */
+        final Label label = new Label();
         label.setText(message);
         label.setAlignment(Pos.CENTER);
-        label.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_25);
-        label.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+        label.setStyle(Style.LABEL);
 
-        Button yesButton = new Button("YES");
-        yesButton.setStyle(" -fx-background-radius: 6; "
-                + "-fx-font-weight: bold;\r\n"
-                + "-fx-text-fill: #FFFFFF;\r\n"
-                + "-fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                + " -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
-        yesButton.setPrefSize(sw / ViewConstants.DIVISOR_25, sh / ViewConstants.DIVISOR_25);
 
-        Button noButton = new Button("NO");
-        noButton.setStyle(" -fx-background-radius: 6; "
-                + "-fx-font-weight: bold;\r\n"
-                + "-fx-text-fill: #FFFFFF;\r\n"
-                + "-fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                + " -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
-
-        noButton.setPrefSize(sw / ViewConstants.DIVISOR_25, sh / ViewConstants.DIVISOR_25);
-
+        /**Buttons and events. */
+        /**Button YES in the confirm box and his event. */
+        final Button yesButton = new Button("YES");
+        yesButton.setStyle(Style.BOTTONI_1);
+        yesButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
         yesButton.setOnAction(e -> {
             answer = true;
             window.close();
         });
 
+        /**Button NO in the confirm box and his event. */
+        final Button noButton = new Button("NO");
+        noButton.setStyle(Style.BOTTONI_1);
+        noButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
         noButton.setOnAction(e -> {
             answer = false;
             window.close();
         });
 
-        VBox layout = new VBox(10);
+
+        /**Layout. */
+        final VBox layout = new VBox(ViewConstants.DIVISOR_10);
         layout.getChildren().addAll(label, yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: grey;");
-        Scene scene = new Scene(layout, sw / ViewConstants.DIVISOR_4, sh / ViewConstants.DIVISOR_4);
+
+
+        /**Scene and stage preferences. */
+        final Scene scene = new Scene(layout, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_4));
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle(title);
         window.setScene(scene);
         window.setResizable(false);
         window.showAndWait();
 
-
-        return (answer);  //viene impostata poi ad una variabile nel main per essere stampata
+        return answer;
     }
 }

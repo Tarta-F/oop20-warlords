@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import constants.ViewConstants;
+import constants.ViewImages;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -41,7 +42,7 @@ public class GameTutorial extends Region {
             
 
         //background image
-        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GameSettingsTUTORIAL.png"));
+        Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_TUTORIAL));
         ImageView tutorialBackGround = new ImageView(backgroundImg);
         tutorialBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
         tutorialBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
@@ -50,11 +51,7 @@ public class GameTutorial extends Region {
         //back button
         Button mainMenu = new Button("MAIN MENU");
         mainMenu.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        mainMenu.setStyle("    -fx-text-fill: #000000;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: linear-gradient(#FFFFFF, #696969);\r\n"
-                + "      -fx-font-size:"+sw/constants.ViewConstants.DIVISOR_150+";");
+        mainMenu.setStyle(Style.BOTTONI_2);
         mainMenu.setOnAction(e -> {
             scenaMenu = new MainMenu();
             
@@ -68,7 +65,6 @@ public class GameTutorial extends Region {
         
         //layout
        HBox backMenu = new HBox();
-       //backMenu.setAlignment(Pos.CENTER);
        backMenu.setPadding(new Insets(0, 0 ,sh/constants.ViewConstants.DIVISOR_30 , sw/constants.ViewConstants.DIVISOR_2));
        backMenu.getChildren().add(mainMenu);
         

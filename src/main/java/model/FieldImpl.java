@@ -1,11 +1,6 @@
 package model;
 
-import java.util.Collection;
 import java.util.Collections;
-
-/**
- * @author acer
- */
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,13 +9,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import utilities.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class FieldImpl implements Field {
+public final class FieldImpl implements Field {
 
     private final List<Lane> lanes;
     private final int cellsNumber;
     private final int laneNumber;
+
+    private static final String MESSAGE_OUT_OF_FIELD = "The entered lane is out of the limits";
 
     public FieldImpl(final int cellsNumber, final int laneNumber) {
         this.cellsNumber = cellsNumber;
@@ -34,7 +31,7 @@ public class FieldImpl implements Field {
     @Override
     public void addUnit(final int laneIndex, final Unit unit) {
         if (laneIndex < 0 || laneIndex >= this.lanes.size()) {
-            throw new IllegalArgumentException("The lane selected doesn't exist.");
+            throw new IndexOutOfBoundsException(MESSAGE_OUT_OF_FIELD);
         }
         this.lanes.get(laneIndex).addUnit(unit);
     }
@@ -56,10 +53,11 @@ public class FieldImpl implements Field {
     public Map<Unit, Pair<Integer, Integer>> getUnits() {
         final Map<Unit, Pair<Integer, Integer>> units = new HashMap<>();
         this.lanes.forEach(l -> l.getUnits().entrySet()
-                .forEach(e -> units.put(e.getKey(), new Pair<>(e.getValue(), lanes.indexOf(l)))));
+                .forEach(e -> units.put(e.getKey(), Pair.of(e.getValue(), lanes.indexOf(l)))));
         return Collections.unmodifiableMap(units);
     }
 
+    @Override
     public void update() {
         this.lanes.forEach(l -> l.update());
     }
