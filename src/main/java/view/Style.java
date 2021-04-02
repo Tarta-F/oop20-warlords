@@ -11,7 +11,7 @@ public final class Style {
             + " -fx-background-radius: 6;\r\n"
             + " -fx-font-weight: bold;\r\n "
             + " -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-            + " -fx-font-size: 15;";
+            + " -fx-font-size: "+ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_150)+";";
     
     
     
@@ -19,14 +19,14 @@ public final class Style {
             + " -fx-background-radius: 6;\r\n"
             + " -fx-font-weight: bold;\r\n "
             + " -fx-background-color: linear-gradient(#FFFFFF, #696969);\r\n"
-            + " -fx-font-size: 15;";//ViewRsolution.screenResolutiondWidth(ViewConstants.DIVISOR_150
+            + " -fx-font-size: "+ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_150)+";";
     
     
     public static final String LABEL= "-fx-text-fill: #FFFFFF;\r\n"
             + " -fx-background-radius: 6;\r\n"
             + " -fx-font-weight: bold;\r\n "
             + " -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
-            + " -fx-font-size: 15;";
+            + " -fx-font-size: "+ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_150)+";";
     
     private Style () { }
 }

@@ -38,21 +38,13 @@ public final class Exit {
         label.setText(message);
         label.setAlignment(Pos.CENTER);
         label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
-        label.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
-                + "      -fx-font-size:" + ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_150) + ";");
+        label.setStyle(Style.LABEL);
 
 
         /**Buttons and events. */
         /**Button YES in the confirm box and his event. */
         final Button yesButton = new Button("YES");
-        yesButton.setStyle(" -fx-background-radius: 6; "
-                + "-fx-font-weight: bold;\r\n"
-                + "-fx-text-fill: #FFFFFF;\r\n"
-                + "-fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                + " -fx-font-size:" + ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_150) + ";");
+        yesButton.setStyle(Style.BOTTONI_1);
         yesButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
         yesButton.setOnAction(e -> {
             answer = true;
@@ -61,11 +53,7 @@ public final class Exit {
 
         /**Button NO in the confirm box and his event. */
         final Button noButton = new Button("NO");
-        noButton.setStyle(" -fx-background-radius: 6; "
-                + "-fx-font-weight: bold;\r\n"
-                + "-fx-text-fill: #FFFFFF;\r\n"
-                + "-fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                + " -fx-font-size:" + ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_150) + ";");
+        noButton.setStyle(Style.BOTTONI_1);
         noButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
         noButton.setOnAction(e -> {
             answer = false;

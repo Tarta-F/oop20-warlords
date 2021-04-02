@@ -51,6 +51,7 @@ public class MainMenu extends Application {
         window.setResizable(false);
         
         window.setOnCloseRequest(e -> {
+            e.consume();
             closeProgram();
         });
     }
