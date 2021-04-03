@@ -43,7 +43,7 @@ public final class MainMenu extends Application {
 
     /**
      * Method to create the view of the current image. 
-     * @return borderPane Pane
+     * @return borderPane borderPane
      * */
     public Parent createContent() throws IOException {
 
