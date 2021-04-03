@@ -1,44 +1,31 @@
 package view;
 
 import constants.ViewConstants;
+import constants.ViewImages;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
 
-import javafx.application.Application;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.stage.Stage;
-import model.PlayerType;
-import model.UnitType;
-import view.Exit;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -362,6 +349,7 @@ public final class GameView extends Region {
                 break;
             }
         });
+
         pane.getChildren().add(gameBackGround);
         pane.getChildren().add(borderpane);
         return pane;
@@ -379,9 +367,9 @@ public final class GameView extends Region {
      * Draw in the Field the given units.
      * @param units a set containing the info for drawing the units in the right place
      */
-    public void show(final Set<Triple<UnitType, PlayerType, Pair<Integer, Integer>>> units) {
+    public void show(final Map<UnitViewType, Pair<Integer, Integer>> units) {
         this.field.clear();
-        units.forEach(unit -> this.field.add(unit.getLeft(), unit.getMiddle(), unit.getRight()));
+        units.entrySet().forEach(unit -> this.field.add(unit.getKey(), unit.getValue()));
     }
 
 }

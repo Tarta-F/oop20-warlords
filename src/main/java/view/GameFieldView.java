@@ -4,17 +4,14 @@ import constants.ViewConstants;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
-
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
-import model.PlayerType;
-import model.UnitType;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -37,7 +34,7 @@ public final class GameFieldView {
     private static final int CELL_W = SW / ViewConstants.DIVISOR_27;
     private static final int CELL_H = SH / ViewConstants.DIVISOR_10;
 
-    private final Table<UnitType, PlayerType, Image> unitImageTable = HashBasedTable.create();
+    private final Map<UnitViewType, Image> unitImageTable = new HashMap<>();
 
     public GameFieldView(final int nRow, final int nCols) {
 
@@ -60,17 +57,15 @@ public final class GameFieldView {
     }
 
     /**
-     * Method that gives the image corresponding to the unit and the player needed, if it has not yet been requested
-     *  it will be drawn.
+     * Method that gives the image corresponding to the unit , if it has not yet been requested it will be drawn.
      * @param unit image requested
-     * @param player that owns the unit
      * @return The image corresponding to the input
      */
-    private Image callCachedImage(final UnitType unit, final PlayerType player) {
-        if (!this.unitImageTable.contains(unit, player)) {
-            this.unitImageTable.put(unit, player, new Image(this.getClass().getResourceAsStream("/archer.png")));
+    private Image callCachedImage(final UnitViewType unit) {
+        if (!this.unitImageTable.containsKey(unit)) {
+            this.unitImageTable.put(unit, new Image(this.getClass().getResourceAsStream(unit.getPath())));
         }
-        return this.unitImageTable.get(unit, player);
+        return this.unitImageTable.get(unit);
     }
 
     /**
@@ -82,12 +77,11 @@ public final class GameFieldView {
 
     /**
      * Add the unit at the player at the given position in the grid.
-     * @param unit unittype to add
-     * @param player that owns the unit
+     * @param unit UnitType to add
      * @param position in which to place the unit
      */
-    public void add(final UnitType unit, final PlayerType player, final Pair<Integer, Integer> position) {
-        final ImageView unitView = new ImageView(this.callCachedImage(unit, player)); 
+    public void add(final UnitViewType unit, final Pair<Integer, Integer> position) {
+        final ImageView unitView = new ImageView(this.callCachedImage(unit)); 
 
         unitView.setFitWidth(CELL_W);
         unitView.setFitHeight(CELL_H);

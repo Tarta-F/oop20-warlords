@@ -30,7 +30,3 @@ public final class Style {
     
     private Style () { }
 }
-
-
-
-//   + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
