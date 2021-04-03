@@ -10,6 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
+
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,6 +28,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
+import model.PlayerType;
+import model.UnitType;
 import view.Exit;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -42,12 +47,12 @@ import javafx.scene.layout.VBox;
 /**
  * This class is the BattleField game view.
  */
-public class GameView extends Region { 
+public final class GameView extends Region { 
 
-   private MainMenu scenaMenu;
-    
-    
-    
+    private MainMenu scenaMenu;
+    private final GameFieldView field;
+
+    private final Image scenario;
     /**Taking screen size for the adaptation of the various elements of the view to the resolution of the screen.*/
     final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     final int sw = (int) screen.getWidth();
@@ -64,17 +69,23 @@ public class GameView extends Region {
     private List<ImageView> listUnitP1 = new ArrayList<>();
     private List<ImageView> listUnitP2 = new ArrayList<>();
 
+    public GameView(final int nLane, final Image scenario) {
+        this.scenario = scenario;
+        this.field = new GameFieldView(nLane, ViewConstants.GRID_COLUMNS);
+    }
 
+    public GameView() {
+        this.scenario = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
+        this.field = new GameFieldView(ViewConstants.GRID_LINES, ViewConstants.GRID_COLUMNS);
+    }
 
     public Parent createContent() throws IOException {
 
-
-
         Pane pane = new Pane();
-        
+
         //background image
-        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
-        ImageView gameBackGround = new ImageView(backgroundImg);
+//        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
+        ImageView gameBackGround = new ImageView(scenario);
         gameBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
         gameBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
@@ -165,11 +176,11 @@ public class GameView extends Region {
         Button exit = new Button("Exit");
         exit.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         exit.setOnAction(e -> closeProgram());
-        exit.setStyle(Style.BOTTONI_1);
+        exit.setStyle(Style.BUTTON_1);
 
         /**Creation button Menu.*/
         Button menu = new Button("Menu");
-        menu.setStyle(Style.BOTTONI_1);
+        menu.setStyle(Style.BUTTON_1);
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         menu.setOnAction(e ->{
             scenaMenu = new MainMenu();
@@ -231,31 +242,13 @@ public class GameView extends Region {
         rightMenu.setAlignment(Pos.CENTER);
         rightMenu.getChildren().addAll(listArrowP2);
 
-
-
-        /**Creation of the grid.*/
-        GridPane gridPane = new GridPane();
-        gridPane.setBackground(background);
-        for (int i = 0; i < ViewConstants.GRID_COLUMNS; i++) {
-            for (int j = 0; j < ViewConstants.GRID_LINES; j++) {
-                ImageView vuoto = new ImageView();
-                vuoto.setFitWidth(sw / ViewConstants.DIVISOR_27);
-                vuoto.setFitHeight(sh / ViewConstants.DIVISOR_10);
-                GridPane.setConstraints(vuoto, i, j);
-                gridPane.getChildren().add(vuoto);
-            }
-        }
-        gridPane.setAlignment(Pos.CENTER);
-
-
-
         /**Set position of the various elements created.*/
         BorderPane borderpane = new BorderPane();
         borderpane.setTop(topMenu);
         borderpane.setLeft(leftMenu);
         borderpane.setBottom(bottomMenu);
         borderpane.setRight(rightMenu);
-        borderpane.setCenter(gridPane);
+        borderpane.setCenter(this.field.getGrid());
         borderpane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
 
 
@@ -382,5 +375,13 @@ public class GameView extends Region {
         }
     }
 
+    /**
+     * Draw in the Field the given units.
+     * @param units a set containing the info for drawing the units in the right place
+     */
+    public void show(final Set<Triple<UnitType, PlayerType, Pair<Integer, Integer>>> units) {
+        this.field.clear();
+        units.forEach(unit -> this.field.add(unit.getLeft(), unit.getMiddle(), unit.getRight()));
+    }
 
 }
