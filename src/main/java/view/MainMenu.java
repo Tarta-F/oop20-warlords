@@ -3,8 +3,10 @@ package view;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.nio.file.ClosedWatchServiceException;
 
 import constants.ViewConstants;
+import constants.ViewImages;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,6 +28,7 @@ public class MainMenu extends Application {
     private Stage window;
     private GameTutorial scenaTutorial;
     private GameModeSelection scenaGameModeSelection;
+
     
     //screen size
     final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -48,8 +51,8 @@ public class MainMenu extends Application {
         window.setResizable(false);
         
         window.setOnCloseRequest(e -> {
-           e.consume();
-           closeProgram();
+            e.consume();
+            closeProgram();
         });
     }
         public Parent createContent() throws IOException {
@@ -59,24 +62,24 @@ public class MainMenu extends Application {
         borderPane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);   
        
         //background image
-        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/menu.png"));
+        Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
         ImageView menuBackGround = new ImageView(backgroundImg);
         menuBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
         menuBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
         //image
         
-         Image logoImage  = new Image(this.getClass().getResourceAsStream("/logo.png"));
+         Image logoImage  = new Image(this.getClass().getResourceAsStream(ViewImages.LOGO));
         ImageView logo = new ImageView(logoImage);
         logo.setFitWidth(sw / ViewConstants.DIVISOR_4);
         logo.setFitHeight(sh / ViewConstants.DIVISOR_8);
 
-        Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream("/spearman.png"));
+        Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ViewImages.SPEARMAN));
         ImageView logoSpearman = new ImageView(logoSpearmanImage);
         logoSpearman.setFitWidth(sw / ViewConstants.DIVISOR_7);
         logoSpearman.setFitHeight(sh / ViewConstants.DIVISOR_3);
 
-        Image logoArcherImage  = new Image(this.getClass().getResourceAsStream("/archer.png"));
+        Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ViewImages.ARCHER));
         ImageView logoArcher = new ImageView(logoArcherImage);
         logoArcher.setFitWidth(sw / ViewConstants.DIVISOR_8);
         logoArcher.setFitHeight(sh / ViewConstants.DIVISOR_3);
@@ -84,20 +87,12 @@ public class MainMenu extends Application {
 
         //buttons
         Button campaign = new Button("CAMPAIGN");
-        campaign.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        campaign.setStyle(Style.BOTTONI_1);
 
         campaign.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
 
         Button versus = new Button("VERSUS");
-        versus.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        versus.setStyle(Style.BOTTONI_1);
 
         versus.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
         versus.setOnAction(e ->{
@@ -112,11 +107,7 @@ public class MainMenu extends Application {
         });
         
         Button tutorials = new Button("TUTORIALS");
-        tutorials.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        tutorials.setStyle(Style.BOTTONI_1);
 
         tutorials.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
         tutorials.setOnAction(e ->{
@@ -131,11 +122,7 @@ public class MainMenu extends Application {
         });
 
         Button exitMenu = new Button("EXIT");
-        exitMenu.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        exitMenu.setStyle(Style.BOTTONI_1);
 
         exitMenu.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
         exitMenu.setOnAction(e -> closeProgram());
@@ -165,11 +152,11 @@ public class MainMenu extends Application {
 
 
     }
-        /**Method to close the program with a confirm box.*/
-        private void closeProgram() {
-        boolean answer = Exit.display("quitting", "Do you want to quit?");
-        if (answer) {
-            System.exit(0);
-            }
-        }
+        public void closeProgram() {
+            boolean answer = Exit.display("quitting", "Do you want to quit?");
+            if (answer) {
+                System.exit(0);
+                }
+            } 
+
 }

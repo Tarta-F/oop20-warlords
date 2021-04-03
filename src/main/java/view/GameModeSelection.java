@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import constants.ViewConstants;
+import constants.ViewImages;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -40,7 +41,7 @@ public class GameModeSelection extends Region {
         Pane pane = new Pane();  
 
         //background image
-        Image backgroundimg  = new Image(this.getClass().getResourceAsStream("/GameSettings.png"));
+        Image backgroundimg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_SETTINGS));
         ImageView backG = new ImageView(backgroundimg);
         backG.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
         backG.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
@@ -53,11 +54,7 @@ public class GameModeSelection extends Region {
         for (int i = 1; i < ViewConstants.N_BUTTON_5 - 1; i++) {
             scenarioButtons = new Button("SCENARIO: " + i);
             scenarioButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-            scenarioButtons.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                      + "    -fx-background-radius: 6;\r\n"
-                      + "    -fx-font-weight: bold;\r\n"
-                      + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                      + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+            scenarioButtons.setStyle(Style.BOTTONI_1);
             listaScenario.add(scenarioButtons);
         }
 
@@ -69,11 +66,7 @@ public class GameModeSelection extends Region {
         for (int i = 1; i < ViewConstants.N_BUTTON_6; i += 2) {
             laneButtons = new Button("LANE'S NUMBER: " + i);
             laneButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-            laneButtons.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                      + "    -fx-background-radius: 6;\r\n"
-                      + "    -fx-font-weight: bold;\r\n"
-                      + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                      + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+            laneButtons.setStyle(Style.BOTTONI_1);
             listaLane.add(laneButtons);
 
         } 
@@ -86,22 +79,14 @@ public class GameModeSelection extends Region {
         for (int i = ViewConstants.N_BUTTON_5; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_5) {
             timerButtons = new Button(i + " MINUTES");
             timerButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-            timerButtons.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                    + "    -fx-background-radius: 6;\r\n"
-                    + "    -fx-font-weight: bold;\r\n"
-                    + "     -fx-background-color: linear-gradient(#000000, #696969);\r\n"
-                    + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+            timerButtons.setStyle(Style.BOTTONI_1);
             listaTimer.add(timerButtons);
             }
 
         //back button
         Button back = new Button("BACK");
         back.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        back.setStyle("    -fx-text-fill: #000000;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: linear-gradient(#FFFFFF, #696969);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        back.setStyle(Style.BOTTONI_2);
         back.setOnAction(e ->{
             scenaMenu = new MainMenu();
             
@@ -115,11 +100,7 @@ public class GameModeSelection extends Region {
         
         Button start = new Button("START");
         start.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        start.setStyle("    -fx-text-fill: #000000;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: linear-gradient(#FFFFFF, #696969);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        start.setStyle(Style.BOTTONI_2);
        start.setOnAction(e ->{
            scenaGame = new GameView();
            
@@ -137,31 +118,19 @@ public class GameModeSelection extends Region {
         Label scenario = new Label("Scenario:");
         scenario.setAlignment(Pos.CENTER);
         scenario.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        scenario.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        scenario.setStyle(Style.LABEL);
 
 
         Label lane = new Label("Number of lane:");
         lane.setAlignment(Pos.CENTER);
         lane.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        lane.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        lane.setStyle(Style.LABEL);
 
 
         Label timer = new Label("Timer:");
         timer.setAlignment(Pos.CENTER);
         timer.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        timer.setStyle("    -fx-text-fill: #FFFFFF;\r\n"
-                + "    -fx-background-radius: 6;\r\n"
-                + "    -fx-font-weight: bold;\r\n"
-                + "     -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
-                + "      -fx-font-size:" + sw / ViewConstants.DIVISOR_150 + ";");
+        timer.setStyle(Style.LABEL);
 
 
 
