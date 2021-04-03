@@ -11,8 +11,8 @@ import java.awt.Toolkit;
 public final class ViewResolution {
 
     private static final Dimension SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
-    private static int screenWidth;
-    private static int screenHeight;
+    private static double screenWidth;
+    private static double screenHeight;
 
     private ViewResolution() {
         /**Not called. */
@@ -23,8 +23,8 @@ public final class ViewResolution {
      * @param constant Integer
      * @return screenWidth Integer
      * */
-    public static int screenResolutionWidth(final int constant) {
-        screenWidth = (int) SCREEN.getWidth();
+    public static double screenResolutionWidth(final double constant) {
+        screenWidth = SCREEN.getWidth();
         screenWidth = screenWidth / constant;
         return screenWidth;
     }
@@ -34,8 +34,8 @@ public final class ViewResolution {
      * @param constant Integer
      * @return screenHeigtht Integer
      * */
-    public static int screenResolutionHeight(final int constant) {
-        screenHeight = (int) SCREEN.getHeight();
+    public static double screenResolutionHeight(final double constant) {
+        screenHeight = SCREEN.getHeight();
         screenHeight = screenHeight / constant;
         return screenHeight;
     }

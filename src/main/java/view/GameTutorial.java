@@ -51,7 +51,7 @@ public class GameTutorial extends Region {
         //back button
         Button mainMenu = new Button("MAIN MENU");
         mainMenu.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        mainMenu.setStyle(Style.BOTTONI_2);
+        mainMenu.setStyle(Style.BUTTON_2);
         mainMenu.setOnAction(e -> {
             scenaMenu = new MainMenu();
             
