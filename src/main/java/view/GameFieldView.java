@@ -15,12 +15,17 @@ import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
 import model.PlayerType;
 import model.UnitType;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 
 /** 
  * Class that models the Field with a GridPane of the given dimensions.
  */
-public final class FieldView {
+public final class GameFieldView {
 
     private final GridPane gridPane = new GridPane();
 
@@ -34,11 +39,12 @@ public final class FieldView {
 
     private final Table<UnitType, PlayerType, Image> unitImageTable = HashBasedTable.create();
 
-    public FieldView(final int nRow, final int nCols) {
+    public GameFieldView(final int nRow, final int nCols) {
 
         /**Creation of the grid.*/
         for (int i = 0; i < nCols; i++) {
             for (int j = 0; j < nRow; j++) {
+                //TODO RIEMPO LA LISTA CON IMAGEVIEW VUOTI, DA CAMBIARE
                 final ImageView ground = new ImageView();
                 ground.setFitWidth(CELL_W);
                 ground.setFitHeight(CELL_H);
@@ -48,13 +54,9 @@ public final class FieldView {
         }
         this.gridPane.setAlignment(Pos.CENTER);
 
-        // BACKGROUND
-        final ImageView background = new ImageView(new Image(this.getClass().getResourceAsStream("/Ground.png")));
-        background.setFitWidth(nCols * CELL_W);
-        background.setFitHeight(nRow * CELL_H);
-
-        this.gridPane.getChildren().add(background);
-
+        final Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
+        gridPane.setBackground(new Background(new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, 
+                BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
     }
 
     /**
