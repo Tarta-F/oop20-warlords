@@ -54,7 +54,7 @@ public class GameModeSelection extends Region {
         for (int i = 1; i < ViewConstants.N_BUTTON_5 - 1; i++) {
             scenarioButtons = new Button("SCENARIO: " + i);
             scenarioButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-            scenarioButtons.setStyle(Style.BOTTONI_1);
+            scenarioButtons.setStyle(Style.BUTTON_1);
             listaScenario.add(scenarioButtons);
         }
 
@@ -66,7 +66,7 @@ public class GameModeSelection extends Region {
         for (int i = 1; i < ViewConstants.N_BUTTON_6; i += 2) {
             laneButtons = new Button("LANE'S NUMBER: " + i);
             laneButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-            laneButtons.setStyle(Style.BOTTONI_1);
+            laneButtons.setStyle(Style.BUTTON_1);
             listaLane.add(laneButtons);
 
         } 
@@ -79,14 +79,14 @@ public class GameModeSelection extends Region {
         for (int i = ViewConstants.N_BUTTON_5; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_5) {
             timerButtons = new Button(i + " MINUTES");
             timerButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-            timerButtons.setStyle(Style.BOTTONI_1);
+            timerButtons.setStyle(Style.BUTTON_1);
             listaTimer.add(timerButtons);
             }
 
         //back button
         Button back = new Button("BACK");
         back.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        back.setStyle(Style.BOTTONI_2);
+        back.setStyle(Style.BUTTON_2);
         back.setOnAction(e ->{
             scenaMenu = new MainMenu();
             
@@ -100,7 +100,7 @@ public class GameModeSelection extends Region {
         
         Button start = new Button("START");
         start.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        start.setStyle(Style.BOTTONI_2);
+        start.setStyle(Style.BUTTON_2);
        start.setOnAction(e ->{
            scenaGame = new GameView();
            

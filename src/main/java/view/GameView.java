@@ -163,11 +163,11 @@ public final class GameView extends Region {
         Button exit = new Button("Exit");
         exit.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         exit.setOnAction(e -> closeProgram());
-        exit.setStyle(Style.BOTTONI_1);
+        exit.setStyle(Style.BUTTON_1);
 
         /**Creation button Menu.*/
         Button menu = new Button("Menu");
-        menu.setStyle(Style.BOTTONI_1);
+        menu.setStyle(Style.BUTTON_1);
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         menu.setOnAction(e ->{
             scenaMenu = new MainMenu();

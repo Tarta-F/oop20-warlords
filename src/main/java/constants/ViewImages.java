@@ -42,11 +42,6 @@ public final class ViewImages {
     
     public static final String ARCHER= "/archer_2.png";
 
-    public static final String PROVA= "-fx-text-fill: #000000;\r\n"
-            + " -fx-background-radius: 6;\r\n"
-            + " -fx-font-weight: bold;\r\n "
-            + " -fx-background-color: linear-gradient(#FFFFFF, #696969);\r\n"
-            + " -fx-font-size: 15;";
     
     private ViewImages () { }
 }
