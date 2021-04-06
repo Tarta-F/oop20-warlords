@@ -4,38 +4,31 @@ import constants.ViewConstants;
 import controllers.Controller;
 import controllers.ControllerImpl;
 import model.PlayerType;
+import constants.ViewImages;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import javafx.application.Application;
+import java.util.Map;
+import java.util.Arrays;
+import org.apache.commons.lang3.tuple.Pair;
 import javafx.application.Platform;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.stage.Stage;
-import view.Exit;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -44,14 +37,16 @@ import javafx.scene.layout.VBox;
 /**
  * This class is the BattleField game view.
  */
-public class GameView extends Region { 
+public final class GameView extends Region {
 
-   private MainMenu scenaMenu;
+    private MainMenu scenaMenu;
+    private final GameFieldView field;
 
-    /** DA TOGLIERE Taking screen size for the adaptation of the various elements of the view to the resolution of the screen.*/
-    private final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    private final int sw = (int) screen.getWidth();
-    private final int sh = (int) screen.getHeight();
+    private final Image scenario;
+    /**Taking screen size for the adaptation of the various elements of the view to the resolution of the screen.*/
+    final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    final int sw = (int) screen.getWidth();
+    final int sh = (int) screen.getHeight();
 
     private List<ImageView> listArrowP1 = new ArrayList<>();
     private List<ImageView> listArrowP2 = new ArrayList<>();
@@ -63,7 +58,7 @@ public class GameView extends Region {
     private Label timer;
     private Controller observer;
 
-    public GameView(/* final Controller observer */) {
+    //public GameView(/* final Controller observer */) {
 //        this.observer = observer;
 //        try {
 //            this.createContent();
@@ -71,7 +66,7 @@ public class GameView extends Region {
 //            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
-    }
+    //}
 
     Image unit1Image  = new Image(this.getClass().getResourceAsStream("/SwordsmenUnit.png"));
     Image unit2Image  = new Image(this.getClass().getResourceAsStream("/SpearmenUnit.png"));
@@ -84,13 +79,24 @@ public class GameView extends Region {
     Image arrowSelectedImageP1 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer1.png"));
     Image arrowSelectedImageP2 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer2.png"));
 
+    public GameView(final int nLane, final Image scenario) {
+        this.scenario = scenario;
+        this.field = new GameFieldView(nLane, ViewConstants.GRID_COLUMNS);
+    }
+
+    public GameView() {
+        this.scenario = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
+        this.field = new GameFieldView(ViewConstants.GRID_LINES, ViewConstants.GRID_COLUMNS);
+    }
+
+
     public Parent createContent() throws IOException {
 
         Pane pane = new Pane();
 
         //background image
-        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
-        ImageView gameBackGround = new ImageView(backgroundImg);
+//        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
+        ImageView gameBackGround = new ImageView(scenario);
         gameBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
         gameBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
@@ -112,28 +118,28 @@ public class GameView extends Region {
         ImageView unitP1 = new ImageView(unit1SelectedImage);
         utilSetDimension(unitP1);  //al posto di ripetere sempre le stesse 2 righe
         listUnitP1.add(unitP1);
- 
+
         unitP1 = new ImageView(unit2Image);
         unitP1.setFitWidth(sw / ViewConstants.DIVISOR_20);
         unitP1.setFitHeight(sh / ViewConstants.DIVISOR_20);
         listUnitP1.add(unitP1);
- 
+
         unitP1 = new ImageView(unit3Image);
         unitP1.setFitWidth(sw / ViewConstants.DIVISOR_20);
         unitP1.setFitHeight(sh / ViewConstants.DIVISOR_20);
         listUnitP1.add(unitP1);
- 
+
 
         ImageView unitP2 = new ImageView(unit1SelectedImage);
         unitP2.setFitWidth(sw / ViewConstants.DIVISOR_20);
         unitP2.setFitHeight(sh / ViewConstants.DIVISOR_20);
         listUnitP2.add(unitP2);
- 
+
         unitP2 = new ImageView(unit2Image);
         unitP2.setFitWidth(sw / ViewConstants.DIVISOR_20);
         unitP2.setFitHeight(sh / ViewConstants.DIVISOR_20);
         listUnitP2.add(unitP2);
- 
+
         unitP2 = new ImageView(unit3Image);
         unitP2.setFitWidth(sw / ViewConstants.DIVISOR_20);
         unitP2.setFitHeight(sh / ViewConstants.DIVISOR_20);
@@ -165,11 +171,11 @@ public class GameView extends Region {
         Button exit = new Button("Exit");
         exit.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         exit.setOnAction(e -> closeProgram());
-        exit.setStyle(Style.BOTTONI_1);
+        exit.setStyle(Style.BUTTON_1);
 
         /**Creation button Menu.*/
         Button menu = new Button("Menu");
-        menu.setStyle(Style.BOTTONI_1);
+        menu.setStyle(Style.BUTTON_1);
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         menu.setOnAction(e -> {
             scenaMenu = new MainMenu();
@@ -226,27 +232,13 @@ public class GameView extends Region {
         rightMenu.setAlignment(Pos.CENTER);
         rightMenu.getChildren().addAll(listArrowP2);
 
-        /**Creation of the grid.*/
-        GridPane gridPane = new GridPane();
-        gridPane.setBackground(background);
-        for (int i = 0; i < ViewConstants.GRID_COLUMNS; i++) {
-            for (int j = 0; j < ViewConstants.GRID_LINES; j++) {
-                ImageView vuoto = new ImageView();
-                vuoto.setFitWidth(sw / ViewConstants.DIVISOR_27);
-                vuoto.setFitHeight(sh / ViewConstants.DIVISOR_10);
-                GridPane.setConstraints(vuoto, i, j);
-                gridPane.getChildren().add(vuoto);
-            }
-        }
-        gridPane.setAlignment(Pos.CENTER);
-
         /**Set position of the various elements created.*/
         BorderPane borderpane = new BorderPane();
         borderpane.setTop(topMenu);
         borderpane.setLeft(leftMenu);
         borderpane.setBottom(bottomMenu);
         borderpane.setRight(rightMenu);
-        borderpane.setCenter(gridPane);
+        borderpane.setCenter(this.field.getGrid());
         borderpane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
 
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
@@ -281,6 +273,7 @@ public class GameView extends Region {
                 break;
             }
         });
+
         pane.getChildren().add(gameBackGround);
         pane.getChildren().add(borderpane);
         return pane;
@@ -293,7 +286,7 @@ public class GameView extends Region {
         if (playerType.equals(PlayerType.PLAYER1)) {
             listArrowP1.get(index).setImage(arrowImageP1);
             listArrowP1.get(next).setImage(arrowSelectedImageP1);
-        } 
+        }
         if (playerType.equals(PlayerType.PLAYER2)) {
             listArrowP2.get(index).setImage(arrowImageP2);
             listArrowP2.get(next).setImage(arrowSelectedImageP2);
@@ -304,7 +297,7 @@ public class GameView extends Region {
       if (playerType.equals(PlayerType.PLAYER1)) {
           listUnitP1.get(next).setImage(this.unitSelected.get(next));  //lista con le 3 immagini unitSelected e lista non
           listUnitP1.get(index).setImage(this.unitImage.get(index));
-          //così faccio .setImage(listaSelected.get(index)) e  .setImage(listaNotSelected.get(index)) 
+          //così faccio .setImage(listaSelected.get(index)) e  .setImage(listaNotSelected.get(index))
       }
       if (playerType.equals(PlayerType.PLAYER2)) {
           listUnitP2.get(next).setImage(this.unitSelected.get(next));
@@ -332,4 +325,14 @@ public class GameView extends Region {
         System.exit(0);
         }
     }
+
+    /**
+     * Draw in the Field the given units.
+     * @param units a set containing the info for drawing the units in the right place
+     */
+    public void show(final Map<UnitViewType, Pair<Integer, Integer>> units) {
+        this.field.clear();
+        units.entrySet().forEach(unit -> this.field.add(unit.getKey(), unit.getValue()));
+    }
+
 }

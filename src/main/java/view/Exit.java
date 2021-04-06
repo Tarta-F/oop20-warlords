@@ -44,7 +44,7 @@ public final class Exit {
         /**Buttons and events. */
         /**Button YES in the confirm box and his event. */
         final Button yesButton = new Button("YES");
-        yesButton.setStyle(Style.BOTTONI_1);
+        yesButton.setStyle(Style.BUTTON_1);
         yesButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
         yesButton.setOnAction(e -> {
             answer = true;
@@ -53,7 +53,7 @@ public final class Exit {
 
         /**Button NO in the confirm box and his event. */
         final Button noButton = new Button("NO");
-        noButton.setStyle(Style.BOTTONI_1);
+        noButton.setStyle(Style.BUTTON_1);
         noButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
         noButton.setOnAction(e -> {
             answer = false;

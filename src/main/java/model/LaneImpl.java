@@ -44,7 +44,7 @@ public final class LaneImpl implements Lane {
     }
 
     private Optional<Unit> searchTarget(final Unit unit) {
-        return Stream.iterate(this.getUnits().get(unit), i -> i + (unit.getPlayer() == PlayerType.PLAYER1 ? 1 : -1))
+        return Stream.iterate(this.getUnits().get(unit), i -> i + (unit.getPlayer().equals(PlayerType.PLAYER1) ? 1 : -1))
                 .limit(unit.getRange() + 1)  //  + 1 for the current position
                 .filter(this::isLegalPosition)
                 .flatMap(p -> this.getUnitsAtPosition(p).stream())
@@ -82,7 +82,7 @@ public final class LaneImpl implements Lane {
             final Unit unit = e.getKey();
             if (unit.isAlive()) {
                 final int nSteps = e.getValue().getValue();
-                map.put(unit, unit.getPlayer() == PlayerType.PLAYER1 ? nSteps : this.lenght - nSteps - 1);
+                map.put(unit, unit.getPlayer().equals(PlayerType.PLAYER1) ? nSteps : this.lenght - nSteps - 1);
             }
         });
         return Collections.unmodifiableMap(map);
@@ -117,7 +117,6 @@ public final class LaneImpl implements Lane {
             } else {
                 this.move(unit.getKey());
             }
-            //TODO
         }
 
     }

@@ -27,7 +27,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundPosition;
 
-public class GameModeSelection extends Region { 
+public class GameModeSelection extends Region {
 
     private MainMenu scenaMenu;
     private GameView scenaGame;
@@ -47,14 +47,14 @@ public class GameModeSelection extends Region {
         backG.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
         backG.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
-        //scenario buttons 
+        //scenario buttons
         Button scenarioButtons;
         List<Button> listaScenario = new ArrayList<>();
 
         for (int i = 1; i < ViewConstants.N_BUTTON_5 - 1; i++) {
             scenarioButtons = new Button("SCENARIO: " + i);
             scenarioButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-            scenarioButtons.setStyle(Style.BOTTONI_1);
+            scenarioButtons.setStyle(Style.BUTTON_1);
             listaScenario.add(scenarioButtons);
         }
 
@@ -65,10 +65,10 @@ public class GameModeSelection extends Region {
         for (int i = 1; i < ViewConstants.N_BUTTON_6; i += 2) {
             laneButtons = new Button("LANE'S NUMBER: " + i);
             laneButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-            laneButtons.setStyle(Style.BOTTONI_1);
+            laneButtons.setStyle(Style.BUTTON_1);
             listaLane.add(laneButtons);
 
-        } 
+        }
 
        // timer Buttons
         Button timerButtons;
@@ -77,15 +77,15 @@ public class GameModeSelection extends Region {
         for (int i = ViewConstants.N_BUTTON_5; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_5) {
             timerButtons = new Button(i + " MINUTES");
             timerButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-            timerButtons.setStyle(Style.BOTTONI_1);
+            timerButtons.setStyle(Style.BUTTON_1);
             listaTimer.add(timerButtons);
             }
 
         //back button
         Button back = new Button("BACK");
         back.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        back.setStyle(Style.BOTTONI_2);
-        back.setOnAction(e -> {
+        back.setStyle(Style.BUTTON_2);
+        back.setOnAction(e ->{
             scenaMenu = new MainMenu();
             try {
                 pane.getChildren().setAll(scenaMenu.createContent());
@@ -97,7 +97,7 @@ public class GameModeSelection extends Region {
 
         Button start = new Button("START");
         start.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
-        start.setStyle(Style.BOTTONI_2);
+        start.setStyle(Style.BUTTON_2);
         start.setOnAction(e -> {
 //            scenaGame = new GameView();
             ControllerImpl c = new ControllerImpl();
@@ -107,7 +107,7 @@ public class GameModeSelection extends Region {
             // TODO Auto-generated catch block
             e1.printStackTrace();
            }
-       }); 
+       });
 
         //label
         Label scenario = new Label("Scenario:");
@@ -154,4 +154,3 @@ public class GameModeSelection extends Region {
         return pane;
     }
 }
-
