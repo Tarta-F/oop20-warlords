@@ -8,7 +8,7 @@ public class GameTimer implements Runnable {
     private volatile int mins;
     private volatile int seconds;
     private volatile int totSec;
-    private GameView gameView;
+    private final GameView gameView;
 
     GameTimer(final int mins, final GameView gameView) {
         this.mins = mins;
@@ -18,18 +18,18 @@ public class GameTimer implements Runnable {
     }
 
     @Override
-    public void run() {
+    public final void run() {
         while (totSec >= 0) {
             try {
                 seconds = totSec % SEC_IN_MIN;
                 mins = (totSec - seconds) / SEC_IN_MIN;
-                totSec--;  /* it's ok because there is only 1 timer*/
+                totSec--;  /*[warning spotbugs] but it's safe because there is only 1 timer*/
                 this.gameView.updateTimer(mins, seconds);
-                //Platform.runLater(() -> lbl.setText(String.format("%02d:%02d", mins, seconds)));
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
         }
+        //TODO block/finish the game
     }
 }

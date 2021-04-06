@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.event.ActionEvent;
@@ -52,11 +53,6 @@ public class GameView extends Region {
     private final int sw = (int) screen.getWidth();
     private final int sh = (int) screen.getHeight();
 
-//    private int counterLaneP1 = 2;
-//    private int counterLaneP2 = 2;
-//    private int counterUnitP1 = 0;
-//    private int counterUnitP2 = 0;
-
     private List<ImageView> listArrowP1 = new ArrayList<>();
     private List<ImageView> listArrowP2 = new ArrayList<>();
     private List<ImageView> listUnitP1 = new ArrayList<>();
@@ -64,7 +60,7 @@ public class GameView extends Region {
 
     private List<Image> unitSelected;
     private List<Image> unitImage;
-    Label timer;
+    private Label timer;
     private Controller observer;
 
     public GameView(/* final Controller observer */) {
@@ -76,6 +72,7 @@ public class GameView extends Region {
 //            e.printStackTrace();
 //        }
     }
+
     Image unit1Image  = new Image(this.getClass().getResourceAsStream("/SwordsmenUnit.png"));
     Image unit2Image  = new Image(this.getClass().getResourceAsStream("/SpearmenUnit.png"));
     Image unit3Image = new Image(this.getClass().getResourceAsStream("/ArcherUnit.png"));
@@ -101,16 +98,14 @@ public class GameView extends Region {
 
         Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
 
-        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5, true, true, true, false);
+        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5,
+                true, true, true, false);
 
-        BackgroundImage backgroundImage = new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        BackgroundImage backgroundImage = new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER, backgroundSize);
 
         Background background = new Background(backgroundImage);
 
-//        this.unitSelected = new ArrayList<>(Arrays.asList(new ImageView(unit1SelectedImage), new ImageView(unit2SelectedImage), 
-//                new ImageView(unit3SelectedImage)));
-//        this.unitImage = new ArrayList<>(Arrays.asList(new ImageView(unit1Image), new ImageView(unit2Image), 
-//                new ImageView(unit3Image)));
       this.unitImage = new ArrayList<>(Arrays.asList(unit1Image, unit2Image, unit3Image));
       this.unitSelected = new ArrayList<>(Arrays.asList(unit1SelectedImage, unit2SelectedImage, unit3SelectedImage));
 
@@ -216,12 +211,12 @@ public class GameView extends Region {
         topMenu.getChildren().addAll(listUnitP1);
         topMenu.getChildren().addAll(timer);
         topMenu.getChildren().addAll(listUnitP2);
-        topMenu.setPadding(new Insets(sh / ViewConstants.DIVISOR_60, 0, sh /ViewConstants.DIVISOR_60, 0));
+        topMenu.setPadding(new Insets(sh / ViewConstants.DIVISOR_60, 0, sh / ViewConstants.DIVISOR_60, 0));
 
         HBox bottomMenu = new HBox(sw / ViewConstants.DIVISOR_30);
         bottomMenu.getChildren().addAll(player1, menu, exit, player2);
         bottomMenu.setAlignment(Pos.CENTER);
-        bottomMenu.setPadding(new Insets(sh / ViewConstants.DIVISOR_60, 0, sh /ViewConstants.DIVISOR_60, 0));
+        bottomMenu.setPadding(new Insets(sh / ViewConstants.DIVISOR_60, 0, sh / ViewConstants.DIVISOR_60, 0));
 
         VBox leftMenu = new VBox(sh / ViewConstants.DIVISOR_20);
         leftMenu.setAlignment(Pos.CENTER);
@@ -256,6 +251,8 @@ public class GameView extends Region {
 
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
+//            case (KeyCode) InputType.UP_LANE_1.getKey():
+//                break;    //doesn't work :(
             case W:
                 this.observer.controlPrevLane(PlayerType.PLAYER1);
                 break;
@@ -323,7 +320,7 @@ public class GameView extends Region {
         imageView.setFitWidth(sw / ViewConstants.DIVISOR_20);
         imageView.setFitHeight(sh / ViewConstants.DIVISOR_20);
     }
-    
+
     public void setObserver(Controller observer) {
         this.observer = observer;
     }

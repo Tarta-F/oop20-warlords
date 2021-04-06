@@ -11,7 +11,7 @@ import model.UnitImpl;
 import model.UnitType;
 import view.GameView;
 
-public class ControllerImpl implements Controller {
+public final class ControllerImpl implements Controller {
     //private Pair<Pair<PlayerType, Integer>, Pair<PlayerType, Integer>> selectedLaneIndex;
     private int selectedLaneIndexP1 = 2;
     private int selectedLaneIndexP2 = 2;
@@ -22,12 +22,14 @@ public class ControllerImpl implements Controller {
     private long lastSpawnP2 = 0;
     private GameView gameView;
     private FieldImpl field;
-    private Pane pane;
+    //private Pane pane;
     //TODO timer dei player da mostrare alla view ->
 
-    public ControllerImpl(GameView gameView) {
-        //this.selectedLaneIndex = Pair.of(Pair.of(PlayerType.PLAYER1, 2), Pair.of(PlayerType.PLAYER2, 2));
-        this.gameView = gameView;
+//    public ControllerImpl(final GameView gameView) {
+//        this.gameView = gameView;
+//        this.gameView.setObserver(this);
+    public ControllerImpl() {
+        this.gameView = new GameView();
         this.gameView.setObserver(this);
 //        try {
 //            this.pane = new Pane();
@@ -39,23 +41,7 @@ public class ControllerImpl implements Controller {
         this.field = new FieldImpl(15, 5);
         new Thread(new GameTimer(1, this.gameView)).start();
     }
-//    private void selectNextLane(PlayerType playerType) {
-//        final Pair<PlayerType, Integer> util = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndex.getLeft() : this.selectedLaneIndex.getRight();
-//        final int index = util.getRight();
-//        final int next = (index + 1) % GameConstants.FIVE_LANES;
-//        //this.selectedLaneIndex = Pair.of(playerType, next);  //update pair with the next index
-//    }
-//    private void selectPrevLane(PlayerType playerType) {
-//        final Pair<PlayerType, Integer> util = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndex.getLeft() : this.selectedLaneIndex.getRight();
-//        final int index = util.getRight();
-//        int next;
-//        if (index == 0) {
-//            next = GameConstants.FIVE_LANES - 1;
-//        } else {
-//            next = (index - 1) % GameConstants.FIVE_LANES;
-//        }
-//        //util = Pair.of(playerType, next); //errato
-//    }
+
     @Override
     public void controlNextLane(final PlayerType playerType) {
         final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
@@ -132,5 +118,7 @@ public class ControllerImpl implements Controller {
         }
         this.gameView.updateSelectUnit(playerType, currentIndex, nextIndex);
     }
-
+    public GameView getView() {
+        return this.gameView;
+    }
 }

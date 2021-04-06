@@ -44,7 +44,7 @@ public enum InputType {
         return this.player;
     }
 
-    public KeyCode getKey(final PlayerType player) {
+    public KeyCode getKey(/* final PlayerType player */) {
         return this.key;
     }
 

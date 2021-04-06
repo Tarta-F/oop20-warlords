@@ -29,38 +29,32 @@ public class MainMenu extends Application {
     private GameTutorial scenaTutorial;
     private GameModeSelection scenaGameModeSelection;
 
-    
     //screen size
     final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     final int sw = (int) screen.getWidth();
     final int sh = (int) screen.getHeight();
 
-    
     public static void main(final String[] args) {
         launch(args);
     }
-    
+
     @Override
     public final void start(final Stage primaryStage) throws Exception {
-
 
         window = primaryStage;
         Scene scene = new Scene(createContent(), sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
         window.setScene(scene);
         window.show();
         window.setResizable(false);
-        
         window.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();
         });
     }
         public Parent createContent() throws IOException {
-        
-            
+
         BorderPane borderPane = new BorderPane();
-        borderPane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);   
-       
+        borderPane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
         //background image
         Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
         ImageView menuBackGround = new ImageView(backgroundImg);
@@ -68,8 +62,7 @@ public class MainMenu extends Application {
         menuBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
         //image
-        
-         Image logoImage  = new Image(this.getClass().getResourceAsStream(ViewImages.LOGO));
+        Image logoImage  = new Image(this.getClass().getResourceAsStream(ViewImages.LOGO));
         ImageView logo = new ImageView(logoImage);
         logo.setFitWidth(sw / ViewConstants.DIVISOR_4);
         logo.setFitHeight(sh / ViewConstants.DIVISOR_8);
@@ -95,9 +88,8 @@ public class MainMenu extends Application {
         versus.setStyle(Style.BOTTONI_1);
 
         versus.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
-        versus.setOnAction(e ->{
+        versus.setOnAction(e -> {
             scenaGameModeSelection = new GameModeSelection();
-            
             try {
                 borderPane.getChildren().setAll(scenaGameModeSelection.createContent());
             } catch (IOException e1) {
@@ -105,13 +97,12 @@ public class MainMenu extends Application {
                 e1.printStackTrace();
             }
         });
-        
+
         Button tutorials = new Button("TUTORIALS");
         tutorials.setStyle(Style.BOTTONI_1);
 
         tutorials.setPrefSize(sw / ViewConstants.DIVISOR_15, sh / ViewConstants.DIVISOR_15);
-        tutorials.setOnAction(e ->{
-             
+        tutorials.setOnAction(e -> {
             try {
                 scenaTutorial = new GameTutorial();
                 borderPane.getChildren().setAll(scenaTutorial.createContent());
@@ -150,7 +141,6 @@ public class MainMenu extends Application {
         borderPane.setRight(destra);
         return borderPane;
 
-
     }
         public void closeProgram() {
             boolean answer = Exit.display("quitting", "Do you want to quit?");
@@ -158,5 +148,4 @@ public class MainMenu extends Application {
                 System.exit(0);
                 }
             } 
-
 }

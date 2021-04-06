@@ -99,10 +99,10 @@ public class GameModeSelection extends Region {
         start.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
         start.setStyle(Style.BOTTONI_2);
         start.setOnAction(e -> {
-            scenaGame = new GameView();
-            new ControllerImpl(scenaGame);
+//            scenaGame = new GameView();
+            ControllerImpl c = new ControllerImpl();
            try {
-            pane.getChildren().setAll(scenaGame.createContent());
+            pane.getChildren().setAll(c.getView().createContent());
            } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
