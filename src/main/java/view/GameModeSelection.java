@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import constants.ViewConstants;
 import constants.ViewImages;
+import controllers.ControllerImpl;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,14 +39,13 @@ public class GameModeSelection extends Region {
 
     public Parent createContent() throws IOException {
 
-        Pane pane = new Pane();  
+        Pane pane = new Pane();
 
         //background image
         Image backgroundimg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_SETTINGS));
         ImageView backG = new ImageView(backgroundimg);
         backG.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
         backG.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
-
 
         //scenario buttons 
         Button scenarioButtons;
@@ -58,7 +58,6 @@ public class GameModeSelection extends Region {
             listaScenario.add(scenarioButtons);
         }
 
-
         //lane buttons
         Button laneButtons;
         List<Button> listaLane = new ArrayList<>();
@@ -70,7 +69,6 @@ public class GameModeSelection extends Region {
             listaLane.add(laneButtons);
 
         } 
-
 
        // timer Buttons
         Button timerButtons;
@@ -87,9 +85,8 @@ public class GameModeSelection extends Region {
         Button back = new Button("BACK");
         back.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
         back.setStyle(Style.BOTTONI_2);
-        back.setOnAction(e ->{
+        back.setOnAction(e -> {
             scenaMenu = new MainMenu();
-            
             try {
                 pane.getChildren().setAll(scenaMenu.createContent());
             } catch (IOException e1) {
@@ -97,21 +94,19 @@ public class GameModeSelection extends Region {
                 e1.printStackTrace();
             }
         });
-        
+
         Button start = new Button("START");
         start.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
         start.setStyle(Style.BOTTONI_2);
-       start.setOnAction(e ->{
-           scenaGame = new GameView();
-           
+        start.setOnAction(e -> {
+            scenaGame = new GameView();
+            new ControllerImpl(scenaGame);
            try {
             pane.getChildren().setAll(scenaGame.createContent());
-        } catch (IOException e1) {
+           } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
-        }
-           
-           
+           }
        }); 
 
         //label
@@ -120,19 +115,15 @@ public class GameModeSelection extends Region {
         scenario.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
         scenario.setStyle(Style.LABEL);
 
-
         Label lane = new Label("Number of lane:");
         lane.setAlignment(Pos.CENTER);
         lane.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
         lane.setStyle(Style.LABEL);
 
-
         Label timer = new Label("Timer:");
         timer.setAlignment(Pos.CENTER);
         timer.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
         timer.setStyle(Style.LABEL);
-
-
 
         //layout
         HBox scenarioBox = new HBox(sw / ViewConstants.DIVISOR_15);
@@ -162,7 +153,5 @@ public class GameModeSelection extends Region {
         pane.getChildren().addAll(vBox);
         return pane;
     }
-
-
 }
 

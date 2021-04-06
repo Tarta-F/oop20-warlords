@@ -1,16 +1,17 @@
 package view;
 
 import constants.ViewConstants;
-
+import controllers.Controller;
+import controllers.ControllerImpl;
+import model.PlayerType;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -45,33 +46,51 @@ import javafx.scene.layout.VBox;
 public class GameView extends Region { 
 
    private MainMenu scenaMenu;
-    
-    
-    
-    /**Taking screen size for the adaptation of the various elements of the view to the resolution of the screen.*/
-    final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    final int sw = (int) screen.getWidth();
-    final int sh = (int) screen.getHeight();
 
+    /** DA TOGLIERE Taking screen size for the adaptation of the various elements of the view to the resolution of the screen.*/
+    private final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    private final int sw = (int) screen.getWidth();
+    private final int sh = (int) screen.getHeight();
 
-    private int counterLaneP1 = 2;
-    private int counterLaneP2 = 2;
-    private int counterUnitP1 = 0;
-    private int counterUnitP2 = 0;
+//    private int counterLaneP1 = 2;
+//    private int counterLaneP2 = 2;
+//    private int counterUnitP1 = 0;
+//    private int counterUnitP2 = 0;
 
     private List<ImageView> listArrowP1 = new ArrayList<>();
     private List<ImageView> listArrowP2 = new ArrayList<>();
     private List<ImageView> listUnitP1 = new ArrayList<>();
     private List<ImageView> listUnitP2 = new ArrayList<>();
 
+    private List<Image> unitSelected;
+    private List<Image> unitImage;
+    Label timer;
+    private Controller observer;
 
+    public GameView(/* final Controller observer */) {
+//        this.observer = observer;
+//        try {
+//            this.createContent();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+    }
+    Image unit1Image  = new Image(this.getClass().getResourceAsStream("/SwordsmenUnit.png"));
+    Image unit2Image  = new Image(this.getClass().getResourceAsStream("/SpearmenUnit.png"));
+    Image unit3Image = new Image(this.getClass().getResourceAsStream("/ArcherUnit.png"));
+    Image unit1SelectedImage = new Image(this.getClass().getResourceAsStream("/SelectedSwordsmenUnit.png"));
+    Image unit2SelectedImage = new Image(this.getClass().getResourceAsStream("/SelectedSpearmenUnit.png"));
+    Image unit3SelectedImage = new Image(this.getClass().getResourceAsStream("/SelectedArcherUnit.png"));
+    Image arrowImageP1 = new Image(this.getClass().getResourceAsStream("/ArrowPlayer1.png"));
+    Image arrowImageP2 = new Image(this.getClass().getResourceAsStream("/ArrowPlayer2.png"));
+    Image arrowSelectedImageP1 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer1.png"));
+    Image arrowSelectedImageP2 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer2.png"));
 
     public Parent createContent() throws IOException {
 
-
-
         Pane pane = new Pane();
-        
+
         //background image
         Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
         ImageView gameBackGround = new ImageView(backgroundImg);
@@ -79,34 +98,24 @@ public class GameView extends Region {
         gameBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
         /**Set of all images used.*/
-        Image unit1Image  = new Image(this.getClass().getResourceAsStream("/SwordsmenUnit.png"));
-        Image unit2Image  = new Image(this.getClass().getResourceAsStream("/SpearmenUnit.png"));
-        Image unit3Image = new Image(this.getClass().getResourceAsStream("/ArcherUnit.png"));
-        Image unit1SelectedImage = new Image(this.getClass().getResourceAsStream("/SelectedSwordsmenUnit.png"));
-        Image unit2SelectedImage = new Image(this.getClass().getResourceAsStream("/SelectedSpearmenUnit.png"));
-        Image unit3SelectedImage = new Image(this.getClass().getResourceAsStream("/SelectedArcherUnit.png"));
-        Image arrowImageP1 = new Image(this.getClass().getResourceAsStream("/ArrowPlayer1.png"));
-        Image arrowImageP2 = new Image(this.getClass().getResourceAsStream("/ArrowPlayer2.png"));
-        Image arrowSelectedImageP1 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer1.png"));
-        Image arrowSelectedImageP2 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer2.png"));
-      
-        
- 
 
         Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
-       
-        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5,sh / ViewConstants.DIVISOR_1_5, true, true, true, false);
-    
+
+        BackgroundSize backgroundSize = new BackgroundSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5, true, true, true, false);
+
         BackgroundImage backgroundImage = new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
 
         Background background = new Background(backgroundImage);
-        
-        
-        
-        
+
+//        this.unitSelected = new ArrayList<>(Arrays.asList(new ImageView(unit1SelectedImage), new ImageView(unit2SelectedImage), 
+//                new ImageView(unit3SelectedImage)));
+//        this.unitImage = new ArrayList<>(Arrays.asList(new ImageView(unit1Image), new ImageView(unit2Image), 
+//                new ImageView(unit3Image)));
+      this.unitImage = new ArrayList<>(Arrays.asList(unit1Image, unit2Image, unit3Image));
+      this.unitSelected = new ArrayList<>(Arrays.asList(unit1SelectedImage, unit2SelectedImage, unit3SelectedImage));
+
         ImageView unitP1 = new ImageView(unit1SelectedImage);
-        unitP1.setFitWidth(sw / ViewConstants.DIVISOR_20);
-        unitP1.setFitHeight(sh / ViewConstants.DIVISOR_20);
+        utilSetDimension(unitP1);  //al posto di ripetere sempre le stesse 2 righe
         listUnitP1.add(unitP1);
  
         unitP1 = new ImageView(unit2Image);
@@ -135,7 +144,6 @@ public class GameView extends Region {
         unitP2.setFitHeight(sh / ViewConstants.DIVISOR_20);
         listUnitP2.add(unitP2);
 
-
         /**List of ImageView arrows for the player 1*/
         ImageView arrow1P1;
 
@@ -146,7 +154,6 @@ public class GameView extends Region {
             listArrowP1.add(arrow1P1);
         }
         listArrowP1.get(2).setImage(arrowSelectedImageP1);
-
 
         /**List of ImageView arrows for the player 1*/
         ImageView arrow1P2;
@@ -159,8 +166,6 @@ public class GameView extends Region {
         }
         listArrowP2.get(2).setImage(arrowSelectedImageP2);
 
-
-
         /**Creation button Exit.*/
         Button exit = new Button("Exit");
         exit.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
@@ -171,7 +176,7 @@ public class GameView extends Region {
         Button menu = new Button("Menu");
         menu.setStyle(Style.BOTTONI_1);
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
-        menu.setOnAction(e ->{
+        menu.setOnAction(e -> {
             scenaMenu = new MainMenu();
             try {
                 pane.getChildren().setAll(scenaMenu.createContent());
@@ -181,15 +186,12 @@ public class GameView extends Region {
             }
         });
 
-
-
         //label temporanea(qui ci andrebbe il timer)
-        Label timer = new Label("TIMER");
+        timer = new Label("TIMER");
         timer.setStyle(Style.LABEL);
         timer.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         timer.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         timer.setAlignment(Pos.CENTER);
-
 
         //HP player1
         int HP1=8;
@@ -200,7 +202,6 @@ public class GameView extends Region {
         player1.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         player1.setAlignment(Pos.CENTER);
 
-
         //HP player2
         int HP2=8;
         Label player2 = new Label("PLAYER 2 HP: " + HP2);
@@ -208,7 +209,6 @@ public class GameView extends Region {
         player2.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         player2.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         player2.setAlignment(Pos.CENTER);
-
 
         /**Layout of the GameView.*/
         HBox topMenu = new HBox(sw / ViewConstants.DIVISOR_25);
@@ -231,8 +231,6 @@ public class GameView extends Region {
         rightMenu.setAlignment(Pos.CENTER);
         rightMenu.getChildren().addAll(listArrowP2);
 
-
-
         /**Creation of the grid.*/
         GridPane gridPane = new GridPane();
         gridPane.setBackground(background);
@@ -247,8 +245,6 @@ public class GameView extends Region {
         }
         gridPane.setAlignment(Pos.CENTER);
 
-
-
         /**Set position of the various elements created.*/
         BorderPane borderpane = new BorderPane();
         borderpane.setTop(topMenu);
@@ -258,112 +254,31 @@ public class GameView extends Region {
         borderpane.setCenter(gridPane);
         borderpane.setPrefSize(sw / ViewConstants.DIVISOR_1_5, sh / ViewConstants.DIVISOR_1_5);
 
-
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
             case W:
-                if (counterLaneP1 == 0) {
-                    listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
-                    counterLaneP1 = listArrowP1.size() - 1;
-                    listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
-                } else {
-                    listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
-                    counterLaneP1--;
-                    listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
-                }
+                this.observer.controlPrevLane(PlayerType.PLAYER1);
                 break;
             case S:
-                if (counterLaneP1 == 4) {
-                    listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
-                    counterLaneP1 -= listArrowP1.size() - 1;
-                    listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
-                } else {
-                    listArrowP1.get(counterLaneP1).setImage(arrowImageP1);
-                    counterLaneP1++;
-                    listArrowP1.get(counterLaneP1).setImage(arrowSelectedImageP1);
-                }
+                this.observer.controlNextLane(PlayerType.PLAYER1);
                 break;
             case A:
-                if (counterUnitP1 == 0) {
-                    listUnitP1.get(counterUnitP1).setImage(unit1Image);
-                    counterUnitP1 = listUnitP1.size() - 1;
-                    listUnitP1.get(counterUnitP1).setImage(unit3SelectedImage);
-                } else if (counterUnitP1 == 1) {
-                    listUnitP1.get(counterUnitP1).setImage(unit2Image);
-                    counterUnitP1--;
-                    listUnitP1.get(counterUnitP1).setImage(unit1SelectedImage);
-                } else {
-                    listUnitP1.get(counterUnitP1).setImage(unit3Image);
-                    counterUnitP1--;
-                    listUnitP1.get(counterUnitP1).setImage(unit2SelectedImage);
-                }
+                this.observer.controlPrevUnit(PlayerType.PLAYER1);
                 break;
             case D:
-                if (counterUnitP1 == 2) {
-                    listUnitP1.get(counterUnitP1).setImage(unit3Image);
-                    counterUnitP1 -= listUnitP1.size() - 1;
-                    listUnitP1.get(counterUnitP1).setImage(unit1SelectedImage);
-                } else if (counterUnitP1 == 1) {
-                    listUnitP1.get(counterUnitP1).setImage(unit2Image);
-                    counterUnitP1++;
-                    listUnitP1.get(counterUnitP1).setImage(unit3SelectedImage);
-                } else {
-                    listUnitP1.get(counterUnitP1).setImage(unit1Image);
-                    counterUnitP1++;
-                    listUnitP1.get(counterUnitP1).setImage(unit2SelectedImage);
-                }
+                this.observer.controlNextUnit(PlayerType.PLAYER1);
                 break;
             case UP:
-                if (counterLaneP2 == 0) {
-                    listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
-                    counterLaneP2 = listArrowP2.size() - 1;
-                    listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
-                } else {
-                    listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
-                    counterLaneP2--;
-                    listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
-                }
+                this.observer.controlPrevLane(PlayerType.PLAYER2);
                 break;
             case DOWN:
-                if (counterLaneP2 == 4) {
-                    listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
-                    counterLaneP2 -= listArrowP2.size() - 1;
-                    listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
-                } else {
-                    listArrowP2.get(counterLaneP2).setImage(arrowImageP2);
-                    counterLaneP2++;
-                    listArrowP2.get(counterLaneP2).setImage(arrowSelectedImageP2);
-                }
+                this.observer.controlNextLane(PlayerType.PLAYER2);
                 break;
             case LEFT:
-                if (counterUnitP2 == 0) {
-                    listUnitP2.get(counterUnitP2).setImage(unit1Image);
-                    counterUnitP2 = listUnitP2.size() - 1;
-                    listUnitP2.get(counterUnitP2).setImage(unit3SelectedImage);
-                } else if (counterUnitP2 == 1) {
-                    listUnitP2.get(counterUnitP2).setImage(unit2Image);
-                    counterUnitP2--;
-                    listUnitP2.get(counterUnitP2).setImage(unit1SelectedImage);
-                } else {
-                    listUnitP2.get(counterUnitP2).setImage(unit3Image);
-                    counterUnitP2--;
-                    listUnitP2.get(counterUnitP2).setImage(unit2SelectedImage);
-                }
+                this.observer.controlPrevUnit(PlayerType.PLAYER2);
                 break;
             case RIGHT:
-                if (counterUnitP2 == 2) {
-                    listUnitP2.get(counterUnitP2).setImage(unit3Image);
-                    counterUnitP2 -= listUnitP2.size() - 1;
-                    listUnitP2.get(counterUnitP2).setImage(unit1SelectedImage);
-                } else if (counterUnitP2 == 1) {
-                    listUnitP2.get(counterUnitP2).setImage(unit2Image);
-                    counterUnitP2++;
-                    listUnitP2.get(counterUnitP2).setImage(unit3SelectedImage);
-                } else {
-                    listUnitP2.get(counterUnitP2).setImage(unit1Image);
-                    counterUnitP2++;
-                    listUnitP2.get(counterUnitP2).setImage(unit2SelectedImage);
-                }
+                this.observer.controlNextUnit(PlayerType.PLAYER2);
                 break;
             default:
                 break;
@@ -373,7 +288,46 @@ public class GameView extends Region {
         pane.getChildren().add(borderpane);
         return pane;
     }
+
+    public void updateSelectLane(final PlayerType playerType, final int index, final int next) {
+        final ArrayList<ImageView> tempList = playerType.equals(PlayerType.PLAYER1) ? new ArrayList<>(listArrowP1) : new ArrayList<>(listArrowP2);
+        tempList.get(index).setImage(arrowImageP1);
+        tempList.get(next).setImage(arrowSelectedImageP1);
+        if (playerType.equals(PlayerType.PLAYER1)) {
+            listArrowP1.get(index).setImage(arrowImageP1);
+            listArrowP1.get(next).setImage(arrowSelectedImageP1);
+        } 
+        if (playerType.equals(PlayerType.PLAYER2)) {
+            listArrowP2.get(index).setImage(arrowImageP2);
+            listArrowP2.get(next).setImage(arrowSelectedImageP2);
+        }
+    }
+
+    public void updateSelectUnit(final PlayerType playerType, final int index, final int next) {
+      if (playerType.equals(PlayerType.PLAYER1)) {
+          listUnitP1.get(next).setImage(this.unitSelected.get(next));  //lista con le 3 immagini unitSelected e lista non
+          listUnitP1.get(index).setImage(this.unitImage.get(index));
+          //così faccio .setImage(listaSelected.get(index)) e  .setImage(listaNotSelected.get(index)) 
+      }
+      if (playerType.equals(PlayerType.PLAYER2)) {
+          listUnitP2.get(next).setImage(this.unitSelected.get(next));
+          listUnitP2.get(index).setImage(this.unitImage.get(index));
+      }
+  }
+
+    public void updateTimer(final int mins, final int seconds) {
+        Platform.runLater(() -> timer.setText(String.format("%02d:%02d", mins, seconds)));
+    }
+
+    public void utilSetDimension(final ImageView imageView) {
+        imageView.setFitWidth(sw / ViewConstants.DIVISOR_20);
+        imageView.setFitHeight(sh / ViewConstants.DIVISOR_20);
+    }
     
+    public void setObserver(Controller observer) {
+        this.observer = observer;
+    }
+
     /**Method to close the program with a confirm box.*/
     private void closeProgram() {
     boolean answer = Exit.display("quitting", "Do you want to quit?");
@@ -381,6 +335,4 @@ public class GameView extends Region {
         System.exit(0);
         }
     }
-
-
 }

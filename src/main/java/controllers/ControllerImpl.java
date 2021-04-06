@@ -1,7 +1,10 @@
 package controllers;
 //import org.apache.commons.lang3.tuple.Pair;
 
+import java.io.IOException;
+
 import constants.GameConstants;
+import javafx.scene.layout.Pane;
 import model.FieldImpl;
 import model.PlayerType;
 import model.UnitImpl;
@@ -19,11 +22,22 @@ public class ControllerImpl implements Controller {
     private long lastSpawnP2 = 0;
     private GameView gameView;
     private FieldImpl field;
+    private Pane pane;
     //TODO timer dei player da mostrare alla view ->
-    public ControllerImpl() {
+
+    public ControllerImpl(GameView gameView) {
         //this.selectedLaneIndex = Pair.of(Pair.of(PlayerType.PLAYER1, 2), Pair.of(PlayerType.PLAYER2, 2));
-        this.gameView = new GameView();
+        this.gameView = gameView;
+        this.gameView.setObserver(this);
+//        try {
+//            this.pane = new Pane();
+//            pane.getChildren().setAll(gameView.createContent());
+//           } catch (IOException e1) {
+//            // TODO Auto-generated catch block
+//            e1.printStackTrace();
+//           }
         this.field = new FieldImpl(15, 5);
+        new Thread(new GameTimer(1, this.gameView)).start();
     }
 //    private void selectNextLane(PlayerType playerType) {
 //        final Pair<PlayerType, Integer> util = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndex.getLeft() : this.selectedLaneIndex.getRight();
@@ -43,15 +57,21 @@ public class ControllerImpl implements Controller {
 //        //util = Pair.of(playerType, next); //errato
 //    }
     @Override
-    public void controlLaneUp(final PlayerType playerType) {
+    public void controlNextLane(final PlayerType playerType) {
         final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
         final int nextIndex = (currentIndex + 1) % GameConstants.FIVE_LANES;
-        this.selectedLaneIndexP1 = nextIndex;
-      //TODO this.gameView.updateSelectLane(playerType, index, next); //in base a pType scelgo in che lista guardare
+        //this.selectedLaneIndexP1 = nextIndex;
+        if (playerType.equals(PlayerType.PLAYER1)) {
+            this.selectedLaneIndexP1 = nextIndex;
+        }
+        if (playerType.equals(PlayerType.PLAYER2)) {
+            this.selectedLaneIndexP2 = nextIndex;
+        }
+        this.gameView.updateSelectLane(playerType, currentIndex, nextIndex); //in base a pType scelgo in che lista guardare
     }
 
     @Override
-    public void controlLaneDown(final PlayerType playerType) {
+    public void controlPrevLane(final PlayerType playerType) {
         final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
         int nextIndex;
         if (currentIndex == 0) {
@@ -59,8 +79,14 @@ public class ControllerImpl implements Controller {
         } else {
             nextIndex = (currentIndex - 1) % GameConstants.FIVE_LANES;
         }
-        this.selectedLaneIndexP1 = nextIndex;
-        //TODO
+        //this.selectedLaneIndexP1 = nextIndex;
+        if (playerType.equals(PlayerType.PLAYER1)) {
+            this.selectedLaneIndexP1 = nextIndex;
+        }
+        if (playerType.equals(PlayerType.PLAYER2)) {
+            this.selectedLaneIndexP2 = nextIndex;
+        }
+        this.gameView.updateSelectLane(playerType, currentIndex, nextIndex);
     }
 
     @Override
@@ -79,9 +105,14 @@ public class ControllerImpl implements Controller {
     @Override
     public void controlNextUnit(final PlayerType playerType) {
         final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedUnitIndexP1 : this.selectedUnitIndexP2;
-        final int nextIndex = (currentIndex + 1) % GameConstants.FIVE_LANES;
-        this.selectedUnitIndexP1 = nextIndex;
-        //TODO this.gameView.updateSelectUnit(playerType, index, next);
+        final int nextIndex = (currentIndex + 1) % GameConstants.THREE_LANES;
+        if (playerType.equals(PlayerType.PLAYER1)) {
+            this.selectedUnitIndexP1 = nextIndex;
+        }
+        if (playerType.equals(PlayerType.PLAYER2)) {
+            this.selectedUnitIndexP2 = nextIndex;
+        }
+        this.gameView.updateSelectUnit(playerType, currentIndex, nextIndex);
     }
 
     @Override
@@ -89,12 +120,17 @@ public class ControllerImpl implements Controller {
         final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedUnitIndexP1 : this.selectedUnitIndexP2;
         int nextIndex;
         if (currentIndex == 0) {
-            nextIndex = GameConstants.FIVE_LANES - 1;
+            nextIndex = GameConstants.THREE_LANES - 1;
         } else {
-            nextIndex = (currentIndex - 1) % GameConstants.FIVE_LANES;
+            nextIndex = (currentIndex - 1) % GameConstants.THREE_LANES;
         }
-        this.selectedUnitIndexP1 = nextIndex;
-        //TODO this.gameView.updateSelectUnit(playerType, index, next);
+        if (playerType.equals(PlayerType.PLAYER1)) {
+            this.selectedUnitIndexP1 = nextIndex;
+        }
+        if (playerType.equals(PlayerType.PLAYER2)) {
+            this.selectedUnitIndexP2 = nextIndex;
+        }
+        this.gameView.updateSelectUnit(playerType, currentIndex, nextIndex);
     }
 
 }
