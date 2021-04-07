@@ -20,8 +20,8 @@ public final class ViewResolution {
 
     /**
      * Method to calculate the Width resolution. 
-     * @param constant Integer
-     * @return screenWidth Integer
+     * @param constant Double
+     * @return Width Resolution Double
      * */
     public static double screenResolutionWidth(final double constant) {
         return screenWidth / constant;
@@ -29,8 +29,8 @@ public final class ViewResolution {
 
     /**
      * Method to calculate the Height resolution. 
-     * @param constant Integer
-     * @return screenHeigtht Integer
+     * @param constant Double
+     * @return Height Resolution Double
      * */
     public static double screenResolutionHeight(final double constant) {
         return screenHeight / constant;
