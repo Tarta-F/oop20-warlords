@@ -31,7 +31,7 @@ public final class MainMenu extends Application {
     public void start(final Stage primaryStage) throws Exception {
         /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
-        final Scene scene = new Scene(createContent(), ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        final Scene scene = new Scene(createMainMenu(), ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
         window.setScene(scene);
         window.show();
         window.setResizable(false);
@@ -45,7 +45,7 @@ public final class MainMenu extends Application {
      * Method to create the view of the current image.
      * @return borderPane borderPane
      * */
-    public Parent createContent() throws IOException {
+    public Parent createMainMenu() throws IOException {
 
         /**BorderPane. */
         final BorderPane borderPane = new BorderPane();
@@ -86,7 +86,7 @@ public final class MainMenu extends Application {
         versus.setOnAction(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
-                borderPane.getChildren().setAll(sceneGameModeSelection.createContent());
+                borderPane.getChildren().setAll(sceneGameModeSelection.createGameModeSelection());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -99,17 +99,19 @@ public final class MainMenu extends Application {
         tutorials.setOnAction(e -> {
             try {
                 sceneTutorial = new GameTutorial();
-                borderPane.getChildren().setAll(sceneTutorial.createContent());
+                borderPane.getChildren().setAll(sceneTutorial.createGameTutorial());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
+        
 
         /**Button EXIT. */
         final Button exitMenu = new Button("EXIT");
         exitMenu.setStyle(Style.BUTTON_1);
         exitMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         exitMenu.setOnAction(e -> closeProgram());
+        
 
 
         /**Layout. */

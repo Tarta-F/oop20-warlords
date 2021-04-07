@@ -57,7 +57,9 @@ public final class GameView extends Region {
     private List<Image> unitImage;
     private Label timer;
     private Controller observer;
-
+    private Pane pane = new Pane();
+    
+    
     //public GameView(/* final Controller observer */) {
 //        this.observer = observer;
 //        try {
@@ -90,9 +92,9 @@ public final class GameView extends Region {
     }
 
 
-    public Parent createContent() throws IOException {
+    public Parent createGameView() throws IOException {
 
-        Pane pane = new Pane();
+      
 
         //background image
 //        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
@@ -177,15 +179,7 @@ public final class GameView extends Region {
         Button menu = new Button("Menu");
         menu.setStyle(Style.BUTTON_1);
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
-        menu.setOnAction(e -> {
-            scenaMenu = new MainMenu();
-            try {
-                pane.getChildren().setAll(scenaMenu.createContent());
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-        });
+        menu.setOnAction(e ->  returnMainMenu());
 
         //label temporanea(qui ci andrebbe il timer)
         timer = new Label("TIMER");
@@ -322,7 +316,22 @@ public final class GameView extends Region {
     private void closeProgram() {
     boolean answer = Exit.display("quitting", "Do you want to quit?");
     if (answer) {
-        System.exit(0);
+         System.exit(0);
+        }
+    }
+    
+    
+    /**Method to return to main menu with a confirm box.*/
+    private void returnMainMenu() {
+    boolean answer = Exit.display("quitting", "do you want to return to main menu?");
+    if (answer) {
+        scenaMenu = new MainMenu();
+        try {
+            pane.getChildren().setAll(scenaMenu.createMainMenu());
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         }
     }
 

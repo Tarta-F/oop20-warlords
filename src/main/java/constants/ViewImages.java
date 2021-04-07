@@ -41,7 +41,7 @@ public final class ViewImages {
     public static final String SPEARMAN= "/spearman_1.png";
     
     public static final String ARCHER= "/archer_2.png";
-
     
+
     private ViewImages () { }
 }
