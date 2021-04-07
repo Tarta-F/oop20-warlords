@@ -2,8 +2,6 @@ package view;
 
 import constants.ViewConstants;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
