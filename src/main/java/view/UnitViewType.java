@@ -26,6 +26,7 @@ public enum UnitViewType {
         this.path = path;
     }
 
+    /**@return unit path. */
     public String getPath() {
         return this.path;
     }
