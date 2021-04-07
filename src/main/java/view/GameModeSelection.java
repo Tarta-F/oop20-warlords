@@ -15,12 +15,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
@@ -31,22 +35,30 @@ public class GameModeSelection extends Region {
 
     private MainMenu scenaMenu;
     private GameView scenaGame;
-
+    private int scenarioSelezionato = 1;
+    private int laneSelezionate = 1;
+    private int timerSelezionato = 300;
+    
+            
     //screen size
     final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     final int sw = (int) screen.getWidth();
     final int sh = (int) screen.getHeight();
 
-    public Parent createContent() throws IOException {
+    public Parent createGameModeSelection() throws IOException {
 
         Pane pane = new Pane();
-
+        Label settingsSelected = new Label();
+        
         //background image
         Image backgroundimg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_SETTINGS));
         ImageView backG = new ImageView(backgroundimg);
         backG.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
         backG.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
-
+       
+        final DropShadow drop = new DropShadow(20, Color.RED);
+        drop.setInput(new Glow());
+  
         //scenario buttons
         Button scenarioButtons;
         List<Button> listaScenario = new ArrayList<>();
@@ -58,7 +70,25 @@ public class GameModeSelection extends Region {
             listaScenario.add(scenarioButtons);
         }
 
-        //lane buttons
+        
+        listaScenario.get(0).setOnAction(e -> {
+            scenarioSelezionato = 1;
+            System.out.println(scenarioSelezionato);
+            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+        });
+        listaScenario.get(1).setOnAction(e -> {
+            scenarioSelezionato = 2;
+            System.out.println(scenarioSelezionato);
+            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+        });
+        listaScenario.get(2).setOnAction(e -> {
+            scenarioSelezionato = 3;
+            System.out.println(scenarioSelezionato);
+            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+        });
+       
+         
+         //lane buttons
         Button laneButtons;
         List<Button> listaLane = new ArrayList<>();
 
@@ -67,9 +97,24 @@ public class GameModeSelection extends Region {
             laneButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
             laneButtons.setStyle(Style.BUTTON_1);
             listaLane.add(laneButtons);
-
         }
-
+        listaLane.get(0).setOnAction( e -> {
+            laneSelezionate = 1;
+            System.out.println(laneSelezionate);
+            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+        });
+        listaLane.get(1).setOnAction( e -> {
+            laneSelezionate = 3;
+            System.out.println(laneSelezionate);
+            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+        });
+        listaLane.get(2).setOnAction( e -> {
+            laneSelezionate = 5;
+            System.out.println(laneSelezionate);
+            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+        });
+        
+        
        // timer Buttons
         Button timerButtons;
         List<Button> listaTimer = new ArrayList<>();
@@ -80,7 +125,23 @@ public class GameModeSelection extends Region {
             timerButtons.setStyle(Style.BUTTON_1);
             listaTimer.add(timerButtons);
             }
-
+        listaTimer.get(0).setOnAction( e -> {
+            timerSelezionato = 300;
+            System.out.println(timerSelezionato);
+            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+        });
+        listaTimer.get(1).setOnAction( e -> {
+            timerSelezionato = 600;
+            System.out.println(timerSelezionato);
+            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+        });
+        listaTimer.get(2).setOnAction( e -> {
+            timerSelezionato = 900;
+            System.out.println(timerSelezionato);
+            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+        });
+        
+        
         //back button
         Button back = new Button("BACK");
         back.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
@@ -88,7 +149,7 @@ public class GameModeSelection extends Region {
         back.setOnAction(e ->{
             scenaMenu = new MainMenu();
             try {
-                pane.getChildren().setAll(scenaMenu.createContent());
+                pane.getChildren().setAll(scenaMenu.createMainMenu());
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -102,7 +163,7 @@ public class GameModeSelection extends Region {
 //            scenaGame = new GameView();
             ControllerImpl c = new ControllerImpl();
            try {
-            pane.getChildren().setAll(c.getView().createContent());
+            pane.getChildren().setAll(c.getView().createGameView());
            } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -124,7 +185,13 @@ public class GameModeSelection extends Region {
         timer.setAlignment(Pos.CENTER);
         timer.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
         timer.setStyle(Style.LABEL);
+        
 
+        settingsSelected.setAlignment(Pos.CENTER);
+        settingsSelected.setPrefSize(sw / ViewConstants.DIVISOR_4, sh / ViewConstants.DIVISOR_10);
+        settingsSelected.setStyle(Style.LABEL);
+        settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+       
         //layout
         HBox scenarioBox = new HBox(sw / ViewConstants.DIVISOR_15);
         scenarioBox.setAlignment(Pos.CENTER);
@@ -143,7 +210,7 @@ public class GameModeSelection extends Region {
 
         HBox backStartBox = new HBox(sw / ViewConstants.DIVISOR_15);
         backStartBox.setPadding(new Insets(0, 0, 0, sw / ViewConstants.DIVISOR_30));
-        backStartBox.getChildren().addAll(back, start);
+        backStartBox.getChildren().addAll(back, start, settingsSelected);
         VBox vBox = new VBox(sh / ViewConstants.DIVISOR_15);
         vBox.setAlignment(Pos.CENTER);
 

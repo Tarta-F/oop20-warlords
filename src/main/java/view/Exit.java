@@ -37,7 +37,7 @@ public final class Exit {
         final Label label = new Label();
         label.setText(message);
         label.setAlignment(Pos.CENTER);
-        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
         label.setStyle(Style.LABEL);
 
 

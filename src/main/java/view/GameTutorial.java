@@ -26,7 +26,7 @@ public class GameTutorial extends Region {
          * Method to create the view of the current image. 
          * @return pane Pane
          * */
-        public final Parent createContent() throws IOException {
+        public final Parent createGameTutorial() throws IOException {
 
         final Pane pane = new Pane();
 
@@ -43,7 +43,7 @@ public class GameTutorial extends Region {
         mainMenu.setOnAction(e -> {
             scenaMenu = new MainMenu();
             try {
-                pane.getChildren().setAll(scenaMenu.createContent());
+                pane.getChildren().setAll(scenaMenu.createMainMenu());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
