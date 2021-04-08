@@ -38,7 +38,9 @@ public class GameModeSelection extends Region {
     private int scenarioSelezionato = 1;
     private int laneSelezionate = 1;
     private int timerSelezionato = 300;
-    
+    private String stringaScenario;
+    private String stringaLane;
+    private String stringaTimer;
             
     //screen size
     final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -49,7 +51,9 @@ public class GameModeSelection extends Region {
 
         Pane pane = new Pane();
         Label settingsSelected = new Label();
-        
+        stringaScenario = new String("SELECTED SCENARIO: " + scenarioSelezionato);
+        stringaLane = new String("\n SELECTED LANES: " + laneSelezionate);
+        stringaTimer = new String("\n SELECTED TIMER: "+ timerSelezionato+ "S");
         //background image
         Image backgroundimg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_SETTINGS));
         ImageView backG = new ImageView(backgroundimg);
@@ -73,18 +77,21 @@ public class GameModeSelection extends Region {
         
         listaScenario.get(0).setOnAction(e -> {
             scenarioSelezionato = 1;
+            stringaScenario = new String("SELECTED SCENARIO: " + scenarioSelezionato);
             System.out.println(scenarioSelezionato);
-            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+            settingsSelected.setText(stringaScenario+stringaLane+stringaTimer);
         });
         listaScenario.get(1).setOnAction(e -> {
             scenarioSelezionato = 2;
+            stringaScenario = new String("SELECTED SCENARIO: " + scenarioSelezionato);
             System.out.println(scenarioSelezionato);
-            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+            settingsSelected.setText(stringaScenario+stringaLane+stringaTimer);
         });
         listaScenario.get(2).setOnAction(e -> {
             scenarioSelezionato = 3;
+            stringaScenario = new String("SELECTED SCENARIO: " + scenarioSelezionato);
             System.out.println(scenarioSelezionato);
-            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+            settingsSelected.setText(stringaScenario+stringaLane+stringaTimer);
         });
        
          
@@ -100,18 +107,21 @@ public class GameModeSelection extends Region {
         }
         listaLane.get(0).setOnAction( e -> {
             laneSelezionate = 1;
+            stringaLane = new String("\n SELECTED LANES: " + laneSelezionate);
             System.out.println(laneSelezionate);
-            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+            settingsSelected.setText(stringaScenario+stringaLane+stringaTimer);
         });
         listaLane.get(1).setOnAction( e -> {
             laneSelezionate = 3;
+            stringaLane = new String("\n SELECTED LANES: " + laneSelezionate);
             System.out.println(laneSelezionate);
-            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+            settingsSelected.setText(stringaScenario+stringaLane+stringaTimer);
         });
         listaLane.get(2).setOnAction( e -> {
             laneSelezionate = 5;
+            stringaLane = new String("\n SELECTED LANES: " + laneSelezionate);
             System.out.println(laneSelezionate);
-            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+            settingsSelected.setText(stringaScenario+stringaLane+stringaTimer);
         });
         
         
@@ -127,18 +137,21 @@ public class GameModeSelection extends Region {
             }
         listaTimer.get(0).setOnAction( e -> {
             timerSelezionato = 300;
+            stringaTimer = new String("\n SELECTED LANES: " + timerSelezionato);
             System.out.println(timerSelezionato);
-            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+            settingsSelected.setText(stringaScenario+stringaLane+stringaTimer);
         });
         listaTimer.get(1).setOnAction( e -> {
             timerSelezionato = 600;
+            stringaTimer = new String("\n SELECTED LANES: " + timerSelezionato);
             System.out.println(timerSelezionato);
-            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+            settingsSelected.setText(stringaScenario+stringaLane+stringaTimer);
         });
         listaTimer.get(2).setOnAction( e -> {
             timerSelezionato = 900;
+            stringaTimer = new String("\n SELECTED LANES: " + timerSelezionato);
             System.out.println(timerSelezionato);
-            settingsSelected.setText("SELECTED SCENARIO: " + scenarioSelezionato +"\n SELECTED LANES: " + laneSelezionate + "\n SELECTED TIMER: "+ timerSelezionato+ "S");
+            settingsSelected.setText(stringaScenario+stringaLane+stringaTimer);
         });
         
         
