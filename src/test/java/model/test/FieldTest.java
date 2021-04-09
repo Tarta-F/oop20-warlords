@@ -37,6 +37,8 @@ public class FieldTest {
 
     @Test
     public void testAddAndGetUnit() {
+        int unitCounter = 2;
+
         assertEquals(Pair.of(0, 0), field.getUnits().get(unit1));
         assertEquals(Pair.of(GameConstants.CELLS_NUM - 1, 1), field.getUnits().get(unit2));
 
@@ -47,10 +49,12 @@ public class FieldTest {
         assertEquals(Pair.of(GameConstants.CELLS_NUM - 3, 1), field.getUnits().get(unit2));
 
         unit1 = new UnitImpl(UnitType.ARCHER, PlayerType.PLAYER1);
-        unit2 = new UnitImpl(UnitType.SPEARMEN, PlayerType.PLAYER1);
+        unit2 = new UnitImpl(UnitType.ARCHER, PlayerType.PLAYER1);
 
         field.addUnit(1, unit1);
+        unitCounter++;
         field.addUnit(2, unit2);
+        unitCounter++;
 
         assertEquals(Pair.of(0, 1), field.getUnits().get(unit1));
         assertEquals(Pair.of(0, 2), field.getUnits().get(unit2));
@@ -65,6 +69,11 @@ public class FieldTest {
             assertFalse(e.getMessage().isEmpty());
         }
 
+        IntStream.range(0, this.field.getLaneNumber())
+            .forEach(lane -> field.addUnit(lane, new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER1)));
+        unitCounter += this.field.getLaneNumber();
+
+        assertEquals(this.field.getUnits().entrySet().size(), unitCounter);
     }
 
     @Test
@@ -78,8 +87,6 @@ public class FieldTest {
 
         assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1).get());
         assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1).get());
-
     }
-
 
 }
