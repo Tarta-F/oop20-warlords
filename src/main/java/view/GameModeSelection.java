@@ -1,17 +1,9 @@
 package view;
 
-
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
-import com.sun.javafx.collections.MappingChange.Map;
-
 import constants.ViewConstants;
 import constants.ViewImages;
 import controllers.ControllerImpl;
@@ -35,13 +27,12 @@ import javafx.scene.layout.VBox;
 public class GameModeSelection extends Region {
 
     private MainMenu scenaMenu;
-    private GameView scenaGame;
     private int scenario = 1;
     private int laneNumber = 5;
     private int timerDuration = 5;
-    Label settingsSelected = new Label();
+    private Label settingsSelected = new Label();
 
-    public Parent createGameModeSelection() throws IOException {
+    public final Parent createGameModeSelection() throws IOException {
 
         Pane pane = new Pane();
 
@@ -76,7 +67,6 @@ public class GameModeSelection extends Region {
             listLane.put(laneButtons, i);
             laneButtons.setOnAction(e -> {
                 this.laneNumber = listLane.get(laneButtons);
-                //updateNumLane();
                 updateSettings();
                 System.out.println(this.laneNumber); /* qui non vedo la variabile del for -> utilizzo Map ? */
             });
@@ -96,7 +86,6 @@ public class GameModeSelection extends Region {
             listTimer.put(timerButtons, i);
             timerButtons.setOnAction(e -> {
                 this.timerDuration = listTimer.get(timerButtons);
-                //updateTime();
                 updateSettings();
                 System.out.println(this.timerDuration);
             });
@@ -121,10 +110,9 @@ public class GameModeSelection extends Region {
         start.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         start.setStyle(Style.BUTTON_2);
         start.setOnAction(e -> {
-//            scenaGame = new GameView();
-           final ControllerImpl c = new ControllerImpl(this.laneNumber, this.timerDuration);
+           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration);
            try {
-            pane.getChildren().setAll(c.getView().createGameView());
+            pane.getChildren().setAll(contr.getView().createGameView());
            } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -134,26 +122,30 @@ public class GameModeSelection extends Region {
         //label
         final Label scenario = new Label("Scenario:");
         scenario.setAlignment(Pos.CENTER);
-        scenario.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        scenario.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10),
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         scenario.setStyle(Style.LABEL);
 
         Label lane = new Label("Number of lane:");
         updateSettings();
         lane.setAlignment(Pos.CENTER);
-        lane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        lane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10),
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         lane.setStyle(Style.LABEL);
 
         Label timer = new Label("Timer:");
         updateSettings();
         timer.setAlignment(Pos.CENTER);
-        timer.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        timer.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10),
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         timer.setStyle(Style.LABEL);
 
         settingsSelected.setAlignment(Pos.CENTER);
-        settingsSelected.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10));
+        settingsSelected.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10));
         settingsSelected.setStyle(Style.LABEL);
-        settingsSelected.setText("SELECTED SCENARIO: " + this.scenario + "\n NUMBER OF LANES: " + this.laneNumber +
-                "\n SELECTED TIMER: " + this.timerDuration + "MINS");
+        settingsSelected.setText("SELECTED SCENARIO: " + this.scenario + "\n NUMBER OF LANES: " + this.laneNumber 
+                + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
         //layout
         final HBox scenarioBox = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
         scenarioBox.setAlignment(Pos.CENTER);
@@ -184,14 +176,7 @@ public class GameModeSelection extends Region {
         return pane;
     }
     private void updateSettings() {
-        this.settingsSelected.setText("SELECTED SCENARIO: " + this.scenario + "\n NUMBER OF LANES: " + this.laneNumber +
-                "\n SELECTED TIMER: " + this.timerDuration + "MINS");
+        this.settingsSelected.setText("SELECTED SCENARIO: " + this.scenario + "\n NUMBER OF LANES: " + this.laneNumber 
+                + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
     }
-//    private void updateNumLane() {
-//        this.lane.setText("Number of lane: " + this.laneNumber);
-//    }
-//    private void updateTime() {
-//        this.timer.setText("Timer: " + this.timerDuration + " mins");
-//    }
-
  }

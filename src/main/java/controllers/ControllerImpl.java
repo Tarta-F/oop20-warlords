@@ -15,14 +15,13 @@ public final class ControllerImpl implements Controller {
 
     private int selectedLaneIndexP1;
     private int selectedLaneIndexP2;
-    private int selectedUnitIndexP1 = 0;
-    private int selectedUnitIndexP2 = 0;
-    private long lastSpawnP1 = 0;
-    private long lastSpawnP2 = 0;
-    private GameView gameView;
-    private FieldImpl field;
-    
-    private int laneNumber;
+    private int selectedUnitIndexP1;
+    private int selectedUnitIndexP2;
+    private final long lastSpawnP1;
+    private final long lastSpawnP2;
+    private final GameView gameView;
+    private final FieldImpl field;
+    private final int laneNumber;
     //private Pane pane;
     //TODO timer dei player da mostrare alla view ->
 
@@ -30,12 +29,13 @@ public final class ControllerImpl implements Controller {
 //        this.gameView = gameView;
 //        this.gameView.setObserver(this);
     public ControllerImpl(final int laneNumber, final int mins) {
+        this.lastSpawnP1 = 0;
+        this.lastSpawnP2 = 0;
         this.gameView = new GameView(laneNumber);
         this.gameView.setObserver(this);
         this.laneNumber = laneNumber;
         this.selectedLaneIndexP1 = this.laneNumber / 2;
         this.selectedLaneIndexP2 = this.laneNumber / 2;
-        
 //        try {
 //            this.pane = new Pane();
 //            pane.getChildren().setAll(gameView.createContent());
