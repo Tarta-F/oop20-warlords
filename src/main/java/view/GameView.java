@@ -41,6 +41,7 @@ public final class GameView extends Region {
 
     private MainMenu scenaMenu;
     private final GameFieldView field;
+    private int laneNumber;
 
     private final Image scenario;
     /**Taking screen size for the adaptation of the various elements of the view to the resolution of the screen.*/
@@ -79,16 +80,16 @@ public final class GameView extends Region {
     Image arrowSelectedImageP1 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer1.png"));
     Image arrowSelectedImageP2 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer2.png"));
 
-    public GameView(final int nLane, final Image scenario) {
+    public GameView(final int laneNumber, final Image scenario) {
         this.scenario = scenario;
-        this.field = new GameFieldView(nLane, ViewConstants.GRID_COLUMNS);
+        this.field = new GameFieldView(laneNumber, ViewConstants.GRID_COLUMNS);
     }
 
-    public GameView() {
+    public GameView(final int laneNumber) {
+        this.laneNumber = laneNumber;
         this.scenario = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
-        this.field = new GameFieldView(ViewConstants.GRID_LINES, ViewConstants.GRID_COLUMNS);
+        this.field = new GameFieldView(this.laneNumber, ViewConstants.GRID_COLUMNS);
     }
-
 
     public Parent createContent() throws IOException {
 
@@ -129,7 +130,6 @@ public final class GameView extends Region {
         unitP1.setFitHeight(sh / ViewConstants.DIVISOR_20);
         listUnitP1.add(unitP1);
 
-
         ImageView unitP2 = new ImageView(unit1SelectedImage);
         unitP2.setFitWidth(sw / ViewConstants.DIVISOR_20);
         unitP2.setFitHeight(sh / ViewConstants.DIVISOR_20);
@@ -148,36 +148,38 @@ public final class GameView extends Region {
         /**List of ImageView arrows for the player 1*/
         ImageView arrow1P1;
 
-        for (int i = 0; i < ViewConstants.N_ARROW; i++) {
+        for (int i = 0; i < this.laneNumber; i++) {
             arrow1P1 = new ImageView(arrowImageP1);
             arrow1P1.setFitWidth(sw / ViewConstants.DIVISOR_20);
             arrow1P1.setFitHeight(sh / ViewConstants.DIVISOR_20);
             listArrowP1.add(arrow1P1);
         }
-        listArrowP1.get(2).setImage(arrowSelectedImageP1);
+        listArrowP1.get(this.laneNumber / 2).setImage(arrowSelectedImageP1);
 
         /**List of ImageView arrows for the player 1*/
         ImageView arrow1P2;
 
-        for (int i = 0; i < ViewConstants.N_ARROW; i++) {
+        for (int i = 0; i < this.laneNumber; i++) {
             arrow1P2 = new ImageView(arrowImageP2);
             arrow1P2.setFitWidth(sw / ViewConstants.DIVISOR_20);
             arrow1P2.setFitHeight(sh / ViewConstants.DIVISOR_20);
             listArrowP2.add(arrow1P2);
         }
-        listArrowP2.get(2).setImage(arrowSelectedImageP2);
+        listArrowP2.get(this.laneNumber / 2).setImage(arrowSelectedImageP2);
 
         /**Creation button Exit.*/
         Button exit = new Button("Exit");
+        //exit.setFocusTraversable(false);
         exit.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
-        exit.setOnAction(e -> closeProgram());
+        exit.setOnMouseClicked(e -> closeProgram());
         exit.setStyle(Style.BUTTON_1);
 
         /**Creation button Menu.*/
         Button menu = new Button("Menu");
         menu.setStyle(Style.BUTTON_1);
+        //menu.setFocusTraversable(false);
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
-        menu.setOnAction(e -> {
+        menu.setOnMouseClicked(e -> {
             scenaMenu = new MainMenu();
             try {
                 pane.getChildren().setAll(scenaMenu.createContent());
@@ -187,25 +189,25 @@ public final class GameView extends Region {
             }
         });
 
-        //label temporanea(qui ci andrebbe il timer)
+        /** label that display the Timer */
         timer = new Label("TIMER");
         timer.setStyle(Style.LABEL);
         timer.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         timer.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         timer.setAlignment(Pos.CENTER);
 
-        //HP player1
-        int HP1=8;
-        Label player1 = new Label("PLAYER 1 HP: " + HP1);
+        /** Health Points player1 */
+        int hp1 = 8;
+        Label player1 = new Label("PLAYER 1 HP: " + hp1);
         player1.setStyle(Style.LABEL);
 
         player1.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         player1.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         player1.setAlignment(Pos.CENTER);
 
-        //HP player2
-        int HP2=8;
-        Label player2 = new Label("PLAYER 2 HP: " + HP2);
+        /** Health Points player2 */
+        int hp2 = 8;
+        Label player2 = new Label("PLAYER 2 HP: " + hp2);
         player2.setStyle(Style.LABEL);
         player2.setPrefHeight(sh / ViewConstants.DIVISOR_20);
         player2.setPrefWidth(sw / ViewConstants.DIVISOR_15);
@@ -295,9 +297,8 @@ public final class GameView extends Region {
 
     public void updateSelectUnit(final PlayerType playerType, final int index, final int next) {
       if (playerType.equals(PlayerType.PLAYER1)) {
-          listUnitP1.get(next).setImage(this.unitSelected.get(next));  //lista con le 3 immagini unitSelected e lista non
+          listUnitP1.get(next).setImage(this.unitSelected.get(next));
           listUnitP1.get(index).setImage(this.unitImage.get(index));
-          //così faccio .setImage(listaSelected.get(index)) e  .setImage(listaNotSelected.get(index))
       }
       if (playerType.equals(PlayerType.PLAYER2)) {
           listUnitP2.get(next).setImage(this.unitSelected.get(next));
@@ -314,7 +315,7 @@ public final class GameView extends Region {
         imageView.setFitHeight(sh / ViewConstants.DIVISOR_20);
     }
 
-    public void setObserver(Controller observer) {
+    public void setObserver(final Controller observer) {
         this.observer = observer;
     }
 

@@ -31,7 +31,8 @@ public final class MainMenu extends Application {
     public void start(final Stage primaryStage) throws Exception {
         /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
-        final Scene scene = new Scene(createContent(), ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        final Scene scene = new Scene(createContent(), ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution
+                .screenResolutionHeight(ViewConstants.DIVISOR_1_5));
         window.setScene(scene);
         window.show();
         window.setResizable(false);

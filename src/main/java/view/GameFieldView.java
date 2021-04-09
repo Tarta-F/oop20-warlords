@@ -47,6 +47,7 @@ public final class GameFieldView {
                 ground.setFitHeight(CELL_H);
                 GridPane.setConstraints(ground, i, j);
                 this.gridPane.getChildren().add(ground);
+                //System.out.println(j + " " + i);
             }
         }
         this.gridPane.setAlignment(Pos.CENTER);

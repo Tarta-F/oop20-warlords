@@ -43,7 +43,7 @@ public interface Field {
     int getLaneNumber();
 
     /**
-     * @return the leght of each lane
+     * @return the lenght of each lane
      */
     int getCellsNumber();
 
