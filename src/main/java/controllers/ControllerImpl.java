@@ -15,25 +15,29 @@ import view.GameView;
 import view.UnitViewType;
 
 public final class ControllerImpl implements Controller {
-    //private Pair<Pair<PlayerType, Integer>, Pair<PlayerType, Integer>> selectedLaneIndex;
-    private int selectedLaneIndexP1 = 2;
-    private int selectedLaneIndexP2 = 2;
-    //private Pair<Integer, Integer> selectedUnitIndex;
-    private int selectedUnitIndexP1 = 0;
-    private int selectedUnitIndexP2 = 0;
-    private long lastSpawnP1 = 0;
-    private long lastSpawnP2 = 0;
+
+    private int selectedLaneIndexP1;
+    private int selectedLaneIndexP2;
+    private int selectedUnitIndexP1;
+    private int selectedUnitIndexP2;
+    private final long lastSpawnP1;
+    private final long lastSpawnP2;
     private final GameView gameView;
     private final FieldImpl field;
-    //private Pane pane;
+    private final int laneNumber;
     //TODO timer dei player da mostrare alla view ->
 
 //    public ControllerImpl(final GameView gameView) {
 //        this.gameView = gameView;
 //        this.gameView.setObserver(this);
-    public ControllerImpl() {
-        this.gameView = new GameView();
+    public ControllerImpl(final int laneNumber, final int mins) {
+        this.lastSpawnP1 = 0;
+        this.lastSpawnP2 = 0;
+        this.gameView = new GameView(laneNumber);
         this.gameView.setObserver(this);
+        this.laneNumber = laneNumber;
+        this.selectedLaneIndexP1 = this.laneNumber / 2;
+        this.selectedLaneIndexP2 = this.laneNumber / 2;
 //        try {
 //            this.pane = new Pane();
 //            pane.getChildren().setAll(gameView.createContent());
@@ -41,8 +45,9 @@ public final class ControllerImpl implements Controller {
 //            // TODO Auto-generated catch block
 //            e1.printStackTrace();
 //           }
-        this.field = new FieldImpl(15, 5);
-        new Thread(new GameTimer(1, this.gameView)).start();
+        System.out.println("NumLanes : " + laneNumber);
+        this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
+        new Thread(new GameTimer(mins, this.gameView)).start();
     }
 
     private UnitViewType convertUnit(final Unit modelUnit) {
@@ -68,7 +73,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public void controlNextLane(final PlayerType playerType) {
         final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
-        final int nextIndex = (currentIndex + 1) % GameConstants.FIVE_LANES;
+        final int nextIndex = (currentIndex + 1) % this.laneNumber;
         if (playerType.equals(PlayerType.PLAYER1)) {
             this.selectedLaneIndexP1 = nextIndex;
         }
@@ -83,9 +88,9 @@ public final class ControllerImpl implements Controller {
         final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
         int nextIndex;
         if (currentIndex == 0) {
-            nextIndex = GameConstants.FIVE_LANES - 1;
+            nextIndex = this.laneNumber - 1;
         } else {
-            nextIndex = (currentIndex - 1) % GameConstants.FIVE_LANES;
+            nextIndex = (currentIndex - 1) % this.laneNumber;
         }
         if (playerType.equals(PlayerType.PLAYER1)) {
             this.selectedLaneIndexP1 = nextIndex;

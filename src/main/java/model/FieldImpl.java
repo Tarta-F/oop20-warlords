@@ -41,7 +41,6 @@ public final class FieldImpl implements Field {
         return Collections.unmodifiableList(this.lanes);
     }
 
-
     @Override
     public Optional<Integer> getScore(final PlayerType player) {
         return this.lanes.stream()

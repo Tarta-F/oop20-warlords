@@ -31,7 +31,7 @@ public final class MainMenu extends Application {
     @Override
     /**Method of the library JAVAFX used for the creation of the view. */
     public void start(final Stage primaryStage) throws Exception {
-        /**Creation of the Stage, Scene and all their preferences. */          
+        /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
         final Pane pane = new Pane(createMainMenu());
         final Scene scene = new Scene(pane, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
@@ -143,7 +143,7 @@ public final class MainMenu extends Application {
     }
 
     /**Method for the shutdown of the program.
-     * @param pane Pane 
+     * @param pane Pane
      * */
     public void closeProgram(final Pane pane) {
         final boolean answer = Exit.display("quitting", "Do you want to quit?");
