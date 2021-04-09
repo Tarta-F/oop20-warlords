@@ -34,26 +34,33 @@ public final class GameFieldView {
     private static final int CELL_W = SW / ViewConstants.DIVISOR_27;
     private static final int CELL_H = SH / ViewConstants.DIVISOR_10;
 
+    private final int nRow;
+    private final int nCols;
+
     private final Map<UnitViewType, Image> unitImageTable = new HashMap<>();
 
     public GameFieldView(final int nRow, final int nCols) {
-
-        /**Creation of the grid.*/
-        for (int i = 0; i < nCols; i++) {
-            for (int j = 0; j < nRow; j++) {
-                //TODO RIEMPO LA LISTA CON IMAGEVIEW VUOTI, DA CAMBIARE
-                final ImageView ground = new ImageView();
-                ground.setFitWidth(CELL_W);
-                ground.setFitHeight(CELL_H);
-                GridPane.setConstraints(ground, i, j);
-                this.gridPane.getChildren().add(ground);
-            }
-        }
+        this.nRow = nRow;
+        this.nCols = nCols;
+        this.createGrid();
         this.gridPane.setAlignment(Pos.CENTER);
 
         final Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
         gridPane.setBackground(new Background(new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, 
                 BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+    }
+
+    private void createGrid() {
+        for (int i = 0; i < this.nCols; i++) {
+            for (int j = 0; j < this.nRow; j++) {
+                //TODO RIEMPO LA LISTA CON IMAGEVIEW VUOTI, DA CAMBIARE
+                final ImageView cell = new ImageView();
+                cell.setFitWidth(CELL_W);
+                cell.setFitHeight(CELL_H);
+                GridPane.setConstraints(cell, i, j);
+                this.gridPane.getChildren().add(cell);
+            }
+        }
     }
 
     /**
@@ -95,6 +102,7 @@ public final class GameFieldView {
      */
     public void clear() {
         this.gridPane.getChildren().clear();
+        this.createGrid();
     }
 
 }
