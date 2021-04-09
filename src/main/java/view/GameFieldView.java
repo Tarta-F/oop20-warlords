@@ -2,8 +2,6 @@ package view;
 
 import constants.ViewConstants;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,13 +24,8 @@ public final class GameFieldView {
 
     private final GridPane gridPane = new GridPane();
 
-    /**Taking screen size for the adaptation of the various elements of the view to the resolution of the screen.*/
-    private static final Dimension SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
-    private static final int SW = (int) SCREEN.getWidth();
-    private static final int SH = (int) SCREEN.getHeight();
-
-    private static final int CELL_W = SW / ViewConstants.DIVISOR_27;
-    private static final int CELL_H = SH / ViewConstants.DIVISOR_10;
+    private static final int CELL_W = (int) ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_27);
+    private static final int CELL_H = (int) ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10);
 
     private final int nRow;
     private final int nCols;
@@ -90,8 +83,8 @@ public final class GameFieldView {
     public void add(final UnitViewType unit, final Pair<Integer, Integer> position) {
         final ImageView unitView = new ImageView(this.callCachedImage(unit)); 
 
-        unitView.setFitWidth(CELL_W);
-        unitView.setFitHeight(CELL_H);
+        unitView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_27));
+        unitView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10));
 
         GridPane.setConstraints(unitView, position.getLeft(), position.getRight());
         gridPane.getChildren().add(unitView);

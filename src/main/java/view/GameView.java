@@ -33,6 +33,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * This class is the BattleField game view.
@@ -58,6 +59,8 @@ public final class GameView extends Region {
     private Label timer;
     private Controller observer;
 
+    
+    
     //public GameView(/* final Controller observer */) {
 //        this.observer = observer;
 //        try {
@@ -90,12 +93,12 @@ public final class GameView extends Region {
     }
 
 
-    public Parent createContent() throws IOException {
+    public Parent createGameView() throws IOException {
 
+      
         Pane pane = new Pane();
-
         //background image
-//        Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
+        //Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
         ImageView gameBackGround = new ImageView(scenario);
         gameBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
         gameBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
@@ -170,22 +173,14 @@ public final class GameView extends Region {
         /**Creation button Exit.*/
         Button exit = new Button("Exit");
         exit.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
-        exit.setOnAction(e -> closeProgram());
+        exit.setOnAction(e -> closeProgram(pane));
         exit.setStyle(Style.BUTTON_1);
 
         /**Creation button Menu.*/
         Button menu = new Button("Menu");
         menu.setStyle(Style.BUTTON_1);
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
-        menu.setOnAction(e -> {
-            scenaMenu = new MainMenu();
-            try {
-                pane.getChildren().setAll(scenaMenu.createContent());
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-        });
+        menu.setOnAction(e ->  returnMainMenu(pane));
 
         //label temporanea(qui ci andrebbe il timer)
         timer = new Label("TIMER");
@@ -325,10 +320,26 @@ public final class GameView extends Region {
     }
 
     /**Method to close the program with a confirm box.*/
-    private void closeProgram() {
+    private void closeProgram(Pane pane) {
     boolean answer = Exit.display("quitting", "Do you want to quit?");
     if (answer) {
-        System.exit(0);
+        final Stage stage = (Stage) pane.getScene().getWindow();
+        stage.close();
+        }
+    }
+    
+    
+    /**Method to return to main menu with a confirm box.*/
+    private void returnMainMenu(Pane pane) {
+    boolean answer = Exit.display("quitting", "do you want to return to main menu?");
+    if (answer) {
+        scenaMenu = new MainMenu();
+        try {
+            pane.getChildren().setAll(scenaMenu.createMainMenu());
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         }
     }
 
