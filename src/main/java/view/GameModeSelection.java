@@ -57,7 +57,8 @@ public class GameModeSelection extends Region {
 
         for (int i = 1; i < ViewConstants.N_BUTTON_5 - 1; i++) {
             scenarioButtons = new Button("SCENARIO: " + i);
-            scenarioButtons.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+            scenarioButtons.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
+                    ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
             scenarioButtons.setStyle(Style.BUTTON_1);
             listaScenario.add(scenarioButtons);
         }
@@ -69,7 +70,8 @@ public class GameModeSelection extends Region {
 
         for (int i = 1; i < ViewConstants.N_BUTTON_6; i += 2) {
             Button laneButtons = new Button("LANE'S NUMBER: " + i);
-            laneButtons.setPrefSize(sw / ViewConstants.DIVISOR_10, sh / ViewConstants.DIVISOR_15);
+            laneButtons.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
+                    ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
             laneButtons.setStyle(Style.BUTTON_1);
             listLane.put(laneButtons, i);
             laneButtons.setOnAction(e -> {
@@ -120,7 +122,7 @@ public class GameModeSelection extends Region {
         start.setStyle(Style.BUTTON_2);
         start.setOnAction(e -> {
 //            scenaGame = new GameView();
-           final ControllerImpl c = new ControllerImpl();
+           final ControllerImpl c = new ControllerImpl(this.laneNumber, this.timerDuration);
            try {
             pane.getChildren().setAll(c.getView().createGameView());
            } catch (IOException e1) {

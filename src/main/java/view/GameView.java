@@ -173,7 +173,6 @@ public final class GameView extends Region {
 
         /**Creation button Exit.*/
         Button exit = new Button("Exit");
-        //exit.setFocusTraversable(false);
         exit.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         exit.setOnMouseClicked(e -> closeProgram(pane));
         exit.setStyle(Style.BUTTON_1);
@@ -181,7 +180,6 @@ public final class GameView extends Region {
         /**Creation button Menu.*/
         Button menu = new Button("Menu");
         menu.setStyle(Style.BUTTON_1);
-        //menu.setFocusTraversable(false);
         menu.setMinSize(sw / ViewConstants.DIVISOR_30, sh / ViewConstants.DIVISOR_30);
         menu.setOnMouseClicked(e ->  returnMainMenu(pane));
 
@@ -316,8 +314,8 @@ public final class GameView extends Region {
     }
 
     /**Method to close the program with a confirm box.*/
-    private void closeProgram(Pane pane) {
-    boolean answer = Exit.display("quitting", "Do you want to quit?");
+    private void closeProgram(final Pane pane) {
+    boolean answer = Exit.display("Quitting", "Do you want to quit?");
     if (answer) {
         final Stage stage = (Stage) pane.getScene().getWindow();
         stage.close();
@@ -326,8 +324,8 @@ public final class GameView extends Region {
 
 
     /**Method to return to main menu with a confirm box.*/
-    private void returnMainMenu(Pane pane) {
-    boolean answer = Exit.display("quitting", "do you want to return to main menu?");
+    private void returnMainMenu(final Pane pane) {
+    boolean answer = Exit.display("Quitting", "Return to main menu?");
     if (answer) {
         scenaMenu = new MainMenu();
         try {
