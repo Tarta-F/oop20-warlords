@@ -1,7 +1,8 @@
 package view;
 
+import java.io.File;
 import java.io.IOException;
-
+import java.net.URISyntaxException;
 import constants.ViewConstants;
 import constants.ViewImages;
 import javafx.application.Application;
@@ -30,7 +31,7 @@ public final class MainMenu extends Application {
     @Override
     /**Method of the library JAVAFX used for the creation of the view. */
     public void start(final Stage primaryStage) throws Exception {
-        /**Creation of the Stage, Scene and all their preferences. */
+        /**Creation of the Stage, Scene and all their preferences. */          
         final Stage window = primaryStage;
         final Pane pane = new Pane(createMainMenu());
         final Scene scene = new Scene(pane, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
@@ -147,7 +148,6 @@ public final class MainMenu extends Application {
     public void closeProgram(final Pane pane) {
         final boolean answer = Exit.display("quitting", "Do you want to quit?");
         if (answer) {
-            //DA CAMBIARE
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();
             }
