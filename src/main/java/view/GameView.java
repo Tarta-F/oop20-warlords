@@ -269,6 +269,12 @@ public final class GameView extends Region {
             case RIGHT:
                 this.observer.controlNextUnit(PlayerType.PLAYER2);
                 break;
+            case SPACE:
+                this.observer.spawnUnit(PlayerType.PLAYER1);
+                break;
+            case ENTER:
+                this.observer.spawnUnit(PlayerType.PLAYER2);
+                break;
             default:
                 break;
             }
@@ -314,7 +320,7 @@ public final class GameView extends Region {
         imageView.setFitHeight(sh / ViewConstants.DIVISOR_20);
     }
 
-    public void setObserver(Controller observer) {
+    public void setObserver(final Controller observer) {
         this.observer = observer;
     }
 
@@ -332,7 +338,8 @@ public final class GameView extends Region {
      */
     public void show(final Map<UnitViewType, Pair<Integer, Integer>> units) {
         this.field.clear();
-        units.entrySet().forEach(unit -> this.field.add(unit.getKey(), unit.getValue()));
+        units.forEach(this.field::add);
+//        units.forEach((unit, position) -> this.field.add(unit, position));
     }
 
 }
