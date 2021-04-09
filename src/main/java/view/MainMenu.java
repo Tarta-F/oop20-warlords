@@ -32,13 +32,14 @@ public final class MainMenu extends Application {
     public void start(final Stage primaryStage) throws Exception {
         /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
-        final Scene scene = new Scene(createMainMenu(), ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        final Pane pane = new Pane(createMainMenu());
+        final Scene scene = new Scene(pane, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
         window.setScene(scene);
         window.show();
         window.setResizable(false);
         window.setOnCloseRequest(e -> {
             e.consume();
-            closeProgram();
+            closeProgram(pane);
         });
     }
 
@@ -109,7 +110,7 @@ public final class MainMenu extends Application {
         final Button exitMenu = new Button("EXIT");
         exitMenu.setStyle(Style.BUTTON_1);
         exitMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
-        exitMenu.setOnAction(e -> closeProgram());
+        exitMenu.setOnAction(e -> closeProgram(pane));
 
 
         /**Layout. */
@@ -140,12 +141,15 @@ public final class MainMenu extends Application {
         return pane;
     }
 
-    /**Method for the shutdown of the program. */
-    public void closeProgram() {
+    /**Method for the shutdown of the program.
+     * @param pane Pane 
+     * */
+    public void closeProgram(final Pane pane) {
         final boolean answer = Exit.display("quitting", "Do you want to quit?");
         if (answer) {
             //DA CAMBIARE
-            System.exit(0);
+            final Stage stage = (Stage) pane.getScene().getWindow();
+            stage.close();
             }
         }
 
