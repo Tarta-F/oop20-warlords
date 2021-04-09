@@ -20,13 +20,13 @@ import javafx.scene.layout.Region;
  */
 public class GameTutorial extends Region { 
 
-        private MainMenu scenaMenu;
+        private MainMenu sceneMenu;
 
         /**
          * Method to create the view of the current image. 
          * @return pane Pane
          * */
-        public final Parent createContent() throws IOException {
+        public final Parent createGameTutorial() throws IOException {
 
         final Pane pane = new Pane();
 
@@ -41,9 +41,9 @@ public class GameTutorial extends Region {
         mainMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         mainMenu.setStyle(Style.BUTTON_2);
         mainMenu.setOnAction(e -> {
-            scenaMenu = new MainMenu();
+            sceneMenu = new MainMenu();
             try {
-                pane.getChildren().setAll(scenaMenu.createContent());
+                pane.getChildren().setAll(sceneMenu.createMainMenu());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

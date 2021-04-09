@@ -1,7 +1,8 @@
 package view;
 
+import java.io.File;
 import java.io.IOException;
-
+import java.net.URISyntaxException;
 import constants.ViewConstants;
 import constants.ViewImages;
 import javafx.application.Application;
@@ -13,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -31,14 +33,14 @@ public final class MainMenu extends Application {
     public void start(final Stage primaryStage) throws Exception {
         /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
-        final Scene scene = new Scene(createContent(), ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution
-                .screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        final Pane pane = new Pane(createMainMenu());
+        final Scene scene = new Scene(pane, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
         window.setScene(scene);
         window.show();
         window.setResizable(false);
         window.setOnCloseRequest(e -> {
             e.consume();
-            closeProgram();
+            closeProgram(pane);
         });
     }
 
@@ -46,11 +48,10 @@ public final class MainMenu extends Application {
      * Method to create the view of the current image.
      * @return borderPane borderPane
      * */
-    public Parent createContent() throws IOException {
+    public Parent createMainMenu() throws IOException {
 
-        /**BorderPane. */
-        final BorderPane borderPane = new BorderPane();
-        borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        /**Pane. */
+        final Pane pane = new Pane();
 
         /**Background and Image. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
@@ -87,7 +88,7 @@ public final class MainMenu extends Application {
         versus.setOnAction(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
-                borderPane.getChildren().setAll(sceneGameModeSelection.createContent());
+                pane.getChildren().setAll(sceneGameModeSelection.createGameModeSelection());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -100,7 +101,7 @@ public final class MainMenu extends Application {
         tutorials.setOnAction(e -> {
             try {
                 sceneTutorial = new GameTutorial();
-                borderPane.getChildren().setAll(sceneTutorial.createContent());
+                pane.getChildren().setAll(sceneTutorial.createGameTutorial());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -110,7 +111,7 @@ public final class MainMenu extends Application {
         final Button exitMenu = new Button("EXIT");
         exitMenu.setStyle(Style.BUTTON_1);
         exitMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
-        exitMenu.setOnAction(e -> closeProgram());
+        exitMenu.setOnAction(e -> closeProgram(pane));
 
 
         /**Layout. */
@@ -129,21 +130,26 @@ public final class MainMenu extends Application {
         rigthVBox.getChildren().add(logoSpearman);
         rigthVBox.setPadding(new Insets(0, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 0, 0));
 
-        /**BorderPane sets and get. */
-        borderPane.getChildren().add(menuBackGround);
+        /**BorderPane sets and Pane gets. */
+        final BorderPane borderPane = new BorderPane();
+        borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
         borderPane.setCenter(menu);
         borderPane.setLeft(leftVBox);
         borderPane.setRight(rigthVBox);
+        pane.getChildren().add(menuBackGround);
+        pane.getChildren().addAll(borderPane);
 
-        return borderPane;
+        return pane;
     }
 
-    /**Method for the shutdown of the program. */
-    public void closeProgram() {
+    /**Method for the shutdown of the program.
+     * @param pane Pane
+     * */
+    public void closeProgram(final Pane pane) {
         final boolean answer = Exit.display("quitting", "Do you want to quit?");
         if (answer) {
-            //DA CAMBIARE
-            System.exit(0);
+            final Stage stage = (Stage) pane.getScene().getWindow();
+            stage.close();
             }
         }
 

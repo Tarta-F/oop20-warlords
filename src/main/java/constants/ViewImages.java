@@ -1,47 +1,61 @@
 package constants;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 /**
- * This class contain the various constants that we use in the game.
+ * This class contain the various image that we use in the program.
  */
 public final class ViewImages {
 
-    public static final String LOGO_SWORDMEN = "/SwordsmenUnit.png";
-    
-    public static final String LOGO_SPEARMAN= "/SpearmenUnit.png";
-    
-    public static final String LOGO_ARCHER= "/ArcherUnit.png";
-    
-    public static final String SELECTED_SWORDMEN = "/SelectedSwordsmenUnit.png";
-    
-    public static final String SELECTED_SPEARMAN = "/SelectedSpearmenUnit.png";
-    
-    public static final String SELECTED_ARCHER = "/SelectedArcherUnit.png";
-    
-    public static final String ARROW_PLAYER1 = "/ArrowPlayer1.png";
-    
-    public static final String ARROW_PLAYER2 = "/ArrowPlayer2.png";
-    
-    public static final String SELECTED_ARROW_PLAYER1 = "/SelectedArrowPlayer1.png";
-    
-    public static final String SELECTED_ARROW_PLAYER2 = "/SelectedArrowPlayer2.png";
-    
-    public static final String GROUND = "/Ground.png";
-    
-    public static final String GAME_SETTINGS = "/GameSettings.png";
-    
-    public static final String GAME_TUTORIAL = "/GameSettingsTUTORIAL.png";
-    
-    public static final String MENU = "/menu.png";
-    
-    public static final String LOGO = "/logo.png";
-    
-    public static final String SPEARMAN= "/spearman_1.png";
-    
-    public static final String ARCHER= "/archer_2.png";
+    /**PATH Image Swordsmen. */
+    public static final String LOGO_SWORDSMEN = "/SwordsmenUnit.png";
 
-    
-    private ViewImages () { }
+    /**PATH Image Spearmen. */
+    public static final String LOGO_SPEARMEN = "/SpearmenUnit.png";
+
+    /**PATH Image Archer. */
+    public static final String LOGO_ARCHER = "/ArcherUnit.png";
+
+    /**PATH Image selected Swordsmen. */
+    public static final String SELECTED_SWORDSMEN = "/SelectedSwordsmenUnit.png";
+
+    /**PATH Image selected Spearmen. */
+    public static final String SELECTED_SPEARMAN = "/SelectedSpearmenUnit.png";
+
+    /**PATH Image selected Archer. */
+    public static final String SELECTED_ARCHER = "/SelectedArcherUnit.png";
+
+    /**PATH Image lane arrow player 1. */
+    public static final String ARROW_PLAYER1 = "/ArrowPlayer1.png";
+
+    /**PATH Image lane arrow player 2. */
+    public static final String ARROW_PLAYER2 = "/ArrowPlayer2.png";
+
+    /**PATH Image selected lane arrow player 1. */
+    public static final String SELECTED_ARROW_PLAYER1 = "/SelectedArrowPlayer1.png";
+
+    /**PATH Image selected lane arrow player 2. */
+    public static final String SELECTED_ARROW_PLAYER2 = "/SelectedArrowPlayer2.png";
+
+    /**PATH Image grid ground. */
+    public static final String GROUND = "/Ground.png";
+
+    /**PATH Image GameModeSelection background. */
+    public static final String GAME_SETTINGS = "/GameSettings.png";
+
+    /**PATH Image GameTutorial background. */
+    public static final String GAME_TUTORIAL = "/GameSettingsTUTORIAL.png";
+
+    /**PATH Image MainMenu background. */
+    public static final String MENU = "/menu.png";
+
+    /**PATH Image MainMenu logo. */
+    public static final String LOGO = "/logo.png";
+
+    /**PATH Image MainMenu spearmen. */
+    public static final String SPEARMAN = "/spearman_1.png";
+
+    /**PATH Image MainMenu archer. */
+    public static final String ARCHER = "/archer_2.png";
+
+    private ViewImages() { }
 }
+
