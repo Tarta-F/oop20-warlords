@@ -2,8 +2,7 @@ package view;
 
 import constants.ViewConstants;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -30,7 +29,7 @@ public final class GameFieldView {
     private final int nRow;
     private final int nCols;
 
-    private final Map<UnitViewType, Image> unitImageTable = new HashMap<>();
+    private final EnumMap<UnitViewType, Image> unitImageTable = new EnumMap<>(UnitViewType.class);
 
     public GameFieldView(final int nRow, final int nCols) {
         this.nRow = nRow;
@@ -39,8 +38,10 @@ public final class GameFieldView {
         this.gridPane.setAlignment(Pos.CENTER);
 
         final Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
-        gridPane.setBackground(new Background(new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, 
-                BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        //TODO
+        final BackgroundSize bgsize = new BackgroundSize(nCols * CELL_W, CELL_H, false, false, false, false);
+        gridPane.setBackground(new Background(new BackgroundImage(groundImage, BackgroundRepeat.NO_REPEAT, 
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bgsize)));
     }
 
     private void createGrid() {
