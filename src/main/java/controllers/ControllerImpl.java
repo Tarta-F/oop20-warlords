@@ -1,7 +1,9 @@
 package controllers;
 
-import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -45,7 +47,6 @@ public final class ControllerImpl implements Controller {
 //            // TODO Auto-generated catch block
 //            e1.printStackTrace();
 //           }
-        System.out.println("NumLanes : " + laneNumber);
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
         new Thread(new GameTimer(mins, this.gameView)).start();
     }
@@ -64,9 +65,16 @@ public final class ControllerImpl implements Controller {
                 return null;
         }
     }
-    private Map<UnitViewType, Pair<Integer, Integer>> convertMap(final Map<Unit, Pair<Integer, Integer>> modelMap) {
-        final Map<UnitViewType, Pair<Integer, Integer>> viewMap = new HashMap<>();
-        modelMap.forEach((k, v) -> viewMap.put(this.convertUnit(k), v));
+
+    private EnumMap<UnitViewType, Set<Pair<Integer, Integer>>> convertMap(final Map<Unit, Pair<Integer, Integer>> modelMap) {
+        final EnumMap<UnitViewType, Set<Pair<Integer, Integer>>> viewMap = new EnumMap<>(UnitViewType.class);
+        modelMap.forEach((k, v) -> {
+            final UnitViewType unitView = this.convertUnit(k);
+            if (!viewMap.containsKey(unitView)) {
+                viewMap.put(unitView, new HashSet<>());
+            }
+            viewMap.get(unitView).add(v);
+        });
         return viewMap;
     }
 
@@ -110,6 +118,7 @@ public final class ControllerImpl implements Controller {
         if (timeWaited > unitToSpawn.getTimer()) { //probabilmente da castare a long (per correttezza (?))
             final int lane = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
             this.field.addUnit(lane, new UnitImpl(unitToSpawn, playerType));
+            //TODO
             gameView.show(this.convertMap(this.field.getUnits()));
         }
     }

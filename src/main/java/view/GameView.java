@@ -11,8 +11,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Arrays;
+import java.util.Set;
+
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.Arrays;
+import java.util.EnumMap;
+
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -276,6 +281,12 @@ public final class GameView extends Region {
             }
         });
 
+//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 0));
+//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 1));
+//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 2));
+//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 3));
+//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 4));
+
         pane.getChildren().add(gameBackGround);
         pane.getChildren().add(borderpane);
         return pane;
@@ -347,9 +358,9 @@ public final class GameView extends Region {
      * Draw in the Field the given units.
      * @param units a set containing the info for drawing the units in the right place
      */
-    public void show(final Map<UnitViewType, Pair<Integer, Integer>> units) {
+    public void show(final EnumMap<UnitViewType, Set<Pair<Integer, Integer>>> units) {
         this.field.clear();
-        units.forEach(this.field::add);
+        units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
 //        units.forEach((unit, position) -> this.field.add(unit, position));
     }
 
