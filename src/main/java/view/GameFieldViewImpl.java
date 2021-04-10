@@ -50,10 +50,10 @@ public final class GameFieldViewImpl implements GameFieldView {
         this.gridPane.setAlignment(Pos.CENTER);
 //        this.gridPane.setPrefSize(nCols * CELL_W, nRow * CELL_H);
 
-        final BackgroundSize bgSize = new BackgroundSize(nCols * CELL_W, CELL_H, false, false, false, false);
+        final BackgroundSize bgSize = new BackgroundSize(nCols * CELL_W, nRow * CELL_H, false, false, false, false);
         final BackgroundImage bgImage = 
-                new BackgroundImage(scenario.orElseGet(() -> new Image(this.getClass().getResourceAsStream(ViewImages.GROUND))),
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
+                new BackgroundImage(scenario.orElseGet(() -> new Image(this.getClass().getResourceAsStream(ViewImages.GROUND_2))),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER, bgSize);
         this.gridPane.setBackground(new Background(bgImage));
     }

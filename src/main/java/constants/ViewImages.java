@@ -37,6 +37,8 @@ public final class ViewImages {
 
     /**PATH Image grid ground. */
     public static final String GROUND = "/Ground.png";
+    /**PATH Image grid ground. */
+    public static final String GROUND_2 = "/Ground2.png";
 
     /**PATH Image GameModeSelection background. */
     public static final String GAME_SETTINGS = "/GameSettings.png";
