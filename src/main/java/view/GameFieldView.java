@@ -4,6 +4,10 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javafx.scene.layout.GridPane;
 
+/** 
+ * This interface models the GameField used in the View using a GridPane.
+ *
+ */
 public interface GameFieldView {
 
     /**

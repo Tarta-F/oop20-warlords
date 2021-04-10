@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -90,13 +91,13 @@ public final class GameView extends Region {
 
     public GameView(final int laneNumber, final Image scenario) {
         this.scenario = scenario;
-        this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS);
+        this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, Optional.of(scenario));
     }
 
     public GameView(final int laneNumber) {
         this.laneNumber = laneNumber;
         this.scenario = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
-        this.field = new GameFieldViewImpl(this.laneNumber, ViewConstants.GRID_COLUMNS);
+        this.field = new GameFieldViewImpl(this.laneNumber, ViewConstants.GRID_COLUMNS, Optional.ofNullable(null));
     }
 
 
