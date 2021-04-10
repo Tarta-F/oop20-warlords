@@ -47,6 +47,7 @@ public final class ControllerImpl implements Controller {
 //            // TODO Auto-generated catch block
 //            e1.printStackTrace();
 //           }
+
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
         new Thread(new GameTimer(mins, this.gameView)).start();
     }
@@ -118,8 +119,10 @@ public final class ControllerImpl implements Controller {
         if (timeWaited > unitToSpawn.getTimer()) { //probabilmente da castare a long (per correttezza (?))
             final int lane = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
             this.field.addUnit(lane, new UnitImpl(unitToSpawn, playerType));
-            //TODO
             gameView.show(this.convertMap(this.field.getUnits()));
+
+            //TODO update variables: lastSpawnP1 || lastSpawnP2
+
         }
     }
 

@@ -72,7 +72,7 @@ public class GameModeSelection extends Region {
             laneButtons.setOnAction(e -> {
                 this.laneNumber = buttonLane.get(laneButtons);
                 updateSettings();
-                System.out.println(this.laneNumber); /* qui non vedo la variabile del for -> utilizzo Map ? */
+                //System.out.println(this.laneNumber); /* qui non vedo la variabile del for -> utilizzo Map ? */
             });
             //listaLane.add(laneButtons);
         }
@@ -94,7 +94,7 @@ public class GameModeSelection extends Region {
             timerButtons.setOnAction(e -> {
                 this.timerDuration = buttonTimer.get(timerButtons);
                 updateSettings();
-                System.out.println(this.timerDuration);
+                //System.out.println(this.timerDuration);
             });
         }
 
