@@ -97,7 +97,7 @@ public final class GameView extends Region {
     public GameView(final int laneNumber) {
         this.laneNumber = laneNumber;
         this.scenario = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
-        this.field = new GameFieldViewImpl(this.laneNumber, ViewConstants.GRID_COLUMNS, Optional.ofNullable(null));
+        this.field = new GameFieldViewImpl(this.laneNumber, ViewConstants.GRID_COLUMNS, Optional.empty());
     }
 
 
