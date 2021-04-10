@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
 import constants.ViewConstants;
 import constants.ViewImages;
 import controllers.ControllerImpl;
@@ -57,40 +61,47 @@ public class GameModeSelection extends Region {
         //lane buttons
         //Button laneButtons;
         List<Button> listaLane = new ArrayList<>();
-        HashMap<Button, Integer> listLane = new HashMap<Button, Integer>();
+        Map<Button, Integer> buttonLane = new HashMap<>();
 
         for (int i = 1; i < ViewConstants.N_BUTTON_6; i += 2) {
             Button laneButtons = new Button("LANE'S NUMBER: " + i);
             laneButtons.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
                     ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
             laneButtons.setStyle(Style.BUTTON_1);
-            listLane.put(laneButtons, i);
+            buttonLane.put(laneButtons, i);
             laneButtons.setOnAction(e -> {
-                this.laneNumber = listLane.get(laneButtons);
+                this.laneNumber = buttonLane.get(laneButtons);
                 updateSettings();
                 System.out.println(this.laneNumber); /* qui non vedo la variabile del for -> utilizzo Map ? */
             });
-            listaLane.add(laneButtons);
+            //listaLane.add(laneButtons);
         }
+        final List<Button> listl = buttonLane.entrySet().stream()
+                .sorted((a, b) -> a.getValue() - b.getValue())
+                .map(e -> e.getKey())
+                .collect(Collectors.toList());
 
        // timer Buttons
         //Button timerButtons;
-        List<Button> listaTimer = new ArrayList<>();
-        final HashMap<Button, Integer> listTimer = new HashMap<>();
+        final Map<Button, Integer> buttonTimer = new HashMap<>();
 
         for (int i = ViewConstants.N_BUTTON_5; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_5) {
             Button timerButtons;
             timerButtons = new Button(i + " MINUTES");
             timerButtons.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
             timerButtons.setStyle(Style.BUTTON_1);
-            listTimer.put(timerButtons, i);
+            buttonTimer.put(timerButtons, i);
             timerButtons.setOnAction(e -> {
-                this.timerDuration = listTimer.get(timerButtons);
+                this.timerDuration = buttonTimer.get(timerButtons);
                 updateSettings();
                 System.out.println(this.timerDuration);
             });
-            listaTimer.add(timerButtons);
-            }
+        }
+
+        final List<Button> listt = buttonTimer.entrySet().stream()
+                .sorted((a, b) -> a.getValue() - b.getValue())
+                .map(e -> e.getKey())
+                .collect(Collectors.toList());
 
         //back button
         final Button back = new Button("BACK");
@@ -155,12 +166,12 @@ public class GameModeSelection extends Region {
         final HBox laneBox = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
         laneBox.setAlignment(Pos.CENTER);
         laneBox.getChildren().add(lane);
-        laneBox.getChildren().addAll(listaLane);
+        laneBox.getChildren().addAll(listl);
 
         final HBox timerBox = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
         timerBox.setAlignment(Pos.CENTER);
         timerBox.getChildren().add(timer);
-        timerBox.getChildren().addAll(listaTimer);
+        timerBox.getChildren().addAll(listt);
 
         final HBox backStartBox = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
         backStartBox.setPadding(new Insets(0, 0, 0, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30)));
