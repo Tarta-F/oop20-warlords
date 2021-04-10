@@ -131,28 +131,23 @@ public final class GameView extends Region {
         listUnitP1.add(unitP1);
 
         unitP1 = new ImageView(unit2Image);
-        unitP1.setFitWidth(sw / ViewConstants.DIVISOR_20);
-        unitP1.setFitHeight(sh / ViewConstants.DIVISOR_20);
+        utilSetDimension(unitP1);
         listUnitP1.add(unitP1);
 
         unitP1 = new ImageView(unit3Image);
-        unitP1.setFitWidth(sw / ViewConstants.DIVISOR_20);
-        unitP1.setFitHeight(sh / ViewConstants.DIVISOR_20);
+        utilSetDimension(unitP1);
         listUnitP1.add(unitP1);
 
         ImageView unitP2 = new ImageView(unit1SelectedImage);
-        unitP2.setFitWidth(sw / ViewConstants.DIVISOR_20);
-        unitP2.setFitHeight(sh / ViewConstants.DIVISOR_20);
+        utilSetDimension(unitP2);
         listUnitP2.add(unitP2);
 
         unitP2 = new ImageView(unit2Image);
-        unitP2.setFitWidth(sw / ViewConstants.DIVISOR_20);
-        unitP2.setFitHeight(sh / ViewConstants.DIVISOR_20);
+        utilSetDimension(unitP2);
         listUnitP2.add(unitP2);
 
         unitP2 = new ImageView(unit3Image);
-        unitP2.setFitWidth(sw / ViewConstants.DIVISOR_20);
-        unitP2.setFitHeight(sh / ViewConstants.DIVISOR_20);
+        utilSetDimension(unitP2);
         listUnitP2.add(unitP2);
 
         /**List of ImageView arrows for the player 1*/
@@ -160,8 +155,7 @@ public final class GameView extends Region {
 
         for (int i = 0; i < this.laneNumber; i++) {
             arrow1P1 = new ImageView(arrowImageP1);
-            arrow1P1.setFitWidth(sw / ViewConstants.DIVISOR_20);
-            arrow1P1.setFitHeight(sh / ViewConstants.DIVISOR_20);
+            utilSetDimension(arrow1P1);
             listArrowP1.add(arrow1P1);
         }
         listArrowP1.get(this.laneNumber / 2).setImage(arrowSelectedImageP1);
@@ -171,8 +165,7 @@ public final class GameView extends Region {
 
         for (int i = 0; i < this.laneNumber; i++) {
             arrow1P2 = new ImageView(arrowImageP2);
-            arrow1P2.setFitWidth(sw / ViewConstants.DIVISOR_20);
-            arrow1P2.setFitHeight(sh / ViewConstants.DIVISOR_20);
+            utilSetDimension(arrow1P2);
             listArrowP2.add(arrow1P2);
         }
         listArrowP2.get(this.laneNumber / 2).setImage(arrowSelectedImageP2);
