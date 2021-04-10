@@ -90,13 +90,13 @@ public final class GameView extends Region {
 
     public GameView(final int laneNumber, final Image scenario) {
         this.scenario = scenario;
-        this.field = new GameFieldView(laneNumber, ViewConstants.GRID_COLUMNS);
+        this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS);
     }
 
     public GameView(final int laneNumber) {
         this.laneNumber = laneNumber;
         this.scenario = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
-        this.field = new GameFieldView(this.laneNumber, ViewConstants.GRID_COLUMNS);
+        this.field = new GameFieldViewImpl(this.laneNumber, ViewConstants.GRID_COLUMNS);
     }
 
 
@@ -358,10 +358,9 @@ public final class GameView extends Region {
      * Draw in the Field the given units.
      * @param units a set containing the info for drawing the units in the right place
      */
-    public void show(final EnumMap<UnitViewType, Set<Pair<Integer, Integer>>> units) {
+    public void show(final EnumMap<UnitViewType, List<Pair<Integer, Integer>>> units) {
         this.field.clear();
         units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
-//        units.forEach((unit, position) -> this.field.add(unit, position));
     }
 
 }

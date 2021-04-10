@@ -1,9 +1,9 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -67,12 +67,12 @@ public final class ControllerImpl implements Controller {
         }
     }
 
-    private EnumMap<UnitViewType, Set<Pair<Integer, Integer>>> convertMap(final Map<Unit, Pair<Integer, Integer>> modelMap) {
-        final EnumMap<UnitViewType, Set<Pair<Integer, Integer>>> viewMap = new EnumMap<>(UnitViewType.class);
+    private EnumMap<UnitViewType, List<Pair<Integer, Integer>>> convertMap(final Map<Unit, Pair<Integer, Integer>> modelMap) {
+        final EnumMap<UnitViewType, List<Pair<Integer, Integer>>> viewMap = new EnumMap<>(UnitViewType.class);
         modelMap.forEach((k, v) -> {
             final UnitViewType unitView = this.convertUnit(k);
             if (!viewMap.containsKey(unitView)) {
-                viewMap.put(unitView, new HashSet<>());
+                viewMap.put(unitView, new ArrayList<>());
             }
             viewMap.get(unitView).add(v);
         });
@@ -156,7 +156,13 @@ public final class ControllerImpl implements Controller {
         }
         this.gameView.updateSelectUnit(playerType, currentIndex, nextIndex);
     }
+
     public GameView getView() {
         return this.gameView;
+    }
+
+    public void update() {
+        this.field.update();
+        this.gameView.show(this.convertMap(this.field.getUnits()));
     }
 }
