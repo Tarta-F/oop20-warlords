@@ -59,6 +59,9 @@ public final class GameConstants {
     /** Cell number for each lane. */
     public static final int CELLS_NUM = 15;
 
+    /** The necessary score to win. */
+    public static final int SCORE_WIN = 8;
+
   //Da metterne altri, se si vuole implementare il movimento diverso per tutte le unita'
     /**Movement of the unit. */
     public static final int STEP = 1;

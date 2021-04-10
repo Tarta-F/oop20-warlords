@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -27,6 +28,7 @@ public final class ControllerImpl implements Controller {
     private final GameView gameView;
     private final FieldImpl field;
     private final int laneNumber;
+    private final Optional<PlayerType> winner;
     //TODO timer dei player da mostrare alla view ->
 
 //    public ControllerImpl(final GameView gameView) {
@@ -40,6 +42,7 @@ public final class ControllerImpl implements Controller {
         this.laneNumber = laneNumber;
         this.selectedLaneIndexP1 = this.laneNumber / 2;
         this.selectedLaneIndexP2 = this.laneNumber / 2;
+        this.winner = Optional.empty();
 //        try {
 //            this.pane = new Pane();
 //            pane.getChildren().setAll(gameView.createContent());
@@ -90,6 +93,7 @@ public final class ControllerImpl implements Controller {
             this.selectedLaneIndexP2 = nextIndex;
         }
         this.gameView.updateSelectLane(playerType, currentIndex, nextIndex); //in base a pType scelgo in che lista guardare
+        this.update();
     }
 
     @Override
@@ -164,5 +168,17 @@ public final class ControllerImpl implements Controller {
     public void update() {
         this.field.update();
         this.gameView.show(this.convertMap(this.field.getUnits()));
+    }
+
+    public boolean isOver() {
+        return this.field.getScore(PlayerType.PLAYER1).get() == GameConstants.SCORE_WIN;
+    }
+
+    public Optional<PlayerType> getWinner() {
+        return winner;
+    }
+
+    public int getScore(final PlayerType player) {
+        return this.field.getScore(player).orElseGet(() -> Integer.valueOf(0));
     }
 }
