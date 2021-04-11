@@ -64,6 +64,8 @@ public final class GameView extends Region {
     private List<Image> unitSelected;
     private List<Image> unitImage;
     private Label timer;
+    private Label timerP1;
+    private Label timerP2;
     private Controller observer;
 
 
@@ -198,6 +200,21 @@ public final class GameView extends Region {
         player1.setPrefWidth(sw / ViewConstants.DIVISOR_15);
         player1.setAlignment(Pos.CENTER);
 
+        //prova timerP1
+        timerP1 = new Label("P1:00");
+        timerP1.setStyle(Style.LABEL);
+
+        timerP1.setPrefHeight(sh / ViewConstants.DIVISOR_20);
+        timerP1.setPrefWidth(sw / ViewConstants.DIVISOR_15);
+        timerP1.setAlignment(Pos.CENTER);
+
+        timerP2 = new Label("P2:00");
+        timerP2.setStyle(Style.LABEL);
+
+        timerP2.setPrefHeight(sh / ViewConstants.DIVISOR_20);
+        timerP2.setPrefWidth(sw / ViewConstants.DIVISOR_15);
+        timerP2.setAlignment(Pos.CENTER);
+
         /** Health Points player2 */
         int hp2 = 8;
         Label player2 = new Label("PLAYER 2 HP: " + hp2);
@@ -215,7 +232,7 @@ public final class GameView extends Region {
         topMenu.setPadding(new Insets(sh / ViewConstants.DIVISOR_60, 0, sh / ViewConstants.DIVISOR_60, 0));
 
         HBox bottomMenu = new HBox(sw / ViewConstants.DIVISOR_30);
-        bottomMenu.getChildren().addAll(player1, menu, exit, player2);
+        bottomMenu.getChildren().addAll(timerP1, player1, menu, exit, player2, timerP2);
         bottomMenu.setAlignment(Pos.CENTER);
         bottomMenu.setPadding(new Insets(sh / ViewConstants.DIVISOR_60, 0, sh / ViewConstants.DIVISOR_60, 0));
 
@@ -315,6 +332,11 @@ public final class GameView extends Region {
         Platform.runLater(() -> timer.setText(String.format("%02d:%02d", mins, seconds)));
     }
 
+    //prova
+    public void updatePlayerTimer(final int mins, final int seconds) {
+        Platform.runLater(() -> timerP1.setText(String.format("%02d:%02d", mins, seconds)));
+    }
+
     private void utilSetDimension(final ImageView imageView) {
         imageView.setFitWidth(sw / ViewConstants.DIVISOR_20);
         imageView.setFitHeight(sh / ViewConstants.DIVISOR_20);
@@ -332,7 +354,6 @@ public final class GameView extends Region {
         stage.close();
         }
     }
-
 
     /**Method to return to main menu with a confirm box.*/
     private void returnMainMenu(final Pane pane) {

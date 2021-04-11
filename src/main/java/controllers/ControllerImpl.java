@@ -29,8 +29,7 @@ public final class ControllerImpl implements Controller {
     private final FieldImpl field;
     private final int laneNumber;
     private final Optional<PlayerType> winner;
-    //TODO timer dei player da mostrare alla view ->
-
+    private final PlayerTimer playerTimer;
 //    public ControllerImpl(final GameView gameView) {
 //        this.gameView = gameView;
 //        this.gameView.setObserver(this);
@@ -43,6 +42,8 @@ public final class ControllerImpl implements Controller {
         this.selectedLaneIndexP1 = this.laneNumber / 2;
         this.selectedLaneIndexP2 = this.laneNumber / 2;
         this.winner = Optional.empty();
+        this.playerTimer = new PlayerTimer(this.gameView);
+
 //        try {
 //            this.pane = new Pane();
 //            pane.getChildren().setAll(gameView.createContent());
@@ -53,6 +54,7 @@ public final class ControllerImpl implements Controller {
 
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
         new Thread(new GameTimer(mins, this.gameView)).start();
+        new Thread(playerTimer).start();
     }
 
     private UnitViewType convertUnit(final Unit modelUnit) {
@@ -135,6 +137,7 @@ public final class ControllerImpl implements Controller {
             final int lane = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
             this.field.addUnit(lane, new UnitImpl(unitToSpawn, playerType));
             gameView.show(this.convertMap(this.field.getUnits()));
+            this.playerTimer.resetTimer();
         }
     }
 

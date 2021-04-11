@@ -2,7 +2,7 @@ package controllers;
 
 import view.GameView;
 
-public class GameTimer implements Runnable {
+public class PlayerTimer implements Runnable {
 
     private static final int SEC_IN_MIN = 60;
     private volatile int mins;
@@ -10,26 +10,31 @@ public class GameTimer implements Runnable {
     private volatile int totSec;
     private final GameView gameView;
 
-    GameTimer(final int mins, final GameView gameView) {
-        this.mins = mins;
+    PlayerTimer(final GameView gameView) {
+        this.mins = 0;
         this.seconds = 0;
-        this.totSec = this.mins * SEC_IN_MIN;
+        this.totSec = 0;
         this.gameView = gameView;
     }
 
     @Override
     public final void run() {
+        // TODO Auto-generated method stub
         while (totSec >= 0) {
             try {
                 this.seconds = totSec % SEC_IN_MIN;
                 this.mins = (totSec - seconds) / SEC_IN_MIN;
-                this.totSec--;  /*[warning spotbugs] but it's safe because there is only 1 thread that use this variable*/
-                this.gameView.updateTimer(this.mins, this.seconds);
+                this.totSec++;
+                this.gameView.updatePlayerTimer(this.mins, this.seconds);
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
         }
-        //TODO block/finish the game
+    }
+    public final void resetTimer() {
+        this.totSec = 0;
+        this.mins = 0;
+        this.seconds = 0;
     }
 }
