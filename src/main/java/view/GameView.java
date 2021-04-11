@@ -321,7 +321,7 @@ public final class GameView extends Region {
         Platform.runLater(() -> timer.setText(String.format("%02d:%02d", mins, seconds)));
     }
 
-    public void utilSetDimension(final ImageView imageView) {
+    private void utilSetDimension(final ImageView imageView) {
         imageView.setFitWidth(sw / ViewConstants.DIVISOR_20);
         imageView.setFitHeight(sh / ViewConstants.DIVISOR_20);
     }

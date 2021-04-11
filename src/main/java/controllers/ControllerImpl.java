@@ -22,8 +22,8 @@ public final class ControllerImpl implements Controller {
     private int selectedLaneIndexP2;
     private int selectedUnitIndexP1;
     private int selectedUnitIndexP2;
-    private final long lastSpawnP1;
-    private final long lastSpawnP2;
+    private long lastSpawnP1;
+    private long lastSpawnP2;
     private final GameView gameView;
     private final FieldImpl field;
     private final int laneNumber;
@@ -78,6 +78,16 @@ public final class ControllerImpl implements Controller {
         });
         return viewMap;
     }
+    /** Utility function to update Spawn Timer related to the player.
+     * @param playerType Player who want to spawn a troup
+     */
+    private void setSpawnTime(final PlayerType playerType) {
+        if (playerType.equals(PlayerType.PLAYER1)) {
+            this.lastSpawnP1 = System.currentTimeMillis();
+        } else {
+            this.lastSpawnP2 = System.currentTimeMillis();
+        }
+    }
 
     @Override
     public void controlNextLane(final PlayerType playerType) {
@@ -117,12 +127,10 @@ public final class ControllerImpl implements Controller {
         final long timeWaited = System.currentTimeMillis() - lastSpawn;
         final UnitType unitToSpawn = UnitType.values()[unitIndex];
         if (timeWaited > unitToSpawn.getTimer()) { //probabilmente da castare a long (per correttezza (?))
+            setSpawnTime(playerType);
             final int lane = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
             this.field.addUnit(lane, new UnitImpl(unitToSpawn, playerType));
             gameView.show(this.convertMap(this.field.getUnits()));
-
-            //TODO update variables: lastSpawnP1 || lastSpawnP2
-
         }
     }
 
