@@ -1,8 +1,11 @@
 package view;
 
 import constants.ViewConstants;
+import constants.ViewImages;
 
 import java.util.EnumMap;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -10,18 +13,22 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 
 /** 
  * Class that models the Field with a GridPane of the given dimensions.
  */
 public final class GameFieldViewImpl implements GameFieldView {
+
+    private static final String MESSAGE_OVER_ROWS = "Image exceed row limits";
+
+    private static final String MESSAGE_OVER_COLUMNS = "Image exceed column limits";
+
+    private static final String MESSAGE_NEGATIVE_DIMENSIONS = "Impossible create a field with negative dimensions";
 
     private final GridPane gridPane = new GridPane();
 
@@ -33,32 +40,37 @@ public final class GameFieldViewImpl implements GameFieldView {
 
     private final EnumMap<UnitViewType, Image> unitImageTable = new EnumMap<>(UnitViewType.class);
 
-    public GameFieldViewImpl(final int nRow, final int nCols) {
+    public GameFieldViewImpl(final int nRow, final int nCols, final Optional<Image> scenario) {
+        if (nRow < 0 || nCols < 0) {
+            throw new IllegalArgumentException(MESSAGE_NEGATIVE_DIMENSIONS);
+        }
         this.nRow = nRow;
         this.nCols = nCols;
         this.createGrid();
         this.gridPane.setAlignment(Pos.CENTER);
 //        this.gridPane.setPrefSize(nCols * CELL_W, nRow * CELL_H);
 
-        final Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
-        //TODO
-        final BackgroundSize bgsize = new BackgroundSize(nCols * CELL_W, CELL_H, false, false, false, false);
-//        gridPane.setBackground(new Background(new BackgroundImage(groundImage, BackgroundRepeat.NO_REPEAT, 
-//                BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, bgsize)));
-        gridPane.setBackground(new Background(new BackgroundFill(Color.BROWN, null, null)));
+        final BackgroundSize bgSize = new BackgroundSize(nCols * CELL_W, nRow * CELL_H, false, false, false, false);
+        final BackgroundImage bgImage = 
+                new BackgroundImage(scenario.orElseGet(() -> new Image(this.getClass().getResourceAsStream(ViewImages.GROUND_2))),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                        BackgroundPosition.CENTER, bgSize);
+        this.gridPane.setBackground(new Background(bgImage));
     }
 
+    /**
+     * Fills the Grid with the number of row and columns given by the fields of this objects.
+     */
     private void createGrid() {
-        for (int i = 0; i < this.nCols; i++) {
-            for (int j = 0; j < this.nRow; j++) {
-                //TODO RIEMPO LA LISTA CON IMAGEVIEW VUOTI, DA CAMBIARE
+        IntStream.range(0, this.nCols).forEach(c -> {
+            IntStream.range(0, this.nRow).forEach(r -> {
                 final ImageView cell = new ImageView();
                 cell.setFitWidth(CELL_W);
                 cell.setFitHeight(CELL_H);
-                GridPane.setConstraints(cell, i, j);
+                GridPane.setConstraints(cell, c, r);
                 this.gridPane.getChildren().add(cell);
-            }
-        }
+            });
+        });
     }
 
     /**
@@ -74,32 +86,40 @@ public final class GameFieldViewImpl implements GameFieldView {
     }
 
     /**
-     * @return The Grid created by this Field
+     * If the value is negative or greater than or equal to limit, then throw IndexOutOfBoundsException 
+     * with the given message.
+     * @param value the value to check
+     * @param limit the limit that value can assume
+     * @param message the message to print if throws the exception
+     * 
      */
+    private void checkOutOfBounds(final Integer value, final Integer limit, final String message) {
+        if (value < 0 || value > limit - 1) {
+            throw new IndexOutOfBoundsException(message);
+        }
+    }
+
     @Override
     public GridPane getGrid() {
         return this.gridPane;
     }
 
-    /**
-     * Add the unit at the player at the given position in the grid.
-     * @param unit UnitType to add
-     * @param position in which to place the unit
-     */
     @Override
     public void add(final UnitViewType unit, final Pair<Integer, Integer> position) {
+        final int x = position.getLeft();
+        final int y = position.getRight();
         final ImageView unitView = new ImageView(this.callCachedImage(unit)); 
+
+        this.checkOutOfBounds(x, nCols, MESSAGE_OVER_COLUMNS);
+        this.checkOutOfBounds(y, nRow, MESSAGE_OVER_ROWS);
 
         unitView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_27));
         unitView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10));
 
-        GridPane.setConstraints(unitView, position.getLeft(), position.getRight());
+        GridPane.setConstraints(unitView, x, y);
         gridPane.getChildren().add(unitView);
     }
 
-    /**
-     * Clear the Field from all the units contained.
-     */
     @Override
     public void clear() {
         this.gridPane.getChildren().clear();

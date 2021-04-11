@@ -1,8 +1,6 @@
 package view;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import constants.ViewConstants;
 import constants.ViewImages;
 import javafx.application.Application;

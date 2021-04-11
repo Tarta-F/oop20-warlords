@@ -57,13 +57,22 @@ public final class ViewConstants {
     public static final int N_ARROW = 5;
 
     /**Number of BUTTON in the GameModeSelection. */
-    public static final int N_BUTTON_5 = 5;
+    public static final int N_BUTTON_3 = 3;
 
     /**Number of BUTTON in the GameModeSelection. */
     public static final int N_BUTTON_6 = 6;
 
     /**Number of BUTTON in the GameModeSelection. */
     public static final int N_BUTTON_16 = 16;
+
+    /**Default SCENARIO in GameModeSelection. */
+    public static final int DEFAULT_SCENARIO = 1;
+
+    /**Default LANES in GameModeSelection. */
+    public static final int DEFAULT_LANE = 5;
+
+    /**Default TIMER in GameModeSelection. */
+    public static final int DEFAULT_TIMER = 5;
 
     private ViewConstants() { }
 }
