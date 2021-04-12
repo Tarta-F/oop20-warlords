@@ -56,10 +56,10 @@ public final class GameView extends Region {
     final int sw = (int) screen.getWidth();
     final int sh = (int) screen.getHeight();
 
-    private List<ImageView> listArrowP1 = new ArrayList<>();
-    private List<ImageView> listArrowP2 = new ArrayList<>();
-    private List<ImageView> listUnitP1 = new ArrayList<>();
-    private List<ImageView> listUnitP2 = new ArrayList<>();
+    private final List<ImageView> listArrowP1 = new ArrayList<>();
+    private final List<ImageView> listArrowP2 = new ArrayList<>();
+    private final List<ImageView> listUnitP1 = new ArrayList<>();
+    private final List<ImageView> listUnitP2 = new ArrayList<>();
 
     private List<Image> unitSelected;
     private List<Image> unitImage;
