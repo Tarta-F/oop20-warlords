@@ -30,6 +30,7 @@ public final class ControllerImpl implements Controller {
     private final int laneNumber;
     private final Optional<PlayerType> winner;
     private final PlayerTimer playerTimer;
+    private final PlayerTimer playerTimer2;
 //    public ControllerImpl(final GameView gameView) {
 //        this.gameView = gameView;
 //        this.gameView.setObserver(this);
@@ -42,8 +43,8 @@ public final class ControllerImpl implements Controller {
         this.selectedLaneIndexP1 = this.laneNumber / 2;
         this.selectedLaneIndexP2 = this.laneNumber / 2;
         this.winner = Optional.empty();
-        this.playerTimer = new PlayerTimer(this.gameView);
-
+        this.playerTimer = new PlayerTimer(this.gameView, PlayerType.PLAYER1);
+        this.playerTimer2 = new PlayerTimer(this.gameView, PlayerType.PLAYER2);
 //        try {
 //            this.pane = new Pane();
 //            pane.getChildren().setAll(gameView.createContent());
@@ -55,6 +56,7 @@ public final class ControllerImpl implements Controller {
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
         new Thread(new GameTimer(mins, this.gameView)).start();
         new Thread(playerTimer).start();
+        new Thread(playerTimer2).start();
     }
 
     private UnitViewType convertUnit(final Unit modelUnit) {
@@ -132,12 +134,20 @@ public final class ControllerImpl implements Controller {
         final int unitIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedUnitIndexP1 : this.selectedUnitIndexP2;
         final long timeWaited = System.currentTimeMillis() - lastSpawn;
         final UnitType unitToSpawn = UnitType.values()[unitIndex];
-        if (timeWaited > unitToSpawn.getTimer()) { //probabilmente da castare a long (per correttezza (?))
+        if (timeWaited > unitToSpawn.getTimer()) {
             setSpawnTime(playerType);
             final int lane = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
             this.field.addUnit(lane, new UnitImpl(unitToSpawn, playerType));
             gameView.show(this.convertMap(this.field.getUnits()));
+            this.resetPlayerTimer(playerType);
+        }
+    }
+
+    private void resetPlayerTimer(final PlayerType playerType) {
+        if (playerType.equals(PlayerType.PLAYER1)) {
             this.playerTimer.resetTimer();
+        } else {
+            this.playerTimer2.resetTimer();
         }
     }
 

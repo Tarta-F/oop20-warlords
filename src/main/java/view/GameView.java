@@ -333,8 +333,12 @@ public final class GameView extends Region {
     }
 
     //prova
-    public void updatePlayerTimer(final int mins, final int seconds) {
-        Platform.runLater(() -> timerP1.setText(String.format("%02d:%02d", mins, seconds)));
+    public void updatePlayerTimer(final int mins, final int seconds, final PlayerType playerType) {
+        if (playerType.equals(PlayerType.PLAYER1)) {
+            Platform.runLater(() -> timerP1.setText(String.format("%02d:%02d", mins, seconds)));
+        } else {
+            Platform.runLater(() -> timerP2.setText(String.format("%02d:%02d", mins, seconds)));
+        }
     }
 
     private void utilSetDimension(final ImageView imageView) {
@@ -348,24 +352,24 @@ public final class GameView extends Region {
 
     /**Method to close the program with a confirm box.*/
     private void closeProgram(final Pane pane) {
-    boolean answer = Exit.display("Quitting", "Do you want to quit?");
-    if (answer) {
-        final Stage stage = (Stage) pane.getScene().getWindow();
-        stage.close();
+        boolean answer = Exit.display("Quitting", "Do you want to quit?");
+        if (answer) {
+            final Stage stage = (Stage) pane.getScene().getWindow();
+            stage.close();
         }
     }
 
     /**Method to return to main menu with a confirm box.*/
     private void returnMainMenu(final Pane pane) {
-    boolean answer = Exit.display("Quitting", "Return to main menu?");
-    if (answer) {
-        scenaMenu = new MainMenu();
-        try {
-            pane.getChildren().setAll(scenaMenu.createMainMenu());
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
+        boolean answer = Exit.display("Quitting", "Return to main menu?");
+        if (answer) {
+            scenaMenu = new MainMenu();
+            try {
+                pane.getChildren().setAll(scenaMenu.createMainMenu());
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         }
     }
 
