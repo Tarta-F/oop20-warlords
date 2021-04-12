@@ -37,8 +37,10 @@ public final class ControllerImpl implements Controller {
     public ControllerImpl(final int laneNumber, final int mins) {
         this.lastSpawnP1 = 0;
         this.lastSpawnP2 = 0;
+
         this.gameView = new GameView(laneNumber);
         this.gameView.setObserver(this);
+
         this.laneNumber = laneNumber;
         this.selectedLaneIndexP1 = this.laneNumber / 2;
         this.selectedLaneIndexP2 = this.laneNumber / 2;
@@ -59,6 +61,24 @@ public final class ControllerImpl implements Controller {
         new Thread(playerTimer2).start();
     }
 
+    /**
+     * Check if the given player has win, if yes the player is setted as the winner.
+     * @param player to check the victory
+     * @return true if the player has won
+     */
+    private boolean hasWin(final PlayerType player) {
+        if (this.getScore(player) == GameConstants.SCORE_WIN) {
+            this.winner = Optional.ofNullable(player);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Converts the istance of Unit class from the model, to the corresponding UnitViewType.
+     * @param modelUnit the unit to be converted
+     * @return the UnitViewType of the given unit
+     */
     private UnitViewType convertUnit(final Unit modelUnit) {
         final UnitType modelType = modelUnit.getUnitType();
         final PlayerType player = modelUnit.getPlayer();
@@ -74,6 +94,11 @@ public final class ControllerImpl implements Controller {
         }
     }
 
+    /**
+     * Converts the given map from model to the corrisponding EnumMap that has to be printed on the View.
+     * @param modelMap the map of the units and their positions
+     * @return the EnumMap for the View
+     */
     private EnumMap<UnitViewType, List<Pair<Integer, Integer>>> convertMap(final Map<Unit, Pair<Integer, Integer>> modelMap) {
         final EnumMap<UnitViewType, List<Pair<Integer, Integer>>> viewMap = new EnumMap<>(UnitViewType.class);
         modelMap.forEach((k, v) -> {
@@ -107,6 +132,8 @@ public final class ControllerImpl implements Controller {
             this.selectedLaneIndexP2 = nextIndex;
         }
         this.gameView.updateSelectLane(playerType, currentIndex, nextIndex); //in base a pType scelgo in che lista guardare
+
+        //TODO PER PROVA
         this.update();
     }
 
@@ -182,23 +209,33 @@ public final class ControllerImpl implements Controller {
         this.gameView.updateSelectUnit(playerType, currentIndex, nextIndex);
     }
 
+    @Override
     public GameView getView() {
         return this.gameView;
     }
 
+    @Override
     public void update() {
         this.field.update();
         this.gameView.show(this.convertMap(this.field.getUnits()));
+
+        //TODO PER PROVA
+        System.out.println(getScore(PlayerType.PLAYER1));
+        System.out.println(getScore(PlayerType.PLAYER2));
+        System.out.println(isOver() ? getWinner().get() + " HA VINTO" : "");
     }
 
+    @Override
     public boolean isOver() {
-        return this.field.getScore(PlayerType.PLAYER1).get() == GameConstants.SCORE_WIN;
+        return this.hasWin(PlayerType.PLAYER1) || this.hasWin(PlayerType.PLAYER2);
     }
 
+    @Override
     public Optional<PlayerType> getWinner() {
-        return winner;
+        return this.winner;
     }
 
+    @Override
     public int getScore(final PlayerType player) {
         return this.field.getScore(player).orElseGet(() -> Integer.valueOf(0));
     }

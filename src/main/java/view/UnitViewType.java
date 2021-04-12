@@ -1,24 +1,26 @@
 package view;
 
+import constants.ViewImages;
+
 /**
  * This enum serves to distinguish the type of unit to be drawn and each element has his own image path.
  */
 public enum UnitViewType {
 
     /**Swordsmen of player 1.*/
-    SWORDSMEN_PLAYER1("/swordsman_1.png"),
+    SWORDSMEN_PLAYER1(ViewImages.SEP + "swordsman_1.png"),
     /**Swordsmen of player 2.*/
-    SWORDSMEN_PLAYER2("/swordsman_2.png"),
+    SWORDSMEN_PLAYER2(ViewImages.SEP + "swordsman_2.png"),
 
     /**Spearmen of player 1.*/
-    SPEARMEN_PLAYER1("/spearman_1.png"),
+    SPEARMEN_PLAYER1(ViewImages.SEP + "spearman_1.png"),
     /**Spearmen of player 2.*/
-    SPEARMEN_PLAYER2("/spearman_2.png"),
+    SPEARMEN_PLAYER2(ViewImages.SEP + "spearman_2.png"),
 
     /**Archer of player 1.*/
-    ARCHER_PLAYER1("/archer_1.png"),
+    ARCHER_PLAYER1(ViewImages.SEP + "archer_1.png"),
     /**Archer of player 2.*/
-    ARCHER_PLAYER2("/archer_2.png");
+    ARCHER_PLAYER2(ViewImages.SEP + "archer_2.png");
 
     private final String path;
 

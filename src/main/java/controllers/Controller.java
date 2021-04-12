@@ -1,6 +1,9 @@
 package controllers;
 
+import java.util.Optional;
+
 import model.PlayerType;
+import view.GameView;
 
 public interface Controller {
 
@@ -46,5 +49,22 @@ public interface Controller {
      * @return the score of the player
      */
     int getScore(PlayerType player);
+
+    /**
+     * Get the View used by this Controller.
+     * @return the GameView of this Controller
+     */
+    GameView getView();
+
+    /**
+     * Updates the model and print the result on the GameView.
+     */
+    void update();
+
+    /**
+     * Get the player has Optional.
+     * @return an optional that, if not empty, contains the winner
+     */
+    Optional<PlayerType> getWinner();
 
 }
