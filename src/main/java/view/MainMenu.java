@@ -62,12 +62,12 @@ public final class MainMenu extends Application {
         logo.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4));
         logo.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_8));
 
-        final Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ViewImages.SPEARMAN));
+        final Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_SPEARMAN));
         final ImageView logoSpearman = new ImageView(logoSpearmanImage);
         logoSpearman.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7));
         logoSpearman.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_3));
 
-        final Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ViewImages.ARCHER));
+        final Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_ARCHER));
         final ImageView logoArcher = new ImageView(logoArcherImage);
         logoArcher.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_8));
         logoArcher.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_3));

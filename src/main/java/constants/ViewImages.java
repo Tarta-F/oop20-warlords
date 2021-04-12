@@ -8,42 +8,85 @@ public final class ViewImages {
     /** PATH separator from the system properties.*/
     public static final String SEP = System.getProperty("file.separator");
 
-    /**PATH Image Swordsmen. */
-    public static final String LOGO_SWORDSMEN = SEP + "SwordsmenUnit.png";
 
-    /**PATH Image Spearmen. */
-    public static final String LOGO_SPEARMEN = SEP + "SpearmenUnit.png";
+    /**Player 1 Images. */
+    /**PATH Image Swordsmen player 1. */
+    public static final String P1_LOGO_SWORDSMEN = SEP + "SwordsmenUnitP1.png";
 
-    /**PATH Image Archer. */
-    public static final String LOGO_ARCHER = SEP + "ArcherUnit.png";
+    /**PATH Image Spearmen player 1. */
+    public static final String P1_LOGO_SPEARMEN = SEP + "SpearmenUnitP1.png";
 
-    /**PATH Image selected Swordsmen. */
-    public static final String SELECTED_SWORDSMEN = SEP + "SelectedSwordsmenUnit.png";
+    /**PATH Image Archer player 1. */
+    public static final String P1_LOGO_ARCHER = SEP + "ArcherUnitP1.png";
 
-    /**PATH Image selected Spearmen. */
-    public static final String SELECTED_SPEARMAN = SEP + "SelectedSpearmenUnit.png";
+    /**PATH Image selected Swordsmen player 1. */
+    public static final String P1_SELECTED_SWORDSMEN = SEP + "SelectedSwordsmenUnitP1.png";
 
-    /**PATH Image selected Archer. */
-    public static final String SELECTED_ARCHER = SEP + "SelectedArcherUnit.png";
+    /**PATH Image selected Spearmen player 1. */
+    public static final String P1_SELECTED_SPEARMEN = SEP + "SelectedSpearmenUnitP1.png";
+
+    /**PATH Image selected Archer player 1. */
+    public static final String P1_SELECTED_ARCHER = SEP + "SelectedArcherUnitP1.png";
+
+    /**PATH Image unit Swordsmen player 1. */
+    public static final String P1_SWORDSMEN = SEP + "SwordsmenP1.png";
+
+    /**PATH Image unit Spearmen player 1. */
+    public static final String P1_SPEARMAN = SEP + "SpearmenP1.png";
+
+    /**PATH Image unit Archer player 1. */
+    public static final String P1_ARCHER = SEP + "ArcherP1.png";
 
     /**PATH Image lane arrow player 1. */
-    public static final String ARROW_PLAYER1 = SEP + "ArrowPlayer1.png";
-
-    /**PATH Image lane arrow player 2. */
-    public static final String ARROW_PLAYER2 = SEP + "ArrowPlayer2.png";
+    public static final String P1_ARROW_PLAYER = SEP + "ArrowPlayer1.png";
 
     /**PATH Image selected lane arrow player 1. */
-    public static final String SELECTED_ARROW_PLAYER1 = SEP + "SelectedArrowPlayer1.png";
+    public static final String P1_SELECTED_ARROW_PLAYER = SEP + "SelectedArrowPlayer1.png";
+
+
+    /**Player 2 Images. */
+    /**PATH Image Swordsmen player 2. */
+    public static final String P2_LOGO_SWORDSMEN = SEP + "SwordsmenUnitP2.png";
+
+    /**PATH Image Spearmen player 2. */
+    public static final String P2_LOGO_SPEARMEN = SEP + "SpearmenUnitP2.png";
+
+    /**PATH Image Archer player 2. */
+    public static final String P2_LOGO_ARCHER = SEP + "ArcherUnitP2.png";
+
+    /**PATH Image selected Swordsmen player 2. */
+    public static final String P2_SELECTED_SWORDSMEN = SEP + "SelectedSwordsmenUnitP2.png";
+
+    /**PATH Image selected Spearmen player 2. */
+    public static final String P2_SELECTED_SPEARMAN = SEP + "SelectedSpearmenUnitP2.png";
+
+    /**PATH Image selected Archer player 2. */
+    public static final String P2_SELECTED_ARCHER = SEP + "SelectedArcherUnitP2.png";
+
+    /**PATH Image unit Swordsmen player 2. */
+    public static final String P2_SWORDSMEN = SEP + "SwordsmenP2.png";
+
+    /**PATH Image unit Spearmen player 2. */
+    public static final String P2_SPEARMAN = SEP + "SpearmenP2.png";
+
+    /**PATH Image unit Archer player 2. */
+    public static final String P2_ARCHER = SEP + "ArcherP2.png";
+
+    /**PATH Image lane arrow player 2. */
+    public static final String P2_ARROW_PLAYER = SEP + "ArrowPlayer2.png";
 
     /**PATH Image selected lane arrow player 2. */
-    public static final String SELECTED_ARROW_PLAYER2 = SEP + "SelectedArrowPlayer2.png";
+    public static final String P2_SELECTED_ARROW_PLAYER = SEP + "SelectedArrowPlayer2.png";
 
+
+    /**Grid Images. */
     /**PATH Image grid ground. */
     public static final String GROUND = SEP + "Ground.png";
 
     /**PATH Image grid ground for scenario 2. */
     public static final String GROUND_2 = SEP + "Ground2.png";
 
+    /**Other Scenes. */
     /**PATH Image GameModeSelection background. */
     public static final String GAME_SETTINGS = SEP + "GameSettings.png";
 
@@ -55,12 +98,6 @@ public final class ViewImages {
 
     /**PATH Image MainMenu logo. */
     public static final String LOGO = SEP + "logo.png";
-
-    /**PATH Image MainMenu spearmen. */
-    public static final String SPEARMAN = SEP + "spearman_1.png";
-
-    /**PATH Image MainMenu archer. */
-    public static final String ARCHER = SEP + "archer_2.png";
 
     private ViewImages() { }
 }
