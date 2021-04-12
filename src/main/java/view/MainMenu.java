@@ -32,7 +32,8 @@ public final class MainMenu extends Application {
         /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
         final Pane pane = new Pane(createMainMenu());
-        final Scene scene = new Scene(pane, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        final Scene scene = new Scene(pane, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
         window.setScene(scene);
         window.show();
         window.setResizable(false);
@@ -77,12 +78,14 @@ public final class MainMenu extends Application {
         /**Button CAMPAIGN. */
         final Button campaign = new Button("CAMPAIGN");
         campaign.setStyle(Style.BUTTON_1);
-        campaign.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        campaign.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
 
         /**Button VERSUS. */
         final Button versus = new Button("VERSUS");
         versus.setStyle(Style.BUTTON_1);
-        versus.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        versus.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         versus.setOnAction(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
@@ -95,7 +98,8 @@ public final class MainMenu extends Application {
         /**Button TUTORIALS. */
         final Button tutorials = new Button("TUTORIALS");
         tutorials.setStyle(Style.BUTTON_1);
-        tutorials.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        tutorials.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         tutorials.setOnAction(e -> {
             try {
                 sceneTutorial = new GameTutorial();
@@ -108,7 +112,8 @@ public final class MainMenu extends Application {
         /**Button EXIT. */
         final Button exitMenu = new Button("EXIT");
         exitMenu.setStyle(Style.BUTTON_1);
-        exitMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        exitMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         exitMenu.setOnAction(e -> closeProgram(pane));
 
 
@@ -116,7 +121,8 @@ public final class MainMenu extends Application {
         final VBox menu = new VBox(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         menu.setAlignment(Pos.CENTER);
         menu.getChildren().addAll(logo, campaign, versus, tutorials, exitMenu);
-        menu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), 0, ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), 0));
+        menu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), 0, 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), 0));
 
         final VBox leftVBox = new VBox();
         leftVBox.setAlignment(Pos.CENTER);
@@ -130,7 +136,8 @@ public final class MainMenu extends Application {
 
         /**BorderPane sets and Pane gets. */
         final BorderPane borderPane = new BorderPane();
-        borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
         borderPane.setCenter(menu);
         borderPane.setLeft(leftVBox);
         borderPane.setRight(rigthVBox);

@@ -37,7 +37,8 @@ public final class Exit {
         final Label label = new Label();
         label.setText(message);
         label.setAlignment(Pos.CENTER);
-        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
+        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
         label.setStyle(Style.LABEL);
 
 
@@ -45,7 +46,8 @@ public final class Exit {
         /**Button YES in the confirm box and his event. */
         final Button yesButton = new Button("YES");
         yesButton.setStyle(Style.BUTTON_1);
-        yesButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+        yesButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
         yesButton.setOnAction(e -> {
             answer = true;
             window.close();
@@ -54,7 +56,8 @@ public final class Exit {
         /**Button NO in the confirm box and his event. */
         final Button noButton = new Button("NO");
         noButton.setStyle(Style.BUTTON_1);
-        noButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+        noButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
         noButton.setOnAction(e -> {
             answer = false;
             window.close();
@@ -69,7 +72,8 @@ public final class Exit {
 
 
         /**Scene and stage preferences. */
-        final Scene scene = new Scene(layout, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_4));
+        final Scene scene = new Scene(layout, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_4));
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setScene(scene);

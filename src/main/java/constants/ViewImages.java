@@ -38,10 +38,10 @@ public final class ViewImages {
     public static final String P1_ARCHER = SEP + "ArcherP1.png";
 
     /**PATH Image lane arrow player 1. */
-    public static final String P1_ARROW_PLAYER = SEP + "ArrowPlayer1.png";
+    public static final String P1_ARROW = SEP + "ArrowPlayer1.png";
 
     /**PATH Image selected lane arrow player 1. */
-    public static final String P1_SELECTED_ARROW_PLAYER = SEP + "SelectedArrowPlayer1.png";
+    public static final String P1_SELECTED_ARROW = SEP + "SelectedArrowPlayer1.png";
 
 
     /**Player 2 Images. */
@@ -58,7 +58,7 @@ public final class ViewImages {
     public static final String P2_SELECTED_SWORDSMEN = SEP + "SelectedSwordsmenUnitP2.png";
 
     /**PATH Image selected Spearmen player 2. */
-    public static final String P2_SELECTED_SPEARMAN = SEP + "SelectedSpearmenUnitP2.png";
+    public static final String P2_SELECTED_SPEARMEN = SEP + "SelectedSpearmenUnitP2.png";
 
     /**PATH Image selected Archer player 2. */
     public static final String P2_SELECTED_ARCHER = SEP + "SelectedArcherUnitP2.png";
@@ -73,10 +73,10 @@ public final class ViewImages {
     public static final String P2_ARCHER = SEP + "ArcherP2.png";
 
     /**PATH Image lane arrow player 2. */
-    public static final String P2_ARROW_PLAYER = SEP + "ArrowPlayer2.png";
+    public static final String P2_ARROW = SEP + "ArrowPlayer2.png";
 
     /**PATH Image selected lane arrow player 2. */
-    public static final String P2_SELECTED_ARROW_PLAYER = SEP + "SelectedArrowPlayer2.png";
+    public static final String P2_SELECTED_ARROW = SEP + "SelectedArrowPlayer2.png";
 
 
     /**Grid Images. */

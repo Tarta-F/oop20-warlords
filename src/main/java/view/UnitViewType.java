@@ -8,19 +8,19 @@ import constants.ViewImages;
 public enum UnitViewType {
 
     /**Swordsmen of player 1.*/
-    SWORDSMEN_PLAYER1(ViewImages.SEP + "swordsman_1.png"),
+    SWORDSMEN_PLAYER1(ViewImages.SEP + "SwordsmaenP1.png"),
     /**Swordsmen of player 2.*/
-    SWORDSMEN_PLAYER2(ViewImages.SEP + "swordsman_2.png"),
+    SWORDSMEN_PLAYER2(ViewImages.SEP + "SwordsmenP2.png"),
 
     /**Spearmen of player 1.*/
-    SPEARMEN_PLAYER1(ViewImages.SEP + "spearman_1.png"),
+    SPEARMEN_PLAYER1(ViewImages.SEP + "SpearmenP1.png"),
     /**Spearmen of player 2.*/
-    SPEARMEN_PLAYER2(ViewImages.SEP + "spearman_2.png"),
+    SPEARMEN_PLAYER2(ViewImages.SEP + "SpearmenP2.png"),
 
     /**Archer of player 1.*/
-    ARCHER_PLAYER1(ViewImages.SEP + "archer_1.png"),
+    ARCHER_PLAYER1(ViewImages.SEP + "ArcherP1.png"),
     /**Archer of player 2.*/
-    ARCHER_PLAYER2(ViewImages.SEP + "archer_2.png");
+    ARCHER_PLAYER2(ViewImages.SEP + "ArcherP2.png");
 
     private final String path;
 
