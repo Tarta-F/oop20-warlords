@@ -8,7 +8,7 @@ import constants.ViewImages;
 public enum UnitViewType {
 
     /**Swordsmen of player 1.*/
-    SWORDSMEN_PLAYER1(ViewImages.SEP + "SwordsmaenP1.png"),
+    SWORDSMEN_PLAYER1(ViewImages.SEP + "SwordsmenP1.png"),
     /**Swordsmen of player 2.*/
     SWORDSMEN_PLAYER2(ViewImages.SEP + "SwordsmenP2.png"),
 
