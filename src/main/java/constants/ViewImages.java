@@ -6,7 +6,7 @@ package constants;
 public final class ViewImages {
 
     /** PATH separator from the system properties.*/
-    public static final String SEP = System.getProperty("file.separator");
+    public static final String SEP = "/"; //System.getProperty("file.separator");
 
     /**PATH Image Swordsmen. */
     public static final String LOGO_SWORDSMEN = SEP + "SwordsmenUnit.png";

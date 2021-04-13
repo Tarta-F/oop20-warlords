@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,17 +31,33 @@ import javafx.scene.layout.VBox;
 public class GameModeSelection extends Region {
 
     private MainMenu scenaMenu;
-    private final int scenario = ViewConstants.DEFAULT_SCENARIO;
-    private int laneNumber = ViewConstants.DEFAULT_LANE;
-    private int timerDuration = ViewConstants.DEFAULT_TIMER;
-    private final Label settingsSelected = new Label();
+    private String scenario;
+    private int laneNumber;
+    private int timerDuration;
+    private String background;
+    private String ground;
+    private final Label settingsSelected;
+
+    public GameModeSelection() {
+        this.laneNumber = ViewConstants.DEFAULT_LANE;
+        this.timerDuration = ViewConstants.DEFAULT_TIMER;
+        this.scenario = ScenarioViewType.SCENARIO_1.getDescription();
+        this.background = ScenarioViewType.SCENARIO_1.getBackgroundPath();
+        this.ground = ScenarioViewType.SCENARIO_1.getGroundPath();
+        this.settingsSelected = new Label();
+        this.updateSettings();
+    }
+
+    /**Method to upgrade the label in GameModeSelection. */
+    private void updateSettings() {
+        this.settingsSelected.setText("SELECTED SCENARIO: " + this.scenario + "\n NUMBER OF LANES: " + this.laneNumber 
+                + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
+    }
 
     public final Parent createGameModeSelection() throws IOException {
 
-
         /**Pane. */
         final Pane pane = new Pane();
-
 
         /**BackGroung. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_SETTINGS));
@@ -48,18 +65,26 @@ public class GameModeSelection extends Region {
         backGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5));
         backGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
 
-
         /**Buttons. */
         /**Buttons SCENARIO. */
         final List<Button> scenarioList = new ArrayList<>();
+        final List<ScenarioViewType> scenarios = new ArrayList<>(Arrays.asList(ScenarioViewType.values()));
+        final Map<Button, ScenarioViewType> buttonScenario = new HashMap<>();
 
-        for (int i = 1; i < ViewConstants.N_BUTTON_3 + 1; i++) {
-            final Button scenarioButtons = new Button("SCENARIO: " + i);
+        scenarios.forEach(s -> {
+            final Button scenarioButtons = new Button("SCENARIO " + s.getDescription());
             scenarioButtons.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
                     ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
             scenarioButtons.setStyle(Style.BUTTON_1);
+            buttonScenario.put(scenarioButtons, s);
+            scenarioButtons.setOnAction(e -> {
+                this.background = s.getBackgroundPath();
+                this.ground = s.getGroundPath();
+                this.scenario = s.getDescription();
+                updateSettings();
+            });
             scenarioList.add(scenarioButtons);
-        }
+        });
 
         /**Buttons LANE. */
         //final List<Button> listaLane = new ArrayList<>();
@@ -75,7 +100,6 @@ public class GameModeSelection extends Region {
                 this.laneNumber = buttonLane.get(laneButtons);
                 updateSettings();
             });
-            //listaLane.add(laneButtons);
         }
         final List<Button> listLane = buttonLane.entrySet().stream()
                 .sorted((a, b) -> a.getValue() - b.getValue())
@@ -121,14 +145,15 @@ public class GameModeSelection extends Region {
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         start.setStyle(Style.BUTTON_2);
         start.setOnAction(e -> {
-           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration);
+//            System.out.println("back: " + this.background + "ground" + this.ground +
+//                    "lane: " + this.laneNumber + "timer: " + this.timerDuration);
+           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.background, this.ground);
            try {
             pane.getChildren().setAll(contr.getView().createGameView());
            } catch (IOException e1) {
             e1.printStackTrace();
            }
        });
-
 
         /**Labels. */
         final Label scenario = new Label("Scenario:");
@@ -155,9 +180,6 @@ public class GameModeSelection extends Region {
         settingsSelected.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4), 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10));
         settingsSelected.setStyle(Style.LABEL);
-        settingsSelected.setText("SELECTED SCENARIO: " + this.scenario + "\n NUMBER OF LANES: " + this.laneNumber 
-                + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
-
 
         /**Layout and Pane gets. */
         final HBox scenarioBox = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
@@ -189,11 +211,5 @@ public class GameModeSelection extends Region {
         pane.getChildren().addAll(vBox);
 
         return pane;
-    }
-
-    /**Method to upgrade the label in GameModeSelection. */
-    private void updateSettings() {
-        this.settingsSelected.setText("SELECTED SCENARIO: " + this.scenario + "\n NUMBER OF LANES: " + this.laneNumber 
-                + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
     }
  }

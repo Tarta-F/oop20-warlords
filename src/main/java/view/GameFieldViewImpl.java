@@ -1,14 +1,9 @@
 package view;
 
 import constants.ViewConstants;
-import constants.ViewImages;
-
 import java.util.EnumMap;
-import java.util.Optional;
 import java.util.stream.IntStream;
-
 import org.apache.commons.lang3.tuple.Pair;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
@@ -40,7 +35,7 @@ public final class GameFieldViewImpl implements GameFieldView {
 
     private final EnumMap<UnitViewType, Image> unitImageTable = new EnumMap<>(UnitViewType.class);
 
-    public GameFieldViewImpl(final int nRow, final int nCols, final Optional<Image> scenario) {
+    public GameFieldViewImpl(final int nRow, final int nCols, final String ground) { //final Optional<Image> scenario
         if (nRow < 0 || nCols < 0) {
             throw new IllegalArgumentException(MESSAGE_NEGATIVE_DIMENSIONS);
         }
@@ -48,13 +43,11 @@ public final class GameFieldViewImpl implements GameFieldView {
         this.nCols = nCols;
         this.createGrid();
         this.gridPane.setAlignment(Pos.CENTER);
-//        this.gridPane.setPrefSize(nCols * CELL_W, nRow * CELL_H);
 
         final BackgroundSize bgSize = new BackgroundSize(nCols * CELL_W, nRow * CELL_H, false, false, false, false);
-        final BackgroundImage bgImage = 
-                new BackgroundImage(scenario.orElseGet(() -> new Image(this.getClass().getResourceAsStream(ViewImages.GROUND_2))),
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                        BackgroundPosition.CENTER, bgSize);
+        final BackgroundImage bgImage = new BackgroundImage(new Image(this.getClass().getResourceAsStream(ground)),
+              BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+              BackgroundPosition.CENTER, bgSize);
         this.gridPane.setBackground(new Background(bgImage));
     }
 

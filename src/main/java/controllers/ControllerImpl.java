@@ -28,17 +28,20 @@ public final class ControllerImpl implements Controller {
     private final GameView gameView;
     private final FieldImpl field;
     private final int laneNumber;
-    private final Optional<PlayerType> winner;
+    private Optional<PlayerType> winner;
     private final PlayerTimer playerTimer;
     private final PlayerTimer playerTimer2;
 //    public ControllerImpl(final GameView gameView) {
 //        this.gameView = gameView;
 //        this.gameView.setObserver(this);
-    public ControllerImpl(final int laneNumber, final int mins) {
+//    private String background;
+//    private String ground;
+
+    public ControllerImpl(final int laneNumber, final int mins, final String background, final String ground) {
         this.lastSpawnP1 = 0;
         this.lastSpawnP2 = 0;
 
-        this.gameView = new GameView(laneNumber);
+        this.gameView = new GameView(laneNumber, background, ground);
         this.gameView.setObserver(this);
 
         this.laneNumber = laneNumber;

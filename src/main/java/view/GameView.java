@@ -2,7 +2,6 @@ package view;
 
 import constants.ViewConstants;
 import controllers.Controller;
-import controllers.ControllerImpl;
 import model.PlayerType;
 import constants.ViewImages;
 import java.awt.Dimension;
@@ -10,15 +9,10 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-
 import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.Arrays;
 import java.util.EnumMap;
-
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -50,7 +44,7 @@ public final class GameView extends Region {
     private final GameFieldView field;
     private int laneNumber;
 
-    private final Image scenario;
+    public Image scenario;
     /**Taking screen size for the adaptation of the various elements of the view to the resolution of the screen.*/
     final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     final int sw = (int) screen.getWidth();
@@ -68,7 +62,7 @@ public final class GameView extends Region {
     private Label timerP2;
     private Controller observer;
 
-
+    private final String backgroundF; //fil
 
     //public GameView(/* final Controller observer */) {
 //        this.observer = observer;
@@ -91,25 +85,35 @@ public final class GameView extends Region {
     Image arrowSelectedImageP1 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer1.png"));
     Image arrowSelectedImageP2 = new Image(this.getClass().getResourceAsStream("/SelectedArrowPlayer2.png"));
 
-    public GameView(final int laneNumber, final Image scenario) {
-        this.scenario = scenario;
-        this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, Optional.of(scenario));
-    }
-
-    public GameView(final int laneNumber) {
+    //prova
+    public GameView(final int laneNumber, final String background, final String ground) {
         this.laneNumber = laneNumber;
-        this.scenario = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
-        this.field = new GameFieldViewImpl(this.laneNumber, ViewConstants.GRID_COLUMNS, Optional.empty());
+        this.backgroundF = background;
+        this.scenario = new Image(this.getClass().getResourceAsStream(background));
+        this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
     }
 
+//    public GameView(final int laneNumber, final Image scenario) {
+//        this.scenario = scenario;
+//        this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, Optional.of(scenario));
+//    }
+
+//    public GameView(final int laneNumber) {
+//        this.laneNumber = laneNumber;
+//        this.scenario = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
+//        this.field = new GameFieldViewImpl(this.laneNumber, ViewConstants.GRID_COLUMNS, Optional.empty());
+//    }
 
     public Parent createGameView() throws IOException {
-
 
         Pane pane = new Pane();
         //background image
         //Image backgroundImg  = new Image(this.getClass().getResourceAsStream("/GrassBackground.jpg"));
-        ImageView gameBackGround = new ImageView(scenario);
+        //ImageView gameBackGround = new ImageView(scenario);
+        //gameBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
+        //gameBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
+        //Image backgroundImg  = new Image(this.getClass().getResourceAsStream(this.backgroundF));
+        ImageView gameBackGround = new ImageView(this.scenario);
         gameBackGround.setFitWidth(sw / ViewConstants.DIVISOR_1_5);
         gameBackGround.setFitHeight(sh / ViewConstants.DIVISOR_1_5);
 
@@ -125,8 +129,8 @@ public final class GameView extends Region {
 
         Background background = new Background(backgroundImage);
 
-      this.unitImage = new ArrayList<>(Arrays.asList(unit1Image, unit2Image, unit3Image));
-      this.unitSelected = new ArrayList<>(Arrays.asList(unit1SelectedImage, unit2SelectedImage, unit3SelectedImage));
+        this.unitImage = new ArrayList<>(Arrays.asList(unit1Image, unit2Image, unit3Image));
+        this.unitSelected = new ArrayList<>(Arrays.asList(unit1SelectedImage, unit2SelectedImage, unit3SelectedImage));
 
         ImageView unitP1 = new ImageView(unit1SelectedImage);
         utilSetDimension(unitP1);  //al posto di ripetere sempre le stesse 2 righe
@@ -367,7 +371,6 @@ public final class GameView extends Region {
             try {
                 pane.getChildren().setAll(scenaMenu.createMainMenu());
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         }
