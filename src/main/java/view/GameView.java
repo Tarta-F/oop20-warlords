@@ -222,70 +222,31 @@ public final class GameView extends Region {
             respawnLabel2.setAlignment(Pos.CENTER);
             unit2ListLabel.add(respawnLabel2);
         }
-<<<<<<< HEAD
-        
-        
-        
-        
+
         /**Layout. */
         final List<VBox> vBoxplayer1 = new ArrayList<>();
-        for (int i =0;  i<listUnitP1.size(); i++ ) {
+        for (int i = 0;  i < listUnitP1.size(); i++) {
             final VBox vBox1 = new VBox();
-            vBox1.getChildren().addAll(listUnitP1.get(i), unit1ListLabel.get(i));
             vBox1.setAlignment(Pos.CENTER);
+            vBox1.getChildren().addAll(listUnitP1.get(i), unit1ListLabel.get(i));
             vBoxplayer1.add(vBox1);
           }
-        
+
         final List<VBox> vBoxplayer2 = new ArrayList<>();
-        for (int i =0;  i<listUnitP1.size(); i++ ) {
+        for (int i = 0;  i < listUnitP2.size(); i++) {
             final VBox vBox2 = new VBox();
-            vBox2.getChildren().addAll(listUnitP2.get(i), unit2ListLabel.get(i));
             vBox2.setAlignment(Pos.CENTER);
+            vBox2.getChildren().addAll(listUnitP2.get(i), unit2ListLabel.get(i));
             vBoxplayer2.add(vBox2);
           }
 
-        
         final HBox topMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25));
         topMenu.setAlignment(Pos.CENTER);
         topMenu.getChildren().addAll(vBoxplayer1);
         topMenu.getChildren().add(timer);
         topMenu.getChildren().addAll(vBoxplayer2);
-=======
-
-
-        /**Layout. */
-        final VBox unit1 = new VBox();
-        unit1.getChildren().addAll(listUnitP1.get(0), unit1ListLabel.get(0));
-        unit1.setAlignment(Pos.CENTER);
-
-       final VBox unit2 = new VBox();
-       unit2.getChildren().addAll(listUnitP1.get(1), unit1ListLabel.get(1));
-       unit2.setAlignment(Pos.CENTER);
-
-        final VBox unit3 = new VBox();
-        unit3.getChildren().addAll(listUnitP1.get(2), unit1ListLabel.get(2));
-        unit3.setAlignment(Pos.CENTER);
-
-        final VBox unit4 = new VBox();
-        unit4.getChildren().addAll(listUnitP2.get(0), unit2ListLabel.get(0));
-        unit4.setAlignment(Pos.CENTER);
-
-        final VBox unit5 = new VBox();
-        unit5.getChildren().addAll(listUnitP2.get(1), unit2ListLabel.get(1));
-        unit5.setAlignment(Pos.CENTER);
-
-        final VBox unit6 = new VBox();
-        unit6.getChildren().addAll(listUnitP2.get(2), unit2ListLabel.get(2));
-        unit6.setAlignment(Pos.CENTER);
-
-        final HBox topMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25));
-        topMenu.setAlignment(Pos.CENTER);
-        topMenu.getChildren().addAll(unit1, unit2, unit3, timer, unit4, unit5, unit6);
->>>>>>> 4784b445d9324baed47543ca421bf6c654e6e630
-
         topMenu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0, 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0));
-
 
         final HBox bottomMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30));
         bottomMenu.getChildren().addAll(timerP1, player1, menu, exit, player2, timerP2);
