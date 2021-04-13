@@ -38,7 +38,8 @@ public class GameTutorial extends Region {
 
         /**Button mainMenu. */
         final Button mainMenu = new Button("MAIN MENU");
-        mainMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        mainMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         mainMenu.setStyle(Style.BUTTON_2);
         mainMenu.setOnAction(e -> {
             sceneMenu = new MainMenu();
@@ -51,13 +52,15 @@ public class GameTutorial extends Region {
 
        /**Layout. */
        final HBox backMenu = new HBox();
-       backMenu.setPadding(new Insets(0, 0, ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_2)));
+       backMenu.setPadding(new Insets(0, 0, ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), 
+               ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_2)));
        backMenu.getChildren().add(mainMenu);
 
        /**BorderPane and Pane gets. */
        final BorderPane borderPane = new BorderPane();
        borderPane.setBottom(backMenu);
-       borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+       borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), 
+               ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
        pane.getChildren().add(tutorialBackGround);
        pane.getChildren().addAll(borderPane);
 
