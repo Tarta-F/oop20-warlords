@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -58,6 +59,15 @@ public class GameModeSelection extends Region {
 
         /**Pane. */
         final Pane pane = new Pane();
+
+        /**TextField. */
+        TextField playerName1 = new TextField("Player 1");
+        playerName1.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+
+        TextField playerName2 = new TextField("Player 2");
+        playerName2.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
 
         /**BackGroung. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_SETTINGS));
@@ -176,6 +186,18 @@ public class GameModeSelection extends Region {
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         timer.setStyle(Style.LABEL);
 
+        final Label player1 = new Label("Player 1 name: ");
+        player1.setAlignment(Pos.CENTER);
+        player1.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        player1.setStyle(Style.LABEL);
+
+        final Label player2 = new Label("Player 2 name: ");
+        player2.setAlignment(Pos.CENTER);
+        player2.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        player2.setStyle(Style.LABEL);
+
         settingsSelected.setAlignment(Pos.CENTER);
         settingsSelected.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4), 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10));
@@ -197,6 +219,10 @@ public class GameModeSelection extends Region {
         timerBox.getChildren().add(timer);
         timerBox.getChildren().addAll(listTimer);
 
+        final HBox namesBox = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
+        namesBox.setAlignment(Pos.CENTER);
+        namesBox.getChildren().addAll(player1, playerName1, player2, playerName2);
+
         final HBox backStartBox = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
         backStartBox.setAlignment(Pos.CENTER);
         backStartBox.setPadding(new Insets(0, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_60), 0, 0));
@@ -206,7 +232,7 @@ public class GameModeSelection extends Region {
         vBox.setAlignment(Pos.CENTER);
         vBox.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3), 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
-        vBox.getChildren().addAll(scenarioBox, laneBox, timerBox, backStartBox);
+        vBox.getChildren().addAll(scenarioBox, laneBox, timerBox, namesBox, backStartBox);
 
         pane.getChildren().add(backGround);
         pane.getChildren().addAll(vBox);
