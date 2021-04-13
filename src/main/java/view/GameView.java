@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+
+import com.sun.glass.ui.View;
+
 import java.util.Arrays;
 import java.util.EnumMap;
 import javafx.application.Platform;
@@ -89,19 +92,19 @@ public final class GameView extends Region {
         final Pane pane = new Pane();
         /**BackGround. */
         final ImageView gameBackGround = new ImageView(scenario);
-        gameBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5));
-        gameBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        gameBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
+        gameBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
 
-        final Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
+      //  final Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
 
-        final BackgroundSize backgroundSize = new BackgroundSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5),
-              ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5),
-                true, true, true, false);
+       // final BackgroundSize backgroundSize = new BackgroundSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3),
+        //      ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3),
+     //           true, true, true, false);
 
-        final BackgroundImage backgroundImage = new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER, backgroundSize);
+      // final BackgroundImage backgroundImage = new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+       //         BackgroundPosition.CENTER, backgroundSize);
 
-        final Background background = new Background(backgroundImage);
+       // final Background background = new Background(backgroundImage);
 
         this.unitImageP1 = new ArrayList<>(Arrays.asList(logoSwordsmenP1, logoSpearmenP1, logoArcherP1));
         this.unitSelectedP1 = new ArrayList<>(Arrays.asList(selectedSwordsmenP1, selectedSpearmenP1, selectedArcherP1));
@@ -109,27 +112,27 @@ public final class GameView extends Region {
         this.unitSelectedP2 = new ArrayList<>(Arrays.asList(selectedSwordsmenP2, selectedSpearmenP2, selectedArcherP2));
 
         ImageView unitP1 = new ImageView(selectedSwordsmenP1);
-        utilSetDimension(unitP1);  //al posto di ripetere sempre le stesse 2 righe
+        utilSetDimension1(unitP1);  //al posto di ripetere sempre le stesse 2 righe
         listUnitP1.add(unitP1);
 
         unitP1 = new ImageView(logoSpearmenP1);
-        utilSetDimension(unitP1);
+        utilSetDimension1(unitP1);
         listUnitP1.add(unitP1);
 
         unitP1 = new ImageView(logoArcherP1);
-        utilSetDimension(unitP1);
+        utilSetDimension1(unitP1);
         listUnitP1.add(unitP1);
 
         ImageView unitP2 = new ImageView(selectedSwordsmenP2);
-        utilSetDimension(unitP2);
+        utilSetDimension1(unitP2);
         listUnitP2.add(unitP2);
 
         unitP2 = new ImageView(logoSpearmenP2);
-        utilSetDimension(unitP2);
+        utilSetDimension1(unitP2);
         listUnitP2.add(unitP2);
 
         unitP2 = new ImageView(logoArcherP2);
-        utilSetDimension(unitP2);
+        utilSetDimension1(unitP2);
         listUnitP2.add(unitP2);
 
         /**List of ImageView arrows for the player 1*/
@@ -137,7 +140,7 @@ public final class GameView extends Region {
 
         for (int i = 0; i < this.laneNumber; i++) {
             arrow1P1 = new ImageView(arrowP1);
-            utilSetDimension(arrow1P1);
+            utilSetDimension2(arrow1P1);
             listArrowP1.add(arrow1P1);
         }
         listArrowP1.get(this.laneNumber / 2).setImage(selectedArrowP1);
@@ -147,7 +150,7 @@ public final class GameView extends Region {
 
         for (int i = 0; i < this.laneNumber; i++) {
             arrow1P2 = new ImageView(arrowP2);
-            utilSetDimension(arrow1P2);
+            utilSetDimension2(arrow1P2);
             listArrowP2.add(arrow1P2);
         }
         listArrowP2.get(this.laneNumber / 2).setImage(selectedArrowP2);
@@ -173,32 +176,25 @@ public final class GameView extends Region {
         /**Label TIMER. */
         timer = new Label("TIMER");
         timer.setStyle(Style.LABEL);
-        timer.setPrefHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
-        timer.setPrefWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
+        utilSetDimension3(timer);
         timer.setAlignment(Pos.CENTER);
 
         /**Label Player 1 HEALTH. */
         final int hp1 = 8;
         final Label player1 = new Label("PLAYER 1 HP: " + hp1);
         player1.setStyle(Style.LABEL);
-
-        player1.setPrefHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
-        player1.setPrefWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
+        utilSetDimension3(player1);
         player1.setAlignment(Pos.CENTER);
 
         //prova timerP1
         timerP1 = new Label("P1:00");
         timerP1.setStyle(Style.LABEL);
-
-        timerP1.setPrefHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
-        timerP1.setPrefWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
+        utilSetDimension3(timerP1);
         timerP1.setAlignment(Pos.CENTER);
 
         timerP2 = new Label("P2:00");
         timerP2.setStyle(Style.LABEL);
-
-        timerP2.setPrefHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
-        timerP2.setPrefWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
+        utilSetDimension3(timerP2);
         timerP2.setAlignment(Pos.CENTER);
 
         /** Health Points player2 */
@@ -210,15 +206,70 @@ public final class GameView extends Region {
         player2.setAlignment(Pos.CENTER);
 
 
+        /**List of Labels for the respawn time of player1's units. */
+        final List<Label> unit1ListLabel = new ArrayList<>();
+
+        for (int i = 3; i < ViewConstants.RESPAWN_TIMER + 1; i++) {
+          
+            final Label respawnLabel1 = new Label(  i +" sec");
+            respawnLabel1.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30), 
+                    ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+            respawnLabel1.setAlignment(Pos.CENTER);
+            respawnLabel1.setStyle(Style.LABEL);
+            unit1ListLabel.add(respawnLabel1);
+        }
+        
+        
+        final List<Label> unit2ListLabel = new ArrayList<>();
+
+        for (int i = 3; i < ViewConstants.RESPAWN_TIMER; i++) {
+          
+            final Label respawnLabel2 = new Label(i+" sec");
+            respawnLabel2.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30), 
+                    ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+            respawnLabel2.setStyle(Style.LABEL);
+            respawnLabel2.setAlignment(Pos.CENTER);
+            unit2ListLabel.add(respawnLabel2);
+        }
+        
+        
+        
+        
         /**Layout. */
+
+        final VBox unit1 = new VBox();
+        unit1.getChildren().addAll(listUnitP1.get(0), unit1ListLabel.get(0));
+        unit1.setAlignment(Pos.CENTER);
+        
+       final VBox unit2 = new VBox();
+       unit2.getChildren().addAll(listUnitP1.get(1), unit1ListLabel.get(1));
+       unit2.setAlignment(Pos.CENTER);
+        
+        final VBox unit3 = new VBox();
+        unit3.getChildren().addAll(listUnitP1.get(2), unit1ListLabel.get(2));
+        unit3.setAlignment(Pos.CENTER);
+        
+        final VBox unit4 = new VBox();
+        unit4.getChildren().addAll(listUnitP2.get(0), unit2ListLabel.get(0));
+        unit4.setAlignment(Pos.CENTER);
+        
+        final VBox unit5 = new VBox();
+        unit5.getChildren().addAll(listUnitP2.get(1), unit2ListLabel.get(1));
+        unit5.setAlignment(Pos.CENTER);
+       
+        final VBox unit6 = new VBox();
+        unit6.getChildren().addAll(listUnitP2.get(2), unit2ListLabel.get(2));
+        unit6.setAlignment(Pos.CENTER);
+        
         final HBox topMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25));
         topMenu.setAlignment(Pos.CENTER);
-        topMenu.getChildren().addAll(listUnitP1);
-        topMenu.getChildren().addAll(timer);
-        topMenu.getChildren().addAll(listUnitP2);
-        topMenu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0,
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0));
+        topMenu.getChildren().addAll(unit1,unit2,unit3,timer,unit4,unit5,unit6);
 
+        topMenu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0, 
+
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0));
+        
+        
         final HBox bottomMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30));
         bottomMenu.getChildren().addAll(timerP1, player1, menu, exit, player2, timerP2);
         bottomMenu.setAlignment(Pos.CENTER);
@@ -241,8 +292,8 @@ public final class GameView extends Region {
         borderpane.setBottom(bottomMenu);
         borderpane.setRight(rightMenu);
         borderpane.setCenter(this.field.getGrid());
-        borderpane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5),
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        borderpane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3),
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
 
         /**KeyInput. */
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
@@ -333,10 +384,20 @@ public final class GameView extends Region {
         }
     }
 
-    private void utilSetDimension(final ImageView imageView) {
-      imageView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_20));
-      imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
+    private void utilSetDimension1(final ImageView imageView) {
+      imageView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
+      imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
     }
+    
+    private void utilSetDimension2(final ImageView imageView) {
+        imageView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_20));
+        imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
+      }
+    
+    private void utilSetDimension3(final Label label) {
+        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
+    }
+
 
     public void setObserver(final Controller observer) {
         this.observer = observer;

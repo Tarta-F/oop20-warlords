@@ -27,7 +27,7 @@ public final class GameFieldViewImpl implements GameFieldView {
 
     private final GridPane gridPane = new GridPane();
 
-    private static final int CELL_W = (int) ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_27);
+    private static final int CELL_W = (int) ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_23);
     private static final int CELL_H = (int) ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10);
 
     private final int nRow;
@@ -106,7 +106,7 @@ public final class GameFieldViewImpl implements GameFieldView {
         this.checkOutOfBounds(x, nCols, MESSAGE_OVER_COLUMNS);
         this.checkOutOfBounds(y, nRow, MESSAGE_OVER_ROWS);
 
-        unitView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_27));
+        unitView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_23));
         unitView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10));
 
         GridPane.setConstraints(unitView, x, y);

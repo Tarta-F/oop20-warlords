@@ -33,8 +33,8 @@ public class GameTutorial extends Region {
         /**Background. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_TUTORIAL));
         final ImageView tutorialBackGround = new ImageView(backgroundImg);
-        tutorialBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5));
-        tutorialBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        tutorialBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
+        tutorialBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
 
         /**Button mainMenu. */
         final Button mainMenu = new Button("MAIN MENU");
@@ -59,8 +59,8 @@ public class GameTutorial extends Region {
        /**BorderPane and Pane gets. */
        final BorderPane borderPane = new BorderPane();
        borderPane.setBottom(backMenu);
-       borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), 
-               ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+       borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3), 
+               ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
        pane.getChildren().add(tutorialBackGround);
        pane.getChildren().addAll(borderPane);
 

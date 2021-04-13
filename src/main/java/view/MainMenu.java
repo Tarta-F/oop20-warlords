@@ -32,8 +32,8 @@ public final class MainMenu extends Application {
         /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
         final Pane pane = new Pane(createMainMenu());
-        final Scene scene = new Scene(pane, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        final Scene scene = new Scene(pane, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
         window.setScene(scene);
         window.show();
         window.setResizable(false);
@@ -55,8 +55,8 @@ public final class MainMenu extends Application {
         /**Background and Image. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
         final ImageView menuBackGround = new ImageView(backgroundImg);
-        menuBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5));
-        menuBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        menuBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
+        menuBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
 
         final Image logoImage  = new Image(this.getClass().getResourceAsStream(ViewImages.LOGO));
         final ImageView logo = new ImageView(logoImage);
@@ -136,8 +136,8 @@ public final class MainMenu extends Application {
 
         /**BorderPane sets and Pane gets. */
         final BorderPane borderPane = new BorderPane();
-        borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
         borderPane.setCenter(menu);
         borderPane.setLeft(leftVBox);
         borderPane.setRight(rigthVBox);

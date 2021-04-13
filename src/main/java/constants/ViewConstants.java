@@ -6,7 +6,7 @@ package constants;
 public final class ViewConstants {
 
     /**DIVISOR used in view for the resolution of elements. */
-    public static final double DIVISOR_1_5 = 1.5;
+    public static final double DIVISOR_1_3 = 1.3;
 
     /**DIVISOR used in view for the resolution of elements. */
     public static final int DIVISOR_2 = 2;
@@ -33,10 +33,10 @@ public final class ViewConstants {
     public static final int DIVISOR_20 = 20;
 
     /**DIVISOR used in view for the resolution of elements. */
-    public static final int DIVISOR_25 = 25;
-
+    public static final int DIVISOR_23 = 23;
+ 
     /**DIVISOR used in view for the resolution of elements. */
-    public static final int DIVISOR_27 = 27;
+    public static final int DIVISOR_25 = 25;
 
     /**DIVISOR used in view for the resolution of elements. */
     public static final int DIVISOR_30 = 30;
@@ -74,5 +74,8 @@ public final class ViewConstants {
     /**Default TIMER in GameModeSelection. */
     public static final int DEFAULT_TIMER = 5;
 
+    /**Respawn timer for the units. */
+    public static final int RESPAWN_TIMER = 6;
+    
     private ViewConstants() { }
 }

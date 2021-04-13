@@ -62,8 +62,8 @@ public class GameModeSelection extends Region {
         /**BackGroung. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_SETTINGS));
         final ImageView backGround = new ImageView(backgroundImg);
-        backGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5));
-        backGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        backGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
+        backGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
 
         /**Buttons. */
         /**Buttons SCENARIO. */
@@ -198,13 +198,14 @@ public class GameModeSelection extends Region {
         timerBox.getChildren().addAll(listTimer);
 
         final HBox backStartBox = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
-        backStartBox.setPadding(new Insets(0, 0, 0, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30)));
+        backStartBox.setAlignment(Pos.CENTER);
+        backStartBox.setPadding(new Insets(0, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_60), 0, 0));
         backStartBox.getChildren().addAll(back, start, settingsSelected);
 
         final VBox vBox = new VBox(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         vBox.setAlignment(Pos.CENTER);
-        vBox.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_5), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_5));
+        vBox.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
         vBox.getChildren().addAll(scenarioBox, laneBox, timerBox, backStartBox);
 
         pane.getChildren().add(backGround);
