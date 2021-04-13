@@ -17,7 +17,11 @@ public enum UnitType {
     ARCHER(GameConstants.ARCHER_HP, GameConstants.ARCHER_DMG, GameConstants.ARCHER_RANGE, GameConstants.ARCHER_TIMER, GameConstants.STEP);
 
 
-    private int health, damage, range, timer, step;
+    private int health;
+    private int damage;
+    private int range;
+    private int timer;
+    private int step;
 
     UnitType(final int health, final int damage, final int range, final int timer, final int step) {
         this.health = health;

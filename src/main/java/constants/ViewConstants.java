@@ -76,6 +76,6 @@ public final class ViewConstants {
 
     /**Respawn timer for the units. */
     public static final int RESPAWN_TIMER = 6;
-    
+
     private ViewConstants() { }
 }

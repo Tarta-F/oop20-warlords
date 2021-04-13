@@ -6,14 +6,14 @@ package model;
 public class UnitImpl implements Unit {
 
     private int hp;
-    private int dmg;
-    private int range;
-    private int timer;
-    private int step;
+    private final int dmg;
+    private final int range;
+    private final int timer;
+    private final int step;
     private boolean alive;
-    private UnitType unitType;
-    private PlayerType player;
-    private Direction direction;
+    private final UnitType unitType;
+    private final PlayerType player;
+    //private final Direction direction;
 
 
     public UnitImpl(final UnitType unitType, final PlayerType player) {
@@ -25,7 +25,7 @@ public class UnitImpl implements Unit {
         this.timer = unitType.getTimer();
         this.step = unitType.getStep();
         this.player = player;
-        this.direction = player.getDirection();
+        //this.direction = player.getDirection();
         this.alive = true;
     }
 
@@ -46,7 +46,7 @@ public class UnitImpl implements Unit {
 
     /**@return step.*/
     public int getStep() {
-        return step;
+        return this.step;
     }
 
     /**@return player.*/
