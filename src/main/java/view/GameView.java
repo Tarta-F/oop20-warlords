@@ -1,6 +1,5 @@
 package view;
 
-import constants.GameConstants;
 import constants.ViewConstants;
 import controllers.Controller;
 import model.PlayerType;
@@ -8,8 +7,6 @@ import constants.ViewImages;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.lang3.tuple.Pair;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -45,6 +42,8 @@ public final class GameView extends Region {
     private final List<ImageView> listUnitP2 = new ArrayList<>();
     private final List<Label> unit1ListLabel = new ArrayList<>();
     private final List<Label> unit2ListLabel = new ArrayList<>();
+
+    private final EnumMap<UnitViewType, Pair<ImageView, Label>> unitBoxes = new EnumMap<>(UnitViewType.class);
 
     private List<Image> unitSelectedP1;
     private List<Image> unitImageP1;
@@ -84,6 +83,7 @@ public final class GameView extends Region {
         this.scenario = new Image(this.getClass().getResourceAsStream(background));
         this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
     }
+
     public Parent createGameView() throws IOException {
         /**Pane. */
         final Pane pane = new Pane();
@@ -212,35 +212,27 @@ public final class GameView extends Region {
         }
 
         /**Layout. */
+        final List<VBox> vBoxplayer1 = new ArrayList<>();
+        for (int i = 0;  i < listUnitP1.size(); i++) {
+            final VBox vBox1 = new VBox();
+            vBox1.setAlignment(Pos.CENTER);
+            vBox1.getChildren().addAll(listUnitP1.get(i), unit1ListLabel.get(i));
+            vBoxplayer1.add(vBox1);
+          }
 
-        final VBox unit1 = new VBox();
-        unit1.getChildren().addAll(listUnitP1.get(0), unit1ListLabel.get(0));
-        unit1.setAlignment(Pos.CENTER);
-
-        final VBox unit2 = new VBox();
-        unit2.getChildren().addAll(listUnitP1.get(1), unit1ListLabel.get(1));
-        unit2.setAlignment(Pos.CENTER);
-
-        final VBox unit3 = new VBox();
-        unit3.getChildren().addAll(listUnitP1.get(2), unit1ListLabel.get(2));
-        unit3.setAlignment(Pos.CENTER);
-
-        final VBox unit4 = new VBox();
-        unit4.getChildren().addAll(listUnitP2.get(0), unit2ListLabel.get(0));
-        unit4.setAlignment(Pos.CENTER);
-
-        final VBox unit5 = new VBox();
-        unit5.getChildren().addAll(listUnitP2.get(1), unit2ListLabel.get(1));
-        unit5.setAlignment(Pos.CENTER);
-
-        final VBox unit6 = new VBox();
-        unit6.getChildren().addAll(listUnitP2.get(2), unit2ListLabel.get(2));
-        unit6.setAlignment(Pos.CENTER);
+        final List<VBox> vBoxplayer2 = new ArrayList<>();
+        for (int i = 0;  i < listUnitP2.size(); i++) {
+            final VBox vBox2 = new VBox();
+            vBox2.setAlignment(Pos.CENTER);
+            vBox2.getChildren().addAll(listUnitP2.get(i), unit2ListLabel.get(i));
+            vBoxplayer2.add(vBox2);
+          }
 
         final HBox topMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25));
         topMenu.setAlignment(Pos.CENTER);
-        topMenu.getChildren().addAll(unit1,unit2,unit3,timer,unit4,unit5,unit6);
-
+        topMenu.getChildren().addAll(vBoxplayer1);
+        topMenu.getChildren().add(timer);
+        topMenu.getChildren().addAll(vBoxplayer2);
         topMenu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0, 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0));
 
@@ -311,6 +303,7 @@ public final class GameView extends Region {
 
         pane.getChildren().add(gameBackGround);
         pane.getChildren().add(borderpane);
+
         return pane;
     }
 
@@ -365,7 +358,8 @@ public final class GameView extends Region {
         if (playerType.equals(PlayerType.PLAYER1)) {
             Platform.runLater(() -> {
                 timerP1.setText(String.format("%02d:%02d", mins, seconds));
-//                unit1ListLabel.
+                unit1ListLabel.forEach(l -> {
+                });
             });
         } else {
             Platform.runLater(() -> timerP2.setText(String.format("%02d:%02d", mins, seconds)));
@@ -376,14 +370,15 @@ public final class GameView extends Region {
       imageView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
       imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
     }
-    
+
     private void utilSetDimension2(final ImageView imageView) {
         imageView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_20));
         imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
       }
-    
+
     private void utilSetDimension3(final Label label) {
-        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
+        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
     }
 
 

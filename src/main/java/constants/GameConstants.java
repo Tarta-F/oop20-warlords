@@ -15,7 +15,7 @@ public final class GameConstants {
       public static final int SWORDSMEN_RANGE = 1;
 
     /**TIMER(time for re_spawn) of the unit type SWORDSMEN. */
-      public static final int SWORDSMEN_TIMER = 5000;
+      public static final int SWORDSMEN_TIMER = 4000;
 
     // SPEARMEN
     /**HP of the unit type SPEARMEN. */
@@ -42,7 +42,7 @@ public final class GameConstants {
     public static final int ARCHER_RANGE = 5;
 
     /**TIMER(time for re_spawn) of the unit type ARCHER. */
-    public static final int ARCHER_TIMER = 10000;
+    public static final int ARCHER_TIMER = 6000;
 
     /** Lane number for testing. */
     public static final int ONE_LANE = 1;
