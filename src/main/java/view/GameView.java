@@ -1,5 +1,6 @@
 package view;
 
+import constants.GameConstants;
 import constants.ViewConstants;
 import controllers.Controller;
 import model.PlayerType;
@@ -7,10 +8,9 @@ import constants.ViewImages;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.lang3.tuple.Pair;
-
-import com.sun.glass.ui.View;
-
 import java.util.Arrays;
 import java.util.EnumMap;
 import javafx.application.Platform;
@@ -22,11 +22,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -48,6 +43,8 @@ public final class GameView extends Region {
     private final List<ImageView> listArrowP2 = new ArrayList<>();
     private final List<ImageView> listUnitP1 = new ArrayList<>();
     private final List<ImageView> listUnitP2 = new ArrayList<>();
+    private final List<Label> unit1ListLabel = new ArrayList<>();
+    private final List<Label> unit2ListLabel = new ArrayList<>();
 
     private List<Image> unitSelectedP1;
     private List<Image> unitImageP1;
@@ -205,71 +202,48 @@ public final class GameView extends Region {
         player2.setPrefWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
         player2.setAlignment(Pos.CENTER);
 
-
-        /**List of Labels for the respawn time of player1's units. */
-        final List<Label> unit1ListLabel = new ArrayList<>();
-
-        for (int i = 3; i < ViewConstants.RESPAWN_TIMER + 1; i++) {
-          
-            final Label respawnLabel1 = new Label(  i +" sec");
-            respawnLabel1.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30), 
-                    ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
-            respawnLabel1.setAlignment(Pos.CENTER);
-            respawnLabel1.setStyle(Style.LABEL);
-            unit1ListLabel.add(respawnLabel1);
+        /**List of Labels for the respawn time of players units. */
+        for (final var type : UnitViewType.values()) {
+            if (type.getPlayer().equals(PlayerType.PLAYER1)) { 
+                unit1ListLabel.add(this.unitTimerLabel(type.getWaitingTime()));
+            } else {
+                unit2ListLabel.add(this.unitTimerLabel(type.getWaitingTime()));
+            }
         }
-        
-        
-        final List<Label> unit2ListLabel = new ArrayList<>();
 
-        for (int i = 3; i < ViewConstants.RESPAWN_TIMER; i++) {
-          
-            final Label respawnLabel2 = new Label(i+" sec");
-            respawnLabel2.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30), 
-                    ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
-            respawnLabel2.setStyle(Style.LABEL);
-            respawnLabel2.setAlignment(Pos.CENTER);
-            unit2ListLabel.add(respawnLabel2);
-        }
-        
-        
-        
-        
         /**Layout. */
 
         final VBox unit1 = new VBox();
         unit1.getChildren().addAll(listUnitP1.get(0), unit1ListLabel.get(0));
         unit1.setAlignment(Pos.CENTER);
-        
-       final VBox unit2 = new VBox();
-       unit2.getChildren().addAll(listUnitP1.get(1), unit1ListLabel.get(1));
-       unit2.setAlignment(Pos.CENTER);
-        
+
+        final VBox unit2 = new VBox();
+        unit2.getChildren().addAll(listUnitP1.get(1), unit1ListLabel.get(1));
+        unit2.setAlignment(Pos.CENTER);
+
         final VBox unit3 = new VBox();
         unit3.getChildren().addAll(listUnitP1.get(2), unit1ListLabel.get(2));
         unit3.setAlignment(Pos.CENTER);
-        
+
         final VBox unit4 = new VBox();
         unit4.getChildren().addAll(listUnitP2.get(0), unit2ListLabel.get(0));
         unit4.setAlignment(Pos.CENTER);
-        
+
         final VBox unit5 = new VBox();
         unit5.getChildren().addAll(listUnitP2.get(1), unit2ListLabel.get(1));
         unit5.setAlignment(Pos.CENTER);
-       
+
         final VBox unit6 = new VBox();
         unit6.getChildren().addAll(listUnitP2.get(2), unit2ListLabel.get(2));
         unit6.setAlignment(Pos.CENTER);
-        
+
         final HBox topMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25));
         topMenu.setAlignment(Pos.CENTER);
         topMenu.getChildren().addAll(unit1,unit2,unit3,timer,unit4,unit5,unit6);
 
         topMenu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0, 
-
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0));
-        
-        
+
         final HBox bottomMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30));
         bottomMenu.getChildren().addAll(timerP1, player1, menu, exit, player2, timerP2);
         bottomMenu.setAlignment(Pos.CENTER);
@@ -335,15 +309,18 @@ public final class GameView extends Region {
             }
         });
 
-//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 0));
-//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 1));
-//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 2));
-//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 3));
-//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 4));
-
         pane.getChildren().add(gameBackGround);
         pane.getChildren().add(borderpane);
         return pane;
+    }
+
+    private Label unitTimerLabel(final long l) {
+        final Label respawnLabel = new Label(l + " sec");
+        respawnLabel.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+        respawnLabel.setAlignment(Pos.CENTER);
+        respawnLabel.setStyle(Style.LABEL);
+        return respawnLabel;
     }
 
     public void updateSelectLane(final PlayerType playerType, final int index, final int next) {
@@ -375,10 +352,21 @@ public final class GameView extends Region {
         Platform.runLater(() -> timer.setText(String.format("%02d:%02d", mins, seconds)));
     }
 
-    //prova
+    //TODO VERSIONE FILIPPO
+//    public void updatePlayerTimer(final int mins, final int seconds, final PlayerType playerType) {
+//        if (playerType.equals(PlayerType.PLAYER1)) {
+//            Platform.runLater(() -> timerP1.setText(String.format("%02d:%02d", mins, seconds)));
+//        } else {
+//            Platform.runLater(() -> timerP2.setText(String.format("%02d:%02d", mins, seconds)));
+//        }
+//    }
+
     public void updatePlayerTimer(final int mins, final int seconds, final PlayerType playerType) {
         if (playerType.equals(PlayerType.PLAYER1)) {
-            Platform.runLater(() -> timerP1.setText(String.format("%02d:%02d", mins, seconds)));
+            Platform.runLater(() -> {
+                timerP1.setText(String.format("%02d:%02d", mins, seconds));
+//                unit1ListLabel.
+            });
         } else {
             Platform.runLater(() -> timerP2.setText(String.format("%02d:%02d", mins, seconds)));
         }
