@@ -1,5 +1,6 @@
 package view;
 
+import constants.GameConstants;
 import constants.ViewConstants;
 import controllers.Controller;
 import model.PlayerType;
@@ -43,15 +44,13 @@ public final class GameView extends Region {
     private final List<Label> unit1ListLabel = new ArrayList<>();
     private final List<Label> unit2ListLabel = new ArrayList<>();
 
-    private final EnumMap<UnitViewType, Pair<ImageView, Label>> unitBoxes = new EnumMap<>(UnitViewType.class);
+    private final EnumMap<UnitViewType, Label> unitBoxes = new EnumMap<>(UnitViewType.class);
 
     private List<Image> unitSelectedP1;
     private List<Image> unitImageP1;
     private List<Image> unitSelectedP2;
     private List<Image> unitImageP2;
     private Label timer;
-    private Label timerP1;
-    private Label timerP2;
     private Controller observer;
 
     //private final String backgroundF; //fil
@@ -92,17 +91,6 @@ public final class GameView extends Region {
         gameBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
         gameBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
 
-      //  final Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
-
-       // final BackgroundSize backgroundSize = new BackgroundSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3),
-        //      ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3),
-     //           true, true, true, false);
-
-      // final BackgroundImage backgroundImage = new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-       //         BackgroundPosition.CENTER, backgroundSize);
-
-       // final Background background = new Background(backgroundImage);
-
         this.unitImageP1 = new ArrayList<>(Arrays.asList(logoSwordsmenP1, logoSpearmenP1, logoArcherP1));
         this.unitSelectedP1 = new ArrayList<>(Arrays.asList(selectedSwordsmenP1, selectedSpearmenP1, selectedArcherP1));
         this.unitImageP2 = new ArrayList<>(Arrays.asList(logoSwordsmenP2, logoSpearmenP2, logoArcherP2));
@@ -134,7 +122,6 @@ public final class GameView extends Region {
 
         /**List of ImageView arrows for the player 1*/
         ImageView arrow1P1;
-
         for (int i = 0; i < this.laneNumber; i++) {
             arrow1P1 = new ImageView(arrowP1);
             utilSetDimension2(arrow1P1);
@@ -144,14 +131,12 @@ public final class GameView extends Region {
 
         /**List of ImageView arrows for the player 1*/
         ImageView arrow1P2;
-
         for (int i = 0; i < this.laneNumber; i++) {
             arrow1P2 = new ImageView(arrowP2);
             utilSetDimension2(arrow1P2);
             listArrowP2.add(arrow1P2);
         }
         listArrowP2.get(this.laneNumber / 2).setImage(selectedArrowP2);
-
 
         /**Buttons. */
         /**Button EXIT. */
@@ -168,7 +153,6 @@ public final class GameView extends Region {
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30));
         menu.setOnMouseClicked(e ->  returnMainMenu(pane));
 
-
         /**Labels. */
         /**Label TIMER. */
         timer = new Label("TIMER");
@@ -176,27 +160,17 @@ public final class GameView extends Region {
         utilSetDimension3(timer);
         timer.setAlignment(Pos.CENTER);
 
+        // TODO Cambia hp in score da Controller
         /**Label Player 1 HEALTH. */
-        final int hp1 = 8;
-        final Label player1 = new Label("PLAYER 1 HP: " + hp1);
+        final int scoreP1 = 0;
+        final Label player1 = new Label("SCORE PLAYER 1: " + scoreP1);
         player1.setStyle(Style.LABEL);
         utilSetDimension3(player1);
         player1.setAlignment(Pos.CENTER);
 
-        //prova timerP1
-        timerP1 = new Label("P1:00");
-        timerP1.setStyle(Style.LABEL);
-        utilSetDimension3(timerP1);
-        timerP1.setAlignment(Pos.CENTER);
-
-        timerP2 = new Label("P2:00");
-        timerP2.setStyle(Style.LABEL);
-        utilSetDimension3(timerP2);
-        timerP2.setAlignment(Pos.CENTER);
-
         /** Health Points player2 */
-        final int hp2 = 8;
-        final Label player2 = new Label("PLAYER 2 HP: " + hp2);
+        final int scoreP2 = 0;
+        final Label player2 = new Label("SCORE PLAYER 2 : " + scoreP2);
         player2.setStyle(Style.LABEL);
         player2.setPrefHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
         player2.setPrefWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
@@ -204,10 +178,12 @@ public final class GameView extends Region {
 
         /**List of Labels for the respawn time of players units. */
         for (final var type : UnitViewType.values()) {
+            final Label label = this.unitTimerLabel(type.getWaitingTime());
+            unitBoxes.put(type, label);
             if (type.getPlayer().equals(PlayerType.PLAYER1)) { 
-                unit1ListLabel.add(this.unitTimerLabel(type.getWaitingTime()));
+                unit1ListLabel.add(label);
             } else {
-                unit2ListLabel.add(this.unitTimerLabel(type.getWaitingTime()));
+                unit2ListLabel.add(label);
             }
         }
 
@@ -237,7 +213,7 @@ public final class GameView extends Region {
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0));
 
         final HBox bottomMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30));
-        bottomMenu.getChildren().addAll(timerP1, player1, menu, exit, player2, timerP2);
+        bottomMenu.getChildren().addAll(player1, menu, exit, player2);
         bottomMenu.setAlignment(Pos.CENTER);
         bottomMenu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0,
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0));
@@ -251,7 +227,6 @@ public final class GameView extends Region {
         rightMenu.getChildren().addAll(listArrowP2);
 
         /**BorderPane. */
-        /**BorderPane sets. */
         final BorderPane borderpane = new BorderPane();
         borderpane.setTop(topMenu);
         borderpane.setLeft(leftMenu);
@@ -264,6 +239,7 @@ public final class GameView extends Region {
         /**KeyInput. */
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
+            // TODO MIGLIORIA
 //            case (KeyCode) InputType.UP_LANE_1.getKey():
 //                break;    //doesn't work :(
             case W:
@@ -345,25 +321,15 @@ public final class GameView extends Region {
         Platform.runLater(() -> timer.setText(String.format("%02d:%02d", mins, seconds)));
     }
 
-    //TODO VERSIONE FILIPPO
-//    public void updatePlayerTimer(final int mins, final int seconds, final PlayerType playerType) {
-//        if (playerType.equals(PlayerType.PLAYER1)) {
-//            Platform.runLater(() -> timerP1.setText(String.format("%02d:%02d", mins, seconds)));
-//        } else {
-//            Platform.runLater(() -> timerP2.setText(String.format("%02d:%02d", mins, seconds)));
-//        }
-//    }
-
     public void updatePlayerTimer(final int mins, final int seconds, final PlayerType playerType) {
-        if (playerType.equals(PlayerType.PLAYER1)) {
-            Platform.runLater(() -> {
-                timerP1.setText(String.format("%02d:%02d", mins, seconds));
-                unit1ListLabel.forEach(l -> {
-                });
+        Platform.runLater(() -> {
+            unitBoxes.forEach((type, label) -> {
+                if (type.getPlayer().equals(playerType)) {
+                    final int timer = type.getWaitingTime() - seconds;
+                    label.setText(Integer.toString(timer < 0 ? 0 : timer));
+                }
             });
-        } else {
-            Platform.runLater(() -> timerP2.setText(String.format("%02d:%02d", mins, seconds)));
-        }
+        });
     }
 
     private void utilSetDimension1(final ImageView imageView) {
