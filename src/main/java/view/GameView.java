@@ -1,6 +1,5 @@
 package view;
 
-import constants.GameConstants;
 import constants.ViewConstants;
 import controllers.Controller;
 import model.PlayerType;
@@ -31,6 +30,13 @@ import javafx.stage.Stage;
  * This class is the BattleField game view.
  */
 public final class GameView extends Region {
+
+    //TODO COSTANTI DIMENSIONI
+//    private static final double PANE_WIDTH = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
+//    private static final double PANE_HEIGHT = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
+
+    private static final double UNIT_ICON_WIDTH = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
+    private static final double UNIT_ICON_HEIGHT = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
 
     private MainMenu scenaMenu;
     private final GameFieldView field;
@@ -91,17 +97,21 @@ public final class GameView extends Region {
         /**Pane. */
         final Pane pane = new Pane();
         /**BackGround. */
-        final ImageView gameBackGround = new ImageView(scenario);
-        gameBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
-        gameBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
+//        final ImageView gameBackGround = new ImageView(scenario);
+//        gameBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
+//        gameBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
+
+//        final ImageView gameBackGround = this.createImageViewProportion(scenario, ViewConstants.DIVISOR_1_3, ViewConstants.DIVISOR_1_3);
+        final ImageView gameBackGround = this.createImageView(scenario, ViewConstants.PANE_WIDTH, ViewConstants.PANE_HEIGHT);
 
         this.unitImageP1 = new ArrayList<>(Arrays.asList(logoSwordsmenP1, logoSpearmenP1, logoArcherP1));
         this.unitSelectedP1 = new ArrayList<>(Arrays.asList(selectedSwordsmenP1, selectedSpearmenP1, selectedArcherP1));
         this.unitImageP2 = new ArrayList<>(Arrays.asList(logoSwordsmenP2, logoSpearmenP2, logoArcherP2));
         this.unitSelectedP2 = new ArrayList<>(Arrays.asList(selectedSwordsmenP2, selectedSpearmenP2, selectedArcherP2));
 
-        ImageView unitP1 = new ImageView(selectedSwordsmenP1);
-        utilSetDimension1(unitP1);  //al posto di ripetere sempre le stesse 2 righe
+//        ImageView unitP1 = new ImageView(selectedSwordsmenP1);
+//        utilSetDimension1(unitP1);  //al posto di ripetere sempre le stesse 2 righe
+        ImageView unitP1 = this.createImageView(selectedSwordsmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP1.add(unitP1);
 
         unitP1 = new ImageView(logoSpearmenP1);
@@ -153,31 +163,34 @@ public final class GameView extends Region {
         /**Button MENU. */
         final Button menu = new Button("Menu");
         menu.setStyle(Style.BUTTON_1);
-        menu.setMinSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30),
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30));
+//        menu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30),
+//                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30));
+        this.setRegionDimensionsProportion(menu, ViewConstants.DIVISOR_30, ViewConstants.DIVISOR_30);
         menu.setOnMouseClicked(e ->  returnMainMenu(pane));
 
         /**Labels. */
         /**Label TIMER. */
         timer = new Label("TIMER");
         timer.setStyle(Style.LABEL);
-        utilSetDimension3(timer);
+//        utilSetDimension3(timer);
+        setRegionDimensionsProportion(timer, ViewConstants.DIVISOR_15, ViewConstants.DIVISOR_20);
         timer.setAlignment(Pos.CENTER);
 
-        // TODO Cambia hp in score da Controller
+        // TODO Update Score
         /**Label Player 1 HEALTH. */
         final int scoreP1 = 0;
         final Label player1 = new Label("SCORE " + this.player1Name + ": " + scoreP1);
         player1.setStyle(Style.LABEL);
-        utilSetDimension3(player1);
+//        utilSetDimension3(player1);
+        setRegionDimensionsProportion(player1, ViewConstants.DIVISOR_15, ViewConstants.DIVISOR_20);
         player1.setAlignment(Pos.CENTER);
 
         /** Health Points player2 */
         final int scoreP2 = 0;
         final Label player2 = new Label("SCORE " + this.player2Name + ": " + scoreP2);
         player2.setStyle(Style.LABEL);
-        player2.setPrefHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
-        player2.setPrefWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
+//      utilSetDimension3(player2);
+        setRegionDimensionsProportion(player2, ViewConstants.DIVISOR_15, ViewConstants.DIVISOR_20);
         player2.setAlignment(Pos.CENTER);
 
         /**List of Labels for the respawn time of players units. */
@@ -198,7 +211,7 @@ public final class GameView extends Region {
             vBox1.setAlignment(Pos.CENTER);
             vBox1.getChildren().addAll(listUnitP1.get(i), unit1ListLabel.get(i));
             vBoxplayer1.add(vBox1);
-          }
+        }
 
         final List<VBox> vBoxplayer2 = new ArrayList<>();
         for (int i = 0;  i < listUnitP2.size(); i++) {
@@ -206,7 +219,7 @@ public final class GameView extends Region {
             vBox2.setAlignment(Pos.CENTER);
             vBox2.getChildren().addAll(listUnitP2.get(i), unit2ListLabel.get(i));
             vBoxplayer2.add(vBox2);
-          }
+        }
 
         final HBox topMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25));
         topMenu.setAlignment(Pos.CENTER);
@@ -237,8 +250,10 @@ public final class GameView extends Region {
         borderpane.setBottom(bottomMenu);
         borderpane.setRight(rightMenu);
         borderpane.setCenter(this.field.getGrid());
-        borderpane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3),
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
+//        borderpane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3),
+//                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
+        borderpane.setPrefSize(ViewConstants.PANE_WIDTH, ViewConstants.PANE_HEIGHT);
+//        setRegionDimensions(borderpane, ViewConstants.DIVISOR_1_3, ViewConstants.DIVISOR_1_3);
 
         /**KeyInput. */
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
@@ -336,6 +351,18 @@ public final class GameView extends Region {
         });
     }
 
+    private void setRegionDimensionsProportion(final Region region, final double widthProportion, final double heightProportion) {
+        region.setPrefSize(ViewResolution.screenResolutionWidth(widthProportion), 
+                ViewResolution.screenResolutionHeight(heightProportion));
+    }
+
+    private ImageView createImageView(final Image image, final double width, final double height) {
+        final ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        return imageView;
+    }
+
     private void utilSetDimension1(final ImageView imageView) {
       imageView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
       imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
@@ -346,11 +373,10 @@ public final class GameView extends Region {
         imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
       }
 
-    private void utilSetDimension3(final Label label) {
-        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
-    }
-
+//    private void utilSetDimension3(final Label label) {
+//        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
+//                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
+//    }
 
     public void setObserver(final Controller observer) {
         this.observer = observer;
