@@ -36,6 +36,8 @@ public final class GameView extends Region {
     private final GameFieldView field;
     private final int laneNumber;
     private final Image scenario;
+    private final String player1Name;
+    private final String player2Name;
 
     private final List<ImageView> listArrowP1 = new ArrayList<>();
     private final List<ImageView> listArrowP2 = new ArrayList<>();
@@ -76,8 +78,10 @@ public final class GameView extends Region {
     private final Image selectedArrowP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SELECTED_ARROW));
 
 
-    public GameView(final int laneNumber, final String background, final String ground) {
+    public GameView(final int laneNumber, final String background, final String ground, final String player1Name, final String player2Name) {
         this.laneNumber = laneNumber;
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
         //this.backgroundF = background;
         this.scenario = new Image(this.getClass().getResourceAsStream(background));
         this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
@@ -163,14 +167,14 @@ public final class GameView extends Region {
         // TODO Cambia hp in score da Controller
         /**Label Player 1 HEALTH. */
         final int scoreP1 = 0;
-        final Label player1 = new Label("SCORE PLAYER 1: " + scoreP1);
+        final Label player1 = new Label("SCORE " + this.player1Name + ": " + scoreP1);
         player1.setStyle(Style.LABEL);
         utilSetDimension3(player1);
         player1.setAlignment(Pos.CENTER);
 
         /** Health Points player2 */
         final int scoreP2 = 0;
-        final Label player2 = new Label("SCORE PLAYER 2 : " + scoreP2);
+        final Label player2 = new Label("SCORE " + this.player2Name + ": " + scoreP2);
         player2.setStyle(Style.LABEL);
         player2.setPrefHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
         player2.setPrefWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));

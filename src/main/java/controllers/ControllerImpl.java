@@ -37,11 +37,11 @@ public final class ControllerImpl implements Controller {
 //    private String background;
 //    private String ground;
 
-    public ControllerImpl(final int laneNumber, final int mins, final String background, final String ground) {
+    public ControllerImpl(final int laneNumber, final int mins, final String background, final String ground, final String player1Name, final String player2Name) {
         this.lastSpawnP1 = 0;
         this.lastSpawnP2 = 0;
 
-        this.gameView = new GameView(laneNumber, background, ground);
+        this.gameView = new GameView(laneNumber, background, ground, player1Name, player2Name);
         this.gameView.setObserver(this);
 
         this.laneNumber = laneNumber;
