@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 /**
  * This class is the BattleField game view.
  */
-public final class GameViewImpl extends Region implements ViewInterface, ViewClose {
+public final class GameViewImpl extends Region implements ViewInterface, ViewClose, GameView {
 
     private MainMenu scenaMenu;
     private final GameFieldView field;
