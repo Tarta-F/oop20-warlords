@@ -31,6 +31,7 @@ public final class Exit {
      * */
     public static boolean display(final String title, final String message) {
 
+        /**Stage. */
         final Stage window = new Stage();
 
         /**Label. */
@@ -42,8 +43,8 @@ public final class Exit {
         label.setStyle(Style.LABEL);
 
 
-        /**Buttons and events. */
-        /**Button YES in the confirm box and his event. */
+        /**Buttons. */
+        /**Button YES. */
         final Button yesButton = new Button("YES");
         yesButton.setStyle(Style.BUTTON_1);
         yesButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), 
@@ -53,7 +54,7 @@ public final class Exit {
             window.close();
         });
 
-        /**Button NO in the confirm box and his event. */
+        /**Button NO. */
         final Button noButton = new Button("NO");
         noButton.setStyle(Style.BUTTON_1);
         noButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), 

@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  * This class implements the Main Menu of the view and is used as unique window for the view.
  *
  */
-public final class MainMenu extends Application {
+public final class MainMenu extends Application implements ViewInterface, ViewClose {
 
     private GameTutorial sceneTutorial;
     private GameModeSelection sceneGameModeSelection;
@@ -29,9 +29,10 @@ public final class MainMenu extends Application {
     @Override
     /**Method of the library JAVAFX used for the creation of the view. */
     public void start(final Stage primaryStage) throws Exception {
+
         /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
-        final Pane pane = new Pane(createMainMenu());
+        final Pane pane = new Pane(createContent());
         final Scene scene = new Scene(pane, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3), 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
         window.setScene(scene);
@@ -44,13 +45,14 @@ public final class MainMenu extends Application {
     }
 
     /**
-     * Method to create the view of the current image.
-     * @return borderPane borderPane
+     * Method to create the Pane of MainMenu.
+     * @return pane Pane
      * */
-    public Parent createMainMenu() throws IOException {
+    public Parent createContent() throws IOException {
 
         /**Pane. */
         final Pane pane = new Pane();
+
 
         /**Background and Image. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
@@ -89,21 +91,21 @@ public final class MainMenu extends Application {
         versus.setOnAction(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
-                pane.getChildren().setAll(sceneGameModeSelection.createGameModeSelection());
+                pane.getChildren().setAll(sceneGameModeSelection.createContent());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
 
-        /**Button TUTORIALS. */
-        final Button tutorials = new Button("TUTORIALS");
-        tutorials.setStyle(Style.BUTTON_1);
-        tutorials.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
+        /**Button TUTORIAL. */
+        final Button tutorial = new Button("TUTORIAL");
+        tutorial.setStyle(Style.BUTTON_1);
+        tutorial.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
-        tutorials.setOnAction(e -> {
+        tutorial.setOnAction(e -> {
             try {
                 sceneTutorial = new GameTutorial();
-                pane.getChildren().setAll(sceneTutorial.createGameTutorial());
+                pane.getChildren().setAll(sceneTutorial.createContent());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -120,7 +122,7 @@ public final class MainMenu extends Application {
         /**Layout. */
         final VBox menu = new VBox(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         menu.setAlignment(Pos.CENTER);
-        menu.getChildren().addAll(logo, campaign, versus, tutorials, exitMenu);
+        menu.getChildren().addAll(logo, campaign, versus, tutorial, exitMenu);
         menu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), 0, 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), 0));
 
@@ -133,6 +135,7 @@ public final class MainMenu extends Application {
         rigthVBox.setAlignment(Pos.CENTER);
         rigthVBox.getChildren().add(logoSpearman);
         rigthVBox.setPadding(new Insets(0, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 0, 0));
+
 
         /**BorderPane sets and Pane gets. */
         final BorderPane borderPane = new BorderPane();

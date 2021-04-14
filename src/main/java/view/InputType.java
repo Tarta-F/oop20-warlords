@@ -47,9 +47,4 @@ public enum InputType {
     public KeyCode getKey(/* final PlayerType player */) {
         return this.key;
     }
-
-//    if(keypressed == inputype.getkey) {
-//        this.input = inputtype;
-//        break;
-//    }
 }

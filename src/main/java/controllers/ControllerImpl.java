@@ -14,7 +14,7 @@ import model.PlayerType;
 import model.Unit;
 import model.UnitImpl;
 import model.UnitType;
-import view.GameView;
+import view.GameViewImpl;
 import view.UnitViewType;
 
 public final class ControllerImpl implements Controller {
@@ -25,7 +25,7 @@ public final class ControllerImpl implements Controller {
     private int selectedUnitIndexP2;
     private long lastSpawnP1;
     private long lastSpawnP2;
-    private final GameView gameView;
+    private final GameViewImpl gameView;
     private final FieldImpl field;
     private final int laneNumber;
     private Optional<PlayerType> winner;
@@ -41,7 +41,7 @@ public final class ControllerImpl implements Controller {
         this.lastSpawnP1 = 0;
         this.lastSpawnP2 = 0;
 
-        this.gameView = new GameView(laneNumber, background, ground, player1Name, player2Name);
+        this.gameView = new GameViewImpl(laneNumber, background, ground, player1Name, player2Name);
         this.gameView.setObserver(this);
 
         this.laneNumber = laneNumber;
@@ -213,7 +213,7 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public GameView getView() {
+    public GameViewImpl getView() {
         return this.gameView;
     }
 

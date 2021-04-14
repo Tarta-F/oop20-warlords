@@ -15,10 +15,10 @@ import javafx.scene.layout.Region;
 
 /**
  * 
- * This class implements the GameTutorial scene.
+ * This class implements the GameTutorial Pane.
  *
  */
-public class GameTutorial extends Region { 
+public class GameTutorial extends Region implements ViewInterface { 
 
         private MainMenu sceneMenu;
 
@@ -26,9 +26,11 @@ public class GameTutorial extends Region {
          * Method to create the view of the current image. 
          * @return pane Pane
          * */
-        public final Parent createGameTutorial() throws IOException {
+        public final Parent createContent() throws IOException {
 
+        /**Pane. */
         final Pane pane = new Pane();
+
 
         /**Background. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_TUTORIAL));
@@ -36,7 +38,8 @@ public class GameTutorial extends Region {
         tutorialBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
         tutorialBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
 
-        /**Button mainMenu. */
+
+        /**Button MAIN MENU. */
         final Button mainMenu = new Button("MAIN MENU");
         mainMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
@@ -44,11 +47,12 @@ public class GameTutorial extends Region {
         mainMenu.setOnAction(e -> {
             sceneMenu = new MainMenu();
             try {
-                pane.getChildren().setAll(sceneMenu.createMainMenu());
+                pane.getChildren().setAll(sceneMenu.createContent());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
+
 
        /**Layout. */
        final HBox backMenu = new HBox();
@@ -56,7 +60,8 @@ public class GameTutorial extends Region {
                ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_2)));
        backMenu.getChildren().add(mainMenu);
 
-       /**BorderPane and Pane gets. */
+
+       /**BorderPane sets and Pane gets. */
        final BorderPane borderPane = new BorderPane();
        borderPane.setBottom(backMenu);
        borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3), 
