@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 /**
  * This class is the BattleField game view.
  */
-public final class GameViewImpl extends Region implements ViewInterface, ViewClose, GameView {
+public final class GameViewImpl extends Region implements ViewInterface, ViewClose {
 
     private MainMenu scenaMenu;
     private final GameFieldView field;
@@ -42,14 +42,16 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
     private final List<ImageView> listArrowP2 = new ArrayList<>();
     private final List<ImageView> listUnitP1 = new ArrayList<>();
     private final List<ImageView> listUnitP2 = new ArrayList<>();
+    private final List<Label> unit1ListLabel = new ArrayList<>();
+    private final List<Label> unit2ListLabel = new ArrayList<>();
+
+    private final EnumMap<UnitViewType, Label> unitBoxes = new EnumMap<>(UnitViewType.class);
 
     private List<Image> unitSelectedP1;
     private List<Image> unitImageP1;
     private List<Image> unitSelectedP2;
     private List<Image> unitImageP2;
     private Label timer;
-    private Label timerP1;
-    private Label timerP2;
     private Controller observer;
 
     //private final String backgroundF; //fil
@@ -92,17 +94,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         gameBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
         gameBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
 
-      //  final Image groundImage = new Image(this.getClass().getResourceAsStream("/Ground.png"));
-
-       // final BackgroundSize backgroundSize = new BackgroundSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3),
-        //      ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3),
-     //           true, true, true, false);
-
-      // final BackgroundImage backgroundImage = new BackgroundImage(groundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-       //         BackgroundPosition.CENTER, backgroundSize);
-
-       // final Background background = new Background(backgroundImage);
-
         this.unitImageP1 = new ArrayList<>(Arrays.asList(logoSwordsmenP1, logoSpearmenP1, logoArcherP1));
         this.unitSelectedP1 = new ArrayList<>(Arrays.asList(selectedSwordsmenP1, selectedSpearmenP1, selectedArcherP1));
         this.unitImageP2 = new ArrayList<>(Arrays.asList(logoSwordsmenP2, logoSpearmenP2, logoArcherP2));
@@ -132,9 +123,8 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         utilSetDimension1(unitP2);
         listUnitP2.add(unitP2);
 
-        /**List of ImageView arrows for the player 1*/
+        /**List of ImageView arrows for the player 1. */
         ImageView arrow1P1;
-
         for (int i = 0; i < this.laneNumber; i++) {
             arrow1P1 = new ImageView(arrowP1);
             utilSetDimension2(arrow1P1);
@@ -142,16 +132,14 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         }
         listArrowP1.get(this.laneNumber / 2).setImage(selectedArrowP1);
 
-        /**List of ImageView arrows for the player 1*/
+        /**List of ImageView arrows for the player 2. */
         ImageView arrow1P2;
-
         for (int i = 0; i < this.laneNumber; i++) {
             arrow1P2 = new ImageView(arrowP2);
             utilSetDimension2(arrow1P2);
             listArrowP2.add(arrow1P2);
         }
         listArrowP2.get(this.laneNumber / 2).setImage(selectedArrowP2);
-
 
         /**Buttons. */
         /**Button EXIT. */
@@ -168,7 +156,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30));
         menu.setOnMouseClicked(e ->  returnMainMenu(pane));
 
-
         /**Labels. */
         /**Label TIMER. */
         timer = new Label("TIMER");
@@ -176,56 +163,32 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         utilSetDimension3(timer);
         timer.setAlignment(Pos.CENTER);
 
+        // TODO Cambia hp in score da Controller
         /**Label Player 1 HEALTH. */
-        final int hp1 = 8;
-        final Label player1 = new Label(this.player1Name + ": " + hp1);
+        final int scoreP1 = 0;
+        final Label player1 = new Label("SCORE " + this.player1Name + ": " + scoreP1);
         player1.setStyle(Style.LABEL);
         utilSetDimension3(player1);
         player1.setAlignment(Pos.CENTER);
 
-        //prova timerP1
-        timerP1 = new Label("P1:00");
-        timerP1.setStyle(Style.LABEL);
-        utilSetDimension3(timerP1);
-        timerP1.setAlignment(Pos.CENTER);
-
-        timerP2 = new Label("P2:00");
-        timerP2.setStyle(Style.LABEL);
-        utilSetDimension3(timerP2);
-        timerP2.setAlignment(Pos.CENTER);
-
         /** Health Points player2 */
-        final int hp2 = 8;
-        final Label player2 = new Label(this.player2Name + ": " + hp2);
+        final int scoreP2 = 8;
+        final Label player2 = new Label("SCORE " + this.player2Name + ": " + scoreP2);
         player2.setStyle(Style.LABEL);
         player2.setPrefHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
         player2.setPrefWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
         player2.setAlignment(Pos.CENTER);
 
 
-        /**List of Labels for the respawn time of player1's units. */
-        final List<Label> unit1ListLabel = new ArrayList<>();
-
-        for (int i = 4; i < ViewConstants.RESPAWN_TIMER + 1; i++) {
-
-            final Label respawnLabel1 = new Label(i + " sec");
-            respawnLabel1.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30), 
-                    ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
-            respawnLabel1.setAlignment(Pos.CENTER);
-            respawnLabel1.setStyle(Style.LABEL);
-            unit1ListLabel.add(respawnLabel1);
-        }
-
-        final List<Label> unit2ListLabel = new ArrayList<>();
-
-        for (int i = 4; i < ViewConstants.RESPAWN_TIMER + 1; i++) {
-
-            final Label respawnLabel2 = new Label(i + " sec");
-            respawnLabel2.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30), 
-                    ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
-            respawnLabel2.setStyle(Style.LABEL);
-            respawnLabel2.setAlignment(Pos.CENTER);
-            unit2ListLabel.add(respawnLabel2);
+        /**List of Labels for the respawn time of players units. */
+        for (final var type : UnitViewType.values()) {
+            final Label label = this.unitTimerLabel(type.getWaitingTime());
+            unitBoxes.put(type, label);
+            if (type.getPlayer().equals(PlayerType.PLAYER1)) { 
+                unit1ListLabel.add(label);
+            } else {
+                unit2ListLabel.add(label);
+            }
         }
 
         /**Layout. */
@@ -254,7 +217,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0));
 
         final HBox bottomMenu = new HBox(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30));
-        bottomMenu.getChildren().addAll(timerP1, player1, menu, exit, player2, timerP2);
+        bottomMenu.getChildren().addAll(player1, menu, exit, player2);
         bottomMenu.setAlignment(Pos.CENTER);
         bottomMenu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0,
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60), 0));
@@ -268,7 +231,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         rightMenu.getChildren().addAll(listArrowP2);
 
         /**BorderPane. */
-        /**BorderPane sets. */
         final BorderPane borderpane = new BorderPane();
         borderpane.setTop(topMenu);
         borderpane.setLeft(leftMenu);
@@ -281,6 +243,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         /**KeyInput. */
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
+            // TODO MIGLIORA
 //            case (KeyCode) InputType.UP_LANE_1.getKey():
 //                break;    //doesn't work :(
             case W:
@@ -318,16 +281,21 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
             }
         });
 
-//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 0));
-//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 1));
-//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 2));
-//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 3));
-//        this.field.add(UnitViewType.SWORDSMEN_PLAYER1, Pair.of(0, 4));
 
         pane.getChildren().add(gameBackGround);
         pane.getChildren().add(borderpane);
 
         return pane;
+    }
+
+    private Label unitTimerLabel(final long l) {
+        final Label respawnLabel = new Label(l + " sec");
+        respawnLabel.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+        respawnLabel.setAlignment(Pos.CENTER);
+        respawnLabel.setStyle(Style.LABEL);
+
+        return respawnLabel;
     }
 
     public void updateSelectLane(final PlayerType playerType, final int index, final int next) {
@@ -361,11 +329,14 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
 
     //prova
     public void updatePlayerTimer(final int mins, final int seconds, final PlayerType playerType) {
-        if (playerType.equals(PlayerType.PLAYER1)) {
-            Platform.runLater(() -> timerP1.setText(String.format("%02d:%02d", mins, seconds)));
-        } else {
-            Platform.runLater(() -> timerP2.setText(String.format("%02d:%02d", mins, seconds)));
-        }
+        Platform.runLater(() -> {
+            unitBoxes.forEach((type, label) -> {
+                if (type.getPlayer().equals(playerType)) {
+                    final int timer = type.getWaitingTime() - seconds;
+                    label.setText(Integer.toString(timer < 0 ? 0 : timer));
+                }
+        });
+     });
     }
 
     private void utilSetDimension1(final ImageView imageView) {
