@@ -86,6 +86,50 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
     }
 
+
+    /** Create the timerlabel from the given long number.
+     * @param l the quantity of seconds to display
+     * @return the label created
+     */
+    private Label unitTimerLabel(final long l) {
+        final Label respawnLabel = new Label(l + " sec");
+        respawnLabel.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+        respawnLabel.setAlignment(Pos.CENTER);
+        respawnLabel.setStyle(Style.LABEL);
+
+        return respawnLabel;
+    }
+
+    /**Method to return to main menu with a confirm box.*/
+    private void returnMainMenu(final Pane pane) {
+        final boolean answer = Exit.display("Quitting", "Return to main menu?");
+        if (answer) {
+            scenaMenu = new MainMenu();
+            try {
+                pane.getChildren().setAll(scenaMenu.createContent());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    //TODO Questi 3 non sono da commentare perchè verranno sostituiti 
+    private void utilSetDimension1(final ImageView imageView) {
+      imageView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
+      imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+    }
+
+    private void utilSetDimension2(final ImageView imageView) {
+        imageView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_20));
+        imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
+      }
+
+    private void utilSetDimension3(final Label label) {
+        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
+                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
+    }
+
     public Parent createContent() throws IOException {
         /**Pane. */
         final Pane pane = new Pane();
@@ -288,16 +332,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         return pane;
     }
 
-    private Label unitTimerLabel(final long l) {
-        final Label respawnLabel = new Label(l + " sec");
-        respawnLabel.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
-        respawnLabel.setAlignment(Pos.CENTER);
-        respawnLabel.setStyle(Style.LABEL);
-
-        return respawnLabel;
-    }
-
     public void updateSelectLane(final PlayerType playerType, final int index, final int next) {
         final ArrayList<ImageView> tempList = playerType.equals(PlayerType.PLAYER1) ? new ArrayList<>(listArrowP1) : new ArrayList<>(listArrowP2);
         tempList.get(index).setImage(arrowP1);
@@ -327,7 +361,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         Platform.runLater(() -> timer.setText(String.format("%02d:%02d", mins, seconds)));
     }
 
-    //prova
     public void updatePlayerTimer(final int mins, final int seconds, final PlayerType playerType) {
         Platform.runLater(() -> {
             unitBoxes.forEach((type, label) -> {
@@ -338,22 +371,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         });
      });
     }
-
-    private void utilSetDimension1(final ImageView imageView) {
-      imageView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15));
-      imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
-    }
-
-    private void utilSetDimension2(final ImageView imageView) {
-        imageView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_20));
-        imageView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
-      }
-
-    private void utilSetDimension3(final Label label) {
-        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
-    }
-
 
     public void setObserver(final Controller observer) {
         this.observer = observer;
@@ -366,19 +383,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         if (answer) {
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();
-        }
-    }
-
-    /**Method to return to main menu with a confirm box.*/
-    private void returnMainMenu(final Pane pane) {
-        final boolean answer = Exit.display("Quitting", "Return to main menu?");
-        if (answer) {
-            scenaMenu = new MainMenu();
-            try {
-                pane.getChildren().setAll(scenaMenu.createContent());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
         }
     }
 
