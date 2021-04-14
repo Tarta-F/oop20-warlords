@@ -61,11 +61,11 @@ public class GameModeSelection extends Region {
         final Pane pane = new Pane();
 
         /**TextField. */
-        TextField playerName1 = new TextField("Player 1");
+        final TextField playerName1 = new TextField("Player 1");
         playerName1.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
 
-        TextField playerName2 = new TextField("Player 2");
+        final TextField playerName2 = new TextField("Player 2");
         playerName2.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
                 ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
 
@@ -157,7 +157,7 @@ public class GameModeSelection extends Region {
         start.setOnAction(e -> {
 //            System.out.println("back: " + this.background + "ground" + this.ground +
 //                    "lane: " + this.laneNumber + "timer: " + this.timerDuration);
-           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.background, this.ground);
+           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.background, this.ground, playerName1.getText(), playerName2.getText());
            try {
             pane.getChildren().setAll(contr.getView().createGameView());
            } catch (IOException e1) {
