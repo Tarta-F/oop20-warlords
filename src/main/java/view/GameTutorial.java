@@ -22,23 +22,18 @@ import javafx.scene.layout.Region;
  */
 public class GameTutorial extends Region implements ViewInterface { 
 
-        private MainMenu sceneMenu;
-        private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
-        private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
-        private static final double LAYOUT_PADDING_W_1 = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_2);
-        private static final double LAYOUT_PADDING_H_1 = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30);
-        private static final double BORDERPANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
-        private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
-        
-        /**
-         * Method to create the view of the current image. 
-         * @return pane Pane
-         * */
-        public final Parent createPane() throws IOException {
+    private MainMenu sceneMenu;
+    private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
+    private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
+    private static final double LAYOUT_PADDING_W_1 = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_2);
+    private static final double LAYOUT_PADDING_H_1 = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30);
+    private static final double BORDERPANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
+    private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
+
+    public final Parent createPane() throws IOException {
 
         /**Pane. */
         final Pane pane = new Pane();
-
 
         /**Background. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_TUTORIAL));

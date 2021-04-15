@@ -52,7 +52,7 @@ public class GameModeSelection extends Region implements ViewInterface {
     private static final double LAYOUT_HBOX_PADDING_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_60);
     private static final double VBOX_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
     private static final double VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
-    
+
     public GameModeSelection() {
         this.laneNumber = ViewConstants.DEFAULT_LANE;
         this.timerDuration = ViewConstants.DEFAULT_TIMER;
@@ -162,7 +162,8 @@ public class GameModeSelection extends Region implements ViewInterface {
         start.setPrefSize(BUTTONS_W, BUTTONS_H);
         start.setStyle(Style.BUTTON_2);
         start.setOnAction(e -> {
-           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.background, this.ground, playerName1.getText(), playerName2.getText());
+           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.background,
+                   this.ground, playerName1.getText(), playerName2.getText());
            try {
             pane.getChildren().setAll(contr.getView().createPane());
            } catch (IOException e1) {
@@ -226,7 +227,7 @@ public class GameModeSelection extends Region implements ViewInterface {
 
         final HBox backStartBox = new HBox(LAYOUT_HBOX_W);
         backStartBox.setAlignment(Pos.CENTER);
-        backStartBox.setPadding(new Insets(0, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_60), 0, 0));
+        backStartBox.setPadding(new Insets(0, LAYOUT_HBOX_PADDING_W, 0, 0));
         backStartBox.getChildren().addAll(back, start, settingsSelected);
 
         final VBox vBox = new VBox(LAYOUT_VBOX_H);

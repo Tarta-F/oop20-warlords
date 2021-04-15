@@ -58,7 +58,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
     private static final double BORDERPANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
     private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
     private static final double PADDING_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60);
-    
+
     private MainMenu scenaMenu;
     private final GameFieldView field;
     private final int laneNumber;
@@ -195,7 +195,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         /**Buttons. */
         /**Button EXIT. */
         final Button exit = new Button("Exit");
-        exit.setMinSize(BUTTONS_W,BUTTONS_H);
+        exit.setMinSize(BUTTONS_W, BUTTONS_H);
         exit.setOnMouseClicked(e -> closeProgram(pane));
         exit.setStyle(Style.BUTTON_1);
 

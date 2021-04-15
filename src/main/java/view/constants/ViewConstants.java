@@ -1,7 +1,5 @@
 package view.constants;
 
-import view.ViewResolution;
-
 /**
  * This class contain the various constants that we use in the view.
  */

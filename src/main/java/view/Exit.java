@@ -76,7 +76,7 @@ public final class Exit {
 
 
         /**Scene and stage preferences. */
-        final Scene scene = new Scene(layout,SCENE_W, SCENE_H);
+        final Scene scene = new Scene(layout, SCENE_W, SCENE_H);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setScene(scene);
