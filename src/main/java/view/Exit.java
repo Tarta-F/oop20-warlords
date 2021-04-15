@@ -1,12 +1,13 @@
 package view;
 
+import view.constants.ViewConstants;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.geometry.Pos;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import view.constants.ViewConstants;
 import javafx.scene.layout.VBox;
 
 /**

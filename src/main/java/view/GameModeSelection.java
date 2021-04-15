@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import controllers.ControllerImpl;
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -21,8 +24,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import view.constants.ViewConstants;
-import view.constants.ViewImages;
 
 /**
  *
@@ -163,7 +164,7 @@ public class GameModeSelection extends Region implements ViewInterface {
            } catch (IOException e1) {
             e1.printStackTrace();
            }
-       });
+        });
 
 
         /**Labels. */

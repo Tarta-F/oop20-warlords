@@ -15,8 +15,6 @@ public class UnitImpl implements Unit {
     private boolean alive;
     private final UnitType unitType;
     private final PlayerType player;
-    //private final Direction direction;
-
 
     public UnitImpl(final UnitType unitType, final PlayerType player) {
         super();
@@ -27,7 +25,6 @@ public class UnitImpl implements Unit {
         this.timer = unitType.getTimer();
         this.step = unitType.getStep();
         this.player = player;
-        //this.direction = player.getDirection();
         this.alive = true;
     }
 
@@ -72,7 +69,6 @@ public class UnitImpl implements Unit {
     public void damage(final int damage) {
         this.hp = this.hp - damage;
         if (this.hp <= 0) {
-              //TODO notificare l'observer per cancellazione unita'
                 this.alive = false;
             }
         }

@@ -7,13 +7,13 @@ import java.util.Arrays;
  * */
 public enum UnitType {
 
-    /**Swordsmen unit stats.*/
+    /**Swordsmen unit stats. */
     SWORDSMEN(UnitConstants.SWORDSMEN_HP, UnitConstants.SWORDSMEN_DMG, UnitConstants.SWORDSMEN_RANGE, UnitConstants.SWORDSMEN_TIMER, UnitConstants.STEP),
 
-    /**Spearmen unit stats.*/
+    /**Spearmen unit stats. */
     SPEARMEN(UnitConstants.SPEARMEN_HP, UnitConstants.SPEARMEN_DMG, UnitConstants.SPEARMEN_RANGE, UnitConstants.SPEARMEN_TIMER, UnitConstants.STEP),
 
-    /**Archer unit stats.*/
+    /**Archer unit stats. */
     ARCHER(UnitConstants.ARCHER_HP, UnitConstants.ARCHER_DMG, UnitConstants.ARCHER_RANGE, UnitConstants.ARCHER_TIMER, UnitConstants.STEP);
 
 
@@ -61,7 +61,7 @@ public enum UnitType {
         return this.timer;
     }
 
-    /**@return unit movement*/
+    /**@return unit MOVMENT*/
     public int getStep() {
         return this.step;
     }
