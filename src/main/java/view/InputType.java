@@ -1,6 +1,7 @@
 package view;
 
 import constants.PlayerType;
+
 import javafx.scene.input.KeyCode;
 
 /**
@@ -44,7 +45,7 @@ public enum InputType {
         return this.player;
     }
 
-    public KeyCode getKey(/* final PlayerType player */) {
+    public KeyCode getKey() {
         return this.key;
     }
 }

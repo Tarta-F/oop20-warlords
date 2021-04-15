@@ -2,6 +2,9 @@ package view;
 
 import java.io.IOException;
 
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,8 +17,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import view.constants.ViewConstants;
-import view.constants.ViewImages;
 
 /**
  *
@@ -26,16 +27,29 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
 
     private GameTutorial sceneTutorial;
     private GameModeSelection sceneGameModeSelection;
-
+    private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
+    private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
+    private static final double LAYOUT_PADDING_H_1 = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30);
+    private static final double LAYOUT_PADDING_W_1 = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
+    private static final double BORDERPANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
+    private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
+    public static final double PANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
+    public static final double PANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
+    private static final double LOGO_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4);
+    private static final double LOGO_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_8);
+    private static final double LOGO_UNIT_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7);
+    private static final double LOGO_UNIT_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_3);
+    
+    
     @Override
-    /**Method of the library JAVAFX used for the creation of the view. */
+     /**Method of the library JAVAFX used for the creation of the view. */
     public void start(final Stage primaryStage) throws Exception {
 
         /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
-        final Pane pane = new Pane(createContent());
-        final Scene scene = new Scene(pane, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
+
+        final Pane pane = new Pane(createPane());
+        final Scene scene = new Scene(pane, PANE_W, PANE_H);
         window.setScene(scene);
         window.show();
         window.setResizable(false);
@@ -49,7 +63,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
      * Method to create the Pane of MainMenu.
      * @return pane Pane
      * */
-    public Parent createContent() throws IOException {
+    public Parent createPane() throws IOException {
 
         /**Pane. */
         final Pane pane = new Pane();
@@ -57,56 +71,48 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
 
         /**Background and Image. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
-        final ImageView menuBackGround = new ImageView(backgroundImg);
-        menuBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
-        menuBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
+        final ImageView menuBackGround = ViewResolution.createImageView(backgroundImg, PANE_W, PANE_H);
 
         final Image logoImage  = new Image(this.getClass().getResourceAsStream(ViewImages.LOGO));
-        final ImageView logo = new ImageView(logoImage);
-        logo.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4));
-        logo.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_8));
+        final ImageView logo = ViewResolution.createImageView(logoImage, LOGO_W, LOGO_H);
+
 
         final Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SPEARMAN));
-        final ImageView logoSpearman = new ImageView(logoSpearmanImage);
-        logoSpearman.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7));
-        logoSpearman.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_3));
+        final ImageView logoSpearman = ViewResolution.createImageView(logoSpearmanImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
         final Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_ARCHER));
-        final ImageView logoArcher = new ImageView(logoArcherImage);
-        logoArcher.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7));
-        logoArcher.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_3));
+        final ImageView logoArcher = ViewResolution.createImageView(logoArcherImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
 
         /**Buttons. */
         /**Button CAMPAIGN. */
         final Button campaign = new Button("CAMPAIGN");
         campaign.setStyle(Style.BUTTON_1);
-        campaign.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        campaign.setPrefSize(BUTTONS_W, BUTTONS_H);
 
         /**Button VERSUS. */
         final Button versus = new Button("VERSUS");
         versus.setStyle(Style.BUTTON_1);
-        versus.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        versus.setPrefSize(BUTTONS_W, BUTTONS_H);
         versus.setOnAction(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
-                pane.getChildren().setAll(sceneGameModeSelection.createContent());
+                pane.getChildren().setAll(sceneGameModeSelection.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
 
-        /**Button TUTORIAL. */
-        final Button tutorial = new Button("TUTORIAL");
-        tutorial.setStyle(Style.BUTTON_1);
-        tutorial.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
-        tutorial.setOnAction(e -> {
+
+        /**Button TUTORIALS. */
+        final Button tutorials = new Button("TUTORIALS");
+        tutorials.setStyle(Style.BUTTON_1);
+        tutorials.setPrefSize(BUTTONS_W, BUTTONS_H);
+        tutorials.setOnAction(e -> {
+
             try {
                 sceneTutorial = new GameTutorial();
-                pane.getChildren().setAll(sceneTutorial.createContent());
+                pane.getChildren().setAll(sceneTutorial.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -115,33 +121,31 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         /**Button EXIT. */
         final Button exitMenu = new Button("EXIT");
         exitMenu.setStyle(Style.BUTTON_1);
-        exitMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        exitMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
         exitMenu.setOnAction(e -> closeProgram(pane));
 
 
         /**Layout. */
         final VBox menu = new VBox(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
         menu.setAlignment(Pos.CENTER);
-        menu.getChildren().addAll(logo, campaign, versus, tutorial, exitMenu);
-        menu.setPadding(new Insets(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), 0, 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), 0));
+        menu.getChildren().addAll(logo, campaign, versus, tutorials, exitMenu);
+        menu.setPadding(new Insets(LAYOUT_PADDING_H_1, 0, LAYOUT_PADDING_H_1, 0));
+
 
         final VBox leftVBox = new VBox();
         leftVBox.setAlignment(Pos.CENTER);
         leftVBox.getChildren().add(logoArcher);
-        leftVBox.setPadding(new Insets(0, 0, 0, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15)));
+        leftVBox.setPadding(new Insets(0, 0, 0, LAYOUT_PADDING_W_1));
 
         final VBox rigthVBox = new VBox();
         rigthVBox.setAlignment(Pos.CENTER);
         rigthVBox.getChildren().add(logoSpearman);
-        rigthVBox.setPadding(new Insets(0, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15), 0, 0));
+        rigthVBox.setPadding(new Insets(0, LAYOUT_PADDING_W_1, 0, 0));
 
 
         /**BorderPane sets and Pane gets. */
         final BorderPane borderPane = new BorderPane();
-        borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
+        borderPane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
         borderPane.setCenter(menu);
         borderPane.setLeft(leftVBox);
         borderPane.setRight(rigthVBox);

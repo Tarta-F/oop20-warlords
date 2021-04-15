@@ -4,7 +4,7 @@ import constants.PlayerType;
 
 public interface Unit {
 
-    /**@return unit time re_spawn*/
+    /**@return unit time of respawn*/
     int getWaitingTime();
 
     /**@return unit HP*/

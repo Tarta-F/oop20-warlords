@@ -1,5 +1,7 @@
 package view.constants;
 
+import view.ViewResolution;
+
 /**
  * This class contain the various constants that we use in the view.
  */
@@ -76,6 +78,7 @@ public final class ViewConstants {
 
     /**Respawn timer for the units. */
     public static final int RESPAWN_TIMER = 6;
+
 
     private ViewConstants() { }
 }

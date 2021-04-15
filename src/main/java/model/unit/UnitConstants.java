@@ -2,7 +2,7 @@ package model.unit;
 
 public final  class UnitConstants {
 
-    // SWORDSMEN
+    /**SWORDSMEN. */
     /**HP of the unit type SWORDMEN. */
     public static final int SWORDSMEN_HP = 24;
     /**DMG(damage) of the unit type SWORDSMEN. */
@@ -14,7 +14,7 @@ public final  class UnitConstants {
     /**TIMER(time for re_spawn) of the unit type SWORDSMEN. */
       public static final int SWORDSMEN_TIMER = 4000;
 
-    // SPEARMEN
+    /**SPEARMEN. */
     /**HP of the unit type SPEARMEN. */
     public static final int SPEARMEN_HP = 20;
 
@@ -28,7 +28,7 @@ public final  class UnitConstants {
     public static final int SPEARMEN_TIMER = 5000;
 
 
-    // ARCHER
+    /**ARCHER. */
     /**HP of the unit type ARCHER. */
     public static final int ARCHER_HP = 15;
 
