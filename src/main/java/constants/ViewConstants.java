@@ -79,11 +79,6 @@ public final class ViewConstants {
     /**Respawn timer for the units. */
     public static final int RESPAWN_TIMER = 6;
 
-    /** PANE width. */
-    public static final double PANE_WIDTH = ViewResolution.screenResolutionWidth(DIVISOR_1_3);
-
-    /** PANE height. */
-    public static final double PANE_HEIGHT = ViewResolution.screenResolutionHeight(DIVISOR_1_3);
 
     private ViewConstants() { }
 }
