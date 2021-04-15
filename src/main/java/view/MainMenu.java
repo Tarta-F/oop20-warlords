@@ -2,6 +2,9 @@ package view;
 
 import java.io.IOException;
 
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,8 +17,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import view.constants.ViewConstants;
-import view.constants.ViewImages;
 
 /**
  *

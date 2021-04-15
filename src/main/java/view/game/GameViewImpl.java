@@ -1,5 +1,13 @@
 package view.game;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+import java.util.EnumMap;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import constants.PlayerType;
 import controllers.Controller;
 import view.Exit;
@@ -12,12 +20,6 @@ import view.ViewResolution;
 import view.constants.ViewConstants;
 import view.constants.ViewImages;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.commons.lang3.tuple.Pair;
-import java.util.Arrays;
-import java.util.EnumMap;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;

@@ -86,6 +86,7 @@ public final class ViewImages {
     /**PATH Image grid ground for scenario 2. */
     public static final String GROUND_2 = SEP + "Ground2.png";
 
+
     /**Other Scenes. */
     /**PATH Image GameModeSelection background. */
     public static final String GAME_SETTINGS = SEP + "GameSettings.png";
