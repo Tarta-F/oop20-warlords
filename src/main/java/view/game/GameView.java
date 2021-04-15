@@ -1,12 +1,13 @@
-package view;
+package view.game;
 
 import java.util.EnumMap;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import constants.PlayerType;
 import controllers.Controller;
-import model.PlayerType;
+import view.UnitViewType;
 
 /** 
  * This interface models the GameView.

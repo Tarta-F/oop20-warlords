@@ -2,8 +2,8 @@ package controllers;
 
 import java.util.Optional;
 
-import model.PlayerType;
-import view.GameViewImpl;
+import constants.PlayerType;
+import view.game.GameViewImpl;
 
 public interface Controller {
 

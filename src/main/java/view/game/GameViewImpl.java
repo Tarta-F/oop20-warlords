@@ -1,9 +1,17 @@
-package view;
+package view.game;
 
-import constants.ViewConstants;
+import constants.PlayerType;
 import controllers.Controller;
-import model.PlayerType;
-import constants.ViewImages;
+import view.Exit;
+import view.MainMenu;
+import view.Style;
+import view.UnitViewType;
+import view.ViewClose;
+import view.ViewInterface;
+import view.ViewResolution;
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

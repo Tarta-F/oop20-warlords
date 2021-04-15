@@ -2,9 +2,9 @@ package view;
 
 import java.util.concurrent.TimeUnit;
 
-import model.UnitConstants;
-import constants.ViewImages;
-import model.PlayerType;
+import constants.PlayerType;
+import model.unit.UnitConstants;
+import view.constants.ViewImages;
 
 /**
  * This enum serves to distinguish the type of unit to be drawn and each element has his own image path.

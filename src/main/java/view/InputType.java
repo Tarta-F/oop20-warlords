@@ -1,7 +1,7 @@
 package view;
 
+import constants.PlayerType;
 import javafx.scene.input.KeyCode;
-import model.PlayerType;
 
 /**
  * The controls for playing the game.

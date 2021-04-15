@@ -3,11 +3,11 @@ package controllers;
 import java.util.Optional;
 
 import constants.GameConstants;
+import constants.PlayerType;
 import model.FieldImpl;
-import model.PlayerType;
-import model.UnitImpl;
-import model.UnitType;
-import view.GameViewImpl;
+import model.unit.UnitImpl;
+import model.unit.UnitType;
+import view.game.GameViewImpl;
 
 public final class ControllerImpl implements Controller {
 

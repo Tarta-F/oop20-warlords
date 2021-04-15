@@ -11,12 +11,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import constants.GameConstants;
+import constants.PlayerType;
 import model.Field;
 import model.FieldImpl;
-import model.PlayerType;
-import model.Unit;
-import model.UnitImpl;
-import model.UnitType;
+import model.unit.Unit;
+import model.unit.UnitImpl;
+import model.unit.UnitType;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 public class FieldTest {

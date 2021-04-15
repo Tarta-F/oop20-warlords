@@ -1,6 +1,6 @@
 package controllers;
 
-import view.GameViewImpl;
+import view.game.GameViewImpl;
 
 public class GameTimer implements Runnable {
 

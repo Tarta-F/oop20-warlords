@@ -1,8 +1,7 @@
 package view;
 
 import java.io.IOException;
-import constants.ViewConstants;
-import constants.ViewImages;
+
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -12,6 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
 
 /**
  * 

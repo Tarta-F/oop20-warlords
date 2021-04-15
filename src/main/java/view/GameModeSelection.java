@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import constants.ViewConstants;
-import constants.ViewImages;
 import controllers.ControllerImpl;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,6 +21,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
 
 /**
  *

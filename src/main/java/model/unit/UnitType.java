@@ -1,4 +1,4 @@
-package model;
+package model.unit;
 
 import java.util.Arrays;
 

@@ -7,9 +7,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import model.PlayerType;
-import model.Unit;
-import model.UnitType;
+import constants.PlayerType;
+import model.unit.Unit;
+import model.unit.UnitType;
 import view.UnitViewType;
 
 /**
