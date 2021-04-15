@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 /**
  * All unit types.
  * */
@@ -27,6 +29,16 @@ public enum UnitType {
         this.range = range;
         this.timer = timer;
         this.step = step;
+    }
+
+    /** 
+     * Get the max waiting time of this enum values.
+     * @return the max waiting time 
+     */
+    public static int getMaxWaintingTime() {
+        return Arrays.stream(values())
+                .mapToInt(u -> u.getTimer())
+                .max().getAsInt();
     }
 
     /**@return unit HP*/

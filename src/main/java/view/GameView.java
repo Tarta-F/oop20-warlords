@@ -39,11 +39,10 @@ public interface GameView {
 
     /**
      * Method to Update the player timer.
-     * @param mins int
      * @param seconds int
      * @param playerType PlayerType
      * */
-    void updatePlayerTimer(int mins, int seconds, PlayerType playerType);
+    void updatePlayerTimer(int seconds, PlayerType playerType);
 
     /**
      * Method to set the Observer.

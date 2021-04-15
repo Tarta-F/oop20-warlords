@@ -27,7 +27,7 @@ public class PlayerTimer implements Runnable {
                 this.seconds = totSec % SEC_IN_MIN;
                 this.mins = (totSec - seconds) / SEC_IN_MIN;
                 this.totSec++;
-                this.gameView.updatePlayerTimer(this.mins, this.seconds, this.playerType);
+                this.gameView.updatePlayerTimer(this.seconds, this.playerType);
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();

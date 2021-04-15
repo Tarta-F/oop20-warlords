@@ -24,6 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -361,12 +362,13 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         Platform.runLater(() -> timer.setText(String.format("%02d:%02d", mins, seconds)));
     }
 
-    public void updatePlayerTimer(final int mins, final int seconds, final PlayerType playerType) {
+    public void updatePlayerTimer(final int seconds, final PlayerType playerType) {
         Platform.runLater(() -> {
             unitBoxes.forEach((type, label) -> {
                 if (type.getPlayer().equals(playerType)) {
                     final int timer = type.getWaitingTime() - seconds;
-                    label.setText(Integer.toString(timer < 0 ? 0 : timer));
+                    label.setText(timer <= 0 ? "SPAWN" : timer + " sec");
+                    label.setTextFill(timer <= 0 ? Color.GREEN : Color.RED);
                 }
         });
      });
