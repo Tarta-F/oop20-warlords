@@ -1,20 +1,18 @@
 package model;
 
-import constants.GameConstants;
-
 /**
  * All unit types.
  * */
 public enum UnitType {
 
     /**Swordsmen unit stats.*/
-    SWORDSMEN(GameConstants.SWORDSMEN_HP, GameConstants.SWORDSMEN_DMG, GameConstants.SWORDSMEN_RANGE, GameConstants.SWORDSMEN_TIMER, GameConstants.STEP),
+    SWORDSMEN(UnitConstants.SWORDSMEN_HP, UnitConstants.SWORDSMEN_DMG, UnitConstants.SWORDSMEN_RANGE, UnitConstants.SWORDSMEN_TIMER, UnitConstants.STEP),
 
     /**Spearmen unit stats.*/
-    SPEARMEN(GameConstants.SPEARMEN_HP, GameConstants.SPEARMEN_DMG, GameConstants.SPEARMEN_RANGE, GameConstants.SPEARMEN_TIMER, GameConstants.STEP),
+    SPEARMEN(UnitConstants.SPEARMEN_HP, UnitConstants.SPEARMEN_DMG, UnitConstants.SPEARMEN_RANGE, UnitConstants.SPEARMEN_TIMER, UnitConstants.STEP),
 
     /**Archer unit stats.*/
-    ARCHER(GameConstants.ARCHER_HP, GameConstants.ARCHER_DMG, GameConstants.ARCHER_RANGE, GameConstants.ARCHER_TIMER, GameConstants.STEP);
+    ARCHER(UnitConstants.ARCHER_HP, UnitConstants.ARCHER_DMG, UnitConstants.ARCHER_RANGE, UnitConstants.ARCHER_TIMER, UnitConstants.STEP);
 
 
     private int health;
