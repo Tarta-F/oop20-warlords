@@ -134,7 +134,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         if (answer) {
             scenaMenu = new MainMenu();
             try {
-                pane.getChildren().setAll(scenaMenu.createContent());
+                pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -143,7 +143,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
 
 
 
-    public Parent createContent() throws IOException {
+    public Parent createPane() throws IOException {
         /**Pane. */
         final Pane pane = new Pane();
         /**BackGround. */

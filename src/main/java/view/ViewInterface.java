@@ -13,6 +13,6 @@ public interface ViewInterface {
     /**
      * @return the Pane created for the scene.
      * */
-    Parent createContent() throws IOException;
+    Parent createPane() throws IOException;
 
 }

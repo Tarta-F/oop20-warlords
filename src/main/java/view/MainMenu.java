@@ -47,7 +47,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
 
-        final Pane pane = new Pane(createContent());
+        final Pane pane = new Pane(createPane());
         final Scene scene = new Scene(pane, PANE_W, PANE_H);
         window.setScene(scene);
         window.show();
@@ -62,7 +62,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
      * Method to create the Pane of MainMenu.
      * @return pane Pane
      * */
-    public Parent createContent() throws IOException {
+    public Parent createPane() throws IOException {
 
         /**Pane. */
         final Pane pane = new Pane();
@@ -96,7 +96,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         versus.setOnAction(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
-                pane.getChildren().setAll(sceneGameModeSelection.createContent());
+                pane.getChildren().setAll(sceneGameModeSelection.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -111,7 +111,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
 
             try {
                 sceneTutorial = new GameTutorial();
-                pane.getChildren().setAll(sceneTutorial.createContent());
+                pane.getChildren().setAll(sceneTutorial.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

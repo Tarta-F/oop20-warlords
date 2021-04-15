@@ -68,7 +68,7 @@ public class GameModeSelection extends Region implements ViewInterface {
                 + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
     }
 
-    public final Parent createContent() throws IOException {
+    public final Parent createPane() throws IOException {
 
         /**Pane. */
         final Pane pane = new Pane();
@@ -150,7 +150,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         back.setOnAction(e -> {
             scenaMenu = new MainMenu();
             try {
-                pane.getChildren().setAll(scenaMenu.createContent());
+                pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -163,7 +163,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         start.setOnAction(e -> {
            final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.background, this.ground, playerName1.getText(), playerName2.getText());
            try {
-            pane.getChildren().setAll(contr.getView().createContent());
+            pane.getChildren().setAll(contr.getView().createPane());
            } catch (IOException e1) {
             e1.printStackTrace();
            }
