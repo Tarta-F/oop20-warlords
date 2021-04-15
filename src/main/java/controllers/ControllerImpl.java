@@ -1,21 +1,13 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import constants.GameConstants;
 import model.FieldImpl;
 import model.PlayerType;
-import model.Unit;
 import model.UnitImpl;
 import model.UnitType;
 import view.GameViewImpl;
-import view.UnitViewType;
 
 public final class ControllerImpl implements Controller {
 
@@ -31,13 +23,9 @@ public final class ControllerImpl implements Controller {
     private Optional<PlayerType> winner;
     private final PlayerTimer playerTimer;
     private final PlayerTimer playerTimer2;
-//    public ControllerImpl(final GameView gameView) {
-//        this.gameView = gameView;
-//        this.gameView.setObserver(this);
-//    private String background;
-//    private String ground;
 
-    public ControllerImpl(final int laneNumber, final int mins, final String background, final String ground, final String player1Name, final String player2Name) {
+    public ControllerImpl(final int laneNumber, final int mins, final String background, final String ground, 
+            final String player1Name, final String player2Name) {
         this.lastSpawnP1 = 0;
         this.lastSpawnP2 = 0;
 
@@ -50,13 +38,6 @@ public final class ControllerImpl implements Controller {
         this.winner = Optional.empty();
         this.playerTimer = new PlayerTimer(this.gameView, PlayerType.PLAYER1);
         this.playerTimer2 = new PlayerTimer(this.gameView, PlayerType.PLAYER2);
-//        try {
-//            this.pane = new Pane();
-//            pane.getChildren().setAll(gameView.createContent());
-//           } catch (IOException e1) {
-//            // TODO Auto-generated catch block
-//            e1.printStackTrace();
-//           }
 
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
         new Thread(new GameTimer(mins, this.gameView)).start();
@@ -70,49 +51,13 @@ public final class ControllerImpl implements Controller {
      * @return true if the player has won
      */
     private boolean hasWin(final PlayerType player) {
-        if (this.getScore(player) == GameConstants.SCORE_WIN) {
+        if (this.getScore(player) == GameConstants.SCORE_TO_WIN) {
             this.winner = Optional.ofNullable(player);
             return true;
         }
         return false;
     }
 
-    /**
-     * Converts the istance of Unit class from the model, to the corresponding UnitViewType.
-     * @param modelUnit the unit to be converted
-     * @return the UnitViewType of the given unit
-     */
-    private UnitViewType convertUnit(final Unit modelUnit) {
-        final UnitType modelType = modelUnit.getUnitType();
-        final PlayerType player = modelUnit.getPlayer();
-        switch (modelType) {
-            case SWORDSMEN:
-                return player.equals(PlayerType.PLAYER1) ? UnitViewType.SWORDSMEN_PLAYER1 : UnitViewType.SWORDSMEN_PLAYER2;
-            case SPEARMEN:
-                return player.equals(PlayerType.PLAYER1) ? UnitViewType.SPEARMEN_PLAYER1 : UnitViewType.SPEARMEN_PLAYER2;
-            case ARCHER:
-                return player.equals(PlayerType.PLAYER1) ? UnitViewType.ARCHER_PLAYER1 : UnitViewType.ARCHER_PLAYER2;
-            default:
-                return null;
-        }
-    }
-
-    /**
-     * Converts the given map from model to the corrisponding EnumMap that has to be printed on the View.
-     * @param modelMap the map of the units and their positions
-     * @return the EnumMap for the View
-     */
-    private EnumMap<UnitViewType, List<Pair<Integer, Integer>>> convertMap(final Map<Unit, Pair<Integer, Integer>> modelMap) {
-        final EnumMap<UnitViewType, List<Pair<Integer, Integer>>> viewMap = new EnumMap<>(UnitViewType.class);
-        modelMap.forEach((k, v) -> {
-            final UnitViewType unitView = this.convertUnit(k);
-            if (!viewMap.containsKey(unitView)) {
-                viewMap.put(unitView, new ArrayList<>());
-            }
-            viewMap.get(unitView).add(v);
-        });
-        return viewMap;
-    }
     /** Utility function to update Spawn Timer related to the player.
      * @param playerType Player who want to spawn a troup
      */
@@ -121,6 +66,18 @@ public final class ControllerImpl implements Controller {
             this.lastSpawnP1 = System.currentTimeMillis();
         } else {
             this.lastSpawnP2 = System.currentTimeMillis();
+        }
+    }
+
+    /**
+     * Resets the given player respawn timer.
+     * @param player to reset the timer
+     */
+    private void resetPlayerTimer(final PlayerType player) {
+        if (player.equals(PlayerType.PLAYER1)) {
+            this.playerTimer.resetTimer();
+        } else {
+            this.playerTimer2.resetTimer();
         }
     }
 
@@ -168,16 +125,8 @@ public final class ControllerImpl implements Controller {
             setSpawnTime(playerType);
             final int lane = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
             this.field.addUnit(lane, new UnitImpl(unitToSpawn, playerType));
-            gameView.show(this.convertMap(this.field.getUnits()));
+            gameView.show(Converter.convertMap(this.field.getUnits()));
             this.resetPlayerTimer(playerType);
-        }
-    }
-
-    private void resetPlayerTimer(final PlayerType playerType) {
-        if (playerType.equals(PlayerType.PLAYER1)) {
-            this.playerTimer.resetTimer();
-        } else {
-            this.playerTimer2.resetTimer();
         }
     }
 
@@ -220,7 +169,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public void update() {
         this.field.update();
-        this.gameView.show(this.convertMap(this.field.getUnits()));
+        this.gameView.show(Converter.convertMap(this.field.getUnits()));
 
         //TODO PER PROVA
         System.out.println(getScore(PlayerType.PLAYER1));
