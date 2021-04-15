@@ -1,6 +1,5 @@
-package view;
+package view.game;
 
-import constants.ViewConstants;
 import java.util.EnumMap;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.tuple.Pair;
@@ -13,6 +12,9 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
+import view.UnitViewType;
+import view.ViewResolution;
+import view.constants.ViewConstants;
 
 /** 
  * Class that models the Field with a GridPane of the given dimensions.

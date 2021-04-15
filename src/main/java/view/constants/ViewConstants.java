@@ -1,4 +1,4 @@
-package constants;
+package view.constants;
 
 import view.ViewResolution;
 

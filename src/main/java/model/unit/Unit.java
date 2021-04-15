@@ -1,4 +1,6 @@
-package model;
+package model.unit;
+
+import constants.PlayerType;
 
 public interface Unit {
 

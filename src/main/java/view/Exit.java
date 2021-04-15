@@ -1,13 +1,12 @@
 package view;
 
-import constants.ViewConstants;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.geometry.Pos;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import view.constants.ViewConstants;
 import javafx.scene.layout.VBox;
 
 /**
@@ -38,7 +37,6 @@ public final class Exit {
     public static boolean display(final String title, final String message) {
 
 
-        
         final Stage window = new Stage();
 
         /**Label. */
@@ -49,8 +47,8 @@ public final class Exit {
         label.setStyle(Style.LABEL);
 
 
-        /**Buttons and events. */
-        /**Button YES in the confirm box and his event. */
+        /**Buttons. */
+        /**Button YES. */
         final Button yesButton = new Button("YES");
         yesButton.setStyle(Style.BUTTON_1);
         yesButton.setPrefSize(BUTTONS_W,  BUTTONS_H);
@@ -59,7 +57,7 @@ public final class Exit {
             window.close();
         });
 
-        /**Button NO in the confirm box and his event. */
+        /**Button NO. */
         final Button noButton = new Button("NO");
         noButton.setStyle(Style.BUTTON_1);
         noButton.setPrefSize(BUTTONS_W,  BUTTONS_H);

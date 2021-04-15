@@ -1,8 +1,7 @@
 package view;
 
 import java.io.IOException;
-import constants.ViewConstants;
-import constants.ViewImages;
+
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -12,13 +11,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
 
 /**
  * 
- * This class implements the GameTutorial scene.
+ * This class implements the GameTutorial Pane.
  *
  */
-public class GameTutorial extends Region { 
+public class GameTutorial extends Region implements ViewInterface { 
 
         private MainMenu sceneMenu;
         private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
@@ -32,33 +33,38 @@ public class GameTutorial extends Region {
          * Method to create the view of the current image. 
          * @return pane Pane
          * */
-        public final Parent createGameTutorial() throws IOException {
+        public final Parent createContent() throws IOException {
 
+        /**Pane. */
         final Pane pane = new Pane();
+
 
         /**Background. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_TUTORIAL));
         final ImageView tutorialBackground = ViewResolution.createImageView(backgroundImg, BORDERPANE_W, BORDERPANE_H);
 
-        /**Button mainMenu. */
+
+        /**Button MAIN MENU. */
         final Button mainMenu = new Button("MAIN MENU");
         mainMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
         mainMenu.setStyle(Style.BUTTON_2);
         mainMenu.setOnAction(e -> {
             sceneMenu = new MainMenu();
             try {
-                pane.getChildren().setAll(sceneMenu.createMainMenu());
+                pane.getChildren().setAll(sceneMenu.createContent());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
+
 
        /**Layout. */
        final HBox backMenu = new HBox();
        backMenu.setPadding(new Insets(0, 0, LAYOUT_PADDING_H_1, LAYOUT_PADDING_W_1));
        backMenu.getChildren().add(mainMenu);
 
-       /**BorderPane and Pane gets. */
+
+       /**BorderPane sets and Pane gets. */
        final BorderPane borderPane = new BorderPane();
        borderPane.setBottom(backMenu);
        borderPane.setPrefSize(BORDERPANE_W, BORDERPANE_H);

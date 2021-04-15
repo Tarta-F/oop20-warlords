@@ -1,7 +1,7 @@
 package view;
 
+import constants.PlayerType;
 import javafx.scene.input.KeyCode;
-import model.PlayerType;
 
 /**
  * The controls for playing the game.
@@ -47,9 +47,4 @@ public enum InputType {
     public KeyCode getKey(/* final PlayerType player */) {
         return this.key;
     }
-
-//    if(keypressed == inputype.getkey) {
-//        this.input = inputtype;
-//        break;
-//    }
 }

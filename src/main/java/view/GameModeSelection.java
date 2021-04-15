@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import constants.ViewConstants;
-import constants.ViewImages;
 import controllers.ControllerImpl;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,20 +21,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
 
 /**
  *
- * This class implements the GameModeSelection scene.
+ * This class implements the GameModeSelection Pane.
  *
  */
-public class GameModeSelection extends Region {
+public class GameModeSelection extends Region implements ViewInterface {
 
     private MainMenu scenaMenu;
     private String scenario;
-    private int laneNumber;
-    private int timerDuration;
     private String background;
     private String ground;
+    private int laneNumber;
+    private int timerDuration;
     private final Label settingsSelected;
     private static final double TEXTFIELD_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
     private static final double TEXTFIELD_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
@@ -68,10 +68,11 @@ public class GameModeSelection extends Region {
                 + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
     }
 
-    public final Parent createGameModeSelection() throws IOException {
+    public final Parent createContent() throws IOException {
 
         /**Pane. */
         final Pane pane = new Pane();
+
 
         /**TextField. */
         final TextField playerName1 = new TextField("Player 1");
@@ -80,9 +81,11 @@ public class GameModeSelection extends Region {
         final TextField playerName2 = new TextField("Player 2");
         playerName2.setPrefSize(TEXTFIELD_W, TEXTFIELD_H);
 
+
         /**BackGroung. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_SETTINGS));
         final ImageView background = ViewResolution.createImageView(backgroundImg, VBOX_W, VBOX_H);
+
 
         /**Buttons. */
         /**Buttons SCENARIO. */
@@ -105,7 +108,6 @@ public class GameModeSelection extends Region {
         });
 
         /**Buttons LANE. */
-        //final List<Button> listaLane = new ArrayList<>();
         final Map<Button, Integer> buttonLane = new HashMap<>();
 
         for (int i = 1; i < ViewConstants.N_BUTTON_6; i += 2) {
@@ -148,7 +150,7 @@ public class GameModeSelection extends Region {
         back.setOnAction(e -> {
             scenaMenu = new MainMenu();
             try {
-                pane.getChildren().setAll(scenaMenu.createMainMenu());
+                pane.getChildren().setAll(scenaMenu.createContent());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -159,15 +161,14 @@ public class GameModeSelection extends Region {
         start.setPrefSize(BUTTONS_W, BUTTONS_H);
         start.setStyle(Style.BUTTON_2);
         start.setOnAction(e -> {
-//            System.out.println("back: " + this.background + "ground" + this.ground +
-//                    "lane: " + this.laneNumber + "timer: " + this.timerDuration);
            final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.background, this.ground, playerName1.getText(), playerName2.getText());
            try {
-            pane.getChildren().setAll(contr.getView().createGameView());
+            pane.getChildren().setAll(contr.getView().createContent());
            } catch (IOException e1) {
             e1.printStackTrace();
            }
        });
+
 
         /**Labels. */
         final Label scenario = new Label("Scenario:");
@@ -200,6 +201,7 @@ public class GameModeSelection extends Region {
         settingsSelected.setAlignment(Pos.CENTER);
         settingsSelected.setPrefSize(LABEL_SETTINGS_W, LABEL_SETTINGS_H);
         settingsSelected.setStyle(Style.LABEL);
+
 
         /**Layout and Pane gets. */
         final HBox scenarioBox = new HBox(LAYOUT_HBOX_W);

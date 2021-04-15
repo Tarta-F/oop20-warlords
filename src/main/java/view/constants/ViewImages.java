@@ -1,4 +1,4 @@
-package constants;
+package view.constants;
 
 /**
  * This class contain the various image that we use in the program.

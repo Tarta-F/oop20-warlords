@@ -1,8 +1,7 @@
 package view;
 
 import java.io.IOException;
-import constants.ViewConstants;
-import constants.ViewImages;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,13 +14,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
 
 /**
  *
  * This class implements the Main Menu of the view and is used as unique window for the view.
  *
  */
-public final class MainMenu extends Application {
+public final class MainMenu extends Application implements ViewInterface, ViewClose {
 
     private GameTutorial sceneTutorial;
     private GameModeSelection sceneGameModeSelection;
@@ -42,9 +43,11 @@ public final class MainMenu extends Application {
     @Override
      /**Method of the library JAVAFX used for the creation of the view. */
     public void start(final Stage primaryStage) throws Exception {
+
         /**Creation of the Stage, Scene and all their preferences. */
         final Stage window = primaryStage;
-        final Pane pane = new Pane(createMainMenu());
+
+        final Pane pane = new Pane(createContent());
         final Scene scene = new Scene(pane, PANE_W, PANE_H);
         window.setScene(scene);
         window.show();
@@ -56,13 +59,14 @@ public final class MainMenu extends Application {
     }
 
     /**
-     * Method to create the view of the current image.
-     * @return borderPane borderPane
+     * Method to create the Pane of MainMenu.
+     * @return pane Pane
      * */
-    public Parent createMainMenu() throws IOException {
+    public Parent createContent() throws IOException {
 
         /**Pane. */
         final Pane pane = new Pane();
+
 
         /**Background and Image. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
@@ -92,20 +96,22 @@ public final class MainMenu extends Application {
         versus.setOnAction(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
-                pane.getChildren().setAll(sceneGameModeSelection.createGameModeSelection());
+                pane.getChildren().setAll(sceneGameModeSelection.createContent());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
+
 
         /**Button TUTORIALS. */
         final Button tutorials = new Button("TUTORIALS");
         tutorials.setStyle(Style.BUTTON_1);
         tutorials.setPrefSize(BUTTONS_W, BUTTONS_H);
         tutorials.setOnAction(e -> {
+
             try {
                 sceneTutorial = new GameTutorial();
-                pane.getChildren().setAll(sceneTutorial.createGameTutorial());
+                pane.getChildren().setAll(sceneTutorial.createContent());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -124,6 +130,7 @@ public final class MainMenu extends Application {
         menu.getChildren().addAll(logo, campaign, versus, tutorials, exitMenu);
         menu.setPadding(new Insets(LAYOUT_PADDING_H_1, 0, LAYOUT_PADDING_H_1, 0));
 
+
         final VBox leftVBox = new VBox();
         leftVBox.setAlignment(Pos.CENTER);
         leftVBox.getChildren().add(logoArcher);
@@ -133,6 +140,7 @@ public final class MainMenu extends Application {
         rigthVBox.setAlignment(Pos.CENTER);
         rigthVBox.getChildren().add(logoSpearman);
         rigthVBox.setPadding(new Insets(0, LAYOUT_PADDING_W_1, 0, 0));
+
 
         /**BorderPane sets and Pane gets. */
         final BorderPane borderPane = new BorderPane();

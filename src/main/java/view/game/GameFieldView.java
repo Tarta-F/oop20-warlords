@@ -1,8 +1,9 @@
-package view;
+package view.game;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import javafx.scene.layout.GridPane;
+import view.UnitViewType;
 
 /** 
  * This interface models the GameField used in the View using a GridPane.

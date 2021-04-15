@@ -1,6 +1,6 @@
-package model;
+package model.unit;
 
-import constants.GameConstants;
+import java.util.Arrays;
 
 /**
  * All unit types.
@@ -8,13 +8,13 @@ import constants.GameConstants;
 public enum UnitType {
 
     /**Swordsmen unit stats.*/
-    SWORDSMEN(GameConstants.SWORDSMEN_HP, GameConstants.SWORDSMEN_DMG, GameConstants.SWORDSMEN_RANGE, GameConstants.SWORDSMEN_TIMER, GameConstants.STEP),
+    SWORDSMEN(UnitConstants.SWORDSMEN_HP, UnitConstants.SWORDSMEN_DMG, UnitConstants.SWORDSMEN_RANGE, UnitConstants.SWORDSMEN_TIMER, UnitConstants.STEP),
 
     /**Spearmen unit stats.*/
-    SPEARMEN(GameConstants.SPEARMEN_HP, GameConstants.SPEARMEN_DMG, GameConstants.SPEARMEN_RANGE, GameConstants.SPEARMEN_TIMER, GameConstants.STEP),
+    SPEARMEN(UnitConstants.SPEARMEN_HP, UnitConstants.SPEARMEN_DMG, UnitConstants.SPEARMEN_RANGE, UnitConstants.SPEARMEN_TIMER, UnitConstants.STEP),
 
     /**Archer unit stats.*/
-    ARCHER(GameConstants.ARCHER_HP, GameConstants.ARCHER_DMG, GameConstants.ARCHER_RANGE, GameConstants.ARCHER_TIMER, GameConstants.STEP);
+    ARCHER(UnitConstants.ARCHER_HP, UnitConstants.ARCHER_DMG, UnitConstants.ARCHER_RANGE, UnitConstants.ARCHER_TIMER, UnitConstants.STEP);
 
 
     private int health;
@@ -29,6 +29,16 @@ public enum UnitType {
         this.range = range;
         this.timer = timer;
         this.step = step;
+    }
+
+    /** 
+     * Get the max waiting time of this enum values.
+     * @return the max waiting time 
+     */
+    public static int getMaxWaintingTime() {
+        return Arrays.stream(values())
+                .mapToInt(u -> u.getTimer())
+                .max().getAsInt();
     }
 
     /**@return unit HP*/

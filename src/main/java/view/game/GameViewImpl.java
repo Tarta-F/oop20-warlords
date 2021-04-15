@@ -1,9 +1,17 @@
-package view;
+package view.game;
 
-import constants.ViewConstants;
+import constants.PlayerType;
 import controllers.Controller;
-import model.PlayerType;
-import constants.ViewImages;
+import view.Exit;
+import view.MainMenu;
+import view.Style;
+import view.UnitViewType;
+import view.ViewClose;
+import view.ViewInterface;
+import view.ViewResolution;
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +32,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
  * This class is the BattleField game view.
  */
-public final class GameView extends Region {
+public final class GameViewImpl extends Region implements ViewInterface, ViewClose, GameView {
 
     private static final double UNIT_ICON_WIDTH = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
     private static final double UNIT_ICON_HEIGHT = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
@@ -95,7 +104,7 @@ public final class GameView extends Region {
     private final Image selectedArrowP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SELECTED_ARROW));
 
 
-    public GameView(final int laneNumber, final String background, final String ground, final String player1Name, final String player2Name) {
+    public GameViewImpl(final int laneNumber, final String background, final String ground, final String player1Name, final String player2Name) {
         this.laneNumber = laneNumber;
         this.player1Name = player1Name;
         this.player2Name = player2Name;
@@ -105,7 +114,36 @@ public final class GameView extends Region {
 
     }
 
-    public Parent createGameView() throws IOException {
+
+    /** Create the timerlabel from the given long number.
+     * @param l the quantity of seconds to display
+     * @return the label created
+     */
+    private Label unitTimerLabel(final long l) {
+        final Label respawnLabel = new Label(l + " sec");
+        respawnLabel.setPrefSize(RESPAWN_LABEL_W, RESPAWN_LABEL_H);
+        respawnLabel.setAlignment(Pos.CENTER);
+        respawnLabel.setStyle(Style.LABEL);
+
+        return respawnLabel;
+    }
+
+    /**Method to return to main menu with a confirm box.*/
+    private void returnMainMenu(final Pane pane) {
+        final boolean answer = Exit.display("Quitting", "Return to main menu?");
+        if (answer) {
+            scenaMenu = new MainMenu();
+            try {
+                pane.getChildren().setAll(scenaMenu.createContent());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+
+
+    public Parent createContent() throws IOException {
         /**Pane. */
         final Pane pane = new Pane();
         /**BackGround. */
@@ -137,18 +175,16 @@ public final class GameView extends Region {
         final ImageView unit3P2 = ViewResolution.createImageView(logoArcherP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP2.add(unit3P2);
 
-
         /**List of ImageView arrows for the player 1*/
-
         for (int i = 0; i < this.laneNumber; i++) {
             final ImageView arrow1P1 = ViewResolution.createImageView(arrowP1, ARROW_W, ARROW_H);
             listArrowP1.add(arrow1P1);
         }
         listArrowP1.get(this.laneNumber / 2).setImage(selectedArrowP1);
 
-        /**List of ImageView arrows for the player 1*/
 
-        for (int i = 0; i < this.laneNumber; i++) {
+        /**List of ImageView arrows for the player 1*/
+       for (int i = 0; i < this.laneNumber; i++) {
             final ImageView arrow1P2 = ViewResolution.createImageView(arrowP2, ARROW_W, ARROW_H);
             listArrowP2.add(arrow1P2);
         }
@@ -183,11 +219,12 @@ public final class GameView extends Region {
         player1.setAlignment(Pos.CENTER);
 
         /** Health Points player2 */
-        final int scoreP2 = 0;
+        final int scoreP2 = 8;
         final Label player2 = new Label("SCORE " + this.player2Name + ": " + scoreP2);
         player2.setStyle(Style.LABEL);
         player2.setPrefSize(LABEL_W, LABEL_H);
         player2.setAlignment(Pos.CENTER);
+
 
         /**List of Labels for the respawn time of players units. */
         for (final var type : UnitViewType.values()) {
@@ -250,7 +287,7 @@ public final class GameView extends Region {
         /**KeyInput. */
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
-            // TODO MIGLIORIA
+            // TODO MIGLIORA
 //            case (KeyCode) InputType.UP_LANE_1.getKey():
 //                break;    //doesn't work :(
             case W:
@@ -288,18 +325,11 @@ public final class GameView extends Region {
             }
         });
 
+
         pane.getChildren().add(gameBackGround);
         pane.getChildren().add(borderpane);
 
         return pane;
-    }
-
-    private Label unitTimerLabel(final long l) {
-        final Label respawnLabel = new Label(l + " sec");
-        respawnLabel.setPrefSize(RESPAWN_LABEL_W, RESPAWN_LABEL_H);
-        respawnLabel.setAlignment(Pos.CENTER);
-        respawnLabel.setStyle(Style.LABEL);
-        return respawnLabel;
     }
 
     public void updateSelectLane(final PlayerType playerType, final int index, final int next) {
@@ -331,42 +361,30 @@ public final class GameView extends Region {
         Platform.runLater(() -> timer.setText(String.format("%02d:%02d", mins, seconds)));
     }
 
-    public void updatePlayerTimer(final int mins, final int seconds, final PlayerType playerType) {
+    public void updatePlayerTimer(final int seconds, final PlayerType playerType) {
         Platform.runLater(() -> {
             unitBoxes.forEach((type, label) -> {
                 if (type.getPlayer().equals(playerType)) {
                     final int timer = type.getWaitingTime() - seconds;
-                    label.setText(Integer.toString(timer < 0 ? 0 : timer));
+                    label.setText(timer <= 0 ? "SPAWN" : timer + " sec");
+                    label.setTextFill(timer <= 0 ? Color.GREEN : Color.RED);
                 }
-            });
         });
+     });
     }
-
 
 
     public void setObserver(final Controller observer) {
         this.observer = observer;
     }
 
-    /**Method to close the program with a confirm box. */
-    private void closeProgram(final Pane pane) {
+    /**Method to close the program with a confirm box. 
+     * @param pane Pane*/
+    public void closeProgram(final Pane pane) {
         final boolean answer = Exit.display("Quitting", "Do you want to quit?");
         if (answer) {
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();
-        }
-    }
-
-    /**Method to return to main menu with a confirm box.*/
-    private void returnMainMenu(final Pane pane) {
-        final boolean answer = Exit.display("Quitting", "Return to main menu?");
-        if (answer) {
-            scenaMenu = new MainMenu();
-            try {
-                pane.getChildren().setAll(scenaMenu.createMainMenu());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
         }
     }
 
