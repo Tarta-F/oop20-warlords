@@ -69,9 +69,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
      * @return pane Pane
      * */
     public Parent createPane() throws IOException {
-        
 
-        
         /**Pane. */
         final Pane pane = new Pane();
 
@@ -96,6 +94,9 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final Button scoreboard = new Button("SCOREBOARD");
         scoreboard.setStyle(Style.BUTTON_1);
         scoreboard.setPrefSize(BUTTONS_W, BUTTONS_H);
+        scoreboard.setOnAction(e -> {
+            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+        });
 
         /**Button VERSUS. */
         final Button versus = new Button("VERSUS");
@@ -104,6 +105,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         versus.setOnAction(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneGameModeSelection.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -118,23 +120,29 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         tutorials.setOnAction(e -> {
 
             try {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                 sceneTutorial = new GameTutorial();
                 pane.getChildren().setAll(sceneTutorial.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
-        
+
         /**Button MUSIC. */
         final ToggleButton stopMusic = new ToggleButton("MUSIC ON/OFF");
         stopMusic.setStyle(Style.BUTTON_1);
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
         stopMusic.setOnAction(e -> {
-                    if(stopMusic.isSelected()) {
-                        Music.musicStop();
-                    } else {
-                    Music.musicStart(ViewImages.MUSIC);
-                    
+
+                      if(stopMusic.isSelected()) {
+                          Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                          Music.musicStop();
+
+                      } else {
+                          Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                          Music.musicStart(ViewImages.MUSIC);
+
+
                     }
                 });
 
@@ -142,7 +150,10 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final Button exitMenu = new Button("EXIT");
         exitMenu.setStyle(Style.BUTTON_1);
         exitMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
-        exitMenu.setOnAction(e -> closeProgram(pane));
+        exitMenu.setOnAction(e -> {
+            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            closeProgram(pane);
+        });
 
 
         /**Layout. */

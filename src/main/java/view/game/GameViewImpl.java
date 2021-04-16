@@ -25,6 +25,7 @@ import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -47,8 +48,8 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
     private static final double UNIT_ICON_HEIGHT = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
     private static final double ARROW_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_20);
     private static final double ARROW_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
-    private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30);
-    private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30);
+    private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
+    private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
     private static final double LABEL_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
     private static final double LABEL_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
     private static final double RESPAWN_LABEL_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30);
@@ -237,15 +238,38 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         /**Button EXIT. */
         final Button exit = new Button("Exit");
         exit.setMinSize(BUTTONS_W, BUTTONS_H);
-        exit.setOnMouseClicked(e -> closeProgram(pane));
+        exit.setOnMouseClicked(e -> {
+            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            closeProgram(pane);
+        });
         exit.setStyle(Style.BUTTON_1);
 
         /**Button MENU. */
         final Button menu = new Button("Menu");
         menu.setStyle(Style.BUTTON_1);
         menu.setPrefSize(BUTTONS_W, BUTTONS_H);
-        menu.setOnMouseClicked(e ->  returnMainMenu(pane));
+        menu.setOnMouseClicked(e ->  {
+        Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+        returnMainMenu(pane);
+        });
+        
+        /**Button MUSIC. */
+        final ToggleButton stopMusic = new ToggleButton("Music On/Off");
+        stopMusic.setStyle(Style.BUTTON_1);
+        stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
+        stopMusic.setOnAction(e -> {
 
+                      if(stopMusic.isSelected()) {
+                          Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                          Music.musicStop();
+
+                      } else {
+                          Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                          Music.musicStart(ViewImages.MUSIC_2);
+
+
+                    }
+                });
 
         /**Labels. */
         /**Label TIMER. */
@@ -302,7 +326,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         topMenu.setPadding(new Insets(PADDING_H, 0, PADDING_H, 0));
 
         final HBox bottomMenu = new HBox(BOTTOMMENU_W);
-        bottomMenu.getChildren().addAll(player1, menu, exit, player2);
+        bottomMenu.getChildren().addAll(player1, menu, stopMusic, exit, player2);
         bottomMenu.setAlignment(Pos.CENTER);
         bottomMenu.setPadding(new Insets(PADDING_H, 0, PADDING_H, 0));
 
