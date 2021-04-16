@@ -101,10 +101,10 @@ public final class ViewImages {
     public static final String LOGO = SEP + "logo.png";
     
     /**PATH music. */
-    public static final String MUSIC = SEP + "/Main_menu_music.mp3";
+    public static final String MUSIC = SEP + "Main_menu_music.mp3";
     
     /**PATH music. */
-    public static final String MUSIC_2 = SEP + "/Battle_music.mp3";
+    public static final String MUSIC_2 = SEP + "Battle_music.mp3";
     
     private ViewImages() { }
 }
