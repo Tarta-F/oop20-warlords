@@ -1,4 +1,4 @@
-package constants;
+package view.constants;
 
 /**
  * This class contain the various image that we use in the program.
@@ -85,6 +85,7 @@ public final class ViewImages {
 
     /**PATH Image grid ground for scenario 2. */
     public static final String GROUND_2 = SEP + "Ground2.png";
+
 
     /**Other Scenes. */
     /**PATH Image GameModeSelection background. */

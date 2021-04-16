@@ -1,6 +1,6 @@
 package view;
 
-import constants.ViewConstants;
+import view.constants.ViewConstants;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,7 +18,13 @@ import javafx.scene.layout.VBox;
 public final class Exit {
 
     private static boolean answer;
-
+    private static final double LABEL_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7);
+    private static final double LABEL_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
+    private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25);
+    private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25);
+    private static final double SCENE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4);
+    private static final double SCENE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_4);
+    private static final double LAYOUT_VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60);
     private Exit() {
         /**Not called. */
     }
@@ -31,33 +37,31 @@ public final class Exit {
      * */
     public static boolean display(final String title, final String message) {
 
+
         final Stage window = new Stage();
 
         /**Label. */
         final Label label = new Label();
         label.setText(message);
         label.setAlignment(Pos.CENTER);
-        label.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20));
+        label.setPrefSize(LABEL_W, LABEL_H);
         label.setStyle(Style.LABEL);
 
 
-        /**Buttons and events. */
-        /**Button YES in the confirm box and his event. */
+        /**Buttons. */
+        /**Button YES. */
         final Button yesButton = new Button("YES");
         yesButton.setStyle(Style.BUTTON_1);
-        yesButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+        yesButton.setPrefSize(BUTTONS_W,  BUTTONS_H);
         yesButton.setOnAction(e -> {
             answer = true;
             window.close();
         });
 
-        /**Button NO in the confirm box and his event. */
+        /**Button NO. */
         final Button noButton = new Button("NO");
         noButton.setStyle(Style.BUTTON_1);
-        noButton.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25));
+        noButton.setPrefSize(BUTTONS_W,  BUTTONS_H);
         noButton.setOnAction(e -> {
             answer = false;
             window.close();
@@ -65,15 +69,14 @@ public final class Exit {
 
 
         /**Layout. */
-        final VBox layout = new VBox(ViewConstants.DIVISOR_10);
+        final VBox layout = new VBox(LAYOUT_VBOX_H);
         layout.getChildren().addAll(label, yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: grey;");
 
 
         /**Scene and stage preferences. */
-        final Scene scene = new Scene(layout, ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_4));
+        final Scene scene = new Scene(layout, SCENE_W, SCENE_H);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setScene(scene);

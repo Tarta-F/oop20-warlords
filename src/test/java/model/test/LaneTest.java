@@ -13,12 +13,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import constants.GameConstants;
+import constants.PlayerType;
 import model.Lane;
 import model.LaneImpl;
-import model.PlayerType;
-import model.Unit;
-import model.UnitImpl;
-import model.UnitType;
+import model.unit.Unit;
+import model.unit.UnitImpl;
+import model.unit.UnitType;
 
 public class LaneTest {
 

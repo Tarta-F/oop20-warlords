@@ -1,8 +1,10 @@
 package view;
 
 import java.io.IOException;
-import constants.ViewConstants;
-import constants.ViewImages;
+
+import view.constants.ViewConstants;
+import view.constants.ViewImages;
+
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -15,53 +17,54 @@ import javafx.scene.layout.Region;
 
 /**
  * 
- * This class implements the GameTutorial scene.
+ * This class implements the GameTutorial Pane.
  *
  */
-public class GameTutorial extends Region { 
+public class GameTutorial extends Region implements ViewInterface { 
 
-        private MainMenu sceneMenu;
+    private MainMenu sceneMenu;
+    private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
+    private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
+    private static final double LAYOUT_PADDING_W_1 = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_2);
+    private static final double LAYOUT_PADDING_H_1 = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30);
+    private static final double BORDERPANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
+    private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
 
-        /**
-         * Method to create the view of the current image. 
-         * @return pane Pane
-         * */
-        public final Parent createGameTutorial() throws IOException {
+    public final Parent createPane() throws IOException {
 
+        /**Pane. */
         final Pane pane = new Pane();
 
         /**Background. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_TUTORIAL));
-        final ImageView tutorialBackGround = new ImageView(backgroundImg);
-        tutorialBackGround.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3));
-        tutorialBackGround.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
+        final ImageView tutorialBackground = ViewResolution.createImageView(backgroundImg, BORDERPANE_W, BORDERPANE_H);
 
-        /**Button mainMenu. */
+
+        /**Button MAIN MENU. */
         final Button mainMenu = new Button("MAIN MENU");
-        mainMenu.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10), 
-                ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        mainMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
         mainMenu.setStyle(Style.BUTTON_2);
         mainMenu.setOnAction(e -> {
             sceneMenu = new MainMenu();
             try {
-                pane.getChildren().setAll(sceneMenu.createMainMenu());
+                pane.getChildren().setAll(sceneMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
 
+
        /**Layout. */
        final HBox backMenu = new HBox();
-       backMenu.setPadding(new Insets(0, 0, ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30), 
-               ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_2)));
+       backMenu.setPadding(new Insets(0, 0, LAYOUT_PADDING_H_1, LAYOUT_PADDING_W_1));
        backMenu.getChildren().add(mainMenu);
 
-       /**BorderPane and Pane gets. */
+
+       /**BorderPane sets and Pane gets. */
        final BorderPane borderPane = new BorderPane();
        borderPane.setBottom(backMenu);
-       borderPane.setPrefSize(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3), 
-               ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3));
-       pane.getChildren().add(tutorialBackGround);
+       borderPane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
+       pane.getChildren().add(tutorialBackground);
        pane.getChildren().addAll(borderPane);
 
        return pane;
