@@ -27,7 +27,7 @@ public final class Style {
     public static final String LABEL = "-fx-text-fill: #FFFFFF;\r\n"
             + " -fx-background-radius: 6;\r\n"
             + " -fx-font-weight: bold;\r\n "
-            + " -fx-background-color: rgba(0, 0, 0, 0.5);\r\n"
+            + " -fx-background-color: rgba(0, 0, 0, 0.75);\r\n"
             + " -fx-font-size: " + FONT_W + ";";
 
     private Style() { }
