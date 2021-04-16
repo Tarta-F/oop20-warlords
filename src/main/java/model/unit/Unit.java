@@ -4,13 +4,13 @@ import constants.PlayerType;
 
 public interface Unit {
 
-    /**@return unit time of respawn*/
+    /**@return unit TIME of RESPAWN*/
     int getWaitingTime();
 
     /**@return unit HP*/
     int getHP();
 
-    /**@return unit range attack*/
+    /**@return unit RANGE attack*/
     int getRange();
 
     /**@return unit step ahead*/
@@ -22,15 +22,15 @@ public interface Unit {
     /**@param damage to be taken by this unit*/
     void damage(int damage);
 
-    /**@return unit player ID*/
+    /**@return unit PLAYER*/
     PlayerType getPlayer();
 
-    /**@return unit type*/
+    /**@return unit TYPE*/
     UnitType getUnitType();
 
-    /**@param unit target hitten*/
+    /**@param unit target*/
     void attack(Unit unit);
 
-    /**@return if the unit is alive*/
+    /**@return if the unit is alive or not*/
     boolean isAlive();
 }

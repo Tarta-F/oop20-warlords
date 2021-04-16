@@ -7,13 +7,13 @@ import java.util.Arrays;
  * */
 public enum UnitType {
 
-    /**Swordsmen unit stats. */
+    /**Swordsmen unit and his stats. */
     SWORDSMEN(UnitConstants.SWORDSMEN_HP, UnitConstants.SWORDSMEN_DMG, UnitConstants.SWORDSMEN_RANGE, UnitConstants.SWORDSMEN_TIMER, UnitConstants.STEP),
 
-    /**Spearmen unit stats. */
+    /**Spearmen unit and his stats. */
     SPEARMEN(UnitConstants.SPEARMEN_HP, UnitConstants.SPEARMEN_DMG, UnitConstants.SPEARMEN_RANGE, UnitConstants.SPEARMEN_TIMER, UnitConstants.STEP),
 
-    /**Archer unit stats. */
+    /**Archer unit and his stats. */
     ARCHER(UnitConstants.ARCHER_HP, UnitConstants.ARCHER_DMG, UnitConstants.ARCHER_RANGE, UnitConstants.ARCHER_TIMER, UnitConstants.STEP);
 
 
@@ -41,27 +41,42 @@ public enum UnitType {
                 .max().getAsInt();
     }
 
-    /**@return unit HP*/
+    /**
+     * Get the HEALTH of the unit. 
+     * @return unit HP
+     * */
     public int getHealth() {
         return this.health;
     }
 
-    /**@return unit DMG*/
+    /**
+     * Get the DAMAGE of the unit.
+     * @return unit DMG
+     * */
     public int getDamage() {
         return this.damage;
     }
 
-    /**@return unit RANGE*/
+    /**
+     * Get the RANGE of the unit.
+     * @return unit RANGE
+     * */
     public int getRange() {
         return this.range;
     }
 
-    /**@return unit TIMER*/
+    /**
+     * Get the TIME of RESPAWN of the unit.
+     * @return unit TIMER
+     * */
     public int getTimer() {
         return this.timer;
     }
 
-    /**@return unit MOVMENT*/
+    /**
+     * Get the MOVEMENT of the unit.
+     * @return unit MOVMENT
+     * */
     public int getStep() {
         return this.step;
     }
