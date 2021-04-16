@@ -10,8 +10,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import constants.PlayerType;
 import controllers.Controller;
-import view.Exit;
+import view.ConfirmBox;
 import view.MainMenu;
+import view.Music;
 import view.Style;
 import view.UnitViewType;
 import view.ViewClose;
@@ -162,10 +163,12 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
      * @param actual pane 
      * */
     private void returnMainMenu(final Pane pane) {
-        final boolean answer = Exit.display("Quitting", "Return to main menu?");
+        final boolean answer = ConfirmBox.display("Quitting", "Return to main menu?");
         if (answer) {
             scenaMenu = new MainMenu();
             try {
+                Music.musicStop();
+                Music.musicStart(ViewImages.MUSIC);
                 pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -175,6 +178,9 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
 
 
     public Parent createPane() throws IOException {
+
+        /**Music. */
+        Music.musicStart(ViewImages.MUSIC_2);
 
         /**Pane. */
         final Pane pane = new Pane();
@@ -422,7 +428,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
     /**Method to close the program with a confirm box. 
      * @param pane Pane*/
     public void closeProgram(final Pane pane) {
-        final boolean answer = Exit.display("Quitting", "Do you want to quit?");
+        final boolean answer = ConfirmBox.display("Quitting", "Do you want to quit?");
         if (answer) {
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();

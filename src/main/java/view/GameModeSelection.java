@@ -165,7 +165,8 @@ public class GameModeSelection extends Region implements ViewInterface {
            final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.background,
                    this.ground, playerName1.getText(), playerName2.getText());
            try {
-            pane.getChildren().setAll(contr.getView().createPane());
+               Music.musicStop();
+               pane.getChildren().setAll(contr.getView().createPane());
            } catch (IOException e1) {
             e1.printStackTrace();
            }
