@@ -45,6 +45,9 @@ public interface GameView {
      * */
     void updatePlayerTimer(int seconds, PlayerType playerType);
 
+    /**Method to update the players labels score. */
+    void updateScorePlayer();
+
     /**
      * Method to set the Observer.
      * @param observer Controller

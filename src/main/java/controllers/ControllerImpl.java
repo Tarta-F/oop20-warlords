@@ -170,10 +170,9 @@ public final class ControllerImpl implements Controller {
     public void update() {
         this.field.update();
         this.gameView.show(Converter.convertMap(this.field.getUnits()));
+        this.gameView.updateScorePlayer();
 
         //TODO PER PROVA
-        System.out.println(getScore(PlayerType.PLAYER1));
-        System.out.println(getScore(PlayerType.PLAYER2));
         System.out.println(isOver() ? getWinner().get() + " HA VINTO" : "");
     }
 

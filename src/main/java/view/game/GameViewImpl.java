@@ -66,7 +66,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
     private final String player1Name;
     private final String player2Name;
 
-
     private final List<ImageView> listArrowP1 = new ArrayList<>();
     private final List<ImageView> listArrowP2 = new ArrayList<>();
     private final List<ImageView> listUnitP1 = new ArrayList<>();
@@ -75,12 +74,15 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
     private final List<Label> unit2ListLabel = new ArrayList<>();
 
     private final EnumMap<UnitViewType, Label> unitBoxes = new EnumMap<>(UnitViewType.class);
+    private final EnumMap<PlayerType, Label> labelsScore = new EnumMap<>(PlayerType.class);
 
     private List<Image> unitSelectedP1;
     private List<Image> unitImageP1;
     private List<Image> unitSelectedP2;
     private List<Image> unitImageP2;
     private Label timer;
+    private Label player1;
+    private Label player2;
     private Controller observer;
 
     //private final String backgroundF; //fil
@@ -116,8 +118,19 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
 
     }
 
+    /**
+     * Get player NAME.
+     * @param player PlayerType 
+     * */
+    private String getPlayerName(final PlayerType player) {
+        if (player.equals(PlayerType.PLAYER1)) {
+            return this.player1Name;
+        } else {
+            return this.player2Name;
+        }
+    }
 
-    /** Create the timerlabel from the given long number.
+    /** Create the timer label from the given long number.
      * @param l the quantity of seconds to display
      * @return the label created
      */
@@ -130,7 +143,24 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         return respawnLabel;
     }
 
-    /**Method to return to main menu with a confirm box.*/
+    /**
+     * Create the score label.
+     * @param player PlayerType
+     * */
+    private Label scorePlayerLabel(final PlayerType player) {
+        final Label scoreLabel = new Label("SCORE " + getPlayerName(player) + ": " + observer.getScore(player));
+        scoreLabel.setPrefSize(LABEL_W, LABEL_H);
+        scoreLabel.setAlignment(Pos.CENTER);
+        scoreLabel.setStyle(Style.LABEL);
+
+        return scoreLabel;
+    }
+
+
+    /**
+     * Method to return on main menu with a confirm box. 
+     * @param actual pane 
+     * */
     private void returnMainMenu(final Pane pane) {
         final boolean answer = Exit.display("Quitting", "Return to main menu?");
         if (answer) {
@@ -144,23 +174,26 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
     }
 
 
-
     public Parent createPane() throws IOException {
+
         /**Pane. */
         final Pane pane = new Pane();
-        /**BackGround. */
 
+
+        /**BackGround. */
         final ImageView gameBackGround = ViewResolution.createImageView(scenario, BORDERPANE_W, BORDERPANE_H);
 
+
+        /**Lists of units logo used. */
         this.unitImageP1 = new ArrayList<>(Arrays.asList(logoSwordsmenP1, logoSpearmenP1, logoArcherP1));
         this.unitSelectedP1 = new ArrayList<>(Arrays.asList(selectedSwordsmenP1, selectedSpearmenP1, selectedArcherP1));
         this.unitImageP2 = new ArrayList<>(Arrays.asList(logoSwordsmenP2, logoSpearmenP2, logoArcherP2));
         this.unitSelectedP2 = new ArrayList<>(Arrays.asList(selectedSwordsmenP2, selectedSpearmenP2, selectedArcherP2));
 
 
+        /**List of units player 1. */
         final ImageView unit1P1 = ViewResolution.createImageView(selectedSwordsmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP1.add(unit1P1);
-
 
         final ImageView unit2P1 = ViewResolution.createImageView(logoSpearmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP1.add(unit2P1);
@@ -168,6 +201,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         final ImageView unit3P1 = ViewResolution.createImageView(logoArcherP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP1.add(unit3P1);
 
+        /**List of units player 2. */
         final ImageView unit1P2 = ViewResolution.createImageView(selectedSwordsmenP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP2.add(unit1P2);
 
@@ -177,20 +211,21 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         final ImageView unit3P2 = ViewResolution.createImageView(logoArcherP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP2.add(unit3P2);
 
-        /**List of ImageView arrows for the player 1*/
+
+        /**List of ImageView arrows for player 1. */
         for (int i = 0; i < this.laneNumber; i++) {
             final ImageView arrow1P1 = ViewResolution.createImageView(arrowP1, ARROW_W, ARROW_H);
             listArrowP1.add(arrow1P1);
         }
         listArrowP1.get(this.laneNumber / 2).setImage(selectedArrowP1);
 
-
-        /**List of ImageView arrows for the player 1*/
+        /**List of ImageView arrows for player 2. */
        for (int i = 0; i < this.laneNumber; i++) {
             final ImageView arrow1P2 = ViewResolution.createImageView(arrowP2, ARROW_W, ARROW_H);
             listArrowP2.add(arrow1P2);
         }
         listArrowP2.get(this.laneNumber / 2).setImage(selectedArrowP2);
+
 
         /**Buttons. */
         /**Button EXIT. */
@@ -205,28 +240,13 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         menu.setPrefSize(BUTTONS_W, BUTTONS_H);
         menu.setOnMouseClicked(e ->  returnMainMenu(pane));
 
+
         /**Labels. */
         /**Label TIMER. */
         timer = new Label("TIMER");
         timer.setStyle(Style.LABEL);
         timer.setPrefSize(LABEL_W, LABEL_H);
         timer.setAlignment(Pos.CENTER);
-
-        // TODO Update Score
-        /**Label Player 1 HEALTH. */
-        final int scoreP1 = 0;
-        final Label player1 = new Label("SCORE " + this.player1Name + ": " + scoreP1);
-        player1.setStyle(Style.LABEL);
-        player1.setPrefSize(LABEL_W, LABEL_H);
-        player1.setAlignment(Pos.CENTER);
-
-        /** Health Points player2 */
-        final int scoreP2 = 8;
-        final Label player2 = new Label("SCORE " + this.player2Name + ": " + scoreP2);
-        player2.setStyle(Style.LABEL);
-        player2.setPrefSize(LABEL_W, LABEL_H);
-        player2.setAlignment(Pos.CENTER);
-
 
         /**List of Labels for the respawn time of players units. */
         for (final var type : UnitViewType.values()) {
@@ -238,6 +258,18 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
                 unit2ListLabel.add(label);
             }
         }
+
+        /**Settings for the player labels, with name and score of the player. */
+        for (final var type : PlayerType.values()) {
+            final Label score = this.scorePlayerLabel(type);
+            labelsScore.put(type, score);
+            if (type.equals(PlayerType.PLAYER1)) {
+                player1 = score;
+            } else {
+                player2 = score;
+            }
+        }
+
 
         /**Layout. */
         final List<VBox> vBoxplayer1 = new ArrayList<>();
@@ -289,7 +321,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         /**KeyInput. */
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
-            // TODO MIGLIORA
+
 //            case (KeyCode) InputType.UP_LANE_1.getKey():
 //                break;    //doesn't work :(
             case W:
@@ -373,6 +405,13 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
                 }
         });
      });
+    }
+
+    /**Method to update the players labels score. */
+    public void updateScorePlayer() {
+            labelsScore.forEach((type, label) -> {
+                    label.setText("SCORE " + getPlayerName(type) + ": " + observer.getScore(type));
+            });
     }
 
 
