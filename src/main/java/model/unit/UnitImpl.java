@@ -17,7 +17,6 @@ public class UnitImpl implements Unit {
     private final PlayerType player;
 
     public UnitImpl(final UnitType unitType, final PlayerType player) {
-        super();
         this.unitType = unitType;
         this.hp = unitType.getHealth();
         this.dmg = unitType.getDamage();
@@ -28,44 +27,47 @@ public class UnitImpl implements Unit {
         this.alive = true;
     }
 
-    /**@return time of respawn.*/
+    /**
+     * Get the TIME of RESPAWN of the unit.
+     * @return unit TIMER
+     * */
+    @Override
     public int getWaitingTime() {
         return this.timer;
     }
 
-    /**@return health.*/
+    /**
+     * Get the HEALTH of the unit. 
+     * @return unit HP
+     * */
+    @Override
     public int getHP() {
         return this.hp;
     }
 
-    /**@return damage.*/
-    public int getDamage() {
-        return this.dmg;
-    }
-
-    /**@return step.*/
+    /**
+     * Get the MOVEMENT of the unit.
+     * @return unit MOVMENT
+     * */
+    @Override
     public int getStep() {
         return this.step;
     }
 
-    /**@return player.*/
-    public PlayerType getPlayer() {
-        return this.player;
+    /**
+     * Get the DAMAGE of the unit.
+     * @return unit DMG
+     * */
+    @Override
+    public int getDamage() {
+        return this.dmg;
     }
 
-    /**@return unit type.*/
-    public UnitType getUnitType() {
-        return this.unitType;
-    }
-
-    /**@Override deal damage to another unit.
-     * @param unit Unit*/
-    public void attack(final Unit unit) {
-        unit.damage(this.dmg);
-    }
-
-    /**@Override take damage from another unit
-     * @param damage int*/
+    /**
+     * Unit take damage from another unit.
+     * @param damage received
+     * */
+    @Override
     public void damage(final int damage) {
         this.hp = this.hp - damage;
         if (this.hp <= 0) {
@@ -73,12 +75,47 @@ public class UnitImpl implements Unit {
             }
         }
 
-    /**@return unit range.*/
+    /**
+     * Get the PLAYER of the unit.
+     * @return unit PLAYER
+     * */
+    @Override
+    public PlayerType getPlayer() {
+        return this.player;
+    }
+
+    /**
+     * Get the TYPE of the unit.
+     * @return unit TYPE
+     * */
+    @Override
+    public UnitType getUnitType() {
+        return this.unitType;
+    }
+
+    /**
+     * Unit attack on another unit.
+     * @param unit target
+     * */
+    @Override
+    public void attack(final Unit unit) {
+        unit.damage(this.dmg);
+    }
+
+    /**
+     * Get the RANGE of the unit.
+     * @return unit RANGE
+     * */
+    @Override
     public int getRange() {
         return this.range;
     }
 
-    /**@return status alive.*/
+    /**
+     * Status if the unit is ALIVE. 
+     * @return status ALIVE
+     * */
+    @Override
     public boolean isAlive() {
         return this.alive;
     }

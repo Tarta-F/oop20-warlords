@@ -22,8 +22,8 @@ public final class ViewResolution {
     }
 
     /**
-     * Method to calculate the Width resolution. 
-     * @param constant Double
+     * Method to calculate the WIDTH resolution of an element of the view. 
+     * @param constant chosen
      * @return Width Resolution Double
      * */
     public static double screenResolutionWidth(final double constant) {
@@ -31,18 +31,26 @@ public final class ViewResolution {
     }
 
     /**
-     * Method to calculate the Height resolution. 
-     * @param constant Double
+     * Method to calculate the HEIGHT resolution of an element of the view. 
+     * @param constant chosen
      * @return Height Resolution Double
      * */
     public static double screenResolutionHeight(final double constant) {
         return screenHeight / constant;
     }
 
+    /**
+     * Method to create an ImageView and set his resolution.
+     * @param image Image
+     * @param width chosen
+     * @param height chosen
+     * @return imageView with resolution sizes
+     * */
     public static ImageView createImageView(final Image image, final double width, final double height) {
         final ImageView imageView = new ImageView(image);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
+
         return imageView;
     }
 }

@@ -132,6 +132,7 @@ public final class ControllerImpl implements Controller {
     public void update() {
         this.field.update();
         this.gameView.show(Converter.convertMap(this.field.getUnits()));
+        this.gameView.updateScorePlayer();
 
         //TODO PER PROVA
         System.out.println(isOver() ? getWinner().get() + " WON" : "");
