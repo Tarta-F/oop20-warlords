@@ -18,6 +18,7 @@ import view.UnitViewType;
 import view.ViewClose;
 import view.ViewInterface;
 import view.ViewResolution;
+import view.WinnerBox;
 import view.constants.ViewConstants;
 import view.constants.ViewImages;
 
@@ -447,6 +448,26 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
 
     public void setObserver(final Controller observer) {
         this.observer = observer;
+    }
+
+    /**
+     * Method to return on main menu with winner box. 
+     * @param actual pane 
+     * */
+    private void winnerMBoxResult(final Pane pane) {
+        final boolean answer = WinnerBox.winner("da inserire il nome del player vincente");
+        if (answer) {
+            scenaMenu = new MainMenu();
+            try {
+                pane.getChildren().setAll(scenaMenu.createPane());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        else {
+            final Stage stage = (Stage) pane.getScene().getWindow();
+            stage.close();
+        }
     }
 
     /**Method to close the program with a confirm box. 
