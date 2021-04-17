@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.EnumMap;
-
 import org.apache.commons.lang3.tuple.Pair;
-
 import constants.PlayerType;
 import controllers.Controller;
 import view.ConfirmBox;
@@ -21,7 +19,6 @@ import view.ViewResolution;
 import view.WinnerBox;
 import view.constants.ViewConstants;
 import view.constants.ViewImages;
-
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -110,15 +107,12 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
     private final Image arrowP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_ARROW));
     private final Image selectedArrowP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SELECTED_ARROW));
 
-
     public GameViewImpl(final int laneNumber, final String background, final String ground, final String player1Name, final String player2Name) {
         this.laneNumber = laneNumber;
         this.player1Name = player1Name;
         this.player2Name = player2Name;
-        //this.backgroundF = background;
         this.scenario = new Image(this.getClass().getResourceAsStream(background));
         this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
-
     }
 
     /**
@@ -142,7 +136,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         respawnLabel.setPrefSize(RESPAWN_LABEL_W, RESPAWN_LABEL_H);
         respawnLabel.setAlignment(Pos.CENTER);
         respawnLabel.setStyle(Style.LABEL);
-
         return respawnLabel;
     }
 
@@ -155,10 +148,8 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         scoreLabel.setPrefSize(LABEL_W, LABEL_H);
         scoreLabel.setAlignment(Pos.CENTER);
         scoreLabel.setStyle(Style.LABEL);
-
         return scoreLabel;
     }
-
 
     /**
      * Method to return on main menu with a confirm box. 
@@ -178,7 +169,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         }
     }
 
-
     public Parent createPane() throws IOException {
 
         /**Music. */
@@ -187,17 +177,14 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         /**Pane. */
         final Pane pane = new Pane();
 
-
         /**BackGround. */
         final ImageView gameBackGround = ViewResolution.createImageView(scenario, BORDERPANE_W, BORDERPANE_H);
-
 
         /**Lists of units logo used. */
         this.unitImageP1 = new ArrayList<>(Arrays.asList(logoSwordsmenP1, logoSpearmenP1, logoArcherP1));
         this.unitSelectedP1 = new ArrayList<>(Arrays.asList(selectedSwordsmenP1, selectedSpearmenP1, selectedArcherP1));
         this.unitImageP2 = new ArrayList<>(Arrays.asList(logoSwordsmenP2, logoSpearmenP2, logoArcherP2));
         this.unitSelectedP2 = new ArrayList<>(Arrays.asList(selectedSwordsmenP2, selectedSpearmenP2, selectedArcherP2));
-
 
         /**List of units player 1. */
         final ImageView unit1P1 = ViewResolution.createImageView(selectedSwordsmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
@@ -219,7 +206,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         final ImageView unit3P2 = ViewResolution.createImageView(logoArcherP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP2.add(unit3P2);
 
-
         /**List of ImageView arrows for player 1. */
         for (int i = 0; i < this.laneNumber; i++) {
             final ImageView arrow1P1 = ViewResolution.createImageView(arrowP1, ARROW_W, ARROW_H);
@@ -233,7 +219,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
             listArrowP2.add(arrow1P2);
         }
         listArrowP2.get(this.laneNumber / 2).setImage(selectedArrowP2);
-
 
         /**Buttons. */
         /**Button EXIT. */
@@ -253,23 +238,20 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         Music.buttonsMusic(ViewImages.BUTTON_SOUND);
         returnMainMenu(pane);
         });
-        
+
         /**Button MUSIC. */
         final ToggleButton stopMusic = new ToggleButton("Music On/Off");
         stopMusic.setStyle(Style.BUTTON_1);
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
         stopMusic.setOnAction(e -> {
 
-                      if(stopMusic.isSelected()) {
+                      if (stopMusic.isSelected()) {
                           Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                           Music.musicStop();
-
                       } else {
                           Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                           Music.musicStart(ViewImages.MUSIC_2);
-
-
-                    }
+                      }
                 });
 
         /**Labels. */
@@ -300,7 +282,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
                 player2 = score;
             }
         }
-
 
         /**Layout. */
         final List<VBox> vBoxplayer1 = new ArrayList<>();
@@ -348,11 +329,9 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         borderpane.setCenter(this.field.getGrid());
         borderpane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
 
-
         /**KeyInput. */
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
-
 //            case (KeyCode) InputType.UP_LANE_1.getKey():
 //                break;    //doesn't work :(
             case W:
@@ -389,7 +368,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
                 break;
             }
         });
-
 
         pane.getChildren().add(gameBackGround);
         pane.getChildren().add(borderpane);
@@ -445,7 +423,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
             });
     }
 
-
     public void setObserver(final Controller observer) {
         this.observer = observer;
     }
@@ -463,8 +440,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-        }
-        else {
+        } else {
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();
         }
@@ -488,5 +464,4 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         this.field.clear();
         units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
     }
-
 }

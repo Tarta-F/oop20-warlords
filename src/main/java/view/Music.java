@@ -20,7 +20,6 @@ public final class Music {
         try {
             sound = new Media(Music.class.getResource(song).toURI().toString());
         } catch (URISyntaxException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
         media = new MediaPlayer(sound);
@@ -35,7 +34,6 @@ public final class Music {
     public static void musicStop() {
         media.stop();
     }
-
 
     public static void buttonsMusic(final String song) {
 
@@ -57,4 +55,3 @@ public final class Music {
     }
 
 }
-
