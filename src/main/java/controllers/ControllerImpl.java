@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import model.FieldImpl;
 import model.unit.UnitImpl;
 import model.unit.UnitType;
+import view.game.GameView;
 import view.ScenarioViewType;
 import view.game.GameViewImpl;
 
@@ -20,7 +21,7 @@ public final class ControllerImpl implements Controller {
     private final EnumMap<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, PlayerTimer> timers = new EnumMap<>(PlayerType.class);
 
-    private final GameViewImpl gameView;
+    private final GameView gameView;
     private final FieldImpl field;
     private final int laneNumber;
     private Optional<PlayerType> winner;
@@ -130,7 +131,7 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public GameViewImpl getView() {
+    public GameView getView() {
         return this.gameView;
     }
 

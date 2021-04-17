@@ -3,7 +3,7 @@ package controllers;
 import java.util.Optional;
 
 import constants.PlayerType;
-import view.game.GameViewImpl;
+import view.game.GameView;
 
 public interface Controller {
 
@@ -54,7 +54,7 @@ public interface Controller {
      * Get the View used by this Controller.
      * @return the GameView of this Controller
      */
-    GameViewImpl getView();
+    GameView getView();
 
     /**
      * Updates the model and print the result on the GameView.

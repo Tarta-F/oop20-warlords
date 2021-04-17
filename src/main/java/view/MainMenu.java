@@ -1,12 +1,8 @@
 package view;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
-
 import view.constants.ViewConstants;
 import view.constants.ViewImages;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,10 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 /**
  *
@@ -46,6 +39,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
     private static final double LOGO_UNIT_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7);
     private static final double LOGO_UNIT_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_3);
     private static final double VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
+
     @Override
      /**Method of the library JAVAFX used for the creation of the view. */
     public void start(final Stage primaryStage) throws Exception {
@@ -73,7 +67,6 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         /**Pane. */
         final Pane pane = new Pane();
 
-
         /**Background and Image. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
         final ImageView menuBackGround = ViewResolution.createImageView(backgroundImg, PANE_W, PANE_H);
@@ -81,13 +74,11 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final Image logoImage  = new Image(this.getClass().getResourceAsStream(ViewImages.LOGO));
         final ImageView logo = ViewResolution.createImageView(logoImage, LOGO_W, LOGO_H);
 
-
         final Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SPEARMAN));
         final ImageView logoSpearman = ViewResolution.createImageView(logoSpearmanImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
         final Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_ARCHER));
         final ImageView logoArcher = ViewResolution.createImageView(logoArcherImage, LOGO_UNIT_W, LOGO_UNIT_H);
-
 
         /**Buttons. */
         /**Button CAMPAIGN. */
@@ -112,7 +103,6 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
             }
         });
 
-
         /**Button TUTORIALS. */
         final Button tutorials = new Button("TUTORIALS");
         tutorials.setStyle(Style.BUTTON_1);
@@ -133,18 +123,14 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         stopMusic.setStyle(Style.BUTTON_1);
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
         stopMusic.setOnAction(e -> {
-
-                      if(stopMusic.isSelected()) {
-                          Music.buttonsMusic(ViewImages.BUTTON_SOUND);
-                          Music.musicStop();
-
-                      } else {
-                          Music.buttonsMusic(ViewImages.BUTTON_SOUND);
-                          Music.musicStart(ViewImages.MUSIC);
-
-
-                    }
-                });
+            if (stopMusic.isSelected()) {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.musicStop();
+            } else {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.musicStart(ViewImages.MUSIC);
+            }
+        });
 
         /**Button EXIT. */
         final Button exitMenu = new Button("EXIT");
@@ -155,13 +141,11 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
             closeProgram(pane);
         });
 
-
         /**Layout. */
         final VBox menu = new VBox(VBOX_H);
         menu.setAlignment(Pos.CENTER);
         menu.getChildren().addAll(logo, versus, scoreboard, tutorials, stopMusic, exitMenu);
         menu.setPadding(new Insets(LAYOUT_PADDING_H_1, 0, LAYOUT_PADDING_H_1, 0));
-
 
         final VBox leftVBox = new VBox();
         leftVBox.setAlignment(Pos.CENTER);
@@ -172,7 +156,6 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         rigthVBox.setAlignment(Pos.CENTER);
         rigthVBox.getChildren().add(logoSpearman);
         rigthVBox.setPadding(new Insets(0, LAYOUT_PADDING_W_1, 0, 0));
-
 
         /**BorderPane sets and Pane gets. */
         final BorderPane borderPane = new BorderPane();
@@ -186,8 +169,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         return pane;
     }
 
-
-
+    @Override
     /**Method for the shutdown of the program.
      * @param pane Pane
      * */

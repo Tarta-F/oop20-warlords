@@ -62,6 +62,7 @@ public class GameModeSelection extends Region implements ViewInterface {
                 + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
     }
 
+    @Override
     public final Parent createPane() throws IOException {
 
         /**Pane. */

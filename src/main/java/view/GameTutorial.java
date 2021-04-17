@@ -30,6 +30,7 @@ public class GameTutorial extends Region implements ViewInterface {
     private static final double BORDERPANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
     private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
 
+    @Override
     public final Parent createPane() throws IOException {
 
         /**Pane. */
