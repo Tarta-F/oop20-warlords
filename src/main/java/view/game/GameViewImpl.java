@@ -206,23 +206,18 @@ public final class GameViewImpl extends Region implements GameView {
 
         /**List of units player 1. */
         final ImageView unit1P1 = ViewResolution.createImageView(selectedSwordsmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
-        listUnitP1.add(unit1P1);
-
         final ImageView unit2P1 = ViewResolution.createImageView(logoSpearmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
-        listUnitP1.add(unit2P1);
 
         final ImageView unit3P1 = ViewResolution.createImageView(logoArcherP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
-        listUnitP1.add(unit3P1);
+        listUnitP1.addAll(List.of(unit1P1, unit2P1, unit3P1));
 
         /**List of units player 2. */
         final ImageView unit1P2 = ViewResolution.createImageView(selectedSwordsmenP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
-        listUnitP2.add(unit1P2);
 
         final ImageView unit2P2 = ViewResolution.createImageView(logoSpearmenP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
-        listUnitP2.add(unit2P2);
 
         final ImageView unit3P2 = ViewResolution.createImageView(logoArcherP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
-        listUnitP2.add(unit3P2);
+        listUnitP2.addAll(List.of(unit1P2, unit2P2, unit3P2));
 
         /**List of ImageView arrows for player 1. */
         for (int i = 0; i < this.laneNumber; i++) {
@@ -253,24 +248,23 @@ public final class GameViewImpl extends Region implements GameView {
         menu.setStyle(Style.BUTTON_1);
         menu.setPrefSize(BUTTONS_W, BUTTONS_H);
         menu.setOnMouseClicked(e ->  {
-        Music.buttonsMusic(ViewImages.BUTTON_SOUND);
-        returnMainMenu(pane);
+            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            returnMainMenu(pane);
         });
 
         /**Button MUSIC. */
         final ToggleButton stopMusic = new ToggleButton("Music On/Off");
         stopMusic.setStyle(Style.BUTTON_1);
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
-        stopMusic.setOnAction(e -> {
-
-                      if (stopMusic.isSelected()) {
-                          Music.buttonsMusic(ViewImages.BUTTON_SOUND);
-                          Music.musicStop();
-                      } else {
-                          Music.buttonsMusic(ViewImages.BUTTON_SOUND);
-                          Music.musicStart(ViewImages.MUSIC_2);
-                      }
-                });
+        stopMusic.setOnMouseClicked(e -> {
+            if (stopMusic.isSelected()) {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.musicStop();
+            } else {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.musicStart(ViewImages.MUSIC_2);
+            }
+        });
 
         /**Labels. */
         /**Label TIMER. */
