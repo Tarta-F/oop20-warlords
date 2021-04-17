@@ -47,6 +47,7 @@ public class GameTutorial extends Region implements ViewInterface {
         mainMenu.setOnAction(e -> {
             sceneMenu = new MainMenu();
             try {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();

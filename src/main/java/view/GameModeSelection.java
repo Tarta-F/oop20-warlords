@@ -93,6 +93,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             scenarioButtons.setStyle(Style.BUTTON_1);
             buttonScenario.put(scenarioButtons, s);
             scenarioButtons.setOnAction(e -> {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                 this.scenario = s;
                 updateSettings();
             });
@@ -108,6 +109,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             laneButtons.setStyle(Style.BUTTON_1);
             buttonLane.put(laneButtons, i);
             laneButtons.setOnAction(e -> {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                 this.laneNumber = buttonLane.get(laneButtons);
                 updateSettings();
             });
@@ -126,6 +128,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             timerButtons.setStyle(Style.BUTTON_1);
             buttonTimer.put(timerButtons, i);
             timerButtons.setOnAction(e -> {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                 this.timerDuration = buttonTimer.get(timerButtons);
                 updateSettings();
             });
@@ -141,7 +144,9 @@ public class GameModeSelection extends Region implements ViewInterface {
         back.setStyle(Style.BUTTON_2);
         back.setOnAction(e -> {
             scenaMenu = new MainMenu();
+            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
             try {
+                
                 pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -154,8 +159,10 @@ public class GameModeSelection extends Region implements ViewInterface {
         start.setStyle(Style.BUTTON_2);
         start.setOnAction(e -> {
            final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.scenario, playerName1.getText(), playerName2.getText());
+           Music.buttonsMusic(ViewImages.BUTTON_START);
            try {
-            pane.getChildren().setAll(contr.getView().createPane());
+               Music.musicStop();
+               pane.getChildren().setAll(contr.getView().createPane());
            } catch (IOException e1) {
             e1.printStackTrace();
            }
