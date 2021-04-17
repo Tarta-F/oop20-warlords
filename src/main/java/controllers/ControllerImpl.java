@@ -2,9 +2,11 @@ package controllers;
 
 import java.util.EnumMap;
 import java.util.Optional;
-
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import constants.GameConstants;
 import constants.PlayerType;
+import javafx.application.Platform;
 import model.FieldImpl;
 import model.unit.UnitImpl;
 import model.unit.UnitType;
@@ -23,15 +25,15 @@ public final class ControllerImpl implements Controller {
     private final int laneNumber;
     private Optional<PlayerType> winner;
 
+    private final ScheduledThreadPoolExecutor thrEx;
+    private final GameLoopImpl gl;
     public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
 
         this.gameView = new GameViewImpl(laneNumber, scenario.getBackgroundPath(), scenario.getGroundPath(), player1Name, player2Name);
         this.gameView.setObserver(this);
-
         this.laneNumber = laneNumber;
         this.winner = Optional.empty();
-
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
         new Thread(new GameTimer(mins, this.gameView)).start();
 
@@ -42,7 +44,14 @@ public final class ControllerImpl implements Controller {
             this.timers.put(player, new PlayerTimer(gameView, player));
         }
         this.timers.forEach((p, t) -> new Thread(t).start());
+        /** Instance GameLoop */
+        this.gl = new GameLoopImpl(this);
+        this.thrEx = new ScheduledThreadPoolExecutor(1);
+        this.startLoop();
+    }
 
+    private void startLoop() {
+        this.thrEx.scheduleWithFixedDelay(gl, 0, 1000 / 2, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -93,9 +102,6 @@ public final class ControllerImpl implements Controller {
         final int nextIndex = (currentIndex + 1) % this.laneNumber;
         this.selectedLane.put(player, nextIndex);
         this.gameView.updateSelectLane(player, currentIndex, nextIndex);
-
-        //TODO PER PROVA
-        this.update();
     }
 
     @Override
@@ -131,8 +137,11 @@ public final class ControllerImpl implements Controller {
     @Override
     public void update() {
         this.field.update();
-        this.gameView.show(Converter.convertMap(this.field.getUnits()));
-        this.gameView.updateScorePlayer();
+        Platform.runLater(() -> {
+            this.gameView.show(Converter.convertMap(this.field.getUnits()));
+            this.gameView.updateScorePlayer();
+        });
+
 
         //TODO PER PROVA
         System.out.println(isOver() ? getWinner().get() + " WON" : "");

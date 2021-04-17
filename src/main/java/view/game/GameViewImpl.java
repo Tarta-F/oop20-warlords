@@ -334,7 +334,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
             switch (e.getCode()) {
 //            case (KeyCode) InputType.UP_LANE_1.getKey():
 //                break;    //doesn't work :(
-            case W:
+            case W: /** Up Lane Player 1. */
                 this.observer.controlPrevLane(PlayerType.PLAYER1);
                 break;
             case S:

@@ -2,16 +2,13 @@ package view;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import controllers.ControllerImpl;
 import view.constants.ViewConstants;
 import view.constants.ViewImages;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -146,7 +143,6 @@ public class GameModeSelection extends Region implements ViewInterface {
             scenaMenu = new MainMenu();
             Music.buttonsMusic(ViewImages.BUTTON_SOUND);
             try {
-                
                 pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();

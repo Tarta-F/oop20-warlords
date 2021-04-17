@@ -25,7 +25,7 @@ public final class WinnerBox {
     private static final double SCENE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4);
     private static final double SCENE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_4);
     private static final double LAYOUT_VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60);
-    private WinnerBox () {
+    private WinnerBox() {
         /**Not called. */
     }
 
@@ -41,7 +41,7 @@ public final class WinnerBox {
 
         /**Label. */
         final Label label = new Label();
-        label.setText(player+" IS THE WINNER");
+        label.setText(player + " IS THE WINNER");
         label.setAlignment(Pos.CENTER);
         label.setPrefSize(LABEL_W, LABEL_H);
         label.setStyle(Style.LABEL);

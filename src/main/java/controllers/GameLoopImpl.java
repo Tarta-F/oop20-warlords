@@ -1,6 +1,6 @@
 package controllers;
 
-public class GameLoopImpl implements GameLoop {
+public class GameLoopImpl implements Runnable {
 
     private final Controller controller;
 
@@ -9,8 +9,8 @@ public class GameLoopImpl implements GameLoop {
     }
 
     @Override
-    public final void startGame() {
-        while (controller.isOver()) {
+    public final void run() {
+        if (!controller.isOver()) {
             controller.update();
         }
     }
