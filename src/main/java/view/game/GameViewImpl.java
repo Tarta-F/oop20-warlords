@@ -14,8 +14,6 @@ import view.Exit;
 import view.MainMenu;
 import view.Style;
 import view.UnitViewType;
-import view.ViewClose;
-import view.ViewInterface;
 import view.ViewResolution;
 import view.constants.ViewConstants;
 import view.constants.ViewImages;
@@ -40,7 +38,7 @@ import javafx.stage.Stage;
 /**
  * This class is the BattleField game view.
  */
-public final class GameViewImpl extends Region implements ViewInterface, ViewClose, GameView {
+public final class GameViewImpl extends Region implements GameView {
 
     private static final double UNIT_ICON_WIDTH = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
     private static final double UNIT_ICON_HEIGHT = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
@@ -85,7 +83,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
     private Label player2;
     private Controller observer;
 
-    //private final String backgroundF; //fil
     /**Sets of all Images used. */
     /**Player 1. */
     private final Image logoSwordsmenP1  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_LOGO_SWORDSMEN));
@@ -107,15 +104,13 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
     private final Image arrowP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_ARROW));
     private final Image selectedArrowP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SELECTED_ARROW));
 
-
-    public GameViewImpl(final int laneNumber, final String background, final String ground, final String player1Name, final String player2Name) {
+    public GameViewImpl(final int laneNumber, final String background, final String ground,
+            final String player1Name, final String player2Name) {
         this.laneNumber = laneNumber;
         this.player1Name = player1Name;
         this.player2Name = player2Name;
-        //this.backgroundF = background;
         this.scenario = new Image(this.getClass().getResourceAsStream(background));
         this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
-
     }
 
     /**
@@ -156,7 +151,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         return scoreLabel;
     }
 
-
     /**
      * Method to return on main menu with a confirm box. 
      * @param actual pane 
@@ -173,23 +167,20 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         }
     }
 
-
+    @Override
     public Parent createPane() throws IOException {
 
         /**Pane. */
         final Pane pane = new Pane();
 
-
         /**BackGround. */
         final ImageView gameBackGround = ViewResolution.createImageView(scenario, BORDERPANE_W, BORDERPANE_H);
-
 
         /**Lists of units logo used. */
         this.unitImageP1 = new ArrayList<>(Arrays.asList(logoSwordsmenP1, logoSpearmenP1, logoArcherP1));
         this.unitSelectedP1 = new ArrayList<>(Arrays.asList(selectedSwordsmenP1, selectedSpearmenP1, selectedArcherP1));
         this.unitImageP2 = new ArrayList<>(Arrays.asList(logoSwordsmenP2, logoSpearmenP2, logoArcherP2));
         this.unitSelectedP2 = new ArrayList<>(Arrays.asList(selectedSwordsmenP2, selectedSpearmenP2, selectedArcherP2));
-
 
         /**List of units player 1. */
         final ImageView unit1P1 = ViewResolution.createImageView(selectedSwordsmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
@@ -211,7 +202,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         final ImageView unit3P2 = ViewResolution.createImageView(logoArcherP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP2.add(unit3P2);
 
-
         /**List of ImageView arrows for player 1. */
         for (int i = 0; i < this.laneNumber; i++) {
             final ImageView arrow1P1 = ViewResolution.createImageView(arrowP1, ARROW_W, ARROW_H);
@@ -226,7 +216,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         }
         listArrowP2.get(this.laneNumber / 2).setImage(selectedArrowP2);
 
-
         /**Buttons. */
         /**Button EXIT. */
         final Button exit = new Button("Exit");
@@ -239,7 +228,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         menu.setStyle(Style.BUTTON_1);
         menu.setPrefSize(BUTTONS_W, BUTTONS_H);
         menu.setOnMouseClicked(e ->  returnMainMenu(pane));
-
 
         /**Labels. */
         /**Label TIMER. */
@@ -269,7 +257,6 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
                 player2 = score;
             }
         }
-
 
         /**Layout. */
         final List<VBox> vBoxplayer1 = new ArrayList<>();
@@ -317,11 +304,10 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         borderpane.setCenter(this.field.getGrid());
         borderpane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
 
-
         /**KeyInput. */
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
-
+            // TODO
 //            case (KeyCode) InputType.UP_LANE_1.getKey():
 //                break;    //doesn't work :(
             case W:
@@ -359,46 +345,49 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
             }
         });
 
-
         pane.getChildren().add(gameBackGround);
         pane.getChildren().add(borderpane);
 
         return pane;
     }
 
-    public void updateSelectLane(final PlayerType playerType, final int index, final int next) {
-        final ArrayList<ImageView> tempList = playerType.equals(PlayerType.PLAYER1) ? new ArrayList<>(listArrowP1) : new ArrayList<>(listArrowP2);
+    @Override
+    public void updateSelectLane(final PlayerType player, final int index, final int next) {
+        final List<ImageView> tempList = player.equals(PlayerType.PLAYER1) ? new ArrayList<>(listArrowP1) : new ArrayList<>(listArrowP2);
         tempList.get(index).setImage(arrowP1);
         tempList.get(next).setImage(selectedArrowP1);
-        if (playerType.equals(PlayerType.PLAYER1)) {
+        if (player.equals(PlayerType.PLAYER1)) {
             listArrowP1.get(index).setImage(arrowP1);
             listArrowP1.get(next).setImage(selectedArrowP1);
         }
-        if (playerType.equals(PlayerType.PLAYER2)) {
+        if (player.equals(PlayerType.PLAYER2)) {
             listArrowP2.get(index).setImage(arrowP2);
             listArrowP2.get(next).setImage(selectedArrowP2);
         }
     }
 
-    public void updateSelectUnit(final PlayerType playerType, final int index, final int next) {
-      if (playerType.equals(PlayerType.PLAYER1)) {
+    @Override
+    public void updateSelectUnit(final PlayerType player, final int index, final int next) {
+      if (player.equals(PlayerType.PLAYER1)) {
           listUnitP1.get(next).setImage(this.unitSelectedP1.get(next));
           listUnitP1.get(index).setImage(this.unitImageP1.get(index));
       }
-      if (playerType.equals(PlayerType.PLAYER2)) {
+      if (player.equals(PlayerType.PLAYER2)) {
           listUnitP2.get(next).setImage(this.unitSelectedP2.get(next));
           listUnitP2.get(index).setImage(this.unitImageP2.get(index));
       }
   }
 
+    @Override
     public void updateTimer(final int mins, final int seconds) {
         Platform.runLater(() -> timer.setText(String.format("%02d:%02d", mins, seconds)));
     }
 
-    public void updatePlayerTimer(final int seconds, final PlayerType playerType) {
+    @Override
+    public void updatePlayerTimer(final int seconds, final PlayerType player) {
         Platform.runLater(() -> {
             unitBoxes.forEach((type, label) -> {
-                if (type.getPlayer().equals(playerType)) {
+                if (type.getPlayer().equals(player)) {
                     final int timer = type.getWaitingTime() - seconds;
                     label.setText(timer <= 0 ? "SPAWN" : timer + " sec");
                     label.setTextFill(timer <= 0 ? Color.GREEN : Color.RED);
@@ -407,20 +396,19 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
      });
     }
 
-    /**Method to update the players labels score. */
+    @Override
     public void updateScorePlayer() {
-            labelsScore.forEach((type, label) -> {
-                    label.setText("SCORE " + getPlayerName(type) + ": " + observer.getScore(type));
-            });
+        labelsScore.forEach((type, label) -> {
+            label.setText("SCORE " + getPlayerName(type) + ": " + observer.getScore(type));
+        });
     }
 
-
+    @Override
     public void setObserver(final Controller observer) {
         this.observer = observer;
     }
 
-    /**Method to close the program with a confirm box. 
-     * @param pane Pane*/
+    @Override
     public void closeProgram(final Pane pane) {
         final boolean answer = Exit.display("Quitting", "Do you want to quit?");
         if (answer) {
@@ -429,10 +417,7 @@ public final class GameViewImpl extends Region implements ViewInterface, ViewClo
         }
     }
 
-    /**
-     * Draw in the Field the given units.
-     * @param units a set containing the info for drawing the units in the right place
-     */
+    @Override
     public void show(final EnumMap<UnitViewType, List<Pair<Integer, Integer>>> units) {
         this.field.clear();
         units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));

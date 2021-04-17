@@ -1,7 +1,7 @@
 package controllers;
 
 import constants.PlayerType;
-import view.game.GameViewImpl;
+import view.game.GameView;
 
 public class PlayerTimer implements Runnable {
 
@@ -10,9 +10,9 @@ public class PlayerTimer implements Runnable {
     private volatile int seconds;
     private volatile int totSec;
     private final PlayerType playerType;
-    private final GameViewImpl gameView;
+    private final GameView gameView;
 
-    PlayerTimer(final GameViewImpl gameView, final PlayerType playerType) {
+    PlayerTimer(final GameView gameView, final PlayerType playerType) {
         this.mins = 0;
         this.seconds = 0;
         this.totSec = 0;

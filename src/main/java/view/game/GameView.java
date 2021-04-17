@@ -8,12 +8,14 @@ import org.apache.commons.lang3.tuple.Pair;
 import constants.PlayerType;
 import controllers.Controller;
 import view.UnitViewType;
+import view.ViewClose;
+import view.ViewInterface;
 
 /** 
  * This interface models the GameView.
  *
  */
-public interface GameView {
+public interface GameView extends ViewClose, ViewInterface {
 
     /**
      * Method to Update the selected lane.

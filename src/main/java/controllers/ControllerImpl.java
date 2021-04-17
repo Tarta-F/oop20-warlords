@@ -7,6 +7,7 @@ import constants.PlayerType;
 import model.FieldImpl;
 import model.unit.UnitImpl;
 import model.unit.UnitType;
+import view.game.GameView;
 import view.game.GameViewImpl;
 
 public final class ControllerImpl implements Controller {
@@ -17,7 +18,7 @@ public final class ControllerImpl implements Controller {
     private int selectedUnitIndexP2;
     private long lastSpawnP1;
     private long lastSpawnP2;
-    private final GameViewImpl gameView;
+    private final GameView gameView;
     private final FieldImpl field;
     private final int laneNumber;
     private Optional<PlayerType> winner;
@@ -162,7 +163,7 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public GameViewImpl getView() {
+    public GameView getView() {
         return this.gameView;
     }
 

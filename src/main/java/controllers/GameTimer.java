@@ -1,6 +1,6 @@
 package controllers;
 
-import view.game.GameViewImpl;
+import view.game.GameView;
 
 public class GameTimer implements Runnable {
 
@@ -8,9 +8,9 @@ public class GameTimer implements Runnable {
     private volatile int mins;
     private volatile int seconds;
     private volatile int totSec;
-    private final GameViewImpl gameView;
+    private final GameView gameView;
 
-    GameTimer(final int mins, final GameViewImpl gameView) {
+    GameTimer(final int mins, final GameView gameView) {
         this.mins = mins;
         this.seconds = 0;
         this.totSec = this.mins * SEC_IN_MIN;
