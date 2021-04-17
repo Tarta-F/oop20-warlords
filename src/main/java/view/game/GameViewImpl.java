@@ -5,23 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.EnumMap;
-
 import org.apache.commons.lang3.tuple.Pair;
-
 import constants.PlayerType;
 import controllers.Controller;
-import view.Exit;
+import view.ConfirmBox;
 import view.MainMenu;
+import view.Music;
 import view.Style;
 import view.UnitViewType;
 import view.ViewResolution;
+import view.WinnerBox;
 import view.constants.ViewConstants;
 import view.constants.ViewImages;
-
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -44,8 +44,8 @@ public final class GameViewImpl extends Region implements GameView {
     private static final double UNIT_ICON_HEIGHT = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
     private static final double ARROW_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_20);
     private static final double ARROW_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
-    private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30);
-    private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30);
+    private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
+    private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
     private static final double LABEL_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
     private static final double LABEL_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
     private static final double RESPAWN_LABEL_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30);
@@ -134,7 +134,6 @@ public final class GameViewImpl extends Region implements GameView {
         respawnLabel.setPrefSize(RESPAWN_LABEL_W, RESPAWN_LABEL_H);
         respawnLabel.setAlignment(Pos.CENTER);
         respawnLabel.setStyle(Style.LABEL);
-
         return respawnLabel;
     }
 
@@ -147,7 +146,6 @@ public final class GameViewImpl extends Region implements GameView {
         scoreLabel.setPrefSize(LABEL_W, LABEL_H);
         scoreLabel.setAlignment(Pos.CENTER);
         scoreLabel.setStyle(Style.LABEL);
-
         return scoreLabel;
     }
 
@@ -156,10 +154,12 @@ public final class GameViewImpl extends Region implements GameView {
      * @param actual pane 
      * */
     private void returnMainMenu(final Pane pane) {
-        final boolean answer = Exit.display("Quitting", "Return to main menu?");
+        final boolean answer = ConfirmBox.display("Quitting", "Return to main menu?");
         if (answer) {
             scenaMenu = new MainMenu();
             try {
+                Music.musicStop();
+                Music.musicStart(ViewImages.MUSIC);
                 pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -167,8 +167,30 @@ public final class GameViewImpl extends Region implements GameView {
         }
     }
 
+    /**
+     * Method to return on main menu with winner box. 
+     * @param actual pane 
+     * */
+    private void winnerMBoxResult(final Pane pane) {
+        final boolean answer = WinnerBox.winner("da inserire il nome del player vincente");
+        if (answer) {
+            scenaMenu = new MainMenu();
+            try {
+                pane.getChildren().setAll(scenaMenu.createPane());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            final Stage stage = (Stage) pane.getScene().getWindow();
+            stage.close();
+        }
+    }
+
     @Override
     public Parent createPane() throws IOException {
+
+        /**Music. */
+        Music.musicStart(ViewImages.MUSIC_2);
 
         /**Pane. */
         final Pane pane = new Pane();
@@ -220,14 +242,35 @@ public final class GameViewImpl extends Region implements GameView {
         /**Button EXIT. */
         final Button exit = new Button("Exit");
         exit.setMinSize(BUTTONS_W, BUTTONS_H);
-        exit.setOnMouseClicked(e -> closeProgram(pane));
+        exit.setOnMouseClicked(e -> {
+            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            closeProgram(pane);
+        });
         exit.setStyle(Style.BUTTON_1);
 
         /**Button MENU. */
         final Button menu = new Button("Menu");
         menu.setStyle(Style.BUTTON_1);
         menu.setPrefSize(BUTTONS_W, BUTTONS_H);
-        menu.setOnMouseClicked(e ->  returnMainMenu(pane));
+        menu.setOnMouseClicked(e ->  {
+        Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+        returnMainMenu(pane);
+        });
+
+        /**Button MUSIC. */
+        final ToggleButton stopMusic = new ToggleButton("Music On/Off");
+        stopMusic.setStyle(Style.BUTTON_1);
+        stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
+        stopMusic.setOnAction(e -> {
+
+                      if (stopMusic.isSelected()) {
+                          Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                          Music.musicStop();
+                      } else {
+                          Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                          Music.musicStart(ViewImages.MUSIC_2);
+                      }
+                });
 
         /**Labels. */
         /**Label TIMER. */
@@ -283,7 +326,7 @@ public final class GameViewImpl extends Region implements GameView {
         topMenu.setPadding(new Insets(PADDING_H, 0, PADDING_H, 0));
 
         final HBox bottomMenu = new HBox(BOTTOMMENU_W);
-        bottomMenu.getChildren().addAll(player1, menu, exit, player2);
+        bottomMenu.getChildren().addAll(player1, menu, stopMusic, exit, player2);
         bottomMenu.setAlignment(Pos.CENTER);
         bottomMenu.setPadding(new Insets(PADDING_H, 0, PADDING_H, 0));
 
@@ -410,7 +453,7 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void closeProgram(final Pane pane) {
-        final boolean answer = Exit.display("Quitting", "Do you want to quit?");
+        final boolean answer = ConfirmBox.display("Quitting", "Do you want to quit?");
         if (answer) {
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();
@@ -422,5 +465,4 @@ public final class GameViewImpl extends Region implements GameView {
         this.field.clear();
         units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
     }
-
 }

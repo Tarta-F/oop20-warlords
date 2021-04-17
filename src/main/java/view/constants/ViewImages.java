@@ -99,7 +99,19 @@ public final class ViewImages {
 
     /**PATH Image MainMenu logo. */
     public static final String LOGO = SEP + "logo.png";
-
+    
+    /**PATH music. */
+    public static final String MUSIC = SEP + "Main_menu_music.mp3";
+    
+    /**PATH music. */
+    public static final String MUSIC_2 = SEP + "Battle_music.mp3";
+    
+    /**PATH music. */
+    public static final String BUTTON_SOUND = SEP + "button_click.wav";
+    
+    /**PATH music. */
+    public static final String BUTTON_START = SEP + "start.wav";
+    
     private ViewImages() { }
 }
 

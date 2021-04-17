@@ -1,16 +1,15 @@
 package view;
 
 import java.io.IOException;
-
 import view.constants.ViewConstants;
 import view.constants.ViewImages;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -39,14 +38,15 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
     private static final double LOGO_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_8);
     private static final double LOGO_UNIT_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7);
     private static final double LOGO_UNIT_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_3);
+    private static final double VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
 
     @Override
      /**Method of the library JAVAFX used for the creation of the view. */
     public void start(final Stage primaryStage) throws Exception {
 
         /**Creation of the Stage, Scene and all their preferences. */
+        Music.musicStart(ViewImages.MUSIC);
         final Stage window = primaryStage;
-
         final Pane pane = new Pane(createPane());
         final Scene scene = new Scene(pane, PANE_W, PANE_H);
         window.setScene(scene);
@@ -67,7 +67,6 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         /**Pane. */
         final Pane pane = new Pane();
 
-
         /**Background and Image. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
         final ImageView menuBackGround = ViewResolution.createImageView(backgroundImg, PANE_W, PANE_H);
@@ -75,19 +74,20 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final Image logoImage  = new Image(this.getClass().getResourceAsStream(ViewImages.LOGO));
         final ImageView logo = ViewResolution.createImageView(logoImage, LOGO_W, LOGO_H);
 
-
         final Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SPEARMAN));
         final ImageView logoSpearman = ViewResolution.createImageView(logoSpearmanImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
         final Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_ARCHER));
         final ImageView logoArcher = ViewResolution.createImageView(logoArcherImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
-
         /**Buttons. */
         /**Button CAMPAIGN. */
-        final Button campaign = new Button("CAMPAIGN");
-        campaign.setStyle(Style.BUTTON_1);
-        campaign.setPrefSize(BUTTONS_W, BUTTONS_H);
+        final Button scoreboard = new Button("SCOREBOARD");
+        scoreboard.setStyle(Style.BUTTON_1);
+        scoreboard.setPrefSize(BUTTONS_W, BUTTONS_H);
+        scoreboard.setOnAction(e -> {
+            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+        });
 
         /**Button VERSUS. */
         final Button versus = new Button("VERSUS");
@@ -96,12 +96,12 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         versus.setOnAction(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneGameModeSelection.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
-
 
         /**Button TUTORIALS. */
         final Button tutorials = new Button("TUTORIALS");
@@ -110,6 +110,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         tutorials.setOnAction(e -> {
 
             try {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                 sceneTutorial = new GameTutorial();
                 pane.getChildren().setAll(sceneTutorial.createPane());
             } catch (IOException e1) {
@@ -117,19 +118,34 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
             }
         });
 
+        /**Button MUSIC. */
+        final ToggleButton stopMusic = new ToggleButton("MUSIC ON/OFF");
+        stopMusic.setStyle(Style.BUTTON_1);
+        stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
+        stopMusic.setOnAction(e -> {
+            if (stopMusic.isSelected()) {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.musicStop();
+            } else {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.musicStart(ViewImages.MUSIC);
+            }
+        });
+
         /**Button EXIT. */
         final Button exitMenu = new Button("EXIT");
         exitMenu.setStyle(Style.BUTTON_1);
         exitMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
-        exitMenu.setOnAction(e -> closeProgram(pane));
-
+        exitMenu.setOnAction(e -> {
+            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            closeProgram(pane);
+        });
 
         /**Layout. */
-        final VBox menu = new VBox(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15));
+        final VBox menu = new VBox(VBOX_H);
         menu.setAlignment(Pos.CENTER);
-        menu.getChildren().addAll(logo, campaign, versus, tutorials, exitMenu);
+        menu.getChildren().addAll(logo, versus, scoreboard, tutorials, stopMusic, exitMenu);
         menu.setPadding(new Insets(LAYOUT_PADDING_H_1, 0, LAYOUT_PADDING_H_1, 0));
-
 
         final VBox leftVBox = new VBox();
         leftVBox.setAlignment(Pos.CENTER);
@@ -140,7 +156,6 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         rigthVBox.setAlignment(Pos.CENTER);
         rigthVBox.getChildren().add(logoSpearman);
         rigthVBox.setPadding(new Insets(0, LAYOUT_PADDING_W_1, 0, 0));
-
 
         /**BorderPane sets and Pane gets. */
         final BorderPane borderPane = new BorderPane();
@@ -154,11 +169,12 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         return pane;
     }
 
+    @Override
     /**Method for the shutdown of the program.
      * @param pane Pane
      * */
     public void closeProgram(final Pane pane) {
-        final boolean answer = Exit.display("quitting", "Do you want to quit?");
+        final boolean answer = ConfirmBox.display("quitting", "Do you want to quit?");
         if (answer) {
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();

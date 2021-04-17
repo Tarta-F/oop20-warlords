@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.EnumMap;
 import java.util.Optional;
 
 import constants.GameConstants;
@@ -8,42 +9,41 @@ import model.FieldImpl;
 import model.unit.UnitImpl;
 import model.unit.UnitType;
 import view.game.GameView;
+import view.ScenarioViewType;
 import view.game.GameViewImpl;
 
 public final class ControllerImpl implements Controller {
 
-    private int selectedLaneIndexP1;
-    private int selectedLaneIndexP2;
-    private int selectedUnitIndexP1;
-    private int selectedUnitIndexP2;
-    private long lastSpawnP1;
-    private long lastSpawnP2;
+    private final EnumMap<PlayerType, Long> lastSpawn = new EnumMap<>(PlayerType.class);
+    private final EnumMap<PlayerType, Integer> selectedLane = new EnumMap<>(PlayerType.class);
+    private final EnumMap<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
+    private final EnumMap<PlayerType, PlayerTimer> timers = new EnumMap<>(PlayerType.class);
+
     private final GameView gameView;
     private final FieldImpl field;
     private final int laneNumber;
     private Optional<PlayerType> winner;
-    private final PlayerTimer playerTimer;
-    private final PlayerTimer playerTimer2;
 
-    public ControllerImpl(final int laneNumber, final int mins, final String background, final String ground, 
+    public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
-        this.lastSpawnP1 = 0;
-        this.lastSpawnP2 = 0;
 
-        this.gameView = new GameViewImpl(laneNumber, background, ground, player1Name, player2Name);
+        this.gameView = new GameViewImpl(laneNumber, scenario.getBackgroundPath(), scenario.getGroundPath(), player1Name, player2Name);
         this.gameView.setObserver(this);
 
         this.laneNumber = laneNumber;
-        this.selectedLaneIndexP1 = this.laneNumber / 2;
-        this.selectedLaneIndexP2 = this.laneNumber / 2;
         this.winner = Optional.empty();
-        this.playerTimer = new PlayerTimer(this.gameView, PlayerType.PLAYER1);
-        this.playerTimer2 = new PlayerTimer(this.gameView, PlayerType.PLAYER2);
 
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
         new Thread(new GameTimer(mins, this.gameView)).start();
-        new Thread(playerTimer).start();
-        new Thread(playerTimer2).start();
+
+        for (final var player : PlayerType.values()) {
+            this.lastSpawn.put(player, System.currentTimeMillis());
+            this.selectedLane.put(player, laneNumber / 2);
+            this.selectedUnit.put(player, 0);
+            this.timers.put(player, new PlayerTimer(gameView, player));
+        }
+        this.timers.forEach((p, t) -> new Thread(t).start());
+
     }
 
     /**
@@ -63,11 +63,7 @@ public final class ControllerImpl implements Controller {
      * @param playerType Player who want to spawn a troup
      */
     private void setSpawnTime(final PlayerType playerType) {
-        if (playerType.equals(PlayerType.PLAYER1)) {
-            this.lastSpawnP1 = System.currentTimeMillis();
-        } else {
-            this.lastSpawnP2 = System.currentTimeMillis();
-        }
+        this.lastSpawn.put(playerType, System.currentTimeMillis());
     }
 
     /**
@@ -75,91 +71,57 @@ public final class ControllerImpl implements Controller {
      * @param player to reset the timer
      */
     private void resetPlayerTimer(final PlayerType player) {
-        if (player.equals(PlayerType.PLAYER1)) {
-            this.playerTimer.resetTimer();
-        } else {
-            this.playerTimer2.resetTimer();
-        }
+        this.timers.get(player).resetTimer();
     }
 
     @Override
-    public void controlNextLane(final PlayerType playerType) {
-        final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
+    public void spawnUnit(final PlayerType player) {
+      final int unitIndex = this.selectedUnit.get(player);
+      final long timeWaited = System.currentTimeMillis() - this.lastSpawn.get(player);
+      final UnitType unitToSpawn = UnitType.values()[unitIndex];
+      if (timeWaited > unitToSpawn.getTimer()) {
+        this.setSpawnTime(player);
+        final int lane = this.selectedLane.get(player);
+        this.field.addUnit(lane, new UnitImpl(unitToSpawn, player));
+        gameView.show(Converter.convertMap(this.field.getUnits()));
+        this.resetPlayerTimer(player);
+      }
+    }
+
+    @Override
+    public void controlNextLane(final PlayerType player) {
+        final int currentIndex = this.selectedLane.get(player);
         final int nextIndex = (currentIndex + 1) % this.laneNumber;
-        if (playerType.equals(PlayerType.PLAYER1)) {
-            this.selectedLaneIndexP1 = nextIndex;
-        }
-        if (playerType.equals(PlayerType.PLAYER2)) {
-            this.selectedLaneIndexP2 = nextIndex;
-        }
-        this.gameView.updateSelectLane(playerType, currentIndex, nextIndex); //in base a pType scelgo in che lista guardare
+        this.selectedLane.put(player, nextIndex);
+        this.gameView.updateSelectLane(player, currentIndex, nextIndex);
 
         //TODO PER PROVA
         this.update();
     }
 
     @Override
-    public void controlPrevLane(final PlayerType playerType) {
-        final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
-        int nextIndex;
-        if (currentIndex == 0) {
-            nextIndex = this.laneNumber - 1;
-        } else {
-            nextIndex = (currentIndex - 1) % this.laneNumber;
-        }
-        if (playerType.equals(PlayerType.PLAYER1)) {
-            this.selectedLaneIndexP1 = nextIndex;
-        }
-        if (playerType.equals(PlayerType.PLAYER2)) {
-            this.selectedLaneIndexP2 = nextIndex;
-        }
-        this.gameView.updateSelectLane(playerType, currentIndex, nextIndex);
+    public void controlPrevLane(final PlayerType player) {
+        final int currentIndex = this.selectedLane.get(player);
+        final int nextIndex = currentIndex == 0 ? this.laneNumber - 1 : (currentIndex - 1) % this.laneNumber;
+        this.selectedLane.put(player, nextIndex);
+        this.gameView.updateSelectLane(player, currentIndex, nextIndex);
+    }
+
+
+    @Override
+    public void controlNextUnit(final PlayerType player) {
+        final int currentIndex = this.selectedUnit.get(player);
+        final int nextIndex = (currentIndex + 1) % UnitType.getUnitNumber();
+        this.selectedUnit.put(player, nextIndex);
+        this.gameView.updateSelectUnit(player, currentIndex, nextIndex);
     }
 
     @Override
-    public void spawnUnit(final PlayerType playerType) {
-        final long lastSpawn = playerType.equals(PlayerType.PLAYER1) ? this.lastSpawnP1 : this.lastSpawnP2;
-        final int unitIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedUnitIndexP1 : this.selectedUnitIndexP2;
-        final long timeWaited = System.currentTimeMillis() - lastSpawn;
-        final UnitType unitToSpawn = UnitType.values()[unitIndex];
-        if (timeWaited > unitToSpawn.getTimer()) {
-            setSpawnTime(playerType);
-            final int lane = playerType.equals(PlayerType.PLAYER1) ? this.selectedLaneIndexP1 : this.selectedLaneIndexP2;
-            this.field.addUnit(lane, new UnitImpl(unitToSpawn, playerType));
-            gameView.show(Converter.convertMap(this.field.getUnits()));
-            this.resetPlayerTimer(playerType);
-        }
-    }
-
-    @Override
-    public void controlNextUnit(final PlayerType playerType) {
-        final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedUnitIndexP1 : this.selectedUnitIndexP2;
-        final int nextIndex = (currentIndex + 1) % GameConstants.THREE_LANES;
-        if (playerType.equals(PlayerType.PLAYER1)) {
-            this.selectedUnitIndexP1 = nextIndex;
-        }
-        if (playerType.equals(PlayerType.PLAYER2)) {
-            this.selectedUnitIndexP2 = nextIndex;
-        }
-        this.gameView.updateSelectUnit(playerType, currentIndex, nextIndex);
-    }
-
-    @Override
-    public void controlPrevUnit(final PlayerType playerType) {
-        final int currentIndex = playerType.equals(PlayerType.PLAYER1) ? this.selectedUnitIndexP1 : this.selectedUnitIndexP2;
-        int nextIndex;
-        if (currentIndex == 0) {
-            nextIndex = GameConstants.THREE_LANES - 1;
-        } else {
-            nextIndex = (currentIndex - 1) % GameConstants.THREE_LANES;
-        }
-        if (playerType.equals(PlayerType.PLAYER1)) {
-            this.selectedUnitIndexP1 = nextIndex;
-        }
-        if (playerType.equals(PlayerType.PLAYER2)) {
-            this.selectedUnitIndexP2 = nextIndex;
-        }
-        this.gameView.updateSelectUnit(playerType, currentIndex, nextIndex);
+    public void controlPrevUnit(final PlayerType player) {
+        final int currIndex = this.selectedUnit.get(player);
+        final int nextIndex = currIndex == 0 ? UnitType.getUnitNumber() - 1 : (currIndex - 1) % UnitType.getUnitNumber();
+        this.selectedUnit.put(player, nextIndex);
+        this.gameView.updateSelectUnit(player, currIndex, nextIndex);
     }
 
     @Override
@@ -174,7 +136,7 @@ public final class ControllerImpl implements Controller {
         this.gameView.updateScorePlayer();
 
         //TODO PER PROVA
-        System.out.println(isOver() ? getWinner().get() + " HA VINTO" : "");
+        System.out.println(isOver() ? getWinner().get() + " WON" : "");
     }
 
     @Override

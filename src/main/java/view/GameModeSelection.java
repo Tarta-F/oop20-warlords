@@ -2,7 +2,6 @@ package view;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +32,7 @@ import javafx.scene.layout.VBox;
 public class GameModeSelection extends Region implements ViewInterface {
 
     private MainMenu scenaMenu;
-    private String scenario;
-    private String background;
-    private String ground;
+    private ScenarioViewType scenario;
     private int laneNumber;
     private int timerDuration;
     private final Label settingsSelected;
@@ -54,26 +51,24 @@ public class GameModeSelection extends Region implements ViewInterface {
     private static final double VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
 
     public GameModeSelection() {
+        this.scenario = ScenarioViewType.SCENARIO_1;
         this.laneNumber = ViewConstants.DEFAULT_LANE;
         this.timerDuration = ViewConstants.DEFAULT_TIMER;
-        this.scenario = ScenarioViewType.SCENARIO_1.getDescription();
-        this.background = ScenarioViewType.SCENARIO_1.getBackgroundPath();
-        this.ground = ScenarioViewType.SCENARIO_1.getGroundPath();
         this.settingsSelected = new Label();
         this.updateSettings();
     }
 
     /**Method to upgrade the label in GameModeSelection. */
     private void updateSettings() {
-        this.settingsSelected.setText("SELECTED SCENARIO: " + this.scenario + "\n NUMBER OF LANES: " + this.laneNumber 
+        this.settingsSelected.setText("SELECTED SCENARIO: " + this.scenario.getDescription() + "\n NUMBER OF LANES: " + this.laneNumber
                 + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
     }
 
+    @Override
     public final Parent createPane() throws IOException {
 
         /**Pane. */
         final Pane pane = new Pane();
-
 
         /**TextField. */
         final TextField playerName1 = new TextField("Player 1");
@@ -82,16 +77,14 @@ public class GameModeSelection extends Region implements ViewInterface {
         final TextField playerName2 = new TextField("Player 2");
         playerName2.setPrefSize(TEXTFIELD_W, TEXTFIELD_H);
 
-
         /**BackGroung. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_SETTINGS));
         final ImageView background = ViewResolution.createImageView(backgroundImg, VBOX_W, VBOX_H);
 
-
         /**Buttons. */
         /**Buttons SCENARIO. */
         final List<Button> scenarioList = new ArrayList<>();
-        final List<ScenarioViewType> scenarios = new ArrayList<>(Arrays.asList(ScenarioViewType.values()));
+        final List<ScenarioViewType> scenarios = new ArrayList<>(List.of(ScenarioViewType.values()));
         final Map<Button, ScenarioViewType> buttonScenario = new HashMap<>();
 
         scenarios.forEach(s -> {
@@ -100,9 +93,8 @@ public class GameModeSelection extends Region implements ViewInterface {
             scenarioButtons.setStyle(Style.BUTTON_1);
             buttonScenario.put(scenarioButtons, s);
             scenarioButtons.setOnAction(e -> {
-                this.background = s.getBackgroundPath();
-                this.ground = s.getGroundPath();
-                this.scenario = s.getDescription();
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                this.scenario = s;
                 updateSettings();
             });
             scenarioList.add(scenarioButtons);
@@ -117,6 +109,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             laneButtons.setStyle(Style.BUTTON_1);
             buttonLane.put(laneButtons, i);
             laneButtons.setOnAction(e -> {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                 this.laneNumber = buttonLane.get(laneButtons);
                 updateSettings();
             });
@@ -135,6 +128,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             timerButtons.setStyle(Style.BUTTON_1);
             buttonTimer.put(timerButtons, i);
             timerButtons.setOnAction(e -> {
+                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
                 this.timerDuration = buttonTimer.get(timerButtons);
                 updateSettings();
             });
@@ -150,6 +144,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         back.setStyle(Style.BUTTON_2);
         back.setOnAction(e -> {
             scenaMenu = new MainMenu();
+            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
             try {
                 pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
@@ -162,15 +157,15 @@ public class GameModeSelection extends Region implements ViewInterface {
         start.setPrefSize(BUTTONS_W, BUTTONS_H);
         start.setStyle(Style.BUTTON_2);
         start.setOnAction(e -> {
-           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.background,
-                   this.ground, playerName1.getText(), playerName2.getText());
+           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.scenario, playerName1.getText(), playerName2.getText());
+           Music.buttonsMusic(ViewImages.BUTTON_START);
            try {
-            pane.getChildren().setAll(contr.getView().createPane());
+               Music.musicStop();
+               pane.getChildren().setAll(contr.getView().createPane());
            } catch (IOException e1) {
             e1.printStackTrace();
            }
         });
-
 
         /**Labels. */
         final Label scenario = new Label("Scenario:");
@@ -203,7 +198,6 @@ public class GameModeSelection extends Region implements ViewInterface {
         settingsSelected.setAlignment(Pos.CENTER);
         settingsSelected.setPrefSize(LABEL_SETTINGS_W, LABEL_SETTINGS_H);
         settingsSelected.setStyle(Style.LABEL);
-
 
         /**Layout and Pane gets. */
         final HBox scenarioBox = new HBox(LAYOUT_HBOX_W);

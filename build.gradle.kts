@@ -40,6 +40,9 @@ dependencies {
      // Import of commons lang3 for Pair class
      implementation("org.apache.commons:commons-lang3:3.12.0")
 
+     // Import of Gson by Google. It Serialize and Deserialize Java Object into JSON element
+     implementation("com.google.code.gson:gson:2.8.6")
+
     // JavaFX: comment out if you do not need them
     for (platform in supportedPlatforms) {
         for (module in javaFXModules) {

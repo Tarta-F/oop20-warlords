@@ -1,6 +1,7 @@
 package model.unit;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 /**
  * All unit types.
@@ -35,10 +36,14 @@ public enum UnitType {
      * Get the max waiting time of this enum values.
      * @return the max waiting time 
      */
-    public static int getMaxWaintingTime() {
-        return Arrays.stream(values())
+    public static int getMaxWaitingTime() {
+        return (int) TimeUnit.MILLISECONDS.toSeconds(Arrays.stream(values())
                 .mapToInt(u -> u.getTimer())
-                .max().getAsInt();
+                .max().getAsInt());
+    }
+
+    public static int getUnitNumber() {
+        return UnitType.values().length;
     }
 
     /**
