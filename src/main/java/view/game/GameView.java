@@ -67,4 +67,11 @@ public interface GameView extends ViewClose, ViewInterface {
      * @param player name
      * */
     void winnerBoxResult(String player);
+
+    /**
+     * Get player NAME.
+     * @param player PlayerType 
+     * @return player name
+     * */
+    String getPlayerName(PlayerType player);
 }

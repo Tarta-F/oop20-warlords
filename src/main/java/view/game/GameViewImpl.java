@@ -113,18 +113,6 @@ public final class GameViewImpl extends Region implements GameView {
         this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
     }
 
-    /**
-     * Get player NAME.
-     * @param player PlayerType 
-     * */
-    private String getPlayerName(final PlayerType player) {
-        if (player.equals(PlayerType.PLAYER1)) {
-            return this.player1Name;
-        } else {
-            return this.player2Name;
-        }
-    }
-
     /** Create the timer label from the given long number.
      * @param l the quantity of seconds to display
      * @return the label created
@@ -438,12 +426,9 @@ public final class GameViewImpl extends Region implements GameView {
         units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
     }
 
-    /**
-     * Method to return on main menu with winner box or close the program. 
-     * @param player name
-     * */
+    @Override
     public void winnerBoxResult(final String player) {
-        final boolean choice = ConfirmBox.display("winner", " IS THE WINNER", "MENU", "QUIT", player);
+        final boolean choice = ConfirmBox.display("winner", " HAS WON", "MENU", "QUIT", player);
         if (choice) {
             scenaMenu = new MainMenu();
             try {
@@ -460,4 +445,12 @@ public final class GameViewImpl extends Region implements GameView {
         }
     }
 
+    @Override
+    public String getPlayerName(final PlayerType player) {
+        if (player.equals(PlayerType.PLAYER1)) {
+            return this.player1Name;
+        } else {
+            return this.player2Name;
+        }
+    }
 }

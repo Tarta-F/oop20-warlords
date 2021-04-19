@@ -7,7 +7,6 @@ import view.constants.ViewConstants;
 import view.constants.ResourcesConstants;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -25,7 +24,7 @@ import javafx.scene.layout.Region;
  *
  */
 public class Scoreboard extends Region implements ViewInterface { 
-   
+
     private MainMenu sceneMenu;
     private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
     private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
@@ -35,6 +34,7 @@ public class Scoreboard extends Region implements ViewInterface {
     private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
     private static final double LISTVIEW_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_2);
     private static final double LISTVIEW_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_2);
+
     @Override
     public final Parent createPane() throws IOException {
 
@@ -59,20 +59,19 @@ public class Scoreboard extends Region implements ViewInterface {
                 e1.printStackTrace();
             }
         });
-      
+
         /**ListView. */
         final ListView<String> listView = new ListView<>();
-        listView.getItems().addAll("prova","prova2");
+        listView.getItems().addAll("prova", "prova2");
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listView.setMaxSize(LISTVIEW_W, LISTVIEW_H);
         listView.setStyle(Style.LABEL);
-      
+
         /**Layout. */
        final HBox backMenu = new HBox();
        backMenu.setPadding(new Insets(0, 0, LAYOUT_PADDING_H_1, LAYOUT_PADDING_W_1));
        backMenu.getChildren().add(mainMenu);
-       
-       
+
 
        /**BorderPane sets and Pane gets. */
        final BorderPane borderPane = new BorderPane();
