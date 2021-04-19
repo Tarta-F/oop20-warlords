@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -10,6 +9,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import constants.PlayerType;
 import model.unit.Unit;
 import utilities.counters.Counter;
@@ -17,6 +18,9 @@ import utilities.counters.CounterImpl;
 import utilities.counters.LimitMultiCounter;
 import utilities.counters.LimitMultiCounterImpl;
 
+/** 
+ * Basic implementation of {@link Lane}.
+ */
 public final class LaneImpl implements Lane {
 
     private final int lenght;
@@ -25,6 +29,12 @@ public final class LaneImpl implements Lane {
 
     private static final String MESSAGE_OUT_OF_LANE = "The entered position is out of the limits";
 
+    /**
+     * Creates a {@link Lane} of the specified lenght.
+     * 
+     * @param lenght
+     *      the lenght of the lane
+     */
     public LaneImpl(final int lenght) {
         this.lenght = lenght;
         this.units = new HashMap<>();
@@ -32,19 +42,42 @@ public final class LaneImpl implements Lane {
         this.resetScore();
     }
 
+    /**
+     * Reset the score {@link Counter} of the {@link PlayerType} in this {@link Lane}.
+     */
     private void resetScore() {
         this.scores.put(PlayerType.PLAYER1, new CounterImpl());
         this.scores.put(PlayerType.PLAYER2, new CounterImpl());
     }
 
+    /**
+     * Increase the score of the {@link PlayerType}.
+     * 
+     * @param player
+     *      the {@link PlayerType} whose score to increase
+     */
     private void score(final PlayerType player) {
         this.scores.get(player).increment();
     }
 
+    /**
+     * @param position
+     *      a position of this {@link Lane} to verify
+     * @return
+     *      true if the position is within the limits (0 and {@link LaneImpl#lenght}
+     */
     private boolean isLegalPosition(final int position) {
         return position >= 0 && position < this.lenght;
     }
 
+    /**
+     * Search a {@link Unit} target for the given one.
+     * 
+     * @param unit
+     *      the {@link Unit} for which to search the target
+     * @return
+     *      a {@link Optional} that cointains the target if there's any
+     */
     private Optional<Unit> searchTarget(final Unit unit) {
         return Stream.iterate(this.getUnits().get(unit), i -> i + (unit.getPlayer().equals(PlayerType.PLAYER1) ? 1 : -1))
                 .limit(unit.getRange() + 1)  //  + 1 for the current position
@@ -54,6 +87,12 @@ public final class LaneImpl implements Lane {
                 .findFirst(); 
     }
 
+    /**
+     * Move the given {@link Unit} of the quantity of its {@link Unit#getStep()}.
+     * 
+     * @param unit
+     *      the {@link Unit} to move
+     */
     private void move(final Unit unit) {
         this.units.get(unit).multiIncrement(unit.getStep());
     }
@@ -74,20 +113,13 @@ public final class LaneImpl implements Lane {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    /**
-     * TODO TOGLI ISALIVE.
-     */
     @Override
     public Map<Unit, Integer> getUnits() {
-        final Map<Unit, Integer> map = new HashMap<>();
-        this.units.entrySet().forEach(e -> {
-            final Unit unit = e.getKey();
-            if (unit.isAlive()) {
-                final int nSteps = e.getValue().getValue();
-                map.put(unit, unit.getPlayer().equals(PlayerType.PLAYER1) ? nSteps : this.lenght - nSteps - 1);
-            }
-        });
-        return Collections.unmodifiableMap(map);
+        return this.units.entrySet().stream()
+                .map(e -> Pair.of(e.getKey(), e.getValue().getValue()))
+                .map(p -> p.getLeft().getPlayer().equals(PlayerType.PLAYER1) 
+                        ? p : Pair.of(p.getLeft(), this.lenght - p.getRight() - 1))
+                .collect(Collectors.toUnmodifiableMap(Pair::getLeft, Pair::getRight));
     }
 
     @Override
