@@ -86,7 +86,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final Button scoreboard = new Button("SCOREBOARD");
         scoreboard.setStyle(Style.BUTTON_1);
         scoreboard.setPrefSize(BUTTONS_W, BUTTONS_H);
-        scoreboard.setOnAction(e -> {
+        scoreboard.setOnMouseClicked(e -> {
             scenesScoreboard = new Scoreboard();
             Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             try {
@@ -101,7 +101,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final Button versus = new Button("VERSUS");
         versus.setStyle(Style.BUTTON_1);
         versus.setPrefSize(BUTTONS_W, BUTTONS_H);
-        versus.setOnAction(e -> {
+        versus.setOnMouseClicked(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
@@ -115,7 +115,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final Button tutorials = new Button("TUTORIALS");
         tutorials.setStyle(Style.BUTTON_1);
         tutorials.setPrefSize(BUTTONS_W, BUTTONS_H);
-        tutorials.setOnAction(e -> {
+        tutorials.setOnMouseClicked(e -> {
 
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
@@ -130,7 +130,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final ToggleButton stopMusic = new ToggleButton("MUSIC ON/OFF");
         stopMusic.setStyle(Style.BUTTON_1);
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
-        stopMusic.setOnAction(e -> {
+        stopMusic.setOnMouseClicked(e -> {
             if (stopMusic.isSelected()) {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 Music.musicStop();
@@ -144,7 +144,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final Button exitMenu = new Button("EXIT");
         exitMenu.setStyle(Style.BUTTON_1);
         exitMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
-        exitMenu.setOnAction(e -> {
+        exitMenu.setOnMouseClicked(e -> {
             Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             closeProgram(pane);
         });

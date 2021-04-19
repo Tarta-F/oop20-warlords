@@ -50,7 +50,7 @@ public class Scoreboard extends Region implements ViewInterface {
         final Button mainMenu = new Button("MAIN MENU");
         mainMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
         mainMenu.setStyle(Style.BUTTON_2);
-        mainMenu.setOnAction(e -> {
+        mainMenu.setOnMouseClicked(e -> {
             sceneMenu = new MainMenu();
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
