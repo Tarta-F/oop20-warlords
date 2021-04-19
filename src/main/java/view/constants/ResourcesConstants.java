@@ -3,13 +3,12 @@ package view.constants;
 /**
  * This class contain the various image that we use in the program.
  */
-public final class ViewImages {
+public final class ResourcesConstants {
 
     /** PATH separator from the system properties.*/
     public static final String SEP = "/"; //System.getProperty("file.separator");
 
-
-    /**Player 1 Images. */
+    /* Player 1 Images. */
     /**PATH Image Swordsmen player 1. */
     public static final String P1_LOGO_SWORDSMEN = SEP + "SwordsmenUnitP1.png";
 
@@ -43,8 +42,7 @@ public final class ViewImages {
     /**PATH Image selected lane arrow player 1. */
     public static final String P1_SELECTED_ARROW = SEP + "SelectedArrowPlayer1.png";
 
-
-    /**Player 2 Images. */
+    /* Player 2 Images. */
     /**PATH Image Swordsmen player 2. */
     public static final String P2_LOGO_SWORDSMEN = SEP + "SwordsmenUnitP2.png";
 
@@ -78,16 +76,14 @@ public final class ViewImages {
     /**PATH Image selected lane arrow player 2. */
     public static final String P2_SELECTED_ARROW = SEP + "SelectedArrowPlayer2.png";
 
-
-    /**Grid Images. */
+    /* Grid Images. */
     /**PATH Image grid ground. */
     public static final String GROUND = SEP + "Ground.png";
 
     /**PATH Image grid ground for scenario 2. */
     public static final String GROUND_2 = SEP + "Ground2.png";
 
-
-    /**Other Scenes. */
+    /* Other Scenes. */
     /**PATH Image GameModeSelection background. */
     public static final String GAME_SETTINGS = SEP + "GameSettings.png";
 
@@ -99,19 +95,19 @@ public final class ViewImages {
 
     /**PATH Image MainMenu logo. */
     public static final String LOGO = SEP + "logo.png";
-    
+
     /**PATH music. */
     public static final String MUSIC = SEP + "Main_menu_music.mp3";
-    
+
     /**PATH music. */
     public static final String MUSIC_2 = SEP + "Battle_music.mp3";
-    
+
     /**PATH music. */
     public static final String BUTTON_SOUND = SEP + "button_click.wav";
-    
+
     /**PATH music. */
     public static final String BUTTON_START = SEP + "start.wav";
-    
-    private ViewImages() { }
+
+    private ResourcesConstants() { }
 }
 

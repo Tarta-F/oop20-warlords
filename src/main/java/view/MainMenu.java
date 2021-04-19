@@ -2,7 +2,7 @@ package view;
 
 import java.io.IOException;
 import view.constants.ViewConstants;
-import view.constants.ViewImages;
+import view.constants.ResourcesConstants;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -45,7 +45,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
     public void start(final Stage primaryStage) throws Exception {
 
         /**Creation of the Stage, Scene and all their preferences. */
-        Music.musicStart(ViewImages.MUSIC);
+        Music.musicStart(ResourcesConstants.MUSIC);
         final Stage window = primaryStage;
         final Pane pane = new Pane(createPane());
         final Scene scene = new Scene(pane, PANE_W, PANE_H);
@@ -68,16 +68,16 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final Pane pane = new Pane();
 
         /**Background and Image. */
-        final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
+        final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.MENU));
         final ImageView menuBackGround = ViewResolution.createImageView(backgroundImg, PANE_W, PANE_H);
 
-        final Image logoImage  = new Image(this.getClass().getResourceAsStream(ViewImages.LOGO));
+        final Image logoImage  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.LOGO));
         final ImageView logo = ViewResolution.createImageView(logoImage, LOGO_W, LOGO_H);
 
-        final Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SPEARMAN));
+        final Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_SPEARMAN));
         final ImageView logoSpearman = ViewResolution.createImageView(logoSpearmanImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
-        final Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_ARCHER));
+        final Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_ARCHER));
         final ImageView logoArcher = ViewResolution.createImageView(logoArcherImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
         /**Buttons. */
@@ -86,7 +86,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         scoreboard.setStyle(Style.BUTTON_1);
         scoreboard.setPrefSize(BUTTONS_W, BUTTONS_H);
         scoreboard.setOnAction(e -> {
-            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
         });
 
         /**Button VERSUS. */
@@ -96,7 +96,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         versus.setOnAction(e -> {
             sceneGameModeSelection = new GameModeSelection();
             try {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneGameModeSelection.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -110,7 +110,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         tutorials.setOnAction(e -> {
 
             try {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 sceneTutorial = new GameTutorial();
                 pane.getChildren().setAll(sceneTutorial.createPane());
             } catch (IOException e1) {
@@ -124,11 +124,11 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
         stopMusic.setOnAction(e -> {
             if (stopMusic.isSelected()) {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 Music.musicStop();
             } else {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
-                Music.musicStart(ViewImages.MUSIC);
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.musicStart(ResourcesConstants.MUSIC);
             }
         });
 
@@ -137,7 +137,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         exitMenu.setStyle(Style.BUTTON_1);
         exitMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
         exitMenu.setOnAction(e -> {
-            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             closeProgram(pane);
         });
 

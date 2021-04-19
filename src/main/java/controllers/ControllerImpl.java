@@ -21,7 +21,7 @@ public final class ControllerImpl implements Controller {
     private final EnumMap<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, PlayerTimer> timers = new EnumMap<>(PlayerType.class);
 
-    private final GameViewImpl gameView;
+    private final GameView gameView;
     private final FieldImpl field;
     private final int laneNumber;
     private Optional<PlayerType> winner;

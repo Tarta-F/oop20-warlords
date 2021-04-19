@@ -16,7 +16,7 @@ import view.UnitViewType;
 import view.ViewResolution;
 import view.WinnerBox;
 import view.constants.ViewConstants;
-import view.constants.ViewImages;
+import view.constants.ResourcesConstants;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -86,24 +86,24 @@ public final class GameViewImpl extends Region implements GameView {
 
     /**Sets of all Images used. */
     /**Player 1. */
-    private final Image logoSwordsmenP1  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_LOGO_SWORDSMEN));
-    private final Image logoSpearmenP1  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_LOGO_SPEARMEN));
-    private final Image logoArcherP1  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_LOGO_ARCHER));
-    private final Image selectedSwordsmenP1  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_SELECTED_SWORDSMEN));
-    private final Image selectedSpearmenP1  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_SELECTED_SPEARMEN));
-    private final Image selectedArcherP1  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_SELECTED_ARCHER));
-    private final Image arrowP1  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_ARROW));
-    private final Image selectedArrowP1  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_SELECTED_ARROW));
+    private final Image logoSwordsmenP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_LOGO_SWORDSMEN));
+    private final Image logoSpearmenP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_LOGO_SPEARMEN));
+    private final Image logoArcherP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_LOGO_ARCHER));
+    private final Image selectedSwordsmenP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_SELECTED_SWORDSMEN));
+    private final Image selectedSpearmenP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_SELECTED_SPEARMEN));
+    private final Image selectedArcherP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_SELECTED_ARCHER));
+    private final Image arrowP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_ARROW));
+    private final Image selectedArrowP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_SELECTED_ARROW));
 
     /**Player 2. */
-    private final Image logoSwordsmenP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_LOGO_SWORDSMEN));
-    private final Image logoSpearmenP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_LOGO_SPEARMEN));
-    private final Image logoArcherP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_LOGO_ARCHER));
-    private final Image selectedSwordsmenP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SELECTED_SWORDSMEN));
-    private final Image selectedSpearmenP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SELECTED_SPEARMEN));
-    private final Image selectedArcherP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SELECTED_ARCHER));
-    private final Image arrowP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_ARROW));
-    private final Image selectedArrowP2  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SELECTED_ARROW));
+    private final Image logoSwordsmenP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_LOGO_SWORDSMEN));
+    private final Image logoSpearmenP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_LOGO_SPEARMEN));
+    private final Image logoArcherP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_LOGO_ARCHER));
+    private final Image selectedSwordsmenP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_SELECTED_SWORDSMEN));
+    private final Image selectedSpearmenP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_SELECTED_SPEARMEN));
+    private final Image selectedArcherP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_SELECTED_ARCHER));
+    private final Image arrowP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_ARROW));
+    private final Image selectedArrowP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_SELECTED_ARROW));
 
     public GameViewImpl(final int laneNumber, final String background, final String ground,
             final String player1Name, final String player2Name) {
@@ -160,7 +160,7 @@ public final class GameViewImpl extends Region implements GameView {
             scenaMenu = new MainMenu();
             try {
                 Music.musicStop();
-                Music.musicStart(ViewImages.MUSIC);
+                Music.musicStart(ResourcesConstants.MUSIC);
                 pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -172,7 +172,7 @@ public final class GameViewImpl extends Region implements GameView {
     public Parent createPane() throws IOException {
 
         /**Music. */
-        Music.musicStart(ViewImages.MUSIC_2);
+        Music.musicStart(ResourcesConstants.MUSIC_2);
 
         /**Pane. */
         pane = new Pane();
@@ -220,7 +220,7 @@ public final class GameViewImpl extends Region implements GameView {
         final Button exit = new Button("Exit");
         exit.setMinSize(BUTTONS_W, BUTTONS_H);
         exit.setOnMouseClicked(e -> {
-            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             closeProgram(pane);
         });
         exit.setStyle(Style.BUTTON_1);
@@ -230,7 +230,7 @@ public final class GameViewImpl extends Region implements GameView {
         menu.setStyle(Style.BUTTON_1);
         menu.setPrefSize(BUTTONS_W, BUTTONS_H);
         menu.setOnMouseClicked(e ->  {
-            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             returnMainMenu(pane);
         });
 
@@ -240,11 +240,11 @@ public final class GameViewImpl extends Region implements GameView {
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
         stopMusic.setOnMouseClicked(e -> {
             if (stopMusic.isSelected()) {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 Music.musicStop();
             } else {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
-                Music.musicStart(ViewImages.MUSIC_2);
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.musicStart(ResourcesConstants.MUSIC_2);
             }
         });
 

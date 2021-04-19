@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import view.constants.ViewConstants;
-import view.constants.ViewImages;
+import view.constants.ResourcesConstants;
 
 /**
  * 
@@ -53,7 +53,7 @@ public final class WinnerBox {
         mainMenu.setStyle(Style.BUTTON_1);
         mainMenu.setPrefSize(BUTTONS_W,  BUTTONS_H);
         mainMenu.setOnAction(e -> {
-            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             choice = true;
             window.close();
         });
@@ -63,7 +63,7 @@ public final class WinnerBox {
         exit.setStyle(Style.BUTTON_1);
         exit.setPrefSize(BUTTONS_W,  BUTTONS_H);
         exit.setOnAction(e -> {
-            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             choice = false;
             window.close();
         });

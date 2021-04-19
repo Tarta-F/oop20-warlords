@@ -3,7 +3,7 @@ package view;
 import java.io.IOException;
 
 import view.constants.ViewConstants;
-import view.constants.ViewImages;
+import view.constants.ResourcesConstants;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -37,7 +37,7 @@ public class GameTutorial extends Region implements ViewInterface {
         final Pane pane = new Pane();
 
         /**Background. */
-        final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.GAME_TUTORIAL));
+        final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.GAME_TUTORIAL));
         final ImageView tutorialBackground = ViewResolution.createImageView(backgroundImg, BORDERPANE_W, BORDERPANE_H);
 
 
@@ -48,7 +48,7 @@ public class GameTutorial extends Region implements ViewInterface {
         mainMenu.setOnAction(e -> {
             sceneMenu = new MainMenu();
             try {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
