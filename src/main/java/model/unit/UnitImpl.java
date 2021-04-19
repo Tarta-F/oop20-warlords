@@ -27,96 +27,56 @@ public class UnitImpl implements Unit {
         this.alive = true;
     }
 
-    /**
-     * Get the TIME of RESPAWN of the unit.
-     * @return unit TIMER
-     * */
     @Override
-    public int getWaitingTime() {
+    public final int getWaitingTime() {
         return this.timer;
     }
 
-    /**
-     * Get the HEALTH of the unit. 
-     * @return unit HP
-     * */
     @Override
-    public int getHP() {
+    public final int getHP() {
         return this.hp;
     }
 
-    /**
-     * Get the MOVEMENT of the unit.
-     * @return unit MOVMENT
-     * */
     @Override
-    public int getStep() {
+    public final int getStep() {
         return this.step;
     }
 
-    /**
-     * Get the DAMAGE of the unit.
-     * @return unit DMG
-     * */
     @Override
-    public int getDamage() {
+    public final int getRange() {
+        return this.range;
+    }
+
+    @Override
+    public final int getDamage() {
         return this.dmg;
     }
 
-    /**
-     * Unit take damage from another unit.
-     * @param damage received
-     * */
     @Override
-    public void damage(final int damage) {
+    public final void damage(final int damage) {
         this.hp = this.hp - damage;
         if (this.hp <= 0) {
                 this.alive = false;
             }
         }
 
-    /**
-     * Get the PLAYER of the unit.
-     * @return unit PLAYER
-     * */
     @Override
-    public PlayerType getPlayer() {
+    public final PlayerType getPlayer() {
         return this.player;
     }
 
-    /**
-     * Get the TYPE of the unit.
-     * @return unit TYPE
-     * */
     @Override
-    public UnitType getUnitType() {
+    public final UnitType getUnitType() {
         return this.unitType;
     }
 
-    /**
-     * Unit attack on another unit.
-     * @param unit target
-     * */
     @Override
-    public void attack(final Unit unit) {
+    public final void attack(final Unit unit) {
         unit.damage(this.dmg);
     }
 
-    /**
-     * Get the RANGE of the unit.
-     * @return unit RANGE
-     * */
     @Override
-    public int getRange() {
-        return this.range;
-    }
-
-    /**
-     * Status if the unit is ALIVE. 
-     * @return status ALIVE
-     * */
-    @Override
-    public boolean isAlive() {
+    public final boolean isAlive() {
         return this.alive;
     }
 

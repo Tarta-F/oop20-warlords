@@ -13,41 +13,42 @@ import view.ViewInterface;
 
 /** 
  * This interface models the GameView.
- *
  */
 public interface GameView extends ViewClose, ViewInterface {
 
     /**
      * Method to Update the selected lane.
      * @param playerType PlayerType
-     * @param index int
-     * @param next int
+     * @param index lane
+     * @param next lane
      * */
     void updateSelectLane(PlayerType playerType, int index, int next);
 
     /**
      * Method to Update the selected unit.
      * @param playerType PlayerType
-     * @param index int
-     * @param next int
+     * @param index lane
+     * @param next lane
      * */
     void updateSelectUnit(PlayerType playerType, int index, int next);
 
     /**
      * Method to Update the Timer.
-     * @param mins int
-     * @param seconds int
+     * @param mins lane
+     * @param seconds lane
      * */
     void updateTimer(int mins, int seconds);
 
     /**
      * Method to Update the player timer.
-     * @param seconds int
+     * @param seconds timer
      * @param playerType PlayerType
      * */
     void updatePlayerTimer(int seconds, PlayerType playerType);
 
-    /**Method to update the players labels score. */
+    /**
+     * Method to update the players labels score.
+     * */
     void updateScorePlayer();
 
     /**

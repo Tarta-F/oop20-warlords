@@ -30,5 +30,9 @@ public final class Style {
             + " -fx-background-color: rgba(0, 0, 0, 0.75);\r\n"
             + " -fx-font-size: " + FONT_W + ";";
 
+    /**COnstants CSS for the appearance of layouts. */
+    public static final String LAYOUT = "-fx-background-color: grey;";
+
     private Style() { }
+
 }

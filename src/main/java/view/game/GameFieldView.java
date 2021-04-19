@@ -7,11 +7,11 @@ import view.UnitViewType;
 
 /** 
  * This interface models the GameField used in the View using a GridPane.
- *
  */
 public interface GameFieldView {
 
     /**
+     * Method to return the Grid.
      * @return The Grid created by this Field
      */
     GridPane getGrid();
@@ -27,4 +27,5 @@ public interface GameFieldView {
      * Clear the Field from all the units contained.
      */
     void clear();
+
 }
