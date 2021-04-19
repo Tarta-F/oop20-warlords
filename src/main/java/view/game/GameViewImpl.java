@@ -56,7 +56,7 @@ public final class GameViewImpl extends Region implements GameView {
     private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
     private static final double PADDING_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60);
 
-    private MainMenu scenaMenu;
+    //private MainMenu scenaMenu;
     private final GameFieldView field;
     private final int laneNumber;
     private final Image scenario;
@@ -156,7 +156,7 @@ public final class GameViewImpl extends Region implements GameView {
     private void returnMainMenu(final Pane pane) {
         final boolean answer = ConfirmBox.display("Quitting", "Return to main menu?", "YES", "NO", "");
         if (answer) {
-            scenaMenu = new MainMenu();
+            MainMenu scenaMenu = new MainMenu();
             try {
                 Music.musicStop();
                 Music.musicStart(ResourcesConstants.MUSIC);
@@ -445,7 +445,7 @@ public final class GameViewImpl extends Region implements GameView {
     public void winnerBoxResult(final String player) {
         final boolean choice = ConfirmBox.display("winner", " IS THE WINNER", "MENU", "QUIT", player);
         if (choice) {
-            scenaMenu = new MainMenu();
+            MainMenu scenaMenu = new MainMenu();
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 Music.musicStop();

@@ -29,7 +29,7 @@ import javafx.scene.layout.VBox;
  */
 public class GameModeSelection extends Region implements ViewInterface {
 
-    private MainMenu scenaMenu;
+  // private MainMenu scenaMenu;
     private ScenarioViewType scenario;
     private int laneNumber;
     private int timerDuration;
@@ -142,7 +142,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         back.setPrefSize(BUTTONS_W, BUTTONS_H);
         back.setStyle(Style.BUTTON_2);
         back.setOnMouseClicked(e -> {
-            scenaMenu = new MainMenu();
+            MainMenu scenaMenu = new MainMenu();
             Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             try {
                 pane.getChildren().setAll(scenaMenu.createPane());

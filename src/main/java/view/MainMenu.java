@@ -24,9 +24,9 @@ import javafx.stage.Stage;
  */
 public final class MainMenu extends Application implements ViewInterface, ViewClose {
 
-    private GameTutorial sceneTutorial;
-    private GameModeSelection sceneGameModeSelection;
-    private Scoreboard scenesScoreboard;
+ //   private GameTutorial sceneTutorial;
+ //   private GameModeSelection sceneGameModeSelection;
+ //   private Scoreboard scenesScoreboard;
     private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
     private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
     private static final double LAYOUT_PADDING_H_1 = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30);
@@ -87,7 +87,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         scoreboard.setStyle(Style.BUTTON_1);
         scoreboard.setPrefSize(BUTTONS_W, BUTTONS_H);
         scoreboard.setOnMouseClicked(e -> {
-            scenesScoreboard = new Scoreboard();
+            Scoreboard scenesScoreboard = new Scoreboard();
             Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             try {
                 pane.getChildren().setAll(scenesScoreboard.createPane());
@@ -102,7 +102,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         versus.setStyle(Style.BUTTON_1);
         versus.setPrefSize(BUTTONS_W, BUTTONS_H);
         versus.setOnMouseClicked(e -> {
-            sceneGameModeSelection = new GameModeSelection();
+            GameModeSelection sceneGameModeSelection = new GameModeSelection();
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneGameModeSelection.createPane());
@@ -119,7 +119,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
 
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
-                sceneTutorial = new GameTutorial();
+                GameTutorial sceneTutorial = new GameTutorial();
                 pane.getChildren().setAll(sceneTutorial.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
