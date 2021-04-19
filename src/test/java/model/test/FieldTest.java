@@ -20,6 +20,9 @@ import model.unit.UnitType;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+/**
+ * Test Class for {@link FieldImpl}.
+ */
 public class FieldTest {
 
     private Field field;

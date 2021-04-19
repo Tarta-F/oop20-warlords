@@ -13,17 +13,21 @@ import model.unit.UnitType;
 import view.UnitViewType;
 
 /**
- * This class offers static methods for Controller classes.
+ * This class offers static methods for {@link Controller} class.
  */
 public final class Converter {
 
     private Converter() {
+        /* Not used. */
     }
 
     /**
-     * Converts the istance of Unit class from the model, to the corresponding UnitViewType.
-     * @param modelUnit the unit to be converted
-     * @return the UnitViewType of the given unit
+     * Converts the istance of {@link Unit} class from the model, to the corresponding {@link UnitViewType}.
+     * 
+     * @param modelUnit 
+     *      the {@link Unit} to be converted
+     * @return 
+     *      the {@link UnitViewType} of the input one
      */
     private static UnitViewType convertUnit(final Unit modelUnit) {
         final UnitType modelType = modelUnit.getUnitType();
@@ -41,9 +45,12 @@ public final class Converter {
     }
 
     /**
-     * Converts the given map from model to the corrisponding EnumMap that has to be printed on the View.
-     * @param modelMap the map of the units and their positions
-     * @return the EnumMap for the View
+     * Converts the given {@link Map} from model to the corrisponding {@link EnumMap} that has to be printed on the {@link GameView}.
+     * 
+     * @param modelMap 
+     *      the {@link Map} of the {@link Unit} and their positions
+     * @return 
+     *      the {@link EnumMap} for the {@link GameView}
      */
     public static EnumMap<UnitViewType, List<Pair<Integer, Integer>>> convertMap(final Map<Unit, Pair<Integer, Integer>> modelMap) {
         final EnumMap<UnitViewType, List<Pair<Integer, Integer>>> viewMap = new EnumMap<>(UnitViewType.class);

@@ -1,7 +1,7 @@
 package view.constants;
 
 /**
- * This class contain the various image that we use in the program.
+ * This class contains various local path of resources used in the program.
  */
 public final class ResourcesConstants {
 
