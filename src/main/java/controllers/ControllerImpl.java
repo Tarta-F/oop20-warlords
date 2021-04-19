@@ -142,10 +142,8 @@ public final class ControllerImpl implements Controller {
             this.gameView.show(Converter.convertMap(this.field.getUnits()));
             this.gameView.updateScorePlayer();
         });
-
-
         //TODO PER PROVA
-        System.out.println(isOver() ? getWinner().get() + " WON" : "");
+        //System.out.println(isOver() ? getWinner().get() + " WON" : "");
     }
 
     @Override

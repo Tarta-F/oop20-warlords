@@ -8,18 +8,20 @@ public class GameTimer implements Runnable {
     private volatile int mins;
     private volatile int seconds;
     private volatile int totSec;
+    private volatile boolean stop;
     private final GameView gameView;
 
     GameTimer(final int mins, final GameView gameView) {
         this.mins = mins;
         this.seconds = 0;
         this.totSec = this.mins * SEC_IN_MIN;
+        this.stop = false;
         this.gameView = gameView;
     }
 
     @Override
     public final void run() {
-        while (totSec >= 0) {
+        while (totSec >= 0 && !stop) {
             try {
                 this.seconds = totSec % SEC_IN_MIN;
                 this.mins = (totSec - seconds) / SEC_IN_MIN;

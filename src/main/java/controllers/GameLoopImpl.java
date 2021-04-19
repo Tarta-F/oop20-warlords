@@ -13,6 +13,7 @@ public class GameLoopImpl implements Runnable {
         if (!controller.isOver()) {
             controller.update();
         }
+        //TODO stop
     }
 
 }

@@ -49,6 +49,7 @@ public class GameModeSelection extends Region implements ViewInterface {
     private static final double VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
 
     public GameModeSelection() {
+        /** Set up the "default" settings. */
         this.scenario = ScenarioViewType.SCENARIO_1;
         this.laneNumber = ViewConstants.DEFAULT_LANE;
         this.timerDuration = ViewConstants.DEFAULT_TIMER;
@@ -56,7 +57,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         this.updateSettings();
     }
 
-    /**Method to upgrade the label in GameModeSelection. */
+    /**Method to upgrade the label that sum up selected settings. */
     private void updateSettings() {
         this.settingsSelected.setText("SELECTED SCENARIO: " + this.scenario.getDescription() + "\n NUMBER OF LANES: " + this.laneNumber
                 + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
@@ -98,7 +99,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             scenarioList.add(scenarioButtons);
         });
 
-        /**Buttons LANE. */
+        /**Buttons LANE. Associate a button to a number of lane. */
         final Map<Button, Integer> buttonLane = new HashMap<>();
 
         for (int i = 1; i < ViewConstants.N_BUTTON_6; i += 2) {
@@ -117,7 +118,7 @@ public class GameModeSelection extends Region implements ViewInterface {
                 .map(e -> e.getKey())
                 .collect(Collectors.toList());
 
-        /**Buttons TIMER. */
+        /**Buttons TIMER. Associate a button to a different timer (Game duration). */
         final Map<Button, Integer> buttonTimer = new HashMap<>();
 
         for (int i = ViewConstants.N_BUTTON_3 + 2; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_3 + 2) {
@@ -155,7 +156,8 @@ public class GameModeSelection extends Region implements ViewInterface {
         start.setPrefSize(BUTTONS_W, BUTTONS_H);
         start.setStyle(Style.BUTTON_2);
         start.setOnAction(e -> {
-           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.scenario, playerName1.getText(), playerName2.getText());
+           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.scenario, 
+                   playerName1.getText(), playerName2.getText());
            Music.buttonsMusic(ViewImages.BUTTON_START);
            try {
                Music.musicStop();
@@ -172,13 +174,11 @@ public class GameModeSelection extends Region implements ViewInterface {
         scenario.setStyle(Style.LABEL);
 
         final Label lane = new Label("Number of lane:");
-        updateSettings();
         lane.setAlignment(Pos.CENTER);
         lane.setPrefSize(LABELS_W, LABELS_H);
         lane.setStyle(Style.LABEL);
 
         final Label timer = new Label("Timer:");
-        updateSettings();
         timer.setAlignment(Pos.CENTER);
         timer.setPrefSize(LABELS_W, LABELS_H);
         timer.setStyle(Style.LABEL);
