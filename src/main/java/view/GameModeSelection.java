@@ -29,7 +29,7 @@ import javafx.scene.layout.VBox;
  */
 public class GameModeSelection extends Region implements ViewInterface {
 
-    private MainMenu scenaMenu;
+  // private MainMenu scenaMenu;
     private ScenarioViewType scenario;
     private int laneNumber;
     private int timerDuration;
@@ -91,7 +91,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             scenarioButtons.setPrefSize(BUTTONS_W, BUTTONS_H);
             scenarioButtons.setStyle(Style.BUTTON_1);
             buttonScenario.put(scenarioButtons, s);
-            scenarioButtons.setOnAction(e -> {
+            scenarioButtons.setOnMouseClicked(e -> {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 this.scenario = s;
                 updateSettings();
@@ -107,7 +107,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             laneButtons.setPrefSize(BUTTONS_W, BUTTONS_H);
             laneButtons.setStyle(Style.BUTTON_1);
             buttonLane.put(laneButtons, i);
-            laneButtons.setOnAction(e -> {
+            laneButtons.setOnMouseClicked(e -> {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 this.laneNumber = buttonLane.get(laneButtons);
                 updateSettings();
@@ -126,7 +126,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             timerButtons.setPrefSize(BUTTONS_W, BUTTONS_H);
             timerButtons.setStyle(Style.BUTTON_1);
             buttonTimer.put(timerButtons, i);
-            timerButtons.setOnAction(e -> {
+            timerButtons.setOnMouseClicked(e -> {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 this.timerDuration = buttonTimer.get(timerButtons);
                 updateSettings();
@@ -141,8 +141,8 @@ public class GameModeSelection extends Region implements ViewInterface {
         final Button back = new Button("BACK");
         back.setPrefSize(BUTTONS_W, BUTTONS_H);
         back.setStyle(Style.BUTTON_2);
-        back.setOnAction(e -> {
-            scenaMenu = new MainMenu();
+        back.setOnMouseClicked(e -> {
+            final MainMenu scenaMenu = new MainMenu();
             Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             try {
                 pane.getChildren().setAll(scenaMenu.createPane());
@@ -155,7 +155,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         final Button start = new Button("START");
         start.setPrefSize(BUTTONS_W, BUTTONS_H);
         start.setStyle(Style.BUTTON_2);
-        start.setOnAction(e -> {
+        start.setOnMouseClicked(e -> {
            final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.scenario, 
                    playerName1.getText(), playerName2.getText());
            Music.buttonsMusic(ResourcesConstants.BUTTON_START);

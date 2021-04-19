@@ -22,7 +22,7 @@ import javafx.scene.layout.Region;
  */
 public class GameTutorial extends Region implements ViewInterface { 
 
-    private MainMenu sceneMenu;
+  //  private MainMenu sceneMenu;
     private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
     private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
     private static final double LAYOUT_PADDING_W_1 = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_2);
@@ -45,8 +45,8 @@ public class GameTutorial extends Region implements ViewInterface {
         final Button mainMenu = new Button("MAIN MENU");
         mainMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
         mainMenu.setStyle(Style.BUTTON_2);
-        mainMenu.setOnAction(e -> {
-            sceneMenu = new MainMenu();
+        mainMenu.setOnMouseClicked(e -> {
+            final MainMenu sceneMenu = new MainMenu();
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneMenu.createPane());

@@ -34,9 +34,15 @@ public final class ConfirmBox {
      * Creation of the confirm box.
      * @param title String 
      * @param message String
+<<<<<<< HEAD
      * @param button1 type
      * @param button2 type
      * @param player name
+=======
+     * @param button1 String
+     * @param button2 String
+     * @param player String
+>>>>>>> f7b2ef901f26032105ef0b6ee1e9867dc9fbe956
      * @return answer boolean
      * */
     public static boolean display(final String title, final String message, final String button1, final String button2, final String player) {
@@ -57,7 +63,7 @@ public final class ConfirmBox {
         final Button yesButton = new Button(button1);
         yesButton.setStyle(Style.BUTTON_1);
         yesButton.setPrefSize(BUTTONS_W,  BUTTONS_H);
-        yesButton.setOnAction(e -> {
+        yesButton.setOnMouseClicked(e -> {
             Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             answer = true;
             window.close();
@@ -67,7 +73,7 @@ public final class ConfirmBox {
         final Button noButton = new Button(button2);
         noButton.setStyle(Style.BUTTON_1);
         noButton.setPrefSize(BUTTONS_W,  BUTTONS_H);
-        noButton.setOnAction(e -> {
+        noButton.setOnMouseClicked(e -> {
             Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             answer = false;
             window.close();
