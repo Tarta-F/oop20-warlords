@@ -74,7 +74,7 @@ public final class ViewConstants {
     /**Default TIMER in GameModeSelection. */
     public static final int DEFAULT_TIMER = 5;
 
-    /**Respawn timer for the units. */
+    /**RESPAWN timer for the units. */
     public static final int RESPAWN_TIMER = 6;
 
 

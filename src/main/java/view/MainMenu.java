@@ -2,7 +2,7 @@ package view;
 
 import java.io.IOException;
 import view.constants.ViewConstants;
-import view.constants.ViewImages;
+import view.constants.ResourcesConstants;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,14 +18,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- *
  * This class implements the Main Menu of the view and is used as unique window for the view.
- *
  */
 public final class MainMenu extends Application implements ViewInterface, ViewClose {
 
-    private GameTutorial sceneTutorial;
-    private GameModeSelection sceneGameModeSelection;
     private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
     private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
     private static final double LAYOUT_PADDING_H_1 = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30);
@@ -41,11 +37,9 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
     private static final double VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
 
     @Override
-     /**Method of the library JAVAFX used for the creation of the view. */
     public void start(final Stage primaryStage) throws Exception {
-
-        /**Creation of the Stage, Scene and all their preferences. */
-        Music.musicStart(ViewImages.MUSIC);
+        /*Creation of the Stage, Scene and all their preferences. */
+        Music.musicStart(ResourcesConstants.MUSIC);
         final Stage window = primaryStage;
         final Pane pane = new Pane(createPane());
         final Scene scene = new Scene(pane, PANE_W, PANE_H);
@@ -58,90 +52,93 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         });
     }
 
-    /**
-     * Method to create the Pane of MainMenu.
-     * @return pane Pane
-     * */
+    @Override
     public Parent createPane() throws IOException {
-
-        /**Pane. */
+        /*Pane. */
         final Pane pane = new Pane();
 
-        /**Background and Image. */
-        final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ViewImages.MENU));
+        /*Background and Image. */
+        final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.MENU));
         final ImageView menuBackGround = ViewResolution.createImageView(backgroundImg, PANE_W, PANE_H);
 
-        final Image logoImage  = new Image(this.getClass().getResourceAsStream(ViewImages.LOGO));
+        final Image logoImage  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.LOGO));
         final ImageView logo = ViewResolution.createImageView(logoImage, LOGO_W, LOGO_H);
 
-        final Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P2_SPEARMAN));
+        final Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_SPEARMEN));
         final ImageView logoSpearman = ViewResolution.createImageView(logoSpearmanImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
-        final Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ViewImages.P1_ARCHER));
+        final Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_ARCHER));
         final ImageView logoArcher = ViewResolution.createImageView(logoArcherImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
-        /**Buttons. */
-        /**Button CAMPAIGN. */
+        /*Buttons. */
+        /*Button SCOREBOARD. */
         final Button scoreboard = new Button("SCOREBOARD");
         scoreboard.setStyle(Style.BUTTON_1);
         scoreboard.setPrefSize(BUTTONS_W, BUTTONS_H);
-        scoreboard.setOnAction(e -> {
-            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+        scoreboard.setOnMouseClicked(e -> {
+            final Scoreboard scenesScoreboard = new Scoreboard();
+            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+            try {
+                pane.getChildren().setAll(scenesScoreboard.createPane());
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         });
 
-        /**Button VERSUS. */
+        /*Button VERSUS. */
         final Button versus = new Button("VERSUS");
         versus.setStyle(Style.BUTTON_1);
         versus.setPrefSize(BUTTONS_W, BUTTONS_H);
-        versus.setOnAction(e -> {
-            sceneGameModeSelection = new GameModeSelection();
+        versus.setOnMouseClicked(e -> {
+            final GameModeSelection sceneGameModeSelection = new GameModeSelection();
             try {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneGameModeSelection.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
 
-        /**Button TUTORIALS. */
+        /*Button TUTORIALS. */
         final Button tutorials = new Button("TUTORIALS");
         tutorials.setStyle(Style.BUTTON_1);
         tutorials.setPrefSize(BUTTONS_W, BUTTONS_H);
-        tutorials.setOnAction(e -> {
+        tutorials.setOnMouseClicked(e -> {
 
             try {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
-                sceneTutorial = new GameTutorial();
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                final GameTutorial sceneTutorial = new GameTutorial();
                 pane.getChildren().setAll(sceneTutorial.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
 
-        /**Button MUSIC. */
+        /*Button MUSIC. */
         final ToggleButton stopMusic = new ToggleButton("MUSIC ON/OFF");
         stopMusic.setStyle(Style.BUTTON_1);
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
-        stopMusic.setOnAction(e -> {
+        stopMusic.setOnMouseClicked(e -> {
             if (stopMusic.isSelected()) {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 Music.musicStop();
             } else {
-                Music.buttonsMusic(ViewImages.BUTTON_SOUND);
-                Music.musicStart(ViewImages.MUSIC);
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.musicStart(ResourcesConstants.MUSIC);
             }
         });
 
-        /**Button EXIT. */
+        /*Button EXIT. */
         final Button exitMenu = new Button("EXIT");
         exitMenu.setStyle(Style.BUTTON_1);
         exitMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
-        exitMenu.setOnAction(e -> {
-            Music.buttonsMusic(ViewImages.BUTTON_SOUND);
+        exitMenu.setOnMouseClicked(e -> {
+            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             closeProgram(pane);
         });
 
-        /**Layout. */
+        /*Layout. */
         final VBox menu = new VBox(VBOX_H);
         menu.setAlignment(Pos.CENTER);
         menu.getChildren().addAll(logo, versus, scoreboard, tutorials, stopMusic, exitMenu);
@@ -157,7 +154,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         rigthVBox.getChildren().add(logoSpearman);
         rigthVBox.setPadding(new Insets(0, LAYOUT_PADDING_W_1, 0, 0));
 
-        /**BorderPane sets and Pane gets. */
+        /*BorderPane sets and Pane gets. */
         final BorderPane borderPane = new BorderPane();
         borderPane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
         borderPane.setCenter(menu);
@@ -170,11 +167,8 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
     }
 
     @Override
-    /**Method for the shutdown of the program.
-     * @param pane Pane
-     * */
     public void closeProgram(final Pane pane) {
-        final boolean answer = ConfirmBox.display("quitting", "Do you want to quit?");
+        final boolean answer = ConfirmBox.display("quitting", "Do you want to quit?", "YES", "NO", "");
         if (answer) {
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();

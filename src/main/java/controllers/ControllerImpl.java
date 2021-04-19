@@ -15,7 +15,7 @@ import view.ScenarioViewType;
 import view.game.GameViewImpl;
 
 public final class ControllerImpl implements Controller {
-    
+
     private static final long REFRESH_RATE = 500;
     private final EnumMap<PlayerType, Long> lastSpawn = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, Integer> selectedLane = new EnumMap<>(PlayerType.class);
@@ -144,7 +144,7 @@ public final class ControllerImpl implements Controller {
             this.gameView.show(Converter.convertMap(this.field.getUnits()));
             this.gameView.updateScorePlayer();
             if (isOver()) {
-                this.gameView.winnerBoxResult(getWinner().get().toString());
+                this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
                 //System.out.println(isOver() ? getWinner().get() + " WON" : "");
             }
     }
