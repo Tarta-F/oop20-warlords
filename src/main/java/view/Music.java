@@ -13,8 +13,11 @@ public final class Music {
     private Music() {
         /**Not called. */
     }
-    
-    /**Method to set scene music. */
+
+    /**
+     * Method to set scene music. 
+     * @param song String
+     * */
     public static void musicStart(final String song) {
 
         Media sound = null;
@@ -32,13 +35,16 @@ public final class Music {
         media.setVolume(1);
         media.play();
     }
-   
+
     /**Method to stop scene music. */
     public static void musicStop() {
         media.stop();
     }
-   
-    /**Method to set buttons sound. */
+
+    /**
+      * Method to set buttons sound. 
+      * @param song String
+     * */
     public static void buttonsMusic(final String song) {
 
         Media sound = null;
@@ -53,7 +59,7 @@ public final class Music {
         mediaButton.play();
 
     }
-   
+
     /**Method to stop buttons sound. */
     public static void buttonStop() {
         mediaButton.stop();
