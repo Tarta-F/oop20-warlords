@@ -8,15 +8,17 @@ import java.util.concurrent.TimeUnit;
  * */
 public enum UnitType {
 
-    /**Swordsmen unit and his stats. */
-    SWORDSMEN(UnitConstants.SWORDSMEN_HP, UnitConstants.SWORDSMEN_DMG, UnitConstants.SWORDSMEN_RANGE, UnitConstants.SWORDSMEN_TIMER, UnitConstants.STEP),
+    /**SWORDSMEN unit and his statistics. */
+    SWORDSMEN(UnitConstants.SWORDSMEN_HP, UnitConstants.SWORDSMEN_DMG, UnitConstants.SWORDSMEN_RANGE, 
+            UnitConstants.SWORDSMEN_TIMER, UnitConstants.STEP),
 
-    /**Spearmen unit and his stats. */
-    SPEARMEN(UnitConstants.SPEARMEN_HP, UnitConstants.SPEARMEN_DMG, UnitConstants.SPEARMEN_RANGE, UnitConstants.SPEARMEN_TIMER, UnitConstants.STEP),
+    /**SPEARMEN unit and his statistics. */
+    SPEARMEN(UnitConstants.SPEARMEN_HP, UnitConstants.SPEARMEN_DMG, UnitConstants.SPEARMEN_RANGE, 
+            UnitConstants.SPEARMEN_TIMER, UnitConstants.STEP),
 
-    /**Archer unit and his stats. */
-    ARCHER(UnitConstants.ARCHER_HP, UnitConstants.ARCHER_DMG, UnitConstants.ARCHER_RANGE, UnitConstants.ARCHER_TIMER, UnitConstants.STEP);
-
+    /**ARCHER unit and his statistics. */
+    ARCHER(UnitConstants.ARCHER_HP, UnitConstants.ARCHER_DMG, UnitConstants.ARCHER_RANGE, 
+            UnitConstants.ARCHER_TIMER, UnitConstants.STEP);
 
     private int health;
     private int damage;
@@ -85,4 +87,5 @@ public enum UnitType {
     public int getStep() {
         return this.step;
     }
+
 }

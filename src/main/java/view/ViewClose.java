@@ -4,12 +4,13 @@ import javafx.scene.layout.Pane;
 
 /** 
  * This interface models the scenes that have the Button Exit.
- *
+
  */
 public interface ViewClose {
 
     /**
-     * @param pane for closing the program.
+     * Method used for closing the program via button.
+     * @param pane closed
      * */
     void closeProgram(Pane pane);
 

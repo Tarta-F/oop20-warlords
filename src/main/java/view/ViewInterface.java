@@ -6,12 +6,12 @@ import javafx.scene.Parent;
 
 /** 
  * This interface models all the Panes in the view.
- *
  */
 public interface ViewInterface {
 
     /**
-     * @return the Pane created for the scene.
+     * Method to generate a PANE used for the current scene.
+     * @return Pane created
      * */
     Parent createPane() throws IOException;
 

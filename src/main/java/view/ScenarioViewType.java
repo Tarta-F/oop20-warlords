@@ -1,13 +1,14 @@
 package view;
 
 public enum ScenarioViewType {
-    /** Scenario 1 imgaes. */
+
+    /**Scenario 1 images. */
     SCENARIO_1("EARTH", "/GrassBackground.jpg", "/Ground.png"),
 
-    /** Scenario 2 images. */
+    /**Scenario 2 images. */
     SCENARIO_2("AIR", "/GrassBackground2.png", "/Ground2.png"),
 
-    /** Scenario 3 images. */
+    /**Scenario 3 images. */
     SCENARIO_3("WIND", "/.png", "/.png");
 
     private final String description;
@@ -21,7 +22,7 @@ public enum ScenarioViewType {
     }
 
     /**
-     * 
+     * Method to get to BACKGROUND.
      * @return the path of the background image
      */
     public String getBackgroundPath() {
@@ -29,14 +30,15 @@ public enum ScenarioViewType {
     }
 
     /**
-     * 
+     * Method to get the GRID BACKGROUND.
      * @return the path of the field ground image
      */
     public String getGroundPath() {
         return this.groundPath;
     }
+
     /** 
-     * 
+     * Method to get DESCRIPTION of the scenario.
      * @return description of the Scenario
      */
     public String getDescription() {

@@ -7,9 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * 
  * Class that set the resolution size of all elements in the view, based on the resolution of the screen. 
- *
  */
 public final class ViewResolution {
 
@@ -18,7 +16,7 @@ public final class ViewResolution {
     private static double screenHeight = SCREEN.getHeight();
 
     private  ViewResolution() {
-        /**Not called. */
+        /*Not called. */
     }
 
     /**
@@ -53,4 +51,5 @@ public final class ViewResolution {
 
         return imageView;
     }
+
 }

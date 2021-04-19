@@ -141,11 +141,18 @@ public final class ControllerImpl implements Controller {
         Platform.runLater(() -> {
             this.gameView.show(Converter.convertMap(this.field.getUnits()));
             this.gameView.updateScorePlayer();
-
             if (isOver()) {
-                this.gameView.winnerBoxResult(getWinner().get().toString());
+                this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
                 //System.out.println(isOver() ? getWinner().get() + " WON" : "");
-            }
+            } /*else if ("00:00".equals(this.gameView.getTimer())) {
+                if (this.getScore(PlayerType.PLAYER1) < this.getScore(PlayerType.PLAYER2)) {
+                    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER2));
+                } else if (this.getScore(PlayerType.PLAYER1) == this.getScore(PlayerType.PLAYER2)) {
+                    this.gameView.winnerBoxResult("DRAW!");
+                } else {
+                    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER1));
+                }
+            }*/
         });
     }
 

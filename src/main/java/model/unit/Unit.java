@@ -4,33 +4,64 @@ import constants.PlayerType;
 
 public interface Unit {
 
-    /**@return unit TIME of RESPAWN*/
+    /**
+     * Get the TIME of RESPAWN of the unit.
+     * @return unit TIMER
+     * */
     int getWaitingTime();
 
-    /**@return unit HP*/
+    /**
+     * Get the HEALTH of the unit. 
+     * @return unit HP
+     * */
     int getHP();
 
-    /**@return unit RANGE attack*/
-    int getRange();
-
-    /**@return unit step ahead*/
+    /**
+     * Get the MOVEMENT of the unit.
+     * @return unit MOVMENT
+     * */
     int getStep();
 
-    /**@return unit DMG taken*/
+    /**
+     * Get the RANGE of the unit.
+     * @return unit RANGE
+     * */
+    int getRange();
+
+    /**
+     * Get the DAMAGE of the unit.
+     * @return unit DMG
+     * */
     int getDamage();
 
-    /**@param damage to be taken by this unit*/
+    /**
+     * Unit take damage from another unit.
+     * @param damage received
+     * */
     void damage(int damage);
 
-    /**@return unit PLAYER*/
+    /**
+     * Get the PLAYER of the unit.
+     * @return unit PLAYER
+     * */
     PlayerType getPlayer();
 
-    /**@return unit TYPE*/
+    /**
+     * Get the TYPE of the unit.
+     * @return unit TYPE
+     * */
     UnitType getUnitType();
 
-    /**@param unit target*/
+    /**
+     * Unit attack on another unit.
+     * @param unit target
+     * */
     void attack(Unit unit);
 
-    /**@return if the unit is alive or not*/
+    /**
+     * Status if the unit is ALIVE. 
+     * @return status ALIVE
+     * */
     boolean isAlive();
+
 }

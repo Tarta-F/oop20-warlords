@@ -7,7 +7,6 @@ import view.UnitViewType;
 
 /** 
  * This interface models the GameField used in the {@link GameView} using a {@link GridPane}.
- *
  */
 public interface GameFieldView {
 
@@ -31,4 +30,5 @@ public interface GameFieldView {
      * Clear the this field from all the units contained.
      */
     void clear();
+
 }

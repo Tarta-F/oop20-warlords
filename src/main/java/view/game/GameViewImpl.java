@@ -56,7 +56,6 @@ public final class GameViewImpl extends Region implements GameView {
     private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
     private static final double PADDING_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60);
 
-    //private MainMenu scenaMenu;
     private final GameFieldView field;
     private final int laneNumber;
     private final Image scenario;
@@ -83,8 +82,8 @@ public final class GameViewImpl extends Region implements GameView {
     private Controller observer;
     private Pane pane;
 
-    /**Sets of all Images used. */
-    /**Player 1. */
+    /*Sets of all Images used. */
+    /*Player 1. */
     private final Image logoSwordsmenP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_LOGO_SWORDSMEN));
     private final Image logoSpearmenP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_LOGO_SPEARMEN));
     private final Image logoArcherP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_LOGO_ARCHER));
@@ -94,7 +93,7 @@ public final class GameViewImpl extends Region implements GameView {
     private final Image arrowP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_ARROW));
     private final Image selectedArrowP1  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_SELECTED_ARROW));
 
-    /**Player 2. */
+    /*Player 2. */
     private final Image logoSwordsmenP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_LOGO_SWORDSMEN));
     private final Image logoSpearmenP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_LOGO_SPEARMEN));
     private final Image logoArcherP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_LOGO_ARCHER));
@@ -113,19 +112,8 @@ public final class GameViewImpl extends Region implements GameView {
         this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
     }
 
-    /**
-     * Get player NAME.
-     * @param player PlayerType 
-     * */
-    private String getPlayerName(final PlayerType player) {
-        if (player.equals(PlayerType.PLAYER1)) {
-            return this.player1Name;
-        } else {
-            return this.player2Name;
-        }
-    }
-
-    /** Create the timer label from the given long number.
+    /** 
+     * Create the timer label from the given long number.
      * @param l the quantity of seconds to display
      * @return the label created
      */
@@ -169,30 +157,29 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public Parent createPane() throws IOException {
-
-        /**Music. */
+        /*Music. */
         Music.musicStart(ResourcesConstants.MUSIC_2);
 
-        /**Pane. */
+        /*Pane. */
         pane = new Pane();
 
-        /**BackGround. */
+        /*BackGround. */
         final ImageView gameBackGround = ViewResolution.createImageView(scenario, BORDERPANE_W, BORDERPANE_H);
 
-        /**Lists of units logo used. */
+        /*Lists of units logo used. */
         this.unitImageP1 = new ArrayList<>(Arrays.asList(logoSwordsmenP1, logoSpearmenP1, logoArcherP1));
         this.unitSelectedP1 = new ArrayList<>(Arrays.asList(selectedSwordsmenP1, selectedSpearmenP1, selectedArcherP1));
         this.unitImageP2 = new ArrayList<>(Arrays.asList(logoSwordsmenP2, logoSpearmenP2, logoArcherP2));
         this.unitSelectedP2 = new ArrayList<>(Arrays.asList(selectedSwordsmenP2, selectedSpearmenP2, selectedArcherP2));
 
-        /**List of units player 1. */
+        /*List of units player 1. */
         final ImageView unit1P1 = ViewResolution.createImageView(selectedSwordsmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         final ImageView unit2P1 = ViewResolution.createImageView(logoSpearmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
 
         final ImageView unit3P1 = ViewResolution.createImageView(logoArcherP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP1.addAll(List.of(unit1P1, unit2P1, unit3P1));
 
-        /**List of units player 2. */
+        /*List of units player 2. */
         final ImageView unit1P2 = ViewResolution.createImageView(selectedSwordsmenP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
 
         final ImageView unit2P2 = ViewResolution.createImageView(logoSpearmenP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
@@ -200,22 +187,22 @@ public final class GameViewImpl extends Region implements GameView {
         final ImageView unit3P2 = ViewResolution.createImageView(logoArcherP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP2.addAll(List.of(unit1P2, unit2P2, unit3P2));
 
-        /**List of ImageView arrows for player 1. */
+        /*List of ImageView arrows for player 1. */
         for (int i = 0; i < this.laneNumber; i++) {
             final ImageView arrow1P1 = ViewResolution.createImageView(arrowP1, ARROW_W, ARROW_H);
             listArrowP1.add(arrow1P1);
         }
         listArrowP1.get(this.laneNumber / 2).setImage(selectedArrowP1);
 
-        /**List of ImageView arrows for player 2. */
+        /*List of ImageView arrows for player 2. */
        for (int i = 0; i < this.laneNumber; i++) {
             final ImageView arrow1P2 = ViewResolution.createImageView(arrowP2, ARROW_W, ARROW_H);
             listArrowP2.add(arrow1P2);
         }
         listArrowP2.get(this.laneNumber / 2).setImage(selectedArrowP2);
 
-        /**Buttons. */
-        /**Button EXIT. */
+        /*Buttons. */
+        /*Button EXIT. */
         final Button exit = new Button("Exit");
         exit.setMinSize(BUTTONS_W, BUTTONS_H);
         exit.setOnMouseClicked(e -> {
@@ -224,7 +211,7 @@ public final class GameViewImpl extends Region implements GameView {
         });
         exit.setStyle(Style.BUTTON_1);
 
-        /**Button MENU. */
+        /*Button MENU. */
         final Button menu = new Button("Menu");
         menu.setStyle(Style.BUTTON_1);
         menu.setPrefSize(BUTTONS_W, BUTTONS_H);
@@ -233,7 +220,7 @@ public final class GameViewImpl extends Region implements GameView {
             returnMainMenu(pane);
         });
 
-        /**Button MUSIC. */
+        /*Button MUSIC. */
         final ToggleButton stopMusic = new ToggleButton("Music On/Off");
         stopMusic.setStyle(Style.BUTTON_1);
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
@@ -247,14 +234,14 @@ public final class GameViewImpl extends Region implements GameView {
             }
         });
 
-        /**Labels. */
-        /**Label TIMER. */
+        /*Labels. */
+        /*Label TIMER. */
         timer = new Label("TIMER");
         timer.setStyle(Style.LABEL);
         timer.setPrefSize(LABEL_W, LABEL_H);
         timer.setAlignment(Pos.CENTER);
 
-        /**List of Labels for the respawn time of players units. */
+        /*List of Labels for the respawn time of players units. */
         for (final var type : UnitViewType.values()) {
             final Label label = this.unitTimerLabel(type.getWaitingTime());
             unitBoxes.put(type, label);
@@ -265,7 +252,7 @@ public final class GameViewImpl extends Region implements GameView {
             }
         }
 
-        /**Settings for the player labels, with name and score of the player. */
+        /*Settings for the player labels, with name and score of the player. */
         for (final var type : PlayerType.values()) {
             final Label score = this.scorePlayerLabel(type);
             labelsScore.put(type, score);
@@ -276,7 +263,7 @@ public final class GameViewImpl extends Region implements GameView {
             }
         }
 
-        /**Layout. */
+        /*Layout. */
         final List<VBox> vBoxplayer1 = new ArrayList<>();
         for (int i = 0;  i < listUnitP1.size(); i++) {
             final VBox vBox1 = new VBox();
@@ -313,7 +300,7 @@ public final class GameViewImpl extends Region implements GameView {
         rightMenu.setAlignment(Pos.CENTER);
         rightMenu.getChildren().addAll(listArrowP2);
 
-        /**BorderPane. */
+        /*BorderPane. */
         final BorderPane borderpane = new BorderPane();
         borderpane.setTop(topMenu);
         borderpane.setLeft(leftMenu);
@@ -322,7 +309,7 @@ public final class GameViewImpl extends Region implements GameView {
         borderpane.setCenter(this.field.getGrid());
         borderpane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
 
-        /**KeyInput. */
+        /*KeyInput. */
         borderpane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             switch (e.getCode()) {
             case W: /* Up Lane Player 1. */
@@ -438,12 +425,9 @@ public final class GameViewImpl extends Region implements GameView {
         units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
     }
 
-    /**
-     * Method to return on main menu with winner box or close the program. 
-     * @param player name
-     * */
+    @Override
     public void winnerBoxResult(final String player) {
-        final boolean choice = ConfirmBox.display("winner", " IS THE WINNER", "MENU", "QUIT", player);
+        final boolean choice = ConfirmBox.display("winner", " HAS WON", "MENU", "QUIT", player);
         if (choice) {
             final MainMenu scenaMenu = new MainMenu();
             try {
@@ -460,4 +444,12 @@ public final class GameViewImpl extends Region implements GameView {
         }
     }
 
+    @Override
+    public String getPlayerName(final PlayerType player) {
+        if (player.equals(PlayerType.PLAYER1)) {
+            return this.player1Name;
+        } else {
+            return this.player2Name;
+        }
+    }
 }
