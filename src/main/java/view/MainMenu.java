@@ -26,6 +26,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
 
     private GameTutorial sceneTutorial;
     private GameModeSelection sceneGameModeSelection;
+    private Scoreboard scenesScoreboard;
     private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
     private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
     private static final double LAYOUT_PADDING_H_1 = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_30);
@@ -81,12 +82,19 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final ImageView logoArcher = ViewResolution.createImageView(logoArcherImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
         /**Buttons. */
-        /**Button CAMPAIGN. */
+        /**Button SCOREBOARD. */
         final Button scoreboard = new Button("SCOREBOARD");
         scoreboard.setStyle(Style.BUTTON_1);
         scoreboard.setPrefSize(BUTTONS_W, BUTTONS_H);
         scoreboard.setOnAction(e -> {
+            scenesScoreboard = new Scoreboard();
             Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+            try {
+                pane.getChildren().setAll(scenesScoreboard.createPane());
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         });
 
         /**Button VERSUS. */

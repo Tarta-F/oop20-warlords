@@ -29,6 +29,8 @@ public final class Style {
             + " -fx-font-weight: bold;\r\n "
             + " -fx-background-color: rgba(0, 0, 0, 0.75);\r\n"
             + " -fx-font-size: " + FONT_W + ";";
+    
+
 
     private Style() { }
 }
