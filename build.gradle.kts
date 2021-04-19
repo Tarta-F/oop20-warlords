@@ -34,9 +34,6 @@ val javaFxVersion = "15.0.1"
 val jUnitVersion = "5.7.1"
 
 dependencies {
-    // Example library: Guava. Add what you need (and remove Guava if you don't use it)
-     implementation("com.google.guava:guava:28.1-jre")
-
      // Import of commons lang3 for Pair class
      implementation("org.apache.commons:commons-lang3:3.12.0")
 
@@ -73,7 +70,7 @@ java {
 
 application {
     // Define the main class for the application
-    mainClass.set("application.Laucher")
+    mainClass.set("application.Launcher")
 
     /*
      * mainClassName was deprecated by Gradle, but it is still required by John Engelman's Shadow plugin.
