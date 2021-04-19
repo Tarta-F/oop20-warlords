@@ -21,7 +21,7 @@ public final class ControllerImpl implements Controller {
     private final EnumMap<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, PlayerTimer> timers = new EnumMap<>(PlayerType.class);
 
-    private final GameView gameView;
+    private final GameViewImpl gameView;
     private final FieldImpl field;
     private final int laneNumber;
     private Optional<PlayerType> winner;
@@ -141,9 +141,12 @@ public final class ControllerImpl implements Controller {
         Platform.runLater(() -> {
             this.gameView.show(Converter.convertMap(this.field.getUnits()));
             this.gameView.updateScorePlayer();
+
+            if (isOver()) {
+                this.gameView.winnerBoxResult(getWinner().get().toString());
+                //System.out.println(isOver() ? getWinner().get() + " WON" : "");
+            }
         });
-        //TODO PER PROVA
-        //System.out.println(isOver() ? getWinner().get() + " WON" : "");
     }
 
     @Override

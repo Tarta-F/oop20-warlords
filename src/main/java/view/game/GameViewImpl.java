@@ -82,6 +82,7 @@ public final class GameViewImpl extends Region implements GameView {
     private Label player1;
     private Label player2;
     private Controller observer;
+    private Pane pane;
 
     /**Sets of all Images used. */
     /**Player 1. */
@@ -167,25 +168,6 @@ public final class GameViewImpl extends Region implements GameView {
         }
     }
 
-    /**
-     * Method to return on main menu with winner box. 
-     * @param actual pane 
-     * */
-    private void winnerMBoxResult(final Pane pane) {
-        final boolean answer = WinnerBox.winner("da inserire il nome del player vincente");
-        if (answer) {
-            scenaMenu = new MainMenu();
-            try {
-                pane.getChildren().setAll(scenaMenu.createPane());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        } else {
-            final Stage stage = (Stage) pane.getScene().getWindow();
-            stage.close();
-        }
-    }
-
     @Override
     public Parent createPane() throws IOException {
 
@@ -193,7 +175,7 @@ public final class GameViewImpl extends Region implements GameView {
         Music.musicStart(ViewImages.MUSIC_2);
 
         /**Pane. */
-        final Pane pane = new Pane();
+        pane = new Pane();
 
         /**BackGround. */
         final ImageView gameBackGround = ViewResolution.createImageView(scenario, BORDERPANE_W, BORDERPANE_H);
@@ -456,4 +438,24 @@ public final class GameViewImpl extends Region implements GameView {
         this.field.clear();
         units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
     }
+
+    /**
+     * Method to return on main menu with winner box or close the program. 
+     * @param player name
+     * */
+    public void winnerBoxResult(final String player) {
+        final boolean choice = WinnerBox.winner(player);
+        if (choice) {
+            scenaMenu = new MainMenu();
+            try {
+                pane.getChildren().setAll(scenaMenu.createPane());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            final Stage stage = (Stage) pane.getScene().getWindow();
+            stage.close();
+        }
+    }
+
 }
