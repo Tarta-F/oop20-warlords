@@ -35,14 +35,14 @@ public final class ConfirmBox {
      * @param message String
      * @return answer boolean
      * */
-    public static boolean display(final String title, final String message) {
+    public static boolean display(final String title, final String message, final String button1, final String button2, final String player) {
 
 
         final Stage window = new Stage();
 
         /**Label. */
         final Label label = new Label();
-        label.setText(message);
+        label.setText(player + message);
         label.setAlignment(Pos.CENTER);
         label.setPrefSize(LABEL_W, LABEL_H);
         label.setStyle(Style.LABEL);
@@ -50,7 +50,7 @@ public final class ConfirmBox {
 
         /**Buttons. */
         /**Button YES. */
-        final Button yesButton = new Button("YES");
+        final Button yesButton = new Button(button1);
         yesButton.setStyle(Style.BUTTON_1);
         yesButton.setPrefSize(BUTTONS_W,  BUTTONS_H);
         yesButton.setOnAction(e -> {
@@ -60,7 +60,7 @@ public final class ConfirmBox {
         });
 
         /**Button NO. */
-        final Button noButton = new Button("NO");
+        final Button noButton = new Button(button2);
         noButton.setStyle(Style.BUTTON_1);
         noButton.setPrefSize(BUTTONS_W,  BUTTONS_H);
         noButton.setOnAction(e -> {

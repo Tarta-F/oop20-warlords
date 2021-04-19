@@ -14,7 +14,6 @@ import view.Music;
 import view.Style;
 import view.UnitViewType;
 import view.ViewResolution;
-import view.WinnerBox;
 import view.constants.ViewConstants;
 import view.constants.ResourcesConstants;
 import javafx.application.Platform;
@@ -155,7 +154,7 @@ public final class GameViewImpl extends Region implements GameView {
      * @param actual pane 
      * */
     private void returnMainMenu(final Pane pane) {
-        final boolean answer = ConfirmBox.display("Quitting", "Return to main menu?");
+        final boolean answer = ConfirmBox.display("Quitting", "Return to main menu?", "YES", "NO", "");
         if (answer) {
             scenaMenu = new MainMenu();
             try {
@@ -426,7 +425,7 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void closeProgram(final Pane pane) {
-        final boolean answer = ConfirmBox.display("Quitting", "Do you want to quit?");
+        final boolean answer = ConfirmBox.display("Quitting", "Do you want to quit?", "YES", "NO", "");
         if (answer) {
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();
@@ -444,10 +443,13 @@ public final class GameViewImpl extends Region implements GameView {
      * @param player name
      * */
     public void winnerBoxResult(final String player) {
-        final boolean choice = WinnerBox.winner(player);
+        final boolean choice = ConfirmBox.display("winner", " IS THE WINNER", "MENU", "QUIT", player);
         if (choice) {
             scenaMenu = new MainMenu();
             try {
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.musicStop();
+                Music.musicStart(ResourcesConstants.MUSIC);
                 pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
