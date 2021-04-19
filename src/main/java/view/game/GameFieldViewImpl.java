@@ -6,11 +6,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import view.UnitViewType;
 import view.ViewResolution;
@@ -35,6 +30,8 @@ public final class GameFieldViewImpl implements GameFieldView {
     private final int nRow;
     private final int nCols;
 
+    private final Image ground;
+
     private final EnumMap<UnitViewType, Image> unitImageTable = new EnumMap<>(UnitViewType.class);
 
     /**
@@ -57,12 +54,13 @@ public final class GameFieldViewImpl implements GameFieldView {
         this.nCols = nCols;
         this.createGrid();
         this.gridPane.setAlignment(Pos.CENTER);
+        this.ground = new Image(this.getClass().getResourceAsStream(ground));
 
-        final BackgroundSize bgSize = new BackgroundSize(nCols * CELL_W, nRow * CELL_H, false, false, false, false);
-        final BackgroundImage bgImage = new BackgroundImage(new Image(this.getClass().getResourceAsStream(ground)),
-              BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-              BackgroundPosition.CENTER, bgSize);
-        this.gridPane.setBackground(new Background(bgImage));
+//        final BackgroundSize bgSize = new BackgroundSize(nCols * CELL_W, nRow * CELL_H, false, false, false, false);
+//        final BackgroundImage bgImage = new BackgroundImage(new Image(this.getClass().getResourceAsStream(ground)),
+//              BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+//              BackgroundPosition.CENTER, bgSize);
+//        this.gridPane.setBackground(new Background(bgImage));
     }
 
     /**
@@ -71,7 +69,7 @@ public final class GameFieldViewImpl implements GameFieldView {
     private void createGrid() {
         IntStream.range(0, this.nCols).forEach(c -> {
             IntStream.range(0, this.nRow).forEach(r -> {
-                final ImageView cell = new ImageView();
+                final ImageView cell = new ImageView(ground);
                 cell.setFitWidth(CELL_W);
                 cell.setFitHeight(CELL_H);
                 GridPane.setConstraints(cell, c, r);
@@ -90,9 +88,7 @@ public final class GameFieldViewImpl implements GameFieldView {
      *       the {@link Image} corresponding to the input
      */
     private Image callCachedImage(final UnitViewType unit) {
-        if (!this.unitImageTable.containsKey(unit)) {
-            this.unitImageTable.put(unit, new Image(this.getClass().getResourceAsStream(unit.getPath())));
-        }
+        this.unitImageTable.putIfAbsent(unit, new Image(this.getClass().getResourceAsStream(unit.getPath())));
         return this.unitImageTable.get(unit);
     }
 
@@ -107,7 +103,7 @@ public final class GameFieldViewImpl implements GameFieldView {
      * @param message 
      *      the message to print if throws the exception
      * @throws IndexOutOfBoundsException 
-     *      if the value doesn't fit in the limits     
+     *      if the value doesn't fit in the limits
      * 
      */
     private void checkOutOfBounds(final Integer value, final Integer limit, final String message) {
