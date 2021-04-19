@@ -119,11 +119,7 @@ public final class GameViewImpl extends Region implements GameView {
      * @param player PlayerType 
      * */
     private String getPlayerName(final PlayerType player) {
-        if (player.equals(PlayerType.PLAYER1)) {
-            return this.player1Name;
-        } else {
-            return this.player2Name;
-        }
+        return player.equals(PlayerType.PLAYER1) ? this.player1Name : this.player2Name; 
     }
 
     /** Create the timer label from the given long number.
@@ -143,7 +139,7 @@ public final class GameViewImpl extends Region implements GameView {
      * @param player PlayerType
      * */
     private Label scorePlayerLabel(final PlayerType player) {
-        final Label scoreLabel = new Label("SCORE " + getPlayerName(player) + ": " + observer.getScore(player));
+        final Label scoreLabel = new Label("SCORE " + this.getPlayerName(player) + ": " + observer.getScore(player));
         scoreLabel.setPrefSize(LABEL_W, LABEL_H);
         scoreLabel.setAlignment(Pos.CENTER);
         scoreLabel.setStyle(Style.LABEL);
@@ -414,8 +410,10 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void updateScorePlayer() {
-        labelsScore.forEach((type, label) -> {
-            label.setText("SCORE " + getPlayerName(type) + ": " + observer.getScore(type));
+        Platform.runLater(() -> {
+            labelsScore.forEach((type, label) -> {
+                label.setText("SCORE " + this.getPlayerName(type) + ": " + this.observer.getScore(type));
+            });
         });
     }
 
@@ -428,6 +426,7 @@ public final class GameViewImpl extends Region implements GameView {
     public void closeProgram(final Pane pane) {
         final boolean answer = ConfirmBox.display("Quitting", "Do you want to quit?");
         if (answer) {
+            //TODO this.observer.endGame();
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();
         }
@@ -435,8 +434,10 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void show(final EnumMap<UnitViewType, List<Pair<Integer, Integer>>> units) {
-        this.field.clear();
-        units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
+        Platform.runLater(() -> {
+            this.field.clear();
+            units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
+        });
     }
 
     /**

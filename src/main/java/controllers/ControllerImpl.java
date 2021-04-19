@@ -6,7 +6,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import constants.GameConstants;
 import constants.PlayerType;
-import javafx.application.Platform;
+import model.Field;
 import model.FieldImpl;
 import model.unit.UnitImpl;
 import model.unit.UnitType;
@@ -15,19 +15,22 @@ import view.ScenarioViewType;
 import view.game.GameViewImpl;
 
 public final class ControllerImpl implements Controller {
-
+    
+    private static final long REFRESH_RATE = 500;
     private final EnumMap<PlayerType, Long> lastSpawn = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, Integer> selectedLane = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, PlayerTimer> timers = new EnumMap<>(PlayerType.class);
 
-    private final GameViewImpl gameView;
-    private final FieldImpl field;
+    private final GameView gameView;
+    private final Field field;
     private final int laneNumber;
     private Optional<PlayerType> winner;
 
     private final ScheduledThreadPoolExecutor thrEx;
     private final GameLoopImpl gl;
+    private final GameTimer gt;
+
     public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
 
@@ -36,7 +39,8 @@ public final class ControllerImpl implements Controller {
         this.laneNumber = laneNumber;
         this.winner = Optional.empty();
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
-        new Thread(new GameTimer(mins, this.gameView)).start();
+        this.gt = new GameTimer(mins, this.gameView);
+        new Thread(this.gt).start();
 
         for (final var player : PlayerType.values()) {
             this.lastSpawn.put(player, System.currentTimeMillis());
@@ -45,14 +49,14 @@ public final class ControllerImpl implements Controller {
             this.timers.put(player, new PlayerTimer(gameView, player));
         }
         this.timers.forEach((p, t) -> new Thread(t).start());
-        /** Instance GameLoop */
+        /* Instance GameLoop */
         this.gl = new GameLoopImpl(this);
         this.thrEx = new ScheduledThreadPoolExecutor(1);
         this.startLoop();
     }
 
     private void startLoop() {
-        this.thrEx.scheduleWithFixedDelay(gl, 0, 1000 / 2, TimeUnit.MILLISECONDS);
+        this.thrEx.scheduleWithFixedDelay(gl, 0, this.REFRESH_RATE, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -113,7 +117,6 @@ public final class ControllerImpl implements Controller {
         this.gameView.updateSelectLane(player, currentIndex, nextIndex);
     }
 
-
     @Override
     public void controlNextUnit(final PlayerType player) {
         final int currentIndex = this.selectedUnit.get(player);
@@ -138,15 +141,12 @@ public final class ControllerImpl implements Controller {
     @Override
     public void update() {
         this.field.update();
-        Platform.runLater(() -> {
             this.gameView.show(Converter.convertMap(this.field.getUnits()));
             this.gameView.updateScorePlayer();
-
             if (isOver()) {
                 this.gameView.winnerBoxResult(getWinner().get().toString());
                 //System.out.println(isOver() ? getWinner().get() + " WON" : "");
             }
-        });
     }
 
     @Override
@@ -162,5 +162,11 @@ public final class ControllerImpl implements Controller {
     @Override
     public int getScore(final PlayerType player) {
         return this.field.getScore(player).orElseGet(() -> Integer.valueOf(0));
+    }
+
+    public void endGame() {
+        this.timers.forEach((p, t) -> t.stopTimer());
+        this.gt.stopTimer();
+        this.thrEx.shutdown();
     }
 }

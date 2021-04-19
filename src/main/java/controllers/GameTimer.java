@@ -34,4 +34,8 @@ public class GameTimer implements Runnable {
         }
         //TODO block/finish the game
     }
+
+    public final void stopTimer() {
+        this.stop = true;
+    }
 }
