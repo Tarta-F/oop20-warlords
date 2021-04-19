@@ -49,7 +49,7 @@ public final class WinnerBox {
 
         /**Buttons. */
         /**Button mainMenu. */
-        final Button mainMenu = new Button("YES");
+        final Button mainMenu = new Button("MAIN MENU");
         mainMenu.setStyle(Style.BUTTON_1);
         mainMenu.setPrefSize(BUTTONS_W,  BUTTONS_H);
         mainMenu.setOnAction(e -> {
@@ -59,7 +59,7 @@ public final class WinnerBox {
         });
 
         /**Button exit. */
-        final Button exit = new Button("NO");
+        final Button exit = new Button("EXIT");
         exit.setStyle(Style.BUTTON_1);
         exit.setPrefSize(BUTTONS_W,  BUTTONS_H);
         exit.setOnAction(e -> {

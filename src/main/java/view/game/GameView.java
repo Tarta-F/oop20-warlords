@@ -62,4 +62,9 @@ public interface GameView extends ViewClose, ViewInterface {
      * */
     void show(EnumMap<UnitViewType, List<Pair<Integer, Integer>>> units);
 
+    /**
+     * Method to change scene or close the program at the end of the game.
+     * @param player name
+     * */
+    void winnerMBoxResult(String player);
 }
