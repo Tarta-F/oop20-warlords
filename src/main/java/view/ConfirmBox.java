@@ -33,6 +33,9 @@ public final class ConfirmBox {
      * Creation of the confirm box.
      * @param title String 
      * @param message String
+     * @param button1 String
+     * @param button2 String
+     * @param player String
      * @return answer boolean
      * */
     public static boolean display(final String title, final String message, final String button1, final String button2, final String player) {
@@ -49,7 +52,7 @@ public final class ConfirmBox {
 
 
         /**Buttons. */
-        /**Button YES. */
+        /**Button TRUE. */
         final Button yesButton = new Button(button1);
         yesButton.setStyle(Style.BUTTON_1);
         yesButton.setPrefSize(BUTTONS_W,  BUTTONS_H);
@@ -59,7 +62,7 @@ public final class ConfirmBox {
             window.close();
         });
 
-        /**Button NO. */
+        /**Button FALSE. */
         final Button noButton = new Button(button2);
         noButton.setStyle(Style.BUTTON_1);
         noButton.setPrefSize(BUTTONS_W,  BUTTONS_H);

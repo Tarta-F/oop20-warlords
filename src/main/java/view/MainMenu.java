@@ -87,7 +87,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         scoreboard.setStyle(Style.BUTTON_1);
         scoreboard.setPrefSize(BUTTONS_W, BUTTONS_H);
         scoreboard.setOnMouseClicked(e -> {
-            Scoreboard scenesScoreboard = new Scoreboard();
+            final Scoreboard scenesScoreboard = new Scoreboard();
             Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
             try {
                 pane.getChildren().setAll(scenesScoreboard.createPane());
@@ -102,7 +102,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         versus.setStyle(Style.BUTTON_1);
         versus.setPrefSize(BUTTONS_W, BUTTONS_H);
         versus.setOnMouseClicked(e -> {
-            GameModeSelection sceneGameModeSelection = new GameModeSelection();
+            final GameModeSelection sceneGameModeSelection = new GameModeSelection();
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneGameModeSelection.createPane());
@@ -119,7 +119,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
 
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
-                GameTutorial sceneTutorial = new GameTutorial();
+                final GameTutorial sceneTutorial = new GameTutorial();
                 pane.getChildren().setAll(sceneTutorial.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();

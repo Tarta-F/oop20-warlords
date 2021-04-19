@@ -156,7 +156,7 @@ public final class GameViewImpl extends Region implements GameView {
     private void returnMainMenu(final Pane pane) {
         final boolean answer = ConfirmBox.display("Quitting", "Return to main menu?", "YES", "NO", "");
         if (answer) {
-            MainMenu scenaMenu = new MainMenu();
+            final MainMenu scenaMenu = new MainMenu();
             try {
                 Music.musicStop();
                 Music.musicStart(ResourcesConstants.MUSIC);
@@ -445,7 +445,7 @@ public final class GameViewImpl extends Region implements GameView {
     public void winnerBoxResult(final String player) {
         final boolean choice = ConfirmBox.display("winner", " IS THE WINNER", "MENU", "QUIT", player);
         if (choice) {
-            MainMenu scenaMenu = new MainMenu();
+            final MainMenu scenaMenu = new MainMenu();
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 Music.musicStop();

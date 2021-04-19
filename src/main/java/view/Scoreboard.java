@@ -25,7 +25,7 @@ import javafx.scene.layout.Region;
  *
  */
 public class Scoreboard extends Region implements ViewInterface { 
-   
+
     //private MainMenu sceneMenu;
     private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
     private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
@@ -51,7 +51,7 @@ public class Scoreboard extends Region implements ViewInterface {
         mainMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
         mainMenu.setStyle(Style.BUTTON_2);
         mainMenu.setOnMouseClicked(e -> {
-            MainMenu sceneMenu = new MainMenu();
+            final MainMenu sceneMenu = new MainMenu();
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneMenu.createPane());
@@ -59,20 +59,19 @@ public class Scoreboard extends Region implements ViewInterface {
                 e1.printStackTrace();
             }
         });
-      
+
         /**ListView. */
         final ListView<String> listView = new ListView<>();
         listView.getItems().addAll("prova","prova2");
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listView.setMaxSize(LISTVIEW_W, LISTVIEW_H);
         listView.setStyle(Style.LABEL);
-      
+
         /**Layout. */
        final HBox backMenu = new HBox();
        backMenu.setPadding(new Insets(0, 0, LAYOUT_PADDING_H_1, LAYOUT_PADDING_W_1));
        backMenu.getChildren().add(mainMenu);
-       
-       
+
 
        /**BorderPane sets and Pane gets. */
        final BorderPane borderPane = new BorderPane();

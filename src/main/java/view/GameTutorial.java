@@ -46,7 +46,7 @@ public class GameTutorial extends Region implements ViewInterface {
         mainMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
         mainMenu.setStyle(Style.BUTTON_2);
         mainMenu.setOnMouseClicked(e -> {
-            MainMenu sceneMenu = new MainMenu();
+            final MainMenu sceneMenu = new MainMenu();
             try {
                 Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
                 pane.getChildren().setAll(sceneMenu.createPane());
