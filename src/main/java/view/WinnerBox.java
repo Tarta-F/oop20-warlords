@@ -20,8 +20,8 @@ public final class WinnerBox {
     private static boolean choice;
     private static final double LABEL_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7);
     private static final double LABEL_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
-    private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_25);
-    private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_25);
+    private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_20);
+    private static final double BUTTONS_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
     private static final double SCENE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_4);
     private static final double SCENE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_4);
     private static final double LAYOUT_VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60);

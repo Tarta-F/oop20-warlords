@@ -66,5 +66,5 @@ public interface GameView extends ViewClose, ViewInterface {
      * Method to change scene or close the program at the end of the game.
      * @param player name
      * */
-    void winnerMBoxResult(String player);
+    void winnerBoxResult(String player);
 }

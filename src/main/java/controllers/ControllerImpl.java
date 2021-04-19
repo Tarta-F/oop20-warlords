@@ -143,7 +143,7 @@ public final class ControllerImpl implements Controller {
             this.gameView.updateScorePlayer();
 
             if (isOver()) {
-                this.gameView.winnerMBoxResult(getWinner().get().toString());
+                this.gameView.winnerBoxResult(getWinner().get().toString());
             }
         });
     }

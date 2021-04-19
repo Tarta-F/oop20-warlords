@@ -446,9 +446,9 @@ public final class GameViewImpl extends Region implements GameView {
      * Method to return on main menu with winner box or close the program. 
      * @param player name
      * */
-    public void winnerMBoxResult(final String player) {
-        final boolean answer = WinnerBox.winner(player);
-        if (answer) {
+    public void winnerBoxResult(final String player) {
+        final boolean choice = WinnerBox.winner(player);
+        if (choice) {
             scenaMenu = new MainMenu();
             try {
                 pane.getChildren().setAll(scenaMenu.createPane());
