@@ -10,15 +10,15 @@ public enum UnitType {
 
     /**SWORDSMEN unit and his statistics. */
     SWORDSMEN(UnitConstants.SWORDSMEN_HP, UnitConstants.SWORDSMEN_DMG, UnitConstants.SWORDSMEN_RANGE, 
-            UnitConstants.SWORDSMEN_TIMER, UnitConstants.STEP),
+            UnitConstants.SWORDSMEN_TIMER, UnitConstants.SWORDSMEN_STEP),
 
     /**SPEARMEN unit and his statistics. */
     SPEARMEN(UnitConstants.SPEARMEN_HP, UnitConstants.SPEARMEN_DMG, UnitConstants.SPEARMEN_RANGE, 
-            UnitConstants.SPEARMEN_TIMER, UnitConstants.STEP),
+            UnitConstants.SPEARMEN_TIMER, UnitConstants.SPEARMEN_STEP),
 
     /**ARCHER unit and his statistics. */
     ARCHER(UnitConstants.ARCHER_HP, UnitConstants.ARCHER_DMG, UnitConstants.ARCHER_RANGE, 
-            UnitConstants.ARCHER_TIMER, UnitConstants.STEP);
+            UnitConstants.ARCHER_TIMER, UnitConstants.ARCHER_STEP);
 
     private int health;
     private int damage;
