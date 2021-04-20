@@ -11,11 +11,6 @@ public final class ScoreImpl implements Score {
         this.player2Name = player2Name;
     }
 
-    public ScoreImpl(final String p1, final String p2) {
-        this.player1Name = p1;
-        this.player2Name = p2;
-    }
-
     @Override
     public void setScoreP1(final int scoreP1) {
         this.scoreP1 = scoreP1;
