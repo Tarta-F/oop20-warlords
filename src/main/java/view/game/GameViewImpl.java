@@ -455,13 +455,13 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void winnerBoxResult(final String player) {
-                this.resultBox("winner", " HAS WON", player);
+        Platform.runLater(() -> this.resultBox("winner", " HAS WON", player));
         }
 
    // @Override
     public void drawBoxResult(final String scores) {
-      this.resultBox("draw", " RESULT IN DRAW", scores);
-                }
+        Platform.runLater(() -> this.resultBox("draw", " RESULT IN DRAW", scores));
+      }
 
     /**
      * Get player NAME.

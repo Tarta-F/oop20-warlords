@@ -8,6 +8,24 @@ import view.game.GameView;
 public interface Controller {
 
     /**
+     * Get the score of the player.
+     * @param player 
+     * @return the score of the player
+     */
+    int getScore(PlayerType player);
+
+    /**
+     * Get the View used by this Controller.
+     * @return the GameView of this Controller
+     */
+    GameView getView();
+
+    /**
+     * Set the variable that show if the {@link GameTimer}'s time is ended up.
+     */
+    void setTimerIsOver();
+
+    /**
      * Select the next lane selected by a player.
      * @param playerType P1 or P2
      */
@@ -37,24 +55,11 @@ public interface Controller {
      */
     void spawnUnit(PlayerType playerType);
 
-    /*
+    /**
      * Controls if the game is over.
      * @return true if the game is over
      */
     boolean isOver();
-
-    /**
-     * Get the score of the player.
-     * @param player 
-     * @return the score of the player
-     */
-    int getScore(PlayerType player);
-
-    /**
-     * Get the View used by this Controller.
-     * @return the GameView of this Controller
-     */
-    GameView getView();
 
     /**
      * Updates the model and print the result on the GameView.

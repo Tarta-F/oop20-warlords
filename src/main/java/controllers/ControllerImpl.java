@@ -26,7 +26,7 @@ public final class ControllerImpl implements Controller {
     private final Field field;
     private final int laneNumber;
     private Optional<PlayerType> winner;
-
+    private boolean timerIsOver;
     private final ScheduledThreadPoolExecutor thrEx;
     private final GameLoopImpl gameLoop;
     private final GameTimer gameTimer;
@@ -48,8 +48,8 @@ public final class ControllerImpl implements Controller {
         this.thrEx = new ScheduledThreadPoolExecutor(1);
         this.startLoop();
         //TODO Score score = new ScoreImpl("p1", "p2");
-
     }
+
     /**
      * Utility method that inizialize variables for each Player.
      */
@@ -92,6 +92,26 @@ public final class ControllerImpl implements Controller {
      */
     private void resetPlayerTimer(final PlayerType player) {
         this.timers.get(player).resetTimer();
+    }
+
+    @Override
+    public Optional<PlayerType> getWinner() {
+        return this.winner;
+    }
+
+    @Override
+    public int getScore(final PlayerType player) {
+        return this.field.getScore(player).orElseGet(() -> Integer.valueOf(0));
+    }
+
+    @Override
+    public GameView getView() {
+        return this.gameView;
+    }
+
+    @Override
+    public void setTimerIsOver() {
+        this.timerIsOver = true;
     }
 
     @Override
@@ -141,11 +161,6 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public GameView getView() {
-        return this.gameView;
-    }
-
-    @Override
     public void update() {
         this.field.update();
         this.gameView.show(Converter.convertMap(this.field.getUnits()));
@@ -166,18 +181,8 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public boolean isOver() {  //TODO var booleana settata dal GameTimer
-        return this.hasWin(PlayerType.PLAYER1) || this.hasWin(PlayerType.PLAYER2);
-    }
-
-    @Override
-    public Optional<PlayerType> getWinner() {
-        return this.winner;
-    }
-
-    @Override
-    public int getScore(final PlayerType player) {
-        return this.field.getScore(player).orElseGet(() -> Integer.valueOf(0));
+    public boolean isOver() {
+        return this.hasWin(PlayerType.PLAYER1) || this.hasWin(PlayerType.PLAYER2) || this.timerIsOver;
     }
 
     public void killThreads() {
