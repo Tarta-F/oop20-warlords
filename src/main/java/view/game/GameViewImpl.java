@@ -154,6 +154,28 @@ public final class GameViewImpl extends Region implements GameView {
             }
         }
     }
+    /**
+    * Method to return on main menu with a confirm box. 
+    * @param message1 String
+    * @param message2 String
+    * @param player String
+    * */
+    private void resultBox(final String message1, final String message2, final String player) {
+        final boolean choice = ConfirmBox.display(message1, message2, "MENU", "QUIT", player);
+        if (choice) {
+            final MainMenu scenaMenu = new MainMenu();
+            try {
+                Music.getMusic().playButtonSound();
+                Music.getMusic().play(Sounds.MENU);
+                pane.getChildren().setAll(scenaMenu.createPane());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            final Stage stage = (Stage) pane.getScene().getWindow();
+            stage.close();
+        }
+    }
 
     @Override
     public Parent createPane() throws IOException {
@@ -420,30 +442,14 @@ public final class GameViewImpl extends Region implements GameView {
         units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
     }
 
-    private void showResult(final String x, final String gameResult, final String player) {
-        final boolean choice = ConfirmBox.display(x, gameResult, "MENU", "QUIT", player);
-        if (choice) {
-            final MainMenu scenaMenu = new MainMenu();
-            try {
-                Music.getMusic().playButtonSound();
-                Music.getMusic().play(Sounds.MENU);
-                pane.getChildren().setAll(scenaMenu.createPane());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        } else {
-            final Stage stage = (Stage) pane.getScene().getWindow();
-            stage.close();
-        }
+    @Override
+    public void winnerBoxResult(final String player) {
+        this.resultBox("winner", "HAS WON", player);
     }
 
     @Override
-    public void winnerBoxResult(final String player) {
-        this.showResult("winner", "HAS WON", player);
-    }
-
     public void drawBoxResult(final String scores) {
-        this.showResult("draw", "DRAW", scores);
+        this.resultBox("draw", "DRAW", scores);
     }
 
     @Override
