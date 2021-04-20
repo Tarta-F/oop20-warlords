@@ -18,7 +18,7 @@ public final class GameConstants {
     public static final int FIVE_LANES = 5;
 
     /** Cell number for each lane. */
-    public static final int CELLS_NUM = 15;
+    public static final int CELLS_NUM = 20;
 
     /** The necessary score to win. */
     public static final int SCORE_TO_WIN = 8;
