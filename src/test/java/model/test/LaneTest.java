@@ -28,7 +28,7 @@ public class LaneTest {
     private Lane lane;
     private Unit unit1;
     private Unit unit2;
-    private static final int CLASH_POSITION = 6;
+    private static final int CLASH_POSITION = GameConstants.CELLS_NUM / 2 - 1;
 
     @BeforeEach
     public final void initLane() {

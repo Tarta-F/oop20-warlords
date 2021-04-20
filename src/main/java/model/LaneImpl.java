@@ -109,6 +109,7 @@ public final class LaneImpl implements Lane {
     @Override
     public Map<Unit, Integer> getUnits() {
         return this.units.entrySet().stream()
+                .filter(e -> e.getKey().isAlive())
                 .map(e -> Pair.of(e.getKey(), e.getValue().getValue()))
                 .map(p -> p.getLeft().getPlayer().equals(PlayerType.PLAYER1) 
                         ? p : Pair.of(p.getLeft(), this.lenght - p.getRight() - 1))
