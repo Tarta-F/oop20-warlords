@@ -43,6 +43,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         final Stage window = primaryStage;
         final Pane pane = new Pane(createPane());
         final Scene scene = new Scene(pane, PANE_W, PANE_H);
+        scene.getStylesheets().add(MainMenu.class.getResource("/listView.css").toExternalForm());
         window.setScene(scene);
         window.show();
         window.setResizable(false);
