@@ -59,13 +59,12 @@ public class Scoreboard extends Region implements ViewInterface {
         });
 
         /*Labels. */
-        
-        Label risultati = new Label("RISULTATI");
+
+        final Label risultati = new Label("RISULTATI");
         risultati.setAlignment(Pos.CENTER);
         risultati.setPrefSize(LABEL_W, LABEL_H);
         risultati.setStyle(Style.LABEL);
-        
-        
+
         /*ListView. */
         final ListView<String> listView = new ListView<>();
         listView.getItems().addAll("prova", "prova2");

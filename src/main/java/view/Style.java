@@ -31,9 +31,8 @@ public final class Style {
             + " -fx-font-size: " + FONT_W + ";";
 
     /**Constant CSS for the appearance of labels. */
-    public static final String FONT = 
-             " -fx-font-weight: bold;\r\n "
-            +" -fx-font-size: " + FONT_W + ";";
+    public static final String FONT = "-fx-font-weight: bold;\r\n "
+            + "-fx-font-size: " + FONT_W + ";";
 
     /**COnstants CSS for the appearance of layouts. */
     public static final String LAYOUT = "-fx-background-color: grey;";
