@@ -63,5 +63,10 @@ public interface Field {
      */
     int getCellsNumber();
 
+    /**
+     * Resets the score of each {@link PlayerType} to 0.
+     */
+    void resetScore();
+
 }
 

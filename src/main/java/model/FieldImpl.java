@@ -58,7 +58,7 @@ public final class FieldImpl implements Field {
     public Optional<Integer> getScore(final PlayerType player) {
         return this.lanes.stream()
                 .map(l -> l.getScore(player))
-                .reduce((s1, s2) -> s1 + s2);
+                .reduce(Integer::sum);
     }
 
     @Override
@@ -71,7 +71,7 @@ public final class FieldImpl implements Field {
 
     @Override
     public void update() {
-        this.lanes.forEach(l -> l.update());
+        this.lanes.forEach(Lane::update);
     }
 
     @Override
@@ -82,6 +82,11 @@ public final class FieldImpl implements Field {
     @Override
     public int getCellsNumber() {
         return this.cellsNumber;
+    }
+
+    @Override
+    public void resetScore() {
+        this.lanes.forEach(Lane::resetScore);
     }
 
 }
