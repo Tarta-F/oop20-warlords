@@ -35,7 +35,7 @@ public class IOControllerImpl implements IOController {
     public final List<String> readScore() throws IOException {
         if (this.scoreFile.exists()) {
             final JsonReader reader = new JsonReader(new FileReader(this.scoreFile));
-            final List<ScoreImpl> oldResults = this.gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole reviews list
+            final List<ScoreImpl> oldResults = this.gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
             final List<String> resultList = new ArrayList<>();
             oldResults.forEach(sc -> resultList.add(sc.toString()));
             return resultList;
@@ -60,8 +60,8 @@ public class IOControllerImpl implements IOController {
     }
 
     private void writeFirstScore(final Score score) {
-        List<Score> list = new ArrayList<>(List.of(score));
-        String addFirst = this.gsonWrite.toJson(list);
+        final List<Score> list = new ArrayList<>(List.of(score));
+        final String addFirst = this.gsonWrite.toJson(list);
         try (FileWriter file = new FileWriter(this.scoreFile)) {
             file.write(addFirst); 
             file.flush();

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Optional;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -35,6 +36,8 @@ public final class ControllerImpl implements Controller {
     private final GameTimer gameTimer;
     private final Score score;
     private final IOController ioContr;
+    private final String player1Name;
+    private final String player2Name;
 
     public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
@@ -47,6 +50,8 @@ public final class ControllerImpl implements Controller {
         this.gameTimer = new GameTimer(mins, this.gameView);
         this.score = new ScoreImpl(player1Name, player2Name);
         this.ioContr = new IOControllerImpl();
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
         new Thread(this.gameTimer).start();
         this.initPlayers();
         this.timers.forEach((p, t) -> new Thread(t).start());
@@ -174,8 +179,14 @@ public final class ControllerImpl implements Controller {
         this.gameView.show(Converter.convertMap(this.field.getUnits()));
         this.gameView.updateScorePlayer();
         if (this.isOver()) {
-                this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
+            this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
             this.stopGame();
+            try {
+                this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, 0, 2));
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
                 //System.out.println(isOver() ? getWinner().get() + " WON" : "");
         } /*else if ("00:00".equals(this.gameView.getTimer())) {
                 if (this.getScore(PlayerType.PLAYER1) < this.getScore(PlayerType.PLAYER2)) {
