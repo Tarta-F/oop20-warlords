@@ -10,11 +10,12 @@ import constants.PlayerType;
 import controllers.Controller;
 import view.ConfirmBox;
 import view.MainMenu;
-import view.Music;
 import view.Style;
 import view.UnitViewType;
 import view.ViewResolution;
 import view.constants.ViewConstants;
+import view.sound.Music;
+import view.sound.Sounds;
 import view.constants.ResourcesConstants;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -146,8 +147,7 @@ public final class GameViewImpl extends Region implements GameView {
             final MainMenu scenaMenu = new MainMenu();
             this.observer.stopGame();
             try {
-                Music.musicStop();
-                Music.musicStart(ResourcesConstants.MUSIC);
+                Music.getMusic().play(Sounds.MENU);
                 pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -165,9 +165,8 @@ public final class GameViewImpl extends Region implements GameView {
         if (choice) {
             final MainMenu scenaMenu = new MainMenu();
             try {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
-                Music.musicStop();
-                Music.musicStart(ResourcesConstants.MUSIC);
+                Music.getMusic().playButtonSound();
+                Music.getMusic().play(Sounds.MENU);
                 pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -181,7 +180,7 @@ public final class GameViewImpl extends Region implements GameView {
     @Override
     public Parent createPane() throws IOException {
         /*Music. */
-        Music.musicStart(ResourcesConstants.MUSIC_2);
+        Music.getMusic().play(Sounds.GAME);
 
         /*Pane. */
         pane = new Pane();
@@ -229,7 +228,7 @@ public final class GameViewImpl extends Region implements GameView {
         final Button exit = new Button("Exit");
         exit.setMinSize(BUTTONS_W, BUTTONS_H);
         exit.setOnMouseClicked(e -> {
-            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+            Music.getMusic().playButtonSound();
             closeProgram(pane);
         });
         exit.setStyle(Style.BUTTON_1);
@@ -239,7 +238,7 @@ public final class GameViewImpl extends Region implements GameView {
         menu.setStyle(Style.BUTTON_1);
         menu.setPrefSize(BUTTONS_W, BUTTONS_H);
         menu.setOnMouseClicked(e ->  {
-            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+            Music.getMusic().playButtonSound();
             returnMainMenu(pane);
         });
 
@@ -248,13 +247,8 @@ public final class GameViewImpl extends Region implements GameView {
         stopMusic.setStyle(Style.BUTTON_1);
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
         stopMusic.setOnMouseClicked(e -> {
-            if (stopMusic.isSelected()) {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
-                Music.musicStop();
-            } else {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
-                Music.musicStart(ResourcesConstants.MUSIC_2);
-            }
+            Music.getMusic().playButtonSound();
+            Music.getMusic().musicOnOff();
         });
 
         /*Labels. */
@@ -458,7 +452,7 @@ public final class GameViewImpl extends Region implements GameView {
         Platform.runLater(() -> this.resultBox("winner", " HAS WON", player));
         }
 
-   // @Override
+    @Override
     public void drawBoxResult(final String scores) {
         Platform.runLater(() -> this.resultBox("draw", " RESULT IN DRAW", scores));
       }

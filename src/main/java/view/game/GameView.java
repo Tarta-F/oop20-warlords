@@ -70,9 +70,16 @@ public interface GameView extends ViewClose, ViewInterface {
     void winnerBoxResult(String player);
 
     /**
+     * 
+     * @param scores 
+     */
+    void drawBoxResult(String scores);
+
+    /**
      * Get player NAME.
      * @param player PlayerType 
      * @return player name
      * */
     String getPlayerName(PlayerType player);
+
 }

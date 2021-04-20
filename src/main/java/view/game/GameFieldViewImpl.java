@@ -24,7 +24,7 @@ public final class GameFieldViewImpl implements GameFieldView {
 
     private final GridPane gridPane = new GridPane();
 
-    private static final int CELL_W = (int) ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_23);
+    private static final int CELL_W = (int) ViewResolution.screenResolutionWidth(30);
     private static final int CELL_H = (int) ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10);
 
     private final int nRow;
@@ -56,11 +56,6 @@ public final class GameFieldViewImpl implements GameFieldView {
         this.gridPane.setAlignment(Pos.CENTER);
         this.ground = new Image(this.getClass().getResourceAsStream(ground));
 
-//        final BackgroundSize bgSize = new BackgroundSize(nCols * CELL_W, nRow * CELL_H, false, false, false, false);
-//        final BackgroundImage bgImage = new BackgroundImage(new Image(this.getClass().getResourceAsStream(ground)),
-//              BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-//              BackgroundPosition.CENTER, bgSize);
-//        this.gridPane.setBackground(new Background(bgImage));
     }
 
     /**
@@ -126,8 +121,8 @@ public final class GameFieldViewImpl implements GameFieldView {
         this.checkOutOfBounds(x, nCols, MESSAGE_OVER_COLUMNS);
         this.checkOutOfBounds(y, nRow, MESSAGE_OVER_ROWS);
 
-        unitView.setFitWidth(ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_23));
-        unitView.setFitHeight(ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10));
+        unitView.setFitWidth(CELL_W);
+        unitView.setFitHeight(CELL_H);
 
         GridPane.setConstraints(unitView, x, y);
         gridPane.getChildren().add(unitView);

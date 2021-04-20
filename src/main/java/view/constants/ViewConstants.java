@@ -1,5 +1,7 @@
 package view.constants;
 
+import constants.GameConstants;
+
 /**
  * This class contain the various constants that we use in the view.
  */
@@ -47,11 +49,8 @@ public final class ViewConstants {
     /**DIVISOR used in view for the resolution of elements. */
     public static final int DIVISOR_150 = 150;
 
-    /**Number of LINES in the battlefield grid, used in GameView. */
-    public static final int GRID_LINES = 5;
-
     /**Number of COLUMNS in the battlefield grid, used in GameView. */
-    public static final int GRID_COLUMNS = 15;
+    public static final int GRID_COLUMNS = GameConstants.CELLS_NUM;
 
     /**Number of ARROW in the battlefield grid per player, used in GameView. */
     public static final int N_ARROW = 5;
