@@ -72,7 +72,9 @@ public interface Controller {
      */
     Optional<PlayerType> getWinner();
 
-    //TODO add doc
-    void killThreads();
+    /**
+     * Destroys/stops data flows about the current game.
+     */
+    void stopGame();
 
 }

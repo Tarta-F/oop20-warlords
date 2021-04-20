@@ -6,8 +6,12 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import constants.GameConstants;
 import constants.PlayerType;
+import controllers.io.IOController;
+import controllers.io.IOControllerImpl;
 import model.Field;
 import model.FieldImpl;
+import model.Score;
+import model.ScoreImpl;
 import model.unit.UnitImpl;
 import model.unit.UnitType;
 import view.game.GameView;
@@ -17,19 +21,20 @@ import view.game.GameViewImpl;
 public final class ControllerImpl implements Controller {
 
     private static final long REFRESH_RATE = 500;
+    private boolean timerIsOver;
+    private final int laneNumber;
     private final EnumMap<PlayerType, Long> lastSpawn = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, Integer> selectedLane = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, PlayerTimer> timers = new EnumMap<>(PlayerType.class);
-
     private final GameView gameView;
     private final Field field;
-    private final int laneNumber;
     private Optional<PlayerType> winner;
-    private boolean timerIsOver;
     private final ScheduledThreadPoolExecutor thrEx;
     private final GameLoopImpl gameLoop;
     private final GameTimer gameTimer;
+    private final Score score;
+    private final IOController ioContr;
 
     public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
@@ -40,6 +45,8 @@ public final class ControllerImpl implements Controller {
         this.winner = Optional.empty();
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
         this.gameTimer = new GameTimer(mins, this.gameView);
+        this.score = new ScoreImpl(player1Name, player2Name);
+        this.ioContr = new IOControllerImpl();
         new Thread(this.gameTimer).start();
         this.initPlayers();
         this.timers.forEach((p, t) -> new Thread(t).start());
@@ -47,7 +54,6 @@ public final class ControllerImpl implements Controller {
         this.gameLoop = new GameLoopImpl(this);
         this.thrEx = new ScheduledThreadPoolExecutor(1);
         this.startLoop();
-        //TODO Score score = new ScoreImpl("p1", "p2");
     }
 
     /**
@@ -61,7 +67,9 @@ public final class ControllerImpl implements Controller {
             this.timers.put(player, new PlayerTimer(gameView, player));
         }
     }
-
+    /**
+     * Repeat the {@link #update()} after {@link #REFRESH_RATE} seconds.
+     */
     private void startLoop() {
         this.thrEx.scheduleWithFixedDelay(gameLoop, 0, REFRESH_RATE, TimeUnit.MILLISECONDS);
     }
@@ -167,7 +175,7 @@ public final class ControllerImpl implements Controller {
         this.gameView.updateScorePlayer();
         if (this.isOver()) {
                 this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
-            this.killThreads();
+            this.stopGame();
                 //System.out.println(isOver() ? getWinner().get() + " WON" : "");
         } /*else if ("00:00".equals(this.gameView.getTimer())) {
                 if (this.getScore(PlayerType.PLAYER1) < this.getScore(PlayerType.PLAYER2)) {
@@ -185,7 +193,8 @@ public final class ControllerImpl implements Controller {
         return this.hasWin(PlayerType.PLAYER1) || this.hasWin(PlayerType.PLAYER2) || this.timerIsOver;
     }
 
-    public void killThreads() {
+    @Override
+    public void stopGame() {
         this.timers.forEach((p, t) -> t.stopTimer());
         this.gameTimer.stopTimer();
         this.thrEx.shutdown();

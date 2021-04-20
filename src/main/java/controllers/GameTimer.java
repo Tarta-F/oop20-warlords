@@ -32,7 +32,7 @@ public class GameTimer implements Runnable {
                 ex.printStackTrace();
             }
         }
-        //TODO block/finish the game
+        //TODO block/finish the game Funzione che guarda punteggio: vincitore o pareggio.
     }
 
     public final void stopTimer() {
