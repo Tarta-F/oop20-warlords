@@ -6,11 +6,9 @@ public final class ScoreImpl implements Score {
     private int scoreP1;
     private int scoreP2;
 
-    public ScoreImpl(final String player1Name, final String player2Name, final int scoreP1, final int scoreP2) {
+    public ScoreImpl(final String player1Name, final String player2Name) {
         this.player1Name = player1Name;
         this.player2Name = player2Name;
-        this.scoreP1 = scoreP1;
-        this.scoreP2 = scoreP2;
     }
 
     public ScoreImpl(final String p1, final String p2) {
