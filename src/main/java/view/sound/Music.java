@@ -6,11 +6,10 @@ import java.util.EnumMap;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import view.constants.ResourcesConstants;
 
 /**
- * Scenes sounds implementation.
- * */
+ * Class to manage music and sounds.
+ */
 public final class Music {
 
     private static final Music SINGLETON = new Music();
@@ -27,20 +26,24 @@ public final class Music {
 
     /**
      * @return
-     *      SINGLETON
+     *      Music SINGLETON
      */
     public static Music getMusic() {
         return SINGLETON;
     }
 
     /**
-     * Method to set the MUSIC. 
-     * @param song String
+     * Method to set the background music.
+     * 
+     * @param music
+     *      The {@link MediaPlayer to set as #currentMusic}
      */
     private void switchMusic(final MediaPlayer music) {
         if (SINGLETON.currentMusic != null) {
             SINGLETON.currentMusic.stop();
         }
+
+        music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
         SINGLETON.currentMusic = music;
 
         if (!SINGLETON.stop) {
@@ -48,6 +51,14 @@ public final class Music {
         }
     }
 
+    /**
+     * Extract the {@link MediaPlayer} from the given file.
+     * 
+     * @param path
+     *      A {@link String} that specifies the file path
+     * @return
+     *      the corresponding {@link MediaPlayer}
+     */
     private MediaPlayer getMediaPlayer(final String path) {
         Media sound = null;
         try {
@@ -57,33 +68,25 @@ public final class Music {
         }
 
         final MediaPlayer mp = new MediaPlayer(sound);
-        mp.setOnEndOfMedia(() -> mp.seek(Duration.ZERO));
         mp.setVolume(VOLUME);
 
         return mp;
     }
-    /**
-     * Method to set the MUSIC. 
-     * @param sound
-     *      sound to play
-     * */
-//    public void play(final String sound) {
-//        switchMusic(sound);
-//    }
 
     /**
      * Method to set the MUSIC. 
      * @param sound
      *      sound to play
-     * */
+     */
     public void play(final Sounds sound) {
         this.soundMedias.putIfAbsent(sound, this.getMediaPlayer(sound.getPath()));
         this.switchMusic(this.soundMedias.get(sound));
     }
 
+
     /**
-     * Method to on/off the MUSIC. 
-     * */
+     * Method to on/off sounds effects. 
+     */
     public void musicOnOff() {
         if (SINGLETON.stop) {
             SINGLETON.currentMusic.play();
@@ -94,43 +97,33 @@ public final class Music {
     }
 
     /**
-      * Method to set BUTTONS SOUND. 
-      * @param song String
-     * */
-    public void playSound(final String song) {
-        Media sound = null;
-        try {
-            sound = new Media(Music.class.getResource(song).toURI().toString());
-        } catch (URISyntaxException e1) {
-            e1.printStackTrace();
-        }
-        SINGLETON.currentSound = new MediaPlayer(sound);
-        SINGLETON.currentSound.setVolume(VOLUME);
+      * Method to play specific sound once. 
+      * 
+      * @param sound 
+      *         the {@link Sounds} to be played
+      */
+    public void playSound(final Sounds sound) {
+        this.soundMedias.putIfAbsent(sound, this.getMediaPlayer(sound.getPath()));
+        SINGLETON.currentSound = new MediaPlayer(this.soundMedias.get(sound).getMedia());
 
+        SINGLETON.currentSound.setOnEndOfMedia(() -> SINGLETON.currentSound.seek(Duration.UNKNOWN));
         if (!SINGLETON.stop) {
             SINGLETON.currentSound.play();
         }
     }
 
     /**
-     * Method to play BUTTONS SOUND. 
+     * Method to play button sound. 
      */
     public void playButtonSound() {
-        playSound(ResourcesConstants.BUTTON_SOUND);
+        this.playSound(Sounds.BUTTON);
     }
 
     /**
-     * Plays the sound for Starting Match.
+     * Method to play the sound for Starting Game.
      */
     public void startMatchSound() {
-        playSound(ResourcesConstants.BUTTON_START);
-    }
-
-    /**
-     * Method to stop BUTTONS SOUND. 
-     */
-    public void buttonStop() {
-        SINGLETON.currentSound.stop();
+        this.playSound(Sounds.START_GAME);
     }
 
 }
