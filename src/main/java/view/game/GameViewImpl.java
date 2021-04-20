@@ -112,14 +112,6 @@ public final class GameViewImpl extends Region implements GameView {
         this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
     }
 
-    /**
-     * Get player NAME.
-     * @param player PlayerType
-     * */
-    private String getPlayerName(final PlayerType player) {
-        return player.equals(PlayerType.PLAYER1) ? this.player1Name : this.player2Name;
-    }
-
     /** Create the timer label from the given long number.
      * @param l the quantity of seconds to display
      * @return the label created
@@ -456,12 +448,12 @@ public final class GameViewImpl extends Region implements GameView {
         }
     }
 
-    @Override
+    /**
+     * Get player NAME.
+     * @param player PlayerType
+     * @return String -name of the player.
+     * */
     public String getPlayerName(final PlayerType player) {
-        if (player.equals(PlayerType.PLAYER1)) {
-            return this.player1Name;
-        } else {
-            return this.player2Name;
-        }
+        return player.equals(PlayerType.PLAYER1) ? this.player1Name : this.player2Name;
     }
 }
