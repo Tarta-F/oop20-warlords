@@ -39,13 +39,6 @@ public final class LaneImpl implements Lane {
         this.lenght = lenght;
         this.units = new HashMap<>();
         this.scores = new HashMap<>();
-        this.resetScore();
-    }
-
-    /**
-     * Reset the score {@link Counter} of the {@link PlayerType} in this {@link Lane}.
-     */
-    private void resetScore() {
         this.scores.put(PlayerType.PLAYER1, new CounterImpl());
         this.scores.put(PlayerType.PLAYER2, new CounterImpl());
     }
@@ -109,7 +102,7 @@ public final class LaneImpl implements Lane {
         }
         return this.getUnits().entrySet().stream()
                 .filter(e -> e.getValue() == position)
-                .map(e -> e.getKey())
+                .map(Entry::getKey)
                 .collect(Collectors.toUnmodifiableSet());
     }
 
@@ -130,6 +123,13 @@ public final class LaneImpl implements Lane {
     @Override
     public Integer getScore(final PlayerType player) {
         return this.scores.get(player).getValue();
+    }
+
+    @Override
+    public void resetScore() {
+        for (final PlayerType player : PlayerType.values()) {
+            this.scores.get(player).reset();
+        }
     }
 
     @Override

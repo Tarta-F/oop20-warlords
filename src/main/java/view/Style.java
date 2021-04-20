@@ -30,6 +30,10 @@ public final class Style {
             + " -fx-background-color: rgba(0, 0, 0, 0.75);\r\n"
             + " -fx-font-size: " + FONT_W + ";";
 
+    /**Constant CSS for the appearance of labels. */
+    public static final String FONT = "-fx-font-weight: bold;\r\n "
+            + "-fx-font-size: " + FONT_W + ";";
+
     /**COnstants CSS for the appearance of layouts. */
     public static final String LAYOUT = "-fx-background-color: grey;";
 

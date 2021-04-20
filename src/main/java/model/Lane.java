@@ -13,15 +13,15 @@ public interface Lane {
 
     /**
      * @param unit 
-     *      unit to be added
+     *      {@link Unit} to be added
      */
     void addUnit(Unit unit);
 
     /**
      * @param position 
-     *      the position for which the unit are required
+     *      the position for which the {@link Unit}l are required
      * @return 
-     *      the set of the units in this position
+     *      the {@link Set} of the {@link Unit} in this position
      * @throws 
      *      {@link IllegalArgumentException} in case of the position is out of the lane
      */
@@ -29,7 +29,7 @@ public interface Lane {
 
     /**
      * @return 
-     *      a map of unit with the corresponding position in this lane
+     *      a map of {@link Unit} with the corresponding position in this lane
      */
     Map<Unit, Integer> getUnits();
 
@@ -48,8 +48,13 @@ public interface Lane {
     Integer getScore(PlayerType player);
 
     /**
-     * Updates every unit in this lane with attack, score or move.
+     * Updates every {@link Unit} in this lane with attack, score or move.
      */
-    void update(); 
+    void update();
+
+    /**
+     * Reset the score of the players earned in this {@link Lane}.
+     */
+    void resetScore(); 
 
 }
