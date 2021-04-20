@@ -48,7 +48,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         window.setResizable(false);
         window.setOnCloseRequest(e -> {
             e.consume();
-            closeProgram(pane);
+            /* Disabled for a safe exit.*/ 
         });
     }
 

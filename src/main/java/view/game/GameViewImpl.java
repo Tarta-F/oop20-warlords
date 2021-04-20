@@ -144,6 +144,7 @@ public final class GameViewImpl extends Region implements GameView {
         final boolean answer = ConfirmBox.display("Quitting", "Return to main menu?", "YES", "NO", "");
         if (answer) {
             final MainMenu scenaMenu = new MainMenu();
+            this.observer.killThreads();
             try {
                 Music.musicStop();
                 Music.musicStart(ResourcesConstants.MUSIC);

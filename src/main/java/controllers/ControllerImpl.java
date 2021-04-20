@@ -47,6 +47,8 @@ public final class ControllerImpl implements Controller {
         this.gameLoop = new GameLoopImpl(this);
         this.thrEx = new ScheduledThreadPoolExecutor(1);
         this.startLoop();
+        //TODO Score score = new ScoreImpl("p1", "p2");
+
     }
     /**
      * Utility method that inizialize variables for each Player.
@@ -164,7 +166,7 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public boolean isOver() {
+    public boolean isOver() {  //TODO var booleana settata dal GameTimer
         return this.hasWin(PlayerType.PLAYER1) || this.hasWin(PlayerType.PLAYER2);
     }
 
