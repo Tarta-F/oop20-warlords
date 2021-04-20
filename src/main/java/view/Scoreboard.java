@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 
 import view.constants.ViewConstants;
+import view.sound.Music;
 import view.constants.ResourcesConstants;
 
 import javafx.geometry.Insets;
@@ -47,7 +48,7 @@ public class Scoreboard extends Region implements ViewInterface {
         mainMenu.setOnMouseClicked(e -> {
             final MainMenu sceneMenu = new MainMenu();
             try {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.getMusic().playButtonSound();
                 pane.getChildren().setAll(sceneMenu.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();

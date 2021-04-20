@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import controllers.ControllerImpl;
 import view.constants.ViewConstants;
+import view.sound.Music;
 import view.constants.ResourcesConstants;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -88,7 +89,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             scenarioButtons.setStyle(Style.BUTTON_1);
             buttonScenario.put(scenarioButtons, s);
             scenarioButtons.setOnMouseClicked(e -> {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.getMusic().playButtonSound();
                 this.scenario = s;
                 updateSettings();
             });
@@ -104,7 +105,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             laneButtons.setStyle(Style.BUTTON_1);
             buttonLane.put(laneButtons, i);
             laneButtons.setOnMouseClicked(e -> {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.getMusic().playButtonSound();
                 this.laneNumber = buttonLane.get(laneButtons);
                 updateSettings();
             });
@@ -123,7 +124,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             timerButtons.setStyle(Style.BUTTON_1);
             buttonTimer.put(timerButtons, i);
             timerButtons.setOnMouseClicked(e -> {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.getMusic().playButtonSound();
                 this.timerDuration = buttonTimer.get(timerButtons);
                 updateSettings();
             });
@@ -139,7 +140,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         back.setStyle(Style.BUTTON_2);
         back.setOnMouseClicked(e -> {
             final MainMenu scenaMenu = new MainMenu();
-            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+            Music.getMusic().playButtonSound();
             try {
                 pane.getChildren().setAll(scenaMenu.createPane());
             } catch (IOException e1) {
@@ -154,9 +155,8 @@ public class GameModeSelection extends Region implements ViewInterface {
         start.setOnMouseClicked(e -> {
            final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.scenario, 
                    playerName1.getText(), playerName2.getText());
-           Music.buttonsMusic(ResourcesConstants.BUTTON_START);
+           Music.getMusic().startMatchSound();
            try {
-               Music.musicStop();
                pane.getChildren().setAll(contr.getView().createPane());
            } catch (IOException e1) {
             e1.printStackTrace();

@@ -2,6 +2,8 @@ package view;
 
 import java.io.IOException;
 import view.constants.ViewConstants;
+import view.sound.Music;
+import view.sound.Sounds;
 import view.constants.ResourcesConstants;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -39,7 +41,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
     @Override
     public void start(final Stage primaryStage) throws Exception {
         /*Creation of the Stage, Scene and all their preferences. */
-        Music.musicStart(ResourcesConstants.MUSIC);
+        Music.getMusic().play(Sounds.MENU);
         final Stage window = primaryStage;
         final Pane pane = new Pane(createPane());
         final Scene scene = new Scene(pane, PANE_W, PANE_H);
@@ -77,7 +79,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         scoreboard.setPrefSize(BUTTONS_W, BUTTONS_H);
         scoreboard.setOnMouseClicked(e -> {
             final Scoreboard scenesScoreboard = new Scoreboard();
-            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+            Music.getMusic().playButtonSound();
             try {
                 pane.getChildren().setAll(scenesScoreboard.createPane());
             } catch (IOException e1) {
@@ -93,7 +95,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         versus.setOnMouseClicked(e -> {
             final GameModeSelection sceneGameModeSelection = new GameModeSelection();
             try {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.getMusic().playButtonSound();
                 pane.getChildren().setAll(sceneGameModeSelection.createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -107,7 +109,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         tutorials.setOnMouseClicked(e -> {
 
             try {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.getMusic().playButtonSound();
                 final GameTutorial sceneTutorial = new GameTutorial();
                 pane.getChildren().setAll(sceneTutorial.createPane());
             } catch (IOException e1) {
@@ -120,13 +122,13 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         stopMusic.setStyle(Style.BUTTON_1);
         stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
         stopMusic.setOnMouseClicked(e -> {
-            if (stopMusic.isSelected()) {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
-                Music.musicStop();
-            } else {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
-                Music.musicStart(ResourcesConstants.MUSIC);
-            }
+//            if (stopMusic.isSelected()) {
+                Music.getMusic().playButtonSound();
+                Music.getMusic().musicOnOff();
+//            } else {
+//                Music.getMusic().buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+//                Music.getMusic().musicStart(ResourcesConstants.MUSIC);
+//            }
         });
 
         /*Button EXIT. */
@@ -134,7 +136,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         exitMenu.setStyle(Style.BUTTON_1);
         exitMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
         exitMenu.setOnMouseClicked(e -> {
-            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+            Music.getMusic().playButtonSound();
             closeProgram(pane);
         });
 

@@ -1,7 +1,7 @@
 package view;
 
 import view.constants.ViewConstants;
-import view.constants.ResourcesConstants;
+import view.sound.Music;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -54,7 +54,7 @@ public final class ConfirmBox {
         yesButton.setStyle(Style.BUTTON_1);
         yesButton.setPrefSize(BUTTONS_W,  BUTTONS_H);
         yesButton.setOnMouseClicked(e -> {
-            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+            Music.getMusic().playButtonSound();
             answer = true;
             window.close();
         });
@@ -64,7 +64,7 @@ public final class ConfirmBox {
         noButton.setStyle(Style.BUTTON_1);
         noButton.setPrefSize(BUTTONS_W,  BUTTONS_H);
         noButton.setOnMouseClicked(e -> {
-            Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+            Music.getMusic().playButtonSound();
             answer = false;
             window.close();
         });
