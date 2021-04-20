@@ -154,6 +154,24 @@ public final class GameViewImpl extends Region implements GameView {
             }
         }
     }
+    
+private void resultBox(final String message1, final String message2, final String player) {
+        final boolean choice = ConfirmBox.display(message1, message2, "MENU", "QUIT", player);
+        if (choice) {
+            final MainMenu scenaMenu = new MainMenu();
+            try {
+                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                Music.musicStop();
+                Music.musicStart(ResourcesConstants.MUSIC);
+                pane.getChildren().setAll(scenaMenu.createPane());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            final Stage stage = (Stage) pane.getScene().getWindow();
+            stage.close();
+        }
+    }
 
     @Override
     public Parent createPane() throws IOException {
@@ -427,22 +445,13 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void winnerBoxResult(final String player) {
-        final boolean choice = ConfirmBox.display("winner", " HAS WON", "MENU", "QUIT", player);
-        if (choice) {
-            final MainMenu scenaMenu = new MainMenu();
-            try {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
-                Music.musicStop();
-                Music.musicStart(ResourcesConstants.MUSIC);
-                pane.getChildren().setAll(scenaMenu.createPane());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        } else {
-            final Stage stage = (Stage) pane.getScene().getWindow();
-            stage.close();
+                this.resultBox("winner", " HAS WON", player);
         }
-    }
+
+   // @Override
+    public void drawBoxResult(final String scores) {
+                    this.resultBox("draw", " DRAW", scores);
+                }
 
     @Override
     public String getPlayerName(final PlayerType player) {
