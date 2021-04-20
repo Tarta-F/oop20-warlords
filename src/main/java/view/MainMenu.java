@@ -168,7 +168,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
 
     @Override
     public void closeProgram(final Pane pane) {
-        final boolean answer = ConfirmBox.display("quitting", "Do you want to quit?", "YES", "NO", "");
+        final boolean answer = ConfirmBox.display("Quitting", "Do you want to quit?", "YES", "NO", "");
         if (answer) {
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();

@@ -21,7 +21,7 @@ public final class GameConstants {
     public static final int CELLS_NUM = 15;
 
     /** The necessary score to win. */
-    public static final int SCORE_TO_WIN = 8;
+    public static final int SCORE_TO_WIN = 2;
 
     private GameConstants() { }
 }

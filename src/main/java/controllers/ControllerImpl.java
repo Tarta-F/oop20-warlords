@@ -56,7 +56,7 @@ public final class ControllerImpl implements Controller {
     }
 
     private void startLoop() {
-        this.thrEx.scheduleWithFixedDelay(gl, 0, this.REFRESH_RATE, TimeUnit.MILLISECONDS);
+        this.thrEx.scheduleWithFixedDelay(gl, 0, REFRESH_RATE, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -141,12 +141,21 @@ public final class ControllerImpl implements Controller {
     @Override
     public void update() {
         this.field.update();
-            this.gameView.show(Converter.convertMap(this.field.getUnits()));
-            this.gameView.updateScorePlayer();
-            if (isOver()) {
+        this.gameView.show(Converter.convertMap(this.field.getUnits()));
+        this.gameView.updateScorePlayer();
+        if (this.isOver()) {
                 this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
+            this.killThreads();
                 //System.out.println(isOver() ? getWinner().get() + " WON" : "");
-            }
+        } /*else if ("00:00".equals(this.gameView.getTimer())) {
+                if (this.getScore(PlayerType.PLAYER1) < this.getScore(PlayerType.PLAYER2)) {
+                    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER2));
+                } else if (this.getScore(PlayerType.PLAYER1) == this.getScore(PlayerType.PLAYER2)) {
+                    this.gameView.winnerBoxResult("DRAW!");
+                } else {
+                    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER1));
+                }
+            }*/
     }
 
     @Override
@@ -164,7 +173,7 @@ public final class ControllerImpl implements Controller {
         return this.field.getScore(player).orElseGet(() -> Integer.valueOf(0));
     }
 
-    public void endGame() {
+    public void killThreads() {
         this.timers.forEach((p, t) -> t.stopTimer());
         this.gt.stopTimer();
         this.thrEx.shutdown();

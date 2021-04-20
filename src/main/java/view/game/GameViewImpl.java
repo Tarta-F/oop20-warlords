@@ -415,7 +415,7 @@ public final class GameViewImpl extends Region implements GameView {
     public void closeProgram(final Pane pane) {
         final boolean answer = ConfirmBox.display("Quitting", "Do you want to quit?", "YES", "NO", "");
         if (answer) {
-            //TODO this.observer.endGame();
+            this.observer.killThreads();
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();
         }
@@ -431,21 +431,23 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void winnerBoxResult(final String player) {
-        final boolean choice = ConfirmBox.display("winner", " HAS WON", "MENU", "QUIT", player);
-        if (choice) {
-            final MainMenu scenaMenu = new MainMenu();
-            try {
-                Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
-                Music.musicStop();
-                Music.musicStart(ResourcesConstants.MUSIC);
-                pane.getChildren().setAll(scenaMenu.createPane());
-            } catch (IOException e1) {
-                e1.printStackTrace();
+        Platform.runLater(() -> {
+            final boolean choice = ConfirmBox.display("winner", " HAS WON", "MENU", "QUIT", player);
+            if (choice) {
+                final MainMenu scenaMenu = new MainMenu();
+                try {
+                    Music.buttonsMusic(ResourcesConstants.BUTTON_SOUND);
+                    Music.musicStop();
+                    Music.musicStart(ResourcesConstants.MUSIC);
+                    pane.getChildren().setAll(scenaMenu.createPane());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            } else {
+                final Stage stage = (Stage) pane.getScene().getWindow();
+                stage.close();
             }
-        } else {
-            final Stage stage = (Stage) pane.getScene().getWindow();
-            stage.close();
-        }
+        });
     }
 
     /**

@@ -67,4 +67,7 @@ public interface Controller {
      */
     Optional<PlayerType> getWinner();
 
+    //TODO add doc
+    void killThreads();
+
 }
