@@ -154,8 +154,13 @@ public final class GameViewImpl extends Region implements GameView {
             }
         }
     }
-    
-private void resultBox(final String message1, final String message2, final String player) {
+    /**
+    * Method to return on main menu with a confirm box. 
+    * @param message1 String
+    * @param message2 String
+    * @param player String
+    * */
+    private void resultBox(final String message1, final String message2, final String player) {
         final boolean choice = ConfirmBox.display(message1, message2, "MENU", "QUIT", player);
         if (choice) {
             final MainMenu scenaMenu = new MainMenu();
@@ -450,7 +455,7 @@ private void resultBox(final String message1, final String message2, final Strin
 
    // @Override
     public void drawBoxResult(final String scores) {
-                    this.resultBox("draw", " DRAW", scores);
+                    this.resultBox("draw", " RESULT IN DRAW", scores);
                 }
 
     @Override

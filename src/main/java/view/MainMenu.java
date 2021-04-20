@@ -82,7 +82,6 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
             try {
                 pane.getChildren().setAll(scenesScoreboard.createPane());
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         });
