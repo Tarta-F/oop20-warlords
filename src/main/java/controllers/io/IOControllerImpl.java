@@ -1,4 +1,4 @@
-package controllers;
+package controllers.io;
 
 import java.io.File;
 import java.io.FileReader;

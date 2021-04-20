@@ -28,8 +28,8 @@ public final class ControllerImpl implements Controller {
     private Optional<PlayerType> winner;
 
     private final ScheduledThreadPoolExecutor thrEx;
-    private final GameLoopImpl gl;
-    private final GameTimer gt;
+    private final GameLoopImpl gameLoop;
+    private final GameTimer gameTimer;
 
     public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
@@ -39,24 +39,29 @@ public final class ControllerImpl implements Controller {
         this.laneNumber = laneNumber;
         this.winner = Optional.empty();
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
-        this.gt = new GameTimer(mins, this.gameView);
-        new Thread(this.gt).start();
-
+        this.gameTimer = new GameTimer(mins, this.gameView);
+        new Thread(this.gameTimer).start();
+        this.initPlayers();
+        this.timers.forEach((p, t) -> new Thread(t).start());
+        /* Instance GameLoop */
+        this.gameLoop = new GameLoopImpl(this);
+        this.thrEx = new ScheduledThreadPoolExecutor(1);
+        this.startLoop();
+    }
+    /**
+     * Utility method that inizialize variables for each Player.
+     */
+    private void initPlayers() {
         for (final var player : PlayerType.values()) {
             this.lastSpawn.put(player, System.currentTimeMillis());
             this.selectedLane.put(player, laneNumber / 2);
             this.selectedUnit.put(player, 0);
             this.timers.put(player, new PlayerTimer(gameView, player));
         }
-        this.timers.forEach((p, t) -> new Thread(t).start());
-        /* Instance GameLoop */
-        this.gl = new GameLoopImpl(this);
-        this.thrEx = new ScheduledThreadPoolExecutor(1);
-        this.startLoop();
     }
 
     private void startLoop() {
-        this.thrEx.scheduleWithFixedDelay(gl, 0, REFRESH_RATE, TimeUnit.MILLISECONDS);
+        this.thrEx.scheduleWithFixedDelay(gameLoop, 0, REFRESH_RATE, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -175,7 +180,7 @@ public final class ControllerImpl implements Controller {
 
     public void killThreads() {
         this.timers.forEach((p, t) -> t.stopTimer());
-        this.gt.stopTimer();
+        this.gameTimer.stopTimer();
         this.thrEx.shutdown();
     }
 }
