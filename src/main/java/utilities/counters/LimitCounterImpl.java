@@ -1,16 +1,25 @@
 package utilities.counters;
 
+/**
+ * Basic implementation of {@link LimitCounter}.
+ */
 public class LimitCounterImpl extends CounterImpl implements LimitCounter {
 
     private final int limit;
 
+    /**
+     * Creates a {@link LimitCounter} with the given limit.
+     * 
+     * @param limit
+     *      the max value that the value can assume
+     */
     public LimitCounterImpl(final int limit) {
         super();
         this.limit = limit;
     }
 
     /**
-     * Increment with limit bound check.
+     * {@inheritDoc}
      */
     @Override
     public void increment() {
@@ -20,7 +29,7 @@ public class LimitCounterImpl extends CounterImpl implements LimitCounter {
     }
 
     /**
-     * Check if value is over the limit.
+     * {@inheritDoc}
      */
     @Override
     public boolean isOver() {
