@@ -6,25 +6,28 @@ import javafx.scene.layout.GridPane;
 import view.UnitViewType;
 
 /** 
- * This interface models the GameField used in the View using a GridPane.
+ * This interface models the GameField used in the {@link GameView} using a {@link GridPane}.
  */
 public interface GameFieldView {
 
     /**
-     * Method to return the Grid.
-     * @return The Grid created by this Field
+     * @return 
+     *      the Grid created by this Field
      */
     GridPane getGrid();
 
     /**
-     * Add the unit at the player at the given position in the grid.
-     * @param unit UnitType to add
-     * @param position in which to place the unit
+     * Add the unit at the given position in the grid.
+     * 
+     * @param unit 
+     *      {@link UnitViewType} to add
+     * @param position 
+     *      position in which to place the unit
      */
     void add(UnitViewType unit, Pair<Integer, Integer> position);
 
     /**
-     * Clear the Field from all the units contained.
+     * Clear the this field from all the units contained.
      */
     void clear();
 

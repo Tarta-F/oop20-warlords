@@ -2,7 +2,6 @@ package model;
 
 import java.util.Collections;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,6 +13,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import constants.PlayerType;
 import model.unit.Unit;
 
+/**
+ * Basic implementation of {@link Field}.
+ */
 public final class FieldImpl implements Field {
 
     private final List<Lane> lanes;
@@ -22,6 +24,14 @@ public final class FieldImpl implements Field {
 
     private static final String MESSAGE_OUT_OF_FIELD = "The entered lane is out of the limits";
 
+    /**
+     * Creates a {@link Field} from the given dimensions.
+     * 
+     * @param cellsNumber
+     *                  the number of cells for each lane
+     * @param laneNumber
+     *                  the number of lanes
+     */
     public FieldImpl(final int cellsNumber, final int laneNumber) {
         this.cellsNumber = cellsNumber;
         this.laneNumber = laneNumber;
@@ -53,10 +63,10 @@ public final class FieldImpl implements Field {
 
     @Override
     public Map<Unit, Pair<Integer, Integer>> getUnits() {
-        final Map<Unit, Pair<Integer, Integer>> units = new HashMap<>();
-        this.lanes.forEach(l -> l.getUnits().entrySet()
-                .forEach(e -> units.put(e.getKey(), Pair.of(e.getValue(), lanes.indexOf(l)))));
-        return Collections.unmodifiableMap(units);
+        return this.lanes.stream()
+                .flatMap(l -> l.getUnits().entrySet().stream()
+                        .map(e -> Pair.of(e.getKey(), Pair.of(e.getValue(), lanes.indexOf(l)))))
+                .collect(Collectors.toUnmodifiableMap(Pair::getLeft, Pair::getRight));
     }
 
     @Override
@@ -73,6 +83,5 @@ public final class FieldImpl implements Field {
     public int getCellsNumber() {
         return this.cellsNumber;
     }
-
 
 }

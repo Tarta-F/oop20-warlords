@@ -20,6 +20,9 @@ import model.unit.Unit;
 import model.unit.UnitImpl;
 import model.unit.UnitType;
 
+/**
+ * Test Class for {@link LaneImpl}.
+ */
 public class LaneTest {
 
     private Lane lane;
@@ -97,15 +100,15 @@ public class LaneTest {
         lane.update();
 
         /*
-         * Il comportamento delle unità da qui in poi è indefinito poichè non si sa quale si muoverà per prima e 
-         *  di conseguenza attaccherà per seconda.
+         * The behaviour of the units from here on is undefined as you do not know which one will move first 
+         * and consequently attack second.
          */
         IntStream.range(0, CLASH_POSITION + 1).forEach(c -> {
             lane.update();
         });
 
         /*
-         * A questo punto uno dei due deve essere morto. 
+         * At this point one of them must be dead. 
          */
         assertTrue(unit1.isAlive() ^ unit2.isAlive());
         assertTrue(lane.getUnits().containsKey(unit1) ^ lane.getUnits().containsKey(unit2));
