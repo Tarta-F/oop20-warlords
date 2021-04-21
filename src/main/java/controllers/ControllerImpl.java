@@ -107,6 +107,14 @@ public final class ControllerImpl implements Controller {
         this.timers.get(player).resetTimer();
     }
 
+    public String getPlayer1Name() {
+        return player1Name;
+    }
+
+    public String getPlayer2Name() {
+        return player2Name;
+    }
+
     @Override
     public Optional<PlayerType> getWinner() {
         return this.winner;
