@@ -56,6 +56,7 @@ public final class GameViewImpl extends Region implements GameView {
     private static final double BORDERPANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
     private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
     private static final double PADDING = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60);
+    private static final double LABEL_PLAYER_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
 
     private final ViewFactory factory = new ViewFactoryImpl();
 
@@ -237,7 +238,7 @@ public final class GameViewImpl extends Region implements GameView {
         /*Settings for the player labels, with name and score of the player. */
         for (final var type : PlayerType.values()) {
             final Label score = this.factory.createLabel("SCORE " + this.getPlayerName(type) + ": 0", Style.LABEL,
-                    LABEL_W, LABEL_H);
+                    LABEL_PLAYER_W, LABEL_H);
             labelsScore.put(type, score);
         }
 

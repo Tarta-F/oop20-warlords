@@ -86,10 +86,12 @@ public class GameModeSelection extends Region implements ViewInterface {
         /*TextField. */
         final TextField playerName1 = new TextField("Player 1");
         playerName1.setPrefSize(TEXTFIELD_W, TEXTFIELD_H);
+        playerName1.setStyle(Style.TEXT);
         addTextLimiter(playerName1, 10);
 
         final TextField playerName2 = new TextField("Player 2");
         playerName2.setPrefSize(TEXTFIELD_W, TEXTFIELD_H);
+        playerName2.setStyle(Style.TEXT);
         addTextLimiter(playerName2, 10);
 
         /*BackGroung. */

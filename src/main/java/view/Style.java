@@ -36,7 +36,14 @@ public final class Style {
 
     /**Constants CSS for the appearance of layouts. */
     public static final String LAYOUT = "-fx-background-color: grey;";
-
+    
+    public static final String TEXT = "-fx-text-fill: #000000;\r\n"
+            + " -fx-background-radius: 6;\r\n"
+            + " -fx-font-weight: bold;\r\n "
+            + " -fx-background-color: #FFFFFF;\r\n"
+            + " -fx-font-size: " + FONT_W + ";";
+    
+    
     private Style() { }
 
 }
