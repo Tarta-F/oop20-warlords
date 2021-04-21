@@ -184,19 +184,10 @@ public final class ControllerImpl implements Controller {
             try {
                 this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, 0, 2));
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
                 //System.out.println(isOver() ? getWinner().get() + " WON" : "");
-        } /*else if ("00:00".equals(this.gameView.getTimer())) {
-                if (this.getScore(PlayerType.PLAYER1) < this.getScore(PlayerType.PLAYER2)) {
-                    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER2));
-                } else if (this.getScore(PlayerType.PLAYER1) == this.getScore(PlayerType.PLAYER2)) {
-                    this.gameView.winnerBoxResult("DRAW!");
-                } else {
-                    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER1));
-                }
-            }*/
+        }
     }
 
     @Override
@@ -210,4 +201,19 @@ public final class ControllerImpl implements Controller {
         this.gameTimer.stopTimer();
         this.thrEx.shutdown();
     }
+
+    @Override
+    public void timeOut() {
+        // TODO Auto-generated method stub
+    }
 }
+/*else if ("00:00".equals(this.gameView.getTimer())) {
+if (this.getScore(PlayerType.PLAYER1) < this.getScore(PlayerType.PLAYER2)) {
+    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER2));
+} else if (this.getScore(PlayerType.PLAYER1) == this.getScore(PlayerType.PLAYER2)) {
+    this.gameView.winnerBoxResult("DRAW!");
+} else {
+    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER1));
+}
+}*/
+

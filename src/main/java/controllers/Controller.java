@@ -60,6 +60,8 @@ public interface Controller {
      * @return true if the game is over
      */
     boolean isOver();
+    //TODO
+    void timeOut();
 
     /**
      * Updates the model and print the result on the GameView.

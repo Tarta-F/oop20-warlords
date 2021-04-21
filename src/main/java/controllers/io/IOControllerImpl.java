@@ -21,9 +21,9 @@ public class IOControllerImpl implements IOController {
     private static final String MSG = "No result detected.";
     private static final String FILE_PATH = System.getProperty("user.home") + File.separator + "WarlordsScore.json";
     private static final Type SCORE_TYPE = new TypeToken<List<ScoreImpl>>() { }.getType();
-    private File scoreFile;
-    private Gson gsonRead;
-    private Gson gsonWrite;
+    private final File scoreFile;
+    private final Gson gsonRead;
+    private final Gson gsonWrite;
 
     public IOControllerImpl() {
         this.scoreFile = new File(FILE_PATH);
@@ -47,7 +47,7 @@ public class IOControllerImpl implements IOController {
     @Override
     public final void writeNewScore(final Score score) throws IOException {
         if (this.scoreFile.exists()) {
-            this.readAndWriteNew();
+            this.readAndWriteNew(score);
         } else {
             try {
                 if (this.scoreFile.createNewFile()) {
@@ -70,10 +70,10 @@ public class IOControllerImpl implements IOController {
         }
     }
 
-    private void readAndWriteNew() throws FileNotFoundException {
+    private void readAndWriteNew(final Score score) throws FileNotFoundException {
         final JsonReader reader = new JsonReader(new FileReader(this.scoreFile));
-        final List<ScoreImpl> oldResults = gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole reviews list
-        oldResults.add(new ScoreImpl("p11", "p22", 1, 0));
+        final List<Score> oldResults = gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
+        oldResults.add(score);
         oldResults.forEach(sc -> System.out.println(sc.toString()));
         final String newScore = this.gsonWrite.toJson(oldResults);
         try (FileWriter file = new FileWriter(this.scoreFile)) {
