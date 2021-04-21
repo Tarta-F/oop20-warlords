@@ -8,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import view.UnitViewType;
+import view.ViewFactory;
+import view.ViewFactoryImpl;
 import view.ViewResolution;
 import view.constants.ViewConstants;
 
@@ -17,9 +19,7 @@ import view.constants.ViewConstants;
 public final class GameFieldViewImpl implements GameFieldView {
 
     private static final String MESSAGE_OVER_ROWS = "Image exceed row limits";
-
     private static final String MESSAGE_OVER_COLUMNS = "Image exceed column limits";
-
     private static final String MESSAGE_NEGATIVE_DIMENSIONS = "Impossible create a field with negative dimensions";
 
     private final GridPane gridPane = new GridPane();
@@ -31,6 +31,7 @@ public final class GameFieldViewImpl implements GameFieldView {
     private final int nCols;
 
     private final Image ground;
+    private final ViewFactory factory = new ViewFactoryImpl();
 
     private final EnumMap<UnitViewType, Image> unitImageTable = new EnumMap<>(UnitViewType.class);
 
@@ -116,14 +117,10 @@ public final class GameFieldViewImpl implements GameFieldView {
     public void add(final UnitViewType unit, final Pair<Integer, Integer> position) {
         final int x = position.getLeft();
         final int y = position.getRight();
-        final ImageView unitView = new ImageView(this.callCachedImage(unit)); 
-
         this.checkOutOfBounds(x, nCols, MESSAGE_OVER_COLUMNS);
         this.checkOutOfBounds(y, nRow, MESSAGE_OVER_ROWS);
 
-        unitView.setFitWidth(CELL_W);
-        unitView.setFitHeight(CELL_H);
-
+        final ImageView unitView = this.factory.createImageView(this.callCachedImage(unit), CELL_W, CELL_H); 
         GridPane.setConstraints(unitView, x, y);
         gridPane.getChildren().add(unitView);
     }

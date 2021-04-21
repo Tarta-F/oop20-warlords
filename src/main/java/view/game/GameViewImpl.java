@@ -12,6 +12,7 @@ import view.MainMenu;
 import view.Style;
 import view.UnitViewType;
 import view.ViewFactory;
+import view.ViewFactoryImpl;
 import view.ViewResolution;
 import view.constants.ViewConstants;
 import view.sound.Music;
@@ -55,6 +56,8 @@ public final class GameViewImpl extends Region implements GameView {
     private static final double BORDERPANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
     private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
     private static final double PADDING = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60);
+
+    private final ViewFactory factory = new ViewFactoryImpl();
 
     private final GameFieldView field;
     private final int laneNumber;
@@ -158,7 +161,7 @@ public final class GameViewImpl extends Region implements GameView {
         pane = new Pane();
 
         /*BackGround. */
-        final ImageView gameBackGround = ViewResolution.createImageView(scenario, BORDERPANE_W, BORDERPANE_H);
+        final ImageView gameBackGround = this.factory.createImageView(scenario, BORDERPANE_W, BORDERPANE_H);
 
         /*Lists of units logo used. */
         this.unitImageP1 = List.of(logoSwordsmenP1, logoSpearmenP1, logoArcherP1);
@@ -167,48 +170,48 @@ public final class GameViewImpl extends Region implements GameView {
         this.unitSelectedP2 = List.of(selectedSwordsmenP2, selectedSpearmenP2, selectedArcherP2);
 
         /*List of units player 1. */
-        final ImageView unit1P1 = ViewResolution.createImageView(selectedSwordsmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
-        final ImageView unit2P1 = ViewResolution.createImageView(logoSpearmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
-        final ImageView unit3P1 = ViewResolution.createImageView(logoArcherP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
+        final ImageView unit1P1 = this.factory.createImageView(selectedSwordsmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
+        final ImageView unit2P1 = this.factory.createImageView(logoSpearmenP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
+        final ImageView unit3P1 = this.factory.createImageView(logoArcherP1, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP1.addAll(List.of(unit1P1, unit2P1, unit3P1));
 
         /*List of units player 2. */
-        final ImageView unit1P2 = ViewResolution.createImageView(selectedSwordsmenP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
-        final ImageView unit2P2 = ViewResolution.createImageView(logoSpearmenP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
-        final ImageView unit3P2 = ViewResolution.createImageView(logoArcherP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
+        final ImageView unit1P2 = this.factory.createImageView(selectedSwordsmenP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
+        final ImageView unit2P2 = this.factory.createImageView(logoSpearmenP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
+        final ImageView unit3P2 = this.factory.createImageView(logoArcherP2, UNIT_ICON_WIDTH, UNIT_ICON_HEIGHT);
         listUnitP2.addAll(List.of(unit1P2, unit2P2, unit3P2));
 
         /*List of ImageView arrows for player 1. */
         for (int i = 0; i < this.laneNumber; i++) {
-            final ImageView arrow1P1 = ViewResolution.createImageView(arrowP1, ARROW_W, ARROW_H);
+            final ImageView arrow1P1 = this.factory.createImageView(arrowP1, ARROW_W, ARROW_H);
             listArrowP1.add(arrow1P1);
         }
         listArrowP1.get(this.laneNumber / 2).setImage(selectedArrowP1);
 
         /*List of ImageView arrows for player 2. */
        for (int i = 0; i < this.laneNumber; i++) {
-            final ImageView arrow1P2 = ViewResolution.createImageView(arrowP2, ARROW_W, ARROW_H);
+            final ImageView arrow1P2 = this.factory.createImageView(arrowP2, ARROW_W, ARROW_H);
             listArrowP2.add(arrow1P2);
         }
         listArrowP2.get(this.laneNumber / 2).setImage(selectedArrowP2);
 
         /*Buttons. */
         /*Button EXIT. */
-        final Button exit = ViewFactory.createButton("Exit", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
+        final Button exit = this.factory.createButton("Exit", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         exit.setOnMouseClicked(e -> {
             Music.getMusic().playButtonSound();
             this.closeProgram(pane);
         });
 
         /*Button MENU. */
-        final Button menu = ViewFactory.createButton("Menu", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
+        final Button menu = this.factory.createButton("Menu", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         menu.setOnMouseClicked(e ->  {
             Music.getMusic().playButtonSound();
             this.returnMainMenu(pane);
         });
 
         /*Button MUSIC. */
-        final ToggleButton stopMusic = ViewFactory.createToggleButton("Music On/Off", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
+        final ToggleButton stopMusic = this.factory.createToggleButton("Music On/Off", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         stopMusic.setOnMouseClicked(e -> {
             Music.getMusic().playButtonSound();
             Music.getMusic().musicOnOff();
@@ -216,11 +219,11 @@ public final class GameViewImpl extends Region implements GameView {
 
         /*Labels. */
         /*Label TIMER. */
-        timer = ViewFactory.createLabel("TIMER", Style.LABEL, LABEL_W, LABEL_H);
+        timer = this.factory.createLabel("TIMER", Style.LABEL, LABEL_W, LABEL_H);
 
         /*List of Labels for the respawn time of players units. */
         for (final var type : UnitViewType.values()) {
-            final Label label = ViewFactory.createLabel(type.getWaitingTime() + " sec", Style.LABEL, 
+            final Label label = this.factory.createLabel(type.getWaitingTime() + " sec", Style.LABEL, 
                     RESPAWN_LABEL_W, RESPAWN_LABEL_H);
             label.setTextFill(Color.RED);
             unitBoxes.put(type, label);
@@ -233,7 +236,7 @@ public final class GameViewImpl extends Region implements GameView {
 
         /*Settings for the player labels, with name and score of the player. */
         for (final var type : PlayerType.values()) {
-            final Label score = ViewFactory.createLabel("SCORE " + this.getPlayerName(type) + ": 0", Style.LABEL,
+            final Label score = this.factory.createLabel("SCORE " + this.getPlayerName(type) + ": 0", Style.LABEL,
                     LABEL_W, LABEL_H);
             labelsScore.put(type, score);
         }
@@ -255,19 +258,19 @@ public final class GameViewImpl extends Region implements GameView {
             vBoxplayer2.add(vBox2);
         }
 
-        final HBox topMenu = ViewFactory.createHBox(TOPMENU_W, PADDING);
+        final HBox topMenu = this.factory.createHBox(TOPMENU_W, PADDING);
         topMenu.getChildren().addAll(vBoxplayer1);
         topMenu.getChildren().add(timer);
         topMenu.getChildren().addAll(vBoxplayer2);
 
-        final HBox bottomMenu = ViewFactory.createHBox(BOTTOMMENU_W, PADDING);
+        final HBox bottomMenu = this.factory.createHBox(BOTTOMMENU_W, PADDING);
         bottomMenu.getChildren().addAll(this.labelsScore.get(PlayerType.PLAYER1), menu, stopMusic, exit, 
                 this.labelsScore.get(PlayerType.PLAYER2));
 
-        final VBox leftMenu = ViewFactory.createVBox(LEFT_RIGTH_MENU_H);
+        final VBox leftMenu = this.factory.createVBox(LEFT_RIGTH_MENU_H);
         leftMenu.getChildren().addAll(listArrowP1);
 
-        final VBox rightMenu = ViewFactory.createVBox(LEFT_RIGTH_MENU_H);
+        final VBox rightMenu = this.factory.createVBox(LEFT_RIGTH_MENU_H);
         rightMenu.getChildren().addAll(listArrowP2);
 
         /*BorderPane. */

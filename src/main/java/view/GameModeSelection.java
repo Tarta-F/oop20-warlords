@@ -46,6 +46,8 @@ public class GameModeSelection extends Region implements ViewInterface {
     private static final double VBOX_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
     private static final double VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
 
+    private final ViewFactory factory = new ViewFactoryImpl();
+
     public GameModeSelection() {
         /*Set up the "default" settings. */
         this.scenario = ScenarioViewType.SCENARIO_1;
@@ -75,7 +77,7 @@ public class GameModeSelection extends Region implements ViewInterface {
 
         /*BackGroung. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.GAME_SETTINGS));
-        final ImageView background = ViewResolution.createImageView(backgroundImg, VBOX_W, VBOX_H);
+        final ImageView background = this.factory.createImageView(backgroundImg, VBOX_W, VBOX_H);
 
         /*Buttons. */
         /*Buttons SCENARIO. */
@@ -84,7 +86,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         final Map<Button, ScenarioViewType> buttonScenario = new HashMap<>();
 
         scenarios.forEach(s -> {
-            final Button scenarioButtons = ViewFactory.createButton("SCENARIO " + s.getDescription(), Style.BUTTON_1, 
+            final Button scenarioButtons = this.factory.createButton("SCENARIO " + s.getDescription(), Style.BUTTON_1, 
                     BUTTONS_W, BUTTONS_H);
             buttonScenario.put(scenarioButtons, s);
             scenarioButtons.setOnMouseClicked(e -> {
@@ -98,7 +100,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         /*Buttons LANE. Associate a button to a number of lane. */
         final Map<Button, Integer> buttonLane = new HashMap<>();
         for (int i = 1; i < ViewConstants.N_BUTTON_6; i += 2) {
-            final Button laneButtons = ViewFactory.createButton("LANE'S NUMBER: " + i, Style.BUTTON_1,
+            final Button laneButtons = this.factory.createButton("LANE'S NUMBER: " + i, Style.BUTTON_1,
                     BUTTONS_W, BUTTONS_H);
             buttonLane.put(laneButtons, i);
             laneButtons.setOnMouseClicked(e -> {
@@ -116,7 +118,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         final Map<Button, Integer> buttonTimer = new HashMap<>();
 
         for (int i = ViewConstants.N_BUTTON_3 + 2; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_3 + 2) {
-            final Button timerButtons = ViewFactory.createButton(i + " MINUTES", Style.BUTTON_1, 
+            final Button timerButtons = this.factory.createButton(i + " MINUTES", Style.BUTTON_1, 
                     BUTTONS_W, BUTTONS_H);
             buttonTimer.put(timerButtons, i);
             timerButtons.setOnMouseClicked(e -> {
@@ -131,7 +133,7 @@ public class GameModeSelection extends Region implements ViewInterface {
                 .collect(Collectors.toList());
 
         /*Button BACK. */
-        final Button back = ViewFactory.createButton("BACK", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
+        final Button back = this.factory.createButton("BACK", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
         back.setOnMouseClicked(e -> {
             final MainMenu scenaMenu = new MainMenu();
             Music.getMusic().playButtonSound();
@@ -143,7 +145,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         });
 
         /*Button START. */
-        final Button start = ViewFactory.createButton("START", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
+        final Button start = this.factory.createButton("START", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
         start.setOnMouseClicked(e -> {
            final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.scenario, 
                    playerName1.getText(), playerName2.getText());
@@ -156,30 +158,30 @@ public class GameModeSelection extends Region implements ViewInterface {
         });
 
         /*Labels. */
-        final Label scenario = ViewFactory.createLabel("Scenario:", Style.LABEL, LABELS_W, LABELS_H);
-        final Label lane = ViewFactory.createLabel("Number of lane:", Style.LABEL, LABELS_W, LABELS_H);
-        final Label timer = ViewFactory.createLabel("Timer:", Style.LABEL, LABELS_W, LABELS_H);
-        final Label player1 = ViewFactory.createLabel("Player 1 name: ", Style.LABEL, LABELS_W, LABELS_H);
-        final Label player2 = ViewFactory.createLabel("Player 2 name: ", Style.LABEL, LABELS_W, LABELS_H);
+        final Label scenario = this.factory.createLabel("Scenario:", Style.LABEL, LABELS_W, LABELS_H);
+        final Label lane = this.factory.createLabel("Number of lane:", Style.LABEL, LABELS_W, LABELS_H);
+        final Label timer = this.factory.createLabel("Timer:", Style.LABEL, LABELS_W, LABELS_H);
+        final Label player1 = this.factory.createLabel("Player 1 name: ", Style.LABEL, LABELS_W, LABELS_H);
+        final Label player2 = this.factory.createLabel("Player 2 name: ", Style.LABEL, LABELS_W, LABELS_H);
 
         settingsSelected.setAlignment(Pos.CENTER);
         settingsSelected.setPrefSize(LABEL_SETTINGS_W, LABEL_SETTINGS_H);
         settingsSelected.setStyle(Style.LABEL);
 
         /*Layout and Pane gets. */
-        final HBox scenarioBox = ViewFactory.createHBox(LAYOUT_HBOX_W);
+        final HBox scenarioBox = this.factory.createHBox(LAYOUT_HBOX_W);
         scenarioBox.getChildren().add(scenario);
         scenarioBox.getChildren().addAll(scenarioList);
 
-        final HBox laneBox = ViewFactory.createHBox(LAYOUT_HBOX_W);
+        final HBox laneBox = this.factory.createHBox(LAYOUT_HBOX_W);
         laneBox.getChildren().add(lane);
         laneBox.getChildren().addAll(listLane);
 
-        final HBox timerBox = ViewFactory.createHBox(LAYOUT_HBOX_W);
+        final HBox timerBox = this.factory.createHBox(LAYOUT_HBOX_W);
         timerBox.getChildren().add(timer);
         timerBox.getChildren().addAll(listTimer);
 
-        final HBox namesBox = ViewFactory.createHBox(LAYOUT_HBOX_W);
+        final HBox namesBox = this.factory.createHBox(LAYOUT_HBOX_W);
         namesBox.setAlignment(Pos.CENTER);
         namesBox.getChildren().addAll(player1, playerName1, player2, playerName2);
 
