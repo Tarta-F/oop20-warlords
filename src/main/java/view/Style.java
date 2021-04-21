@@ -34,7 +34,7 @@ public final class Style {
     public static final String FONT = "-fx-font-weight: bold;\r\n "
             + "-fx-font-size: " + FONT_W + ";";
 
-    /**COnstants CSS for the appearance of layouts. */
+    /**Constants CSS for the appearance of layouts. */
     public static final String LAYOUT = "-fx-background-color: grey;";
 
     private Style() { }
