@@ -1,58 +1,97 @@
 package view;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public final class ViewFactory {
+/**
+ * Factory to create view elements.
+ * 
+ */
+public interface ViewFactory {
 
-    private ViewFactory() {
-    }
+    /**
+     * @param message
+     *      content of {@link Button}'s label
+     * @param style
+     *      CSS code style
+     * @param width
+     *      width of the {@link Button}
+     * @param height
+     *      height of the {@link Button}
+     * @return
+     *      a {@link Button} with the input settings
+     */
+    Button createButton(String message, String style, double width, double height);
 
-    public static Button createButton(final String message, final String style, final double width, final double height) {
-        final Button button = new Button(message);
-        button.setStyle(style);
-        button.setPrefSize(width, height);
-        button.setAlignment(Pos.CENTER);
-        return button;
-    }
+    /**
+     * @param message
+     *      content of the {@link Label}
+     * @param style
+     *      CSS code style
+     * @param width
+     *      width of the {@link Label}
+     * @param height
+     *      height of the {@link Label}
+     * @return
+     *      a {@link Label} with the input settings
+     */
+    Label createLabel(String message, String style, double width, double height);
 
-    public static Label createLabel(final String message, final String style, final double width, final double height) {
-        final Label label = new Label(message);
-        label.setStyle(style);
-        label.setPrefSize(width, height);
-        label.setAlignment(Pos.CENTER);
-        return label;
-    }
+    /**
+     * @param width
+     *      width of the {@link VBox}
+     * @return
+     *      an empty {@link VBox} with the given widht
+     */
+    VBox createVBox(double width);
 
-    public static VBox createVBox(final double width) {
-        final VBox vBox = new VBox(width);
-        vBox.setAlignment(Pos.CENTER);
-        return vBox;
-    }
+    /**
+     * @param height
+     *      width of the {@link HBox}
+     * @param padding
+     *      top and bottom offset 
+     * @return
+     *      an empty {@link HBox} with the given height
+     */
+    HBox createHBox(double height, double padding);
 
-    public static HBox createHBox(final double height, final double padding) {
-        final HBox hBox = createHBox(height);
-        hBox.setPadding(new Insets(padding, 0, padding, 0));
-        return hBox;
-    }
+    /**
+     * @param height
+     *      width of the {@link HBox}
+     * @return
+     *      an empty {@link HBox} with the given height
+     */
+    HBox createHBox(double height);
 
-    public static HBox createHBox(final double height) {
-        final HBox hBox = new HBox(height);
-        hBox.setAlignment(Pos.CENTER);
-        return hBox;
-    }
+    /**
+     * @param message
+     *      content of {@link ToggleButton}'s label
+     * @param style
+     *      CSS code style
+     * @param width
+     *      width of the {@link ToggleButton}
+     * @param height
+     *      height of the {@link ToggleButton}
+     * @return
+     *      a {@link ToggleButton} with the input settings
+     */
+    ToggleButton createToggleButton(String message, String style, double width, double height);
 
-    public static ToggleButton createToggleButton(final String message, final String style, final double width, final double height) {
-        final ToggleButton button = new ToggleButton(message);
-        button.setStyle(style);
-        button.setPrefSize(width, height);
-        button.setAlignment(Pos.CENTER);
-        return button;
-    }
+    /**
+     * @param image
+     *      image from which create the {@link ImageView}
+     * @param width
+     *      width of the {@link ImageView}
+     * @param height
+     *      height of the {@link ImageView}
+     * @return
+     *      a {@link ImageView} with the given dimensions
+     */
+    ImageView createImageView(Image image, double width, double height);
 
 }

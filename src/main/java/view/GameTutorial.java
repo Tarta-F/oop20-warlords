@@ -28,6 +28,8 @@ public class GameTutorial extends Region implements ViewInterface {
     private static final double BORDERPANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
     private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
 
+    private final ViewFactory factory = new ViewFactoryImpl();
+
     @Override
     public final Parent createPane() throws IOException {
         /*Pane. */
@@ -35,10 +37,10 @@ public class GameTutorial extends Region implements ViewInterface {
 
         /*Background. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.GAME_TUTORIAL));
-        final ImageView tutorialBackground = ViewResolution.createImageView(backgroundImg, BORDERPANE_W, BORDERPANE_H);
+        final ImageView tutorialBackground = this.factory.createImageView(backgroundImg, BORDERPANE_W, BORDERPANE_H);
 
         /*Button MAIN MENU. */
-        final Button mainMenu = ViewFactory.createButton("MAIN MENU", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
+        final Button mainMenu = this.factory.createButton("MAIN MENU", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
         mainMenu.setOnMouseClicked(e -> {
             final MainMenu sceneMenu = new MainMenu();
             try {
