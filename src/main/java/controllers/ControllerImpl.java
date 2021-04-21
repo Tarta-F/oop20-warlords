@@ -42,7 +42,8 @@ public final class ControllerImpl implements Controller {
     public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
 
-        this.gameView = new GameViewImpl(laneNumber, scenario.getBackgroundPath(), scenario.getGroundPath(), player1Name, player2Name);
+        this.gameView = new GameViewImpl(laneNumber, GameConstants.CELLS_NUM, scenario.getBackgroundPath(),
+                scenario.getGroundPath(), player1Name, player2Name);
         this.gameView.setObserver(this);
         this.laneNumber = laneNumber;
         this.winner = Optional.empty();
@@ -184,16 +185,19 @@ public final class ControllerImpl implements Controller {
     @Override
     public void update() {
         this.field.update();
-        this.gameView.show(Converter.convertMap(this.field.getUnits()));
-        this.gameView.updateScorePlayer();
-        if (this.isOver()) {
-            this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
-            this.stopGame();
-            try {
-                this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, 0, 2));
-            } catch (IOException e) {
-                e.printStackTrace();
+        Platform.runLater(() -> {
+            this.gameView.show(Converter.convertMap(this.field.getUnits()));
+            for (final var player : PlayerType.values()) {
+                this.gameView.updateScorePlayer(player, this.getScore(player));
             }
+            if (this.isOver()) {
+                this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
+                this.stopGame();
+                try {
+                    this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, 0, 2));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 //System.out.println(isOver() ? getWinner().get() + " WON" : "");
         }
     }
@@ -224,4 +228,3 @@ if (this.getScore(PlayerType.PLAYER1) < this.getScore(PlayerType.PLAYER2)) {
     this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER1));
 }
 }*/
-

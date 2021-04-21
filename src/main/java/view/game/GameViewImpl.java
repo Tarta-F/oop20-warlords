@@ -78,8 +78,6 @@ public final class GameViewImpl extends Region implements GameView {
     private List<Image> unitSelectedP2;
     private List<Image> unitImageP2;
     private Label timer;
-    private Label player1;
-    private Label player2;
     private Controller observer;
     private Pane pane;
 
@@ -104,13 +102,13 @@ public final class GameViewImpl extends Region implements GameView {
     private final Image arrowP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_ARROW));
     private final Image selectedArrowP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_SELECTED_ARROW));
 
-    public GameViewImpl(final int laneNumber, final String background, final String ground,
+    public GameViewImpl(final int laneNumber, final int cellsNUmber, final String background, final String ground,
             final String player1Name, final String player2Name) {
         this.laneNumber = laneNumber;
         this.player1Name = player1Name;
         this.player2Name = player2Name;
         this.scenario = new Image(this.getClass().getResourceAsStream(background));
-        this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
+        this.field = new GameFieldViewImpl(laneNumber, cellsNUmber, ground);
     }
 
     /** Create the timer label from the given long number.
@@ -130,7 +128,7 @@ public final class GameViewImpl extends Region implements GameView {
      * @param player PlayerType
      * */
     private Label scorePlayerLabel(final PlayerType player) {
-        final Label scoreLabel = new Label("SCORE " + this.getPlayerName(player) + ": " + observer.getScore(player));
+        final Label scoreLabel = new Label("SCORE " + this.getPlayerName(player) + ": 0");
         scoreLabel.setPrefSize(LABEL_W, LABEL_H);
         scoreLabel.setAlignment(Pos.CENTER);
         scoreLabel.setStyle(Style.LABEL);
@@ -273,11 +271,6 @@ public final class GameViewImpl extends Region implements GameView {
         for (final var type : PlayerType.values()) {
             final Label score = this.scorePlayerLabel(type);
             labelsScore.put(type, score);
-            if (type.equals(PlayerType.PLAYER1)) {
-                player1 = score;
-            } else {
-                player2 = score;
-            }
         }
 
         /*Layout. */
@@ -305,7 +298,8 @@ public final class GameViewImpl extends Region implements GameView {
         topMenu.setPadding(new Insets(PADDING_H, 0, PADDING_H, 0));
 
         final HBox bottomMenu = new HBox(BOTTOMMENU_W);
-        bottomMenu.getChildren().addAll(player1, menu, stopMusic, exit, player2);
+        bottomMenu.getChildren().addAll(this.labelsScore.get(PlayerType.PLAYER1), menu, stopMusic, exit,
+                this.labelsScore.get(PlayerType.PLAYER2));
         bottomMenu.setAlignment(Pos.CENTER);
         bottomMenu.setPadding(new Insets(PADDING_H, 0, PADDING_H, 0));
 
@@ -416,12 +410,8 @@ public final class GameViewImpl extends Region implements GameView {
     }
 
     @Override
-    public void updateScorePlayer() {
-        Platform.runLater(() -> {
-            labelsScore.forEach((type, label) -> {
-                label.setText("SCORE " + this.getPlayerName(type) + ": " + this.observer.getScore(type));
-            });
-        });
+    public void updateScorePlayer(final PlayerType player, final int score) {
+        this.labelsScore.get(player).setText("SCORE " + this.getPlayerName(player) + ": " + score);
     }
 
     @Override
