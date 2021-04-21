@@ -102,13 +102,13 @@ public final class GameViewImpl extends Region implements GameView {
     private final Image arrowP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_ARROW));
     private final Image selectedArrowP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_SELECTED_ARROW));
 
-    public GameViewImpl(final int laneNumber, final String background, final String ground,
+    public GameViewImpl(final int laneNumber, final int cellsNUmber, final String background, final String ground,
             final String player1Name, final String player2Name) {
         this.laneNumber = laneNumber;
         this.player1Name = player1Name;
         this.player2Name = player2Name;
         this.scenario = new Image(this.getClass().getResourceAsStream(background));
-        this.field = new GameFieldViewImpl(laneNumber, ViewConstants.GRID_COLUMNS, ground);
+        this.field = new GameFieldViewImpl(laneNumber, cellsNUmber, ground);
     }
 
     /** 

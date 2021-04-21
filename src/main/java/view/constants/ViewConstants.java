@@ -1,7 +1,5 @@
 package view.constants;
 
-import constants.GameConstants;
-
 /**
  * This class contain the various constants that we use in the view.
  */
@@ -49,12 +47,6 @@ public final class ViewConstants {
     /**DIVISOR used in view for the resolution of elements. */
     public static final int DIVISOR_150 = 150;
 
-    /**Number of COLUMNS in the battlefield grid, used in GameView. */
-    public static final int GRID_COLUMNS = GameConstants.CELLS_NUM;
-
-    /**Number of ARROW in the battlefield grid per player, used in GameView. */
-    public static final int N_ARROW = 5;
-
     /**Number of BUTTON in the GameModeSelection. */
     public static final int N_BUTTON_3 = 3;
 
@@ -63,9 +55,6 @@ public final class ViewConstants {
 
     /**Number of BUTTON in the GameModeSelection. */
     public static final int N_BUTTON_16 = 16;
-
-    /**Default SCENARIO in GameModeSelection. */
-    public static final int DEFAULT_SCENARIO = 1;
 
     /**Default LANES in GameModeSelection. */
     public static final int DEFAULT_LANE = 5;

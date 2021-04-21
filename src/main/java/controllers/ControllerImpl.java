@@ -31,7 +31,8 @@ public final class ControllerImpl implements Controller {
     public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
 
-        this.gameView = new GameViewImpl(laneNumber, scenario.getBackgroundPath(), scenario.getGroundPath(), player1Name, player2Name);
+        this.gameView = new GameViewImpl(laneNumber, GameConstants.CELLS_NUM, scenario.getBackgroundPath(), 
+                scenario.getGroundPath(), player1Name, player2Name);
         this.gameView.setObserver(this);
         this.laneNumber = laneNumber;
         this.winner = Optional.empty();

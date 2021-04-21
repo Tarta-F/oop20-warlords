@@ -17,6 +17,12 @@ public final class GameConstants {
     /** Lane number for hard mode. */
     public static final int FIVE_LANES = 5;
 
+    /**Default lane number. */
+    public static final int DEFAULT_LANE = FIVE_LANES;
+
+    /**Default game timer. */
+    public static final int DEFAULT_TIMER = 5;
+
     /** Cell number for each lane. */
     public static final int CELLS_NUM = 20;
 
