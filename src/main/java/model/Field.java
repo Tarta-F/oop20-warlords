@@ -2,11 +2,7 @@ package model;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
-
 import org.apache.commons.lang3.tuple.Pair;
-
 import constants.PlayerType;
 import model.unit.Unit;
 
@@ -38,7 +34,7 @@ public interface Field {
      * @return 
      *      the numbers of units that have received the enemy base, if there are any
      */
-    Optional<Integer> getScore(PlayerType player);
+    int getScore(PlayerType player);
 
     /**
      * @return 

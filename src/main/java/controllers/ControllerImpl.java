@@ -127,7 +127,7 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public int getScore(final PlayerType player) {
-        return this.field.getScore(player).orElseGet(() -> Integer.valueOf(0));
+        return this.field.getScore(player);
     }
 
     @Override
