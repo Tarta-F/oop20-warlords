@@ -19,7 +19,20 @@ public enum Sounds {
     /**
      * Sound for Starting Game.
      */
+    SPAWN_TROUP(ResourcesConstants.SPAWN),
+    /**
+     * Sound for Starting Game.
+     */
+    DRAW_RESULT(ResourcesConstants.DRAW),
+    /**
+     * Sound for Starting Game.
+     */
+    VICTORY_RESULT(ResourcesConstants.VICTORY),
+    /**
+     * Sound for Starting Game.
+     */
     START_GAME(ResourcesConstants.BUTTON_START);
+
 
     private final String path;
 

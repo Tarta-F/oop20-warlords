@@ -13,6 +13,7 @@ import model.unit.UnitType;
 import view.game.GameView;
 import view.ScenarioViewType;
 import view.game.GameViewImpl;
+import view.sound.Music;
 
 public final class ControllerImpl implements Controller {
 
@@ -95,6 +96,7 @@ public final class ControllerImpl implements Controller {
         this.field.addUnit(lane, new UnitImpl(unitToSpawn, player));
         gameView.show(Converter.convertMap(this.field.getUnits()));
         this.resetPlayerTimer(player);
+        Music.getMusic().playSpawnSound();
       }
     }
 

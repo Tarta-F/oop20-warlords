@@ -13,7 +13,7 @@ import javafx.util.Duration;
 public final class Music {
 
     private static final Music SINGLETON = new Music();
-    private static final double VOLUME = 0.8;
+    private static final double VOLUME = 0.5;
 
     private final EnumMap<Sounds, MediaPlayer> soundMedias = new EnumMap<>(Sounds.class);
 
@@ -83,7 +83,6 @@ public final class Music {
         this.switchMusic(this.soundMedias.get(sound));
     }
 
-
     /**
      * Method to on/off sounds effects. 
      */
@@ -94,6 +93,13 @@ public final class Music {
             SINGLETON.currentMusic.stop();
         }
         SINGLETON.stop = !SINGLETON.stop;
+    }
+
+    /**
+     * Method to stop current music. 
+     */
+    public void musicStop() {
+            SINGLETON.currentMusic.stop();
     }
 
     /**
@@ -125,5 +131,22 @@ public final class Music {
     public void startMatchSound() {
         this.playSound(Sounds.START_GAME);
     }
-
+    /**
+     * Method to play the sound for spawning troups.
+     */
+    public void playSpawnSound() {
+        this.playSound(Sounds.SPAWN_TROUP);
+    }
+    /**
+     * Method to play the sound for Victory result.
+     */ 
+    public void playVictorySound() {
+        this.playSound(Sounds.VICTORY_RESULT);
+    }
+    /**
+     * Method to play the sound for Draw result.
+     */
+    public void playDrawSound() {
+        this.playSound(Sounds.DRAW_RESULT);
+    }
 }

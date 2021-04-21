@@ -108,6 +108,15 @@ public final class ResourcesConstants {
     /**PATH music. */
     public static final String BUTTON_START = SEP + "start.wav";
 
+    /**PATH music. */
+    public static final String SPAWN = SEP + "movment.wav";
+
+    /**PATH music. */
+    public static final String DRAW = SEP + "draw.wav";
+
+    /**PATH music. */
+    public static final String VICTORY = SEP + "victory.wav";
+
     private ResourcesConstants() { }
 
 }

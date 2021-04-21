@@ -396,12 +396,16 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void winnerBoxResult(final String player) {
-        this.resultBox("winner", "HAS WON", player);
+        Music.getMusic().musicStop();
+        Music.getMusic().playVictorySound();
+        this.resultBox("winner", " HAS WON", player);
     }
 
     @Override
     public void drawBoxResult(final String scores) {
-        this.resultBox("draw", "DRAW", scores);
+        Music.getMusic().musicStop();
+        Music.getMusic().playDrawSound();
+        this.resultBox("draw", " DRAW", scores);
     }
 
     @Override
