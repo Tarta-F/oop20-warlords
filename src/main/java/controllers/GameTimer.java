@@ -10,13 +10,15 @@ public class GameTimer implements Runnable {
     private volatile int totSec;
     private volatile boolean stop;
     private final GameView gameView;
+    private final Controller controller;
 
-    GameTimer(final int mins, final GameView gameView) {
+    GameTimer(final int mins, final GameView gameView, final Controller controller) {
         this.mins = mins;
         this.seconds = 0;
         this.totSec = this.mins * SEC_IN_MIN;
         this.stop = false;
         this.gameView = gameView;
+        this.controller = controller;
     }
 
     @Override
@@ -33,6 +35,7 @@ public class GameTimer implements Runnable {
             }
         }
         //TODO block/finish the game Funzione che guarda punteggio: vincitore o pareggio.
+        this.controller.setTimerIsOver();
     }
 
     public final void stopTimer() {

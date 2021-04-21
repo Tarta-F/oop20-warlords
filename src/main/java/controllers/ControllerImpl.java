@@ -43,12 +43,12 @@ public final class ControllerImpl implements Controller {
             final String player1Name, final String player2Name) {
 
         this.gameView = new GameViewImpl(laneNumber, GameConstants.CELLS_NUM, scenario.getBackgroundPath(),
-                scenario.getGroundPath(), player1Name, player2Name);
+                scenario.getGroundPath());
         this.gameView.setObserver(this);
         this.laneNumber = laneNumber;
         this.winner = Optional.empty();
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
-        this.gameTimer = new GameTimer(mins, this.gameView);
+        this.gameTimer = new GameTimer(mins, this.gameView, this);
         this.score = new ScoreImpl(player1Name, player2Name);
         this.ioContr = new IOControllerImpl();
         this.player1Name = player1Name;
@@ -185,26 +185,24 @@ public final class ControllerImpl implements Controller {
     @Override
     public void update() {
         this.field.update();
-        Platform.runLater(() -> {
-            this.gameView.show(Converter.convertMap(this.field.getUnits()));
-            for (final var player : PlayerType.values()) {
-                this.gameView.updateScorePlayer(player, this.getScore(player));
-            }
-            if (this.isOver()) {
-                this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
-                this.stopGame();
-                try {
-                    this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, 0, 2));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //System.out.println(isOver() ? getWinner().get() + " WON" : "");
+        this.gameView.show(Converter.convertMap(this.field.getUnits()));
+        for (final var player : PlayerType.values()) {
+            this.gameView.updateScorePlayer(player, this.getScore(player));
         }
+        if (this.isOver()) {
+            this.gameView.winnerBoxResult(this.getPlayerName(getWinner().get()));
+            this.stopGame();
+            try {
+                this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, 0, 2));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } // System.out.println(isOver() ? getWinner().get() + " WON" : "");
     }
 
     @Override
     public boolean isOver() {
-        return this.hasWin(PlayerType.PLAYER1) || this.hasWin(PlayerType.PLAYER2) || this.timerIsOver;
+        return this.hasWin(PlayerType.PLAYER1) || this.hasWin(PlayerType.PLAYER2);
     }
 
     @Override
@@ -217,6 +215,15 @@ public final class ControllerImpl implements Controller {
     @Override
     public void timeOut() {
         // TODO Auto-generated method stub
+    }
+
+    /**
+     * Get player NAME.
+     * @param player PlayerType
+     * @return String -name of the player.
+     * */
+    public String getPlayerName(final PlayerType player) {
+        return player.equals(PlayerType.PLAYER1) ? this.player1Name : this.player2Name;
     }
 }
 /*else if ("00:00".equals(this.gameView.getTimer())) {

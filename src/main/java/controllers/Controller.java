@@ -79,4 +79,6 @@ public interface Controller {
      */
     void stopGame();
 
+    String getPlayerName(PlayerType player);
+
 }
