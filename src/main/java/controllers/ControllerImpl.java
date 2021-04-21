@@ -11,7 +11,6 @@ import controllers.io.IOController;
 import controllers.io.IOControllerImpl;
 import model.Field;
 import model.FieldImpl;
-import model.Score;
 import model.ScoreImpl;
 import model.unit.UnitImpl;
 import model.unit.UnitType;
@@ -34,7 +33,6 @@ public final class ControllerImpl implements Controller {
     private final ScheduledThreadPoolExecutor thrEx;
     private final GameLoopImpl gameLoop;
     private final GameTimer gameTimer;
-    private final Score score;
     private final IOController ioContr;
     private final String player1Name;
     private final String player2Name;
@@ -49,7 +47,6 @@ public final class ControllerImpl implements Controller {
         this.winner = Optional.empty();
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
         this.gameTimer = new GameTimer(mins, this.gameView, this);
-        this.score = new ScoreImpl(player1Name, player2Name);
         this.ioContr = new IOControllerImpl();
         this.player1Name = player1Name;
         this.player2Name = player2Name;
@@ -110,9 +107,9 @@ public final class ControllerImpl implements Controller {
     /**
      * Stop the game and write on a file the score of the match.
      */
-    private void stopAndWriteScore() {
+    private void stopAndWriteScore(final int scoreP1, final int scoreP2) {
         this.stopGame();
-        this.writeScore();
+        this.writeScore(scoreP1, scoreP2);
     }
 
     public String getPlayer1Name() {
@@ -203,11 +200,10 @@ public final class ControllerImpl implements Controller {
         }
         if (this.isOver()) {
             this.gameView.winnerBoxResult(this.getPlayerName(getWinner().get()));
-            this.stopAndWriteScore();
+            this.stopAndWriteScore(this.getScore(PlayerType.PLAYER1), getScore(PlayerType.PLAYER2));
         } 
         if (this.timerIsOver) {
             this.controlEndTime();
-            this.stopAndWriteScore();
         }
             // System.out.println(isOver() ? getWinner().get() + " WON" : "");
     }
@@ -238,17 +234,17 @@ public final class ControllerImpl implements Controller {
         return player.equals(PlayerType.PLAYER1) ? this.player1Name : this.player2Name;
     }
 
-    private void writeScore() {
+    private void writeScore(final int scoreP1, final int scoreP2) {
         try {
-            this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, 0, 2));
+            this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, scoreP1, scoreP2));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void controlEndTime() {
-        final int p1score = this.field.getScore(PlayerType.PLAYER1).orElseGet(() -> Integer.valueOf(0));
-        final int p2score = this.field.getScore(PlayerType.PLAYER2).orElseGet(() -> Integer.valueOf(0));
+        final int p1score = this.getScore(PlayerType.PLAYER1);
+        final int p2score = this.getScore(PlayerType.PLAYER2);
         if (p1score == p2score) {
             this.gameView.drawBoxResult(p1score + " - " + p2score);
         } else {
@@ -258,6 +254,7 @@ public final class ControllerImpl implements Controller {
                 this.gameView.winnerBoxResult(getPlayerName(PlayerType.PLAYER2));
             }
         }
+        this.stopAndWriteScore(p1score, p2score);
     }
 }
 
