@@ -60,7 +60,7 @@ public class Scoreboard extends Region implements ViewInterface {
         });
 
         /*Label. */
-        final Label risultati = this.factory.createLabel("RISULTATI", Style.LABEL, LABEL_W, LABEL_H);
+        final Label results = this.factory.createLabel("RESULTS", Style.LABEL, LABEL_W, LABEL_H);
 
         /*ListView. */
         final ListView<String> listView = new ListView<>();
@@ -85,7 +85,7 @@ public class Scoreboard extends Region implements ViewInterface {
         final HBox topMenu = new HBox();
         topMenu.setAlignment(Pos.CENTER);
         topMenu.setPadding(new Insets(LAYOUT_PADDING_H_1, 0, 0, 0));
-        topMenu.getChildren().add(risultati);
+        topMenu.getChildren().add(results);
 
         /*BorderPane sets and Pane gets. */
         final BorderPane borderPane = new BorderPane();
