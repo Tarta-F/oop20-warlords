@@ -232,7 +232,7 @@ public final class GameViewImpl extends Region implements GameView {
 
         /*Settings for the player labels, with name and score of the player. */
         for (final var type : PlayerType.values()) {
-            final Label score = this.factory.createLabel("SCORE " + this.getPlayerName(type) + ": 0", Style.LABEL,
+            final Label score = this.factory.createLabel("SCORE " + this.observer.getPlayerName(type) + ": 0", Style.LABEL,
                     LABEL_W, LABEL_H);
             labelsScore.put(type, score);
         }

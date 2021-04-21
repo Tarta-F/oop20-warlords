@@ -117,7 +117,8 @@ public class GameModeSelection extends Region implements ViewInterface {
         /*Buttons TIMER. Associate a button to a different timer (Game duration). */
         final Map<Button, Integer> buttonTimer = new HashMap<>();
 
-        for (int i = ViewConstants.N_BUTTON_3 + 2; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_3 + 2) {
+        //for (int i = ViewConstants.N_BUTTON_3 + 2; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_3 + 2) {
+        for (int i = 1; i <= 5; i += 2) {
             final Button timerButtons = this.factory.createButton(i + " MINUTES", Style.BUTTON_1, 
                     BUTTONS_W, BUTTONS_H);
             buttonTimer.put(timerButtons, i);

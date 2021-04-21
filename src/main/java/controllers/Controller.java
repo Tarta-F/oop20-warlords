@@ -61,7 +61,7 @@ public interface Controller {
      */
     boolean isOver();
     //TODO
-    void timeOut();
+    boolean timeOut();
 
     /**
      * Updates the model and print the result on the GameView.
@@ -79,6 +79,9 @@ public interface Controller {
      */
     void stopGame();
 
+    //TODO
     String getPlayerName(PlayerType player);
+
+    boolean isTimerOver();
 
 }

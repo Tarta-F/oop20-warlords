@@ -107,6 +107,13 @@ public final class ControllerImpl implements Controller {
     private void resetPlayerTimer(final PlayerType player) {
         this.timers.get(player).resetTimer();
     }
+    /**
+     * Stop the game and write on a file the score of the match.
+     */
+    private void stopAndWriteScore() {
+        this.stopGame();
+        this.writeScore();
+    }
 
     public String getPlayer1Name() {
         return player1Name;
@@ -134,6 +141,11 @@ public final class ControllerImpl implements Controller {
     @Override
     public void setTimerIsOver() {
         this.timerIsOver = true;
+    }
+
+    @Override
+    public boolean isTimerOver() {
+        return this.timerIsOver;
     }
 
     @Override
@@ -191,13 +203,13 @@ public final class ControllerImpl implements Controller {
         }
         if (this.isOver()) {
             this.gameView.winnerBoxResult(this.getPlayerName(getWinner().get()));
-            this.stopGame();
-            try {
-                this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, 0, 2));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } // System.out.println(isOver() ? getWinner().get() + " WON" : "");
+            this.stopAndWriteScore();
+        } 
+        if (this.timerIsOver) {
+            this.controlEndTime();
+            this.stopAndWriteScore();
+        }
+            // System.out.println(isOver() ? getWinner().get() + " WON" : "");
     }
 
     @Override
@@ -213,8 +225,8 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public void timeOut() {
-        // TODO Auto-generated method stub
+    public boolean timeOut() {
+        return this.timerIsOver;
     }
 
     /**
@@ -225,13 +237,27 @@ public final class ControllerImpl implements Controller {
     public String getPlayerName(final PlayerType player) {
         return player.equals(PlayerType.PLAYER1) ? this.player1Name : this.player2Name;
     }
+
+    private void writeScore() {
+        try {
+            this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, 0, 2));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void controlEndTime() {
+        final int p1score = this.field.getScore(PlayerType.PLAYER1).orElseGet(() -> Integer.valueOf(0));
+        final int p2score = this.field.getScore(PlayerType.PLAYER2).orElseGet(() -> Integer.valueOf(0));
+        if (p1score == p2score) {
+            this.gameView.drawBoxResult(p1score + " - " + p2score);
+        } else {
+            if (p1score > p2score) {
+                this.gameView.winnerBoxResult(getPlayerName(PlayerType.PLAYER1));
+            } else {
+                this.gameView.winnerBoxResult(getPlayerName(PlayerType.PLAYER2));
+            }
+        }
+    }
 }
-/*else if ("00:00".equals(this.gameView.getTimer())) {
-if (this.getScore(PlayerType.PLAYER1) < this.getScore(PlayerType.PLAYER2)) {
-    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER2));
-} else if (this.getScore(PlayerType.PLAYER1) == this.getScore(PlayerType.PLAYER2)) {
-    this.gameView.winnerBoxResult("DRAW!");
-} else {
-    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER1));
-}
-}*/
+

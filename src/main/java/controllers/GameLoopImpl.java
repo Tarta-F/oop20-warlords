@@ -10,7 +10,7 @@ public class GameLoopImpl implements Runnable {
 
     @Override
     public final void run() {
-       if (!controller.isOver()) {
+       if (!controller.isOver() || controller.isTimerOver()) {
             controller.update();
         }
     }
