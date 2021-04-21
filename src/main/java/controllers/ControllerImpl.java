@@ -140,7 +140,9 @@ public final class ControllerImpl implements Controller {
         this.field.update();
         Platform.runLater(() -> {
             this.gameView.show(Converter.convertMap(this.field.getUnits()));
-            this.gameView.updateScorePlayer();
+            for (final var player : PlayerType.values()) {
+                this.gameView.updateScorePlayer(player, this.getScore(player));
+            }
             if (isOver()) {
                 this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
                 //System.out.println(isOver() ? getWinner().get() + " WON" : "");

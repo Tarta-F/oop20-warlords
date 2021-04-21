@@ -48,8 +48,13 @@ public interface GameView extends ViewClose, ViewInterface {
 
     /**
      * Method to update the players labels score.
-     * */
-    void updateScorePlayer();
+     * 
+     * @param player
+     *      player whose score to update
+     * @param score
+     *      the current score of the player
+     */
+    void updateScorePlayer(PlayerType player, int score);
 
     /**
      * Method to set the Observer.
