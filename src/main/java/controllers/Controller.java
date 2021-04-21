@@ -34,8 +34,9 @@ public interface Controller {
     /**
      * Deploy a unit in the lane currently selected by the player.
      * @param playerType
+     * @return true if the unit has been spawned correctly
      */
-    void spawnUnit(PlayerType playerType);
+    boolean spawnUnit(PlayerType playerType);
 
     /*
      * Controls if the game is over.
