@@ -14,7 +14,7 @@ public interface Unit {
      * Get the HEALTH of the unit. 
      * @return unit HP
      * */
-    int getHP();
+    int getHp();
 
     /**
      * Get the MOVEMENT of the unit.
