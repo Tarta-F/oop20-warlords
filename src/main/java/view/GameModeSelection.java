@@ -80,13 +80,12 @@ public class GameModeSelection extends Region implements ViewInterface {
         /*Buttons. */
         /*Buttons SCENARIO. */
         final List<Button> scenarioList = new ArrayList<>();
-        final List<ScenarioViewType> scenarios = new ArrayList<>(List.of(ScenarioViewType.values()));
+        final List<ScenarioViewType> scenarios = List.of(ScenarioViewType.values());
         final Map<Button, ScenarioViewType> buttonScenario = new HashMap<>();
 
         scenarios.forEach(s -> {
-            final Button scenarioButtons = new Button("SCENARIO " + s.getDescription());
-            scenarioButtons.setPrefSize(BUTTONS_W, BUTTONS_H);
-            scenarioButtons.setStyle(Style.BUTTON_1);
+            final Button scenarioButtons = ViewFactory.createButton("SCENARIO " + s.getDescription(), Style.BUTTON_1, 
+                    BUTTONS_W, BUTTONS_H);
             buttonScenario.put(scenarioButtons, s);
             scenarioButtons.setOnMouseClicked(e -> {
                 Music.getMusic().playButtonSound();
@@ -98,11 +97,9 @@ public class GameModeSelection extends Region implements ViewInterface {
 
         /*Buttons LANE. Associate a button to a number of lane. */
         final Map<Button, Integer> buttonLane = new HashMap<>();
-
         for (int i = 1; i < ViewConstants.N_BUTTON_6; i += 2) {
-            final Button laneButtons = new Button("LANE'S NUMBER: " + i);
-            laneButtons.setPrefSize(BUTTONS_W, BUTTONS_H);
-            laneButtons.setStyle(Style.BUTTON_1);
+            final Button laneButtons = ViewFactory.createButton("LANE'S NUMBER: " + i, Style.BUTTON_1,
+                    BUTTONS_W, BUTTONS_H);
             buttonLane.put(laneButtons, i);
             laneButtons.setOnMouseClicked(e -> {
                 Music.getMusic().playButtonSound();
@@ -119,9 +116,8 @@ public class GameModeSelection extends Region implements ViewInterface {
         final Map<Button, Integer> buttonTimer = new HashMap<>();
 
         for (int i = ViewConstants.N_BUTTON_3 + 2; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_3 + 2) {
-            final Button timerButtons = new Button(i + " MINUTES");
-            timerButtons.setPrefSize(BUTTONS_W, BUTTONS_H);
-            timerButtons.setStyle(Style.BUTTON_1);
+            final Button timerButtons = ViewFactory.createButton(i + " MINUTES", Style.BUTTON_1, 
+                    BUTTONS_W, BUTTONS_H);
             buttonTimer.put(timerButtons, i);
             timerButtons.setOnMouseClicked(e -> {
                 Music.getMusic().playButtonSound();
@@ -135,9 +131,7 @@ public class GameModeSelection extends Region implements ViewInterface {
                 .collect(Collectors.toList());
 
         /*Button BACK. */
-        final Button back = new Button("BACK");
-        back.setPrefSize(BUTTONS_W, BUTTONS_H);
-        back.setStyle(Style.BUTTON_2);
+        final Button back = ViewFactory.createButton("BACK", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
         back.setOnMouseClicked(e -> {
             final MainMenu scenaMenu = new MainMenu();
             Music.getMusic().playButtonSound();
@@ -149,9 +143,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         });
 
         /*Button START. */
-        final Button start = new Button("START");
-        start.setPrefSize(BUTTONS_W, BUTTONS_H);
-        start.setStyle(Style.BUTTON_2);
+        final Button start = ViewFactory.createButton("START", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
         start.setOnMouseClicked(e -> {
            final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.scenario, 
                    playerName1.getText(), playerName2.getText());
@@ -164,52 +156,30 @@ public class GameModeSelection extends Region implements ViewInterface {
         });
 
         /*Labels. */
-        final Label scenario = new Label("Scenario:");
-        scenario.setAlignment(Pos.CENTER);
-        scenario.setPrefSize(LABELS_W, LABELS_H);
-        scenario.setStyle(Style.LABEL);
-
-        final Label lane = new Label("Number of lane:");
-        lane.setAlignment(Pos.CENTER);
-        lane.setPrefSize(LABELS_W, LABELS_H);
-        lane.setStyle(Style.LABEL);
-
-        final Label timer = new Label("Timer:");
-        timer.setAlignment(Pos.CENTER);
-        timer.setPrefSize(LABELS_W, LABELS_H);
-        timer.setStyle(Style.LABEL);
-
-        final Label player1 = new Label("Player 1 name: ");
-        player1.setAlignment(Pos.CENTER);
-        player1.setPrefSize(LABELS_W, LABELS_H);
-        player1.setStyle(Style.LABEL);
-
-        final Label player2 = new Label("Player 2 name: ");
-        player2.setAlignment(Pos.CENTER);
-        player2.setPrefSize(LABELS_W, LABELS_H);
-        player2.setStyle(Style.LABEL);
+        final Label scenario = ViewFactory.createLabel("Scenario:", Style.LABEL, LABELS_W, LABELS_H);
+        final Label lane = ViewFactory.createLabel("Number of lane:", Style.LABEL, LABELS_W, LABELS_H);
+        final Label timer = ViewFactory.createLabel("Timer:", Style.LABEL, LABELS_W, LABELS_H);
+        final Label player1 = ViewFactory.createLabel("Player 1 name: ", Style.LABEL, LABELS_W, LABELS_H);
+        final Label player2 = ViewFactory.createLabel("Player 2 name: ", Style.LABEL, LABELS_W, LABELS_H);
 
         settingsSelected.setAlignment(Pos.CENTER);
         settingsSelected.setPrefSize(LABEL_SETTINGS_W, LABEL_SETTINGS_H);
         settingsSelected.setStyle(Style.LABEL);
 
         /*Layout and Pane gets. */
-        final HBox scenarioBox = new HBox(LAYOUT_HBOX_W);
-        scenarioBox.setAlignment(Pos.CENTER);
+        final HBox scenarioBox = ViewFactory.createHBox(LAYOUT_HBOX_W);
         scenarioBox.getChildren().add(scenario);
         scenarioBox.getChildren().addAll(scenarioList);
 
-        final HBox laneBox = new HBox(LAYOUT_HBOX_W);
-        laneBox.setAlignment(Pos.CENTER);
+        final HBox laneBox = ViewFactory.createHBox(LAYOUT_HBOX_W);
         laneBox.getChildren().add(lane);
         laneBox.getChildren().addAll(listLane);
 
-        final HBox timerBox = new HBox(LAYOUT_HBOX_W);
-        timerBox.setAlignment(Pos.CENTER);
+        final HBox timerBox = ViewFactory.createHBox(LAYOUT_HBOX_W);
         timerBox.getChildren().add(timer);
         timerBox.getChildren().addAll(listTimer);
 
-        final HBox namesBox = new HBox(LAYOUT_HBOX_W);
+        final HBox namesBox = ViewFactory.createHBox(LAYOUT_HBOX_W);
         namesBox.setAlignment(Pos.CENTER);
         namesBox.getChildren().addAll(player1, playerName1, player2, playerName2);
 
@@ -223,8 +193,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         vBox.setPrefSize(VBOX_W, VBOX_H);
         vBox.getChildren().addAll(scenarioBox, laneBox, timerBox, namesBox, backStartBox);
 
-        pane.getChildren().add(background);
-        pane.getChildren().addAll(vBox);
+        pane.getChildren().addAll(background, vBox);
 
         return pane;
     }

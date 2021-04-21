@@ -38,9 +38,7 @@ public class GameTutorial extends Region implements ViewInterface {
         final ImageView tutorialBackground = ViewResolution.createImageView(backgroundImg, BORDERPANE_W, BORDERPANE_H);
 
         /*Button MAIN MENU. */
-        final Button mainMenu = new Button("MAIN MENU");
-        mainMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
-        mainMenu.setStyle(Style.BUTTON_2);
+        final Button mainMenu = ViewFactory.createButton("MAIN MENU", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
         mainMenu.setOnMouseClicked(e -> {
             final MainMenu sceneMenu = new MainMenu();
             try {

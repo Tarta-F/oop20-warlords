@@ -43,7 +43,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         /*Creation of the Stage, Scene and all their preferences. */
         Music.getMusic().play(Sounds.MENU);
         final Stage window = primaryStage;
-        final Pane pane = new Pane(createPane());
+        final Pane pane = new Pane(this.createPane());
         final Scene scene = new Scene(pane, PANE_W, PANE_H);
         scene.getStylesheets().add(MainMenu.class.getResource("/listView.css").toExternalForm());
         window.setScene(scene);
@@ -75,9 +75,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
 
         /*Buttons. */
         /*Button SCOREBOARD. */
-        final Button scoreboard = new Button("SCOREBOARD");
-        scoreboard.setStyle(Style.BUTTON_1);
-        scoreboard.setPrefSize(BUTTONS_W, BUTTONS_H);
+        final Button scoreboard = ViewFactory.createButton("SCOREBOARD", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         scoreboard.setOnMouseClicked(e -> {
             final Scoreboard scenesScoreboard = new Scoreboard();
             Music.getMusic().playButtonSound();
@@ -89,9 +87,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         });
 
         /*Button VERSUS. */
-        final Button versus = new Button("VERSUS");
-        versus.setStyle(Style.BUTTON_1);
-        versus.setPrefSize(BUTTONS_W, BUTTONS_H);
+        final Button versus = ViewFactory.createButton("VERSUS", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         versus.setOnMouseClicked(e -> {
             final GameModeSelection sceneGameModeSelection = new GameModeSelection();
             try {
@@ -103,11 +99,8 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         });
 
         /*Button TUTORIALS. */
-        final Button tutorials = new Button("TUTORIALS");
-        tutorials.setStyle(Style.BUTTON_1);
-        tutorials.setPrefSize(BUTTONS_W, BUTTONS_H);
+        final Button tutorials = ViewFactory.createButton("TUTORIALS", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         tutorials.setOnMouseClicked(e -> {
-
             try {
                 Music.getMusic().playButtonSound();
                 final GameTutorial sceneTutorial = new GameTutorial();
@@ -118,31 +111,21 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         });
 
         /*Button MUSIC. */
-        final ToggleButton stopMusic = new ToggleButton("MUSIC ON/OFF");
-        stopMusic.setStyle(Style.BUTTON_1);
-        stopMusic.setPrefSize(BUTTONS_W, BUTTONS_H);
+        final ToggleButton stopMusic = ViewFactory.createToggleButton("MUSIC ON/OFF", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         stopMusic.setOnMouseClicked(e -> {
-//            if (stopMusic.isSelected()) {
-                Music.getMusic().playButtonSound();
-                Music.getMusic().musicOnOff();
-//            } else {
-//                Music.getMusic().buttonsMusic(ResourcesConstants.BUTTON_SOUND);
-//                Music.getMusic().musicStart(ResourcesConstants.MUSIC);
-//            }
+            Music.getMusic().playButtonSound();
+            Music.getMusic().musicOnOff();
         });
 
         /*Button EXIT. */
-        final Button exitMenu = new Button("EXIT");
-        exitMenu.setStyle(Style.BUTTON_1);
-        exitMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
+        final Button exitMenu = ViewFactory.createButton("EXIT", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         exitMenu.setOnMouseClicked(e -> {
             Music.getMusic().playButtonSound();
             closeProgram(pane);
         });
 
         /*Layout. */
-        final VBox menu = new VBox(VBOX_H);
-        menu.setAlignment(Pos.CENTER);
+        final VBox menu = ViewFactory.createVBox(VBOX_H);
         menu.getChildren().addAll(logo, versus, scoreboard, tutorials, stopMusic, exitMenu);
         menu.setPadding(new Insets(LAYOUT_PADDING_H_1, 0, LAYOUT_PADDING_H_1, 0));
 
@@ -157,13 +140,11 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         rigthVBox.setPadding(new Insets(0, LAYOUT_PADDING_W_1, 0, 0));
 
         /*BorderPane sets and Pane gets. */
-        final BorderPane borderPane = new BorderPane();
+        final BorderPane borderPane = new BorderPane(menu);
         borderPane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
-        borderPane.setCenter(menu);
         borderPane.setLeft(leftVBox);
         borderPane.setRight(rigthVBox);
-        pane.getChildren().add(menuBackGround);
-        pane.getChildren().addAll(borderPane);
+        pane.getChildren().addAll(menuBackGround, borderPane);
 
         return pane;
     }
