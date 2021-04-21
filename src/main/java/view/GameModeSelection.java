@@ -10,6 +10,8 @@ import controllers.ControllerImpl;
 import view.constants.ViewConstants;
 import view.sound.Music;
 import view.constants.ResourcesConstants;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -61,6 +63,19 @@ public class GameModeSelection extends Region implements ViewInterface {
                 + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
     }
 
+    /**Method that limit the players names length to 10. */
+    private static void addTextLimiter(final TextField tf, final int maxLength) {
+        tf.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                if (tf.getText().length() > maxLength) {
+                    final String s = tf.getText().substring(0, maxLength);
+                    tf.setText(s);
+                }
+            }
+        });
+    }
+
     @Override
     public final Parent createPane() throws IOException {
         /*Pane. */
@@ -69,9 +84,11 @@ public class GameModeSelection extends Region implements ViewInterface {
         /*TextField. */
         final TextField playerName1 = new TextField("Player 1");
         playerName1.setPrefSize(TEXTFIELD_W, TEXTFIELD_H);
+        addTextLimiter(playerName1, 10);
 
         final TextField playerName2 = new TextField("Player 2");
         playerName2.setPrefSize(TEXTFIELD_W, TEXTFIELD_H);
+        addTextLimiter(playerName2, 10);
 
         /*BackGroung. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.GAME_SETTINGS));
