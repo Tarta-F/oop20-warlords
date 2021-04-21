@@ -395,11 +395,16 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void winnerBoxResult(final String player) {
+        Music.getMusic().musicStop();
+        Music.getMusic().playVictorySound();
         Platform.runLater(() -> this.resultBox("Winner", " HAS WON", player));
-        }
+    }
 
     @Override
     public void drawBoxResult(final String scores) {
+        Music.getMusic().musicStop();
+        Music.getMusic().playDrawSound();
         Platform.runLater(() -> this.resultBox("Draw", " DRAW! ", scores));
-      }
+    }
+
 }

@@ -33,7 +33,7 @@ public class UnitImpl implements Unit {
     }
 
     @Override
-    public final int getHP() {
+    public final int getHp() {
         return this.hp;
     }
 
