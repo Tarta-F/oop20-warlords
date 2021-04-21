@@ -38,6 +38,8 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
     private static final double LOGO_UNIT_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_3);
     private static final double VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_20);
 
+    private final ViewFactory factory = new ViewFactoryImpl();
+
     @Override
     public void start(final Stage primaryStage) throws Exception {
         /*Creation of the Stage, Scene and all their preferences. */
@@ -62,20 +64,20 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
 
         /*Background and Image. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.MENU));
-        final ImageView menuBackGround = ViewResolution.createImageView(backgroundImg, PANE_W, PANE_H);
+        final ImageView menuBackGround = this.factory.createImageView(backgroundImg, PANE_W, PANE_H);
 
         final Image logoImage  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.LOGO));
-        final ImageView logo = ViewResolution.createImageView(logoImage, LOGO_W, LOGO_H);
+        final ImageView logo = this.factory.createImageView(logoImage, LOGO_W, LOGO_H);
 
         final Image logoSpearmanImage  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_SPEARMEN));
-        final ImageView logoSpearman = ViewResolution.createImageView(logoSpearmanImage, LOGO_UNIT_W, LOGO_UNIT_H);
+        final ImageView logoSpearman = this.factory.createImageView(logoSpearmanImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
         final Image logoArcherImage  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P1_ARCHER));
-        final ImageView logoArcher = ViewResolution.createImageView(logoArcherImage, LOGO_UNIT_W, LOGO_UNIT_H);
+        final ImageView logoArcher = this.factory.createImageView(logoArcherImage, LOGO_UNIT_W, LOGO_UNIT_H);
 
         /*Buttons. */
         /*Button SCOREBOARD. */
-        final Button scoreboard = ViewFactory.createButton("SCOREBOARD", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
+        final Button scoreboard = this.factory.createButton("SCOREBOARD", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         scoreboard.setOnMouseClicked(e -> {
             final Scoreboard scenesScoreboard = new Scoreboard();
             Music.getMusic().playButtonSound();
@@ -88,7 +90,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         });
 
         /*Button VERSUS. */
-        final Button versus = ViewFactory.createButton("VERSUS", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
+        final Button versus = this.factory.createButton("VERSUS", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         versus.setOnMouseClicked(e -> {
             final GameModeSelection sceneGameModeSelection = new GameModeSelection();
             try {
@@ -100,7 +102,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         });
 
         /*Button TUTORIALS. */
-        final Button tutorials = ViewFactory.createButton("TUTORIALS", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
+        final Button tutorials = this.factory.createButton("TUTORIALS", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         tutorials.setOnMouseClicked(e -> {
             try {
                 Music.getMusic().playButtonSound();
@@ -112,21 +114,21 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         });
 
         /*Button MUSIC. */
-        final ToggleButton stopMusic = ViewFactory.createToggleButton("MUSIC ON/OFF", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
+        final ToggleButton stopMusic = this.factory.createToggleButton("MUSIC ON/OFF", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         stopMusic.setOnMouseClicked(e -> {
             Music.getMusic().playButtonSound();
             Music.getMusic().musicOnOff();
         });
 
         /*Button EXIT. */
-        final Button exitMenu = ViewFactory.createButton("EXIT", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
+        final Button exitMenu = this.factory.createButton("EXIT", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         exitMenu.setOnMouseClicked(e -> {
             Music.getMusic().playButtonSound();
             closeProgram(pane);
         });
 
         /*Layout. */
-        final VBox menu = ViewFactory.createVBox(VBOX_H);
+        final VBox menu = this.factory.createVBox(VBOX_H);
         menu.getChildren().addAll(logo, versus, scoreboard, tutorials, stopMusic, exitMenu);
         menu.setPadding(new Insets(LAYOUT_PADDING_H_1, 0, LAYOUT_PADDING_H_1, 0));
 

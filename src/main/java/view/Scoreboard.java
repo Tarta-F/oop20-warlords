@@ -36,6 +36,8 @@ public class Scoreboard extends Region implements ViewInterface {
     private static final double LABEL_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7);
     private static final double LABEL_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
 
+    private final ViewFactory factory = new ViewFactoryImpl();
+
     @Override
     public final Parent createPane() throws IOException {
         /*Pane. */
@@ -43,12 +45,10 @@ public class Scoreboard extends Region implements ViewInterface {
 
         /*Background. */
         final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.GAME_SETTINGS));
-        final ImageView scoreboardBackground = ViewResolution.createImageView(backgroundImg, BORDERPANE_W, BORDERPANE_H);
+        final ImageView scoreboardBackground = this.factory.createImageView(backgroundImg, BORDERPANE_W, BORDERPANE_H);
 
         /*Button MAIN MENU. */
-        final Button mainMenu = new Button("MAIN MENU");
-        mainMenu.setPrefSize(BUTTONS_W, BUTTONS_H);
-        mainMenu.setStyle(Style.BUTTON_2);
+        final Button mainMenu = this.factory.createButton("MAIN MENU", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
         mainMenu.setOnMouseClicked(e -> {
             final MainMenu sceneMenu = new MainMenu();
             try {
@@ -59,12 +59,8 @@ public class Scoreboard extends Region implements ViewInterface {
             }
         });
 
-        /*Labels. */
-
-        final Label risultati = new Label("RISULTATI");
-        risultati.setAlignment(Pos.CENTER);
-        risultati.setPrefSize(LABEL_W, LABEL_H);
-        risultati.setStyle(Style.LABEL);
+        /*Label. */
+        final Label risultati = this.factory.createLabel("RISULTATI", Style.LABEL, LABEL_W, LABEL_H);
 
         /*ListView. */
         final ListView<String> listView = new ListView<>();
@@ -74,7 +70,6 @@ public class Scoreboard extends Region implements ViewInterface {
         listView.setStyle(Style.FONT);
 
         listView.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(final MouseEvent event) {
                 event.consume();
@@ -105,5 +100,4 @@ public class Scoreboard extends Region implements ViewInterface {
         return pane;
     }
 
-    
 }
