@@ -1,47 +1,35 @@
-package controllers;
+package controllers.timer;
 
-import java.util.concurrent.atomic.AtomicLong;
-
+import controllers.Controller;
 import view.game.GameView;
 
-public class GameTimer implements Runnable {
+public class GameTimer extends AbstractTimer {
 
     private static final int SEC_IN_MIN = 60;
-    private static final long SEC = 1000L;
     private volatile int mins;
     private volatile int seconds;
-    private volatile AtomicLong totSec;
-    private volatile boolean stop;
-    private final GameView gameView;
     private final Controller controller;
 
-    GameTimer(final int mins, final GameView gameView, final Controller controller) {
+    public GameTimer(final int mins, final GameView gameView, final Controller controller) {
+        super(gameView);
+        super.setTotSec(mins * SEC_IN_MIN);
         this.mins = mins;
         this.seconds = 0;
-        this.totSec = new AtomicLong(this.mins * SEC_IN_MIN);
-        this.stop = false;
-        this.gameView = gameView;
         this.controller = controller;
     }
 
     @Override
-    public final void run() {
-        while (this.totSec.get() >= 0 && !stop) {
-            try {
-                this.seconds = this.totSec.intValue() % SEC_IN_MIN;
-                this.mins = (this.totSec.intValue() - seconds) / SEC_IN_MIN;
-                this.totSec.decrementAndGet();
-                this.gameView.updateTimer(this.mins, this.seconds);
-                Thread.sleep(SEC);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        }
-        /* Notify the controller that timer countdown is over. */
+    protected final void cycle() {
+        this.seconds = super.getIntTotSec() % SEC_IN_MIN;
+        this.mins = (super.getIntTotSec() - seconds) / SEC_IN_MIN;
+        super.getTotSec().decrementAndGet();
+        this.getGameView().updateTimer(this.mins, this.seconds);
+    }
+
+    @Override
+    protected final void timeOut() {
+        super.stop();
         this.controller.setTimerIsOver();
     }
 
-    public final void stopTimer() {
-        this.stop = true;
-    }
 }

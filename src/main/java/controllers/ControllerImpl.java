@@ -9,6 +9,9 @@ import constants.GameConstants;
 import constants.PlayerType;
 import controllers.io.IOController;
 import controllers.io.IOControllerImpl;
+import controllers.timer.GameTimer;
+import controllers.timer.PlayerTimer;
+import controllers.timer.Timer;
 import model.Field;
 import model.FieldImpl;
 import model.ScoreImpl;
@@ -26,13 +29,13 @@ public final class ControllerImpl implements Controller {
     private final EnumMap<PlayerType, Long> lastSpawn = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, Integer> selectedLane = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
-    private final EnumMap<PlayerType, PlayerTimer> timers = new EnumMap<>(PlayerType.class);
+    private final EnumMap<PlayerType, Timer> timers = new EnumMap<>(PlayerType.class);
     private final GameView gameView;
     private final Field field;
     private Optional<PlayerType> winner;
     private final ScheduledThreadPoolExecutor thrEx;
     private final GameLoopImpl gameLoop;
-    private final GameTimer gameTimer;
+    private final Timer gameTimer;
     private final IOController ioContr;
     private final String player1Name;
     private final String player2Name;
@@ -65,7 +68,7 @@ public final class ControllerImpl implements Controller {
     private void initPlayers() {
         for (final var player : PlayerType.values()) {
             this.lastSpawn.put(player, System.currentTimeMillis());
-            this.selectedLane.put(player, this.laneNumber / 2);
+            this.selectedLane.put(player, laneNumber / 2);
             this.selectedUnit.put(player, 0);
             this.timers.put(player, new PlayerTimer(gameView, player));
         }
@@ -102,7 +105,7 @@ public final class ControllerImpl implements Controller {
      * @param player to reset the timer
      */
     private void resetPlayerTimer(final PlayerType player) {
-        this.timers.get(player).resetTimer();
+        this.timers.get(player).reset();
     }
     /**
      * Stop the game and write on a file the score of the match.
@@ -216,8 +219,8 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public void stopGame() {
-        this.timers.forEach((p, t) -> t.stopTimer());
-        this.gameTimer.stopTimer();
+        this.timers.forEach((p, t) -> t.stop());
+        this.gameTimer.stop();
         this.thrEx.shutdown();
     }
 
