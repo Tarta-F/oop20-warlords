@@ -36,7 +36,6 @@ public final class ControllerImpl implements Controller {
     private final IOController ioContr;
     private final String player1Name;
     private final String player2Name;
-    private final GameLoopImpl gl;
 
     public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
