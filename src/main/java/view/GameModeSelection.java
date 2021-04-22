@@ -33,7 +33,7 @@ public class GameModeSelection extends Region implements ViewInterface {
     private ScenarioViewType scenario;
     private int laneNumber;
     private int timerDuration;
-    private final Label settingsSelected;
+    private final Label labelSettingsSelected;
     private static final double TEXTFIELD_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
     private static final double TEXTFIELD_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
     private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
@@ -55,17 +55,17 @@ public class GameModeSelection extends Region implements ViewInterface {
         this.scenario = ScenarioViewType.SCENARIO_1;
         this.laneNumber = ViewConstants.DEFAULT_LANE;
         this.timerDuration = ViewConstants.DEFAULT_TIMER;
-        this.settingsSelected = new Label();
+        this.labelSettingsSelected = new Label();
         this.updateSettings();
     }
 
     /**Method to upgrade the label that sum up selected settings. */
     private void updateSettings() {
-        this.settingsSelected.setText("SELECTED SCENARIO: " + this.scenario.getDescription() + "\n NUMBER OF LANES: " + this.laneNumber
+        this.labelSettingsSelected.setText("SELECTED SCENARIO: " + this.scenario.getDescription() + "\n NUMBER OF LANES: " + this.laneNumber
                 + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
     }
 
-    /**Method that limit the players names length to 10. */
+    /**Method that limit the players names length. */
     private static void addTextLimiter(final TextField tf, final int maxLength) {
         tf.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -184,9 +184,9 @@ public class GameModeSelection extends Region implements ViewInterface {
         final Label player1 = this.factory.createLabel("Player 1 name: ", Style.LABEL, LABELS_W, LABELS_H);
         final Label player2 = this.factory.createLabel("Player 2 name: ", Style.LABEL, LABELS_W, LABELS_H);
 
-        settingsSelected.setAlignment(Pos.CENTER);
-        settingsSelected.setPrefSize(LABEL_SETTINGS_W, LABEL_SETTINGS_H);
-        settingsSelected.setStyle(Style.LABEL);
+        labelSettingsSelected.setAlignment(Pos.CENTER);
+        labelSettingsSelected.setPrefSize(LABEL_SETTINGS_W, LABEL_SETTINGS_H);
+        labelSettingsSelected.setStyle(Style.LABEL);
 
         /*Layout and Pane gets. */
         final HBox scenarioBox = this.factory.createHBox(LAYOUT_HBOX_W);
@@ -208,7 +208,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         final HBox backStartBox = new HBox(LAYOUT_HBOX_W);
         backStartBox.setAlignment(Pos.CENTER);
         backStartBox.setPadding(new Insets(0, LAYOUT_HBOX_PADDING_W, 0, 0));
-        backStartBox.getChildren().addAll(back, start, settingsSelected);
+        backStartBox.getChildren().addAll(back, start, labelSettingsSelected);
 
         final VBox vBox = new VBox(LAYOUT_VBOX_H);
         vBox.setAlignment(Pos.CENTER);

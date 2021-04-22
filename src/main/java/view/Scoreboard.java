@@ -1,11 +1,12 @@
 package view;
 
 import java.io.IOException;
-
+import java.util.List;
+import controllers.io.IOController;
+import controllers.io.IOControllerImpl;
 import view.constants.ViewConstants;
 import view.sound.Music;
 import view.constants.ResourcesConstants;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -36,10 +37,20 @@ public class Scoreboard extends Region implements ViewInterface {
     private static final double LABEL_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7);
     private static final double LABEL_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
 
-    private final ViewFactory factory = new ViewFactoryImpl();
+    private final IOController ioController;
+    private final ViewFactory factory;
+
+    public Scoreboard() {
+        this.ioController = new IOControllerImpl();
+        this.factory = new ViewFactoryImpl();
+    }
 
     @Override
     public final Parent createPane() throws IOException {
+
+        /* Gettings scores from I/O Controller */
+        final List<String> resultsList = this.ioController.readScore();
+
         /*Pane. */
         final Pane pane = new Pane();
 
@@ -62,19 +73,14 @@ public class Scoreboard extends Region implements ViewInterface {
         /*Label. */
         final Label results = this.factory.createLabel("RESULTS", Style.LABEL, LABEL_W, LABEL_H);
 
-        /*ListView. */
-        final ListView<String> listView = new ListView<>();
-        listView.getItems().addAll("prova", "prova2");
-        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        listView.setMaxSize(LISTVIEW_W, LISTVIEW_H);
-        listView.setStyle(Style.FONT);
-
-        listView.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(final MouseEvent event) {
-                event.consume();
-            }
-        });
+        /*Creating scoreboard table */
+        final ListView<String> scoreboard = new ListView<>();
+        /* Inserting scores in the Table */
+        resultsList.forEach(res -> scoreboard.getItems().add(res));
+        scoreboard.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        scoreboard.setMaxSize(LISTVIEW_W, LISTVIEW_H);
+        scoreboard.setStyle(Style.FONT);
+        scoreboard.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> e.consume());
 
         /*Layout. */
         final HBox backMenu = new HBox();
@@ -91,7 +97,7 @@ public class Scoreboard extends Region implements ViewInterface {
         final BorderPane borderPane = new BorderPane();
         borderPane.setTop(topMenu);
         borderPane.setBottom(backMenu);
-        borderPane.setCenter(listView);
+        borderPane.setCenter(scoreboard);
 
         borderPane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
         pane.getChildren().add(scoreboardBackground);

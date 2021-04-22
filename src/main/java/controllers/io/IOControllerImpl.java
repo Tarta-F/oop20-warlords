@@ -35,7 +35,7 @@ public class IOControllerImpl implements IOController {
     public final List<String> readScore() throws IOException {
         if (this.scoreFile.exists()) {
             final JsonReader reader = new JsonReader(new FileReader(this.scoreFile));
-            final List<ScoreImpl> oldResults = this.gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
+            final List<Score> oldResults = this.gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
             final List<String> resultList = new ArrayList<>();
             oldResults.forEach(sc -> resultList.add(sc.toString()));
             return resultList;
