@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import constants.GameConstants;
 import controllers.ControllerImpl;
 import controllers.SettingsController;
 import view.constants.ViewConstants;
@@ -108,7 +110,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             scenarioButtons.setOnMouseClicked(e -> {
                 Music.getMusic().playButtonSound();
                 this.settingsManager.setScenario(s);
-                updateSettings();
+                this.updateSettings();
             });
             scenarioList.add(scenarioButtons);
         });
@@ -122,7 +124,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             laneButtons.setOnMouseClicked(e -> {
                 Music.getMusic().playButtonSound();
                 this.settingsManager.setLaneNumber(buttonLane.get(laneButtons));
-                updateSettings();
+                this.updateSettings();
             });
         }
         final List<Button> listLane = buttonLane.entrySet().stream()
@@ -134,14 +136,14 @@ public class GameModeSelection extends Region implements ViewInterface {
         final Map<Button, Integer> buttonTimer = new HashMap<>();
 
         //for (int i = ViewConstants.N_BUTTON_3 + 2; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_3 + 2) {
-        for (int i = 1; i <= 5; i += 2) {
+        for (int i = GameConstants.MIN_TIMER; i <= GameConstants.TIMER_MAX; i = i + GameConstants.TIMER_STEP) {
             final Button timerButtons = this.factory.createButton(i + " MINUTES", Style.BUTTON_1, 
                     BUTTONS_W, BUTTONS_H);
             buttonTimer.put(timerButtons, i);
             timerButtons.setOnMouseClicked(e -> {
                 Music.getMusic().playButtonSound();
                 this.settingsManager.setTimerDuration(buttonTimer.get(timerButtons));
-                updateSettings();
+                this.updateSettings();
             });
         }
         final List<Button> listTimer = buttonTimer.entrySet().stream()
