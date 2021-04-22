@@ -3,16 +3,13 @@ package view;
 public enum ScenarioViewType {
 
     /**Scenario 1 images. */
-    SCENARIO_1("GRASS", "/grass.png", "/rocks.png"),
+    SCENARIO_1("FOREST", "/forest.png", "/nothing.png"),
 
     /**Scenario 2 images. */
     SCENARIO_2("SAND", "/Sand.jpg", "/sandGrid.png"),
 
     /**Scenario 3 images. */
-    SCENARIO_3("FIRE", "/lavaTexture.jpg", "/blackDirt.png"),
-
-    /**Scenario 4 images. */
-    SCENARIO_4("FOREST", "/forest.png", "/nothing.png");
+    SCENARIO_3("FIRE", "/lavaTexture.jpg", "/blackDirt.png");
 
     private final String description;
     private final String backgroundPath;

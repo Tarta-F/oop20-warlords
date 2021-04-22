@@ -24,7 +24,7 @@ public final class GameFieldViewImpl implements GameFieldView {
 
     private final GridPane gridPane = new GridPane();
 
-    private static final int CELL_W = (int) ViewResolution.screenResolutionWidth(30);
+    private static final int CELL_W = (int) ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_30);
     private static final int CELL_H = (int) ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_10);
 
     private final int nRow;
