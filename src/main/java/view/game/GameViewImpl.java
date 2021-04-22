@@ -306,10 +306,14 @@ public final class GameViewImpl extends Region implements GameView {
                 this.observer.controlNextUnit(PlayerType.PLAYER2);
                 break;
             case SPACE:
-                this.observer.spawnUnit(PlayerType.PLAYER1);
+                if (this.observer.spawnUnit(PlayerType.PLAYER1)) {
+                    Music.getMusic().playSpawnSound();
+                }
                 break;
             case ENTER:
-                this.observer.spawnUnit(PlayerType.PLAYER2);
+                if (this.observer.spawnUnit(PlayerType.PLAYER2)) {
+                    Music.getMusic().playSpawnSound();
+                }
                 break;
             default:
                 break;
