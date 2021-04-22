@@ -48,14 +48,8 @@ public class IOControllerImpl implements IOController {
     public final void writeNewScore(final Score score) throws IOException {
         if (this.scoreFile.exists()) {
             this.readAndWriteNew(score);
-        } else {
-            try {
-                if (this.scoreFile.createNewFile()) {
-                    this.writeFirstScore(score);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } else if (this.scoreFile.createNewFile()) {
+            this.writeFirstScore(score);
         }
     }
 
@@ -74,7 +68,6 @@ public class IOControllerImpl implements IOController {
         final JsonReader reader = new JsonReader(new FileReader(this.scoreFile));
         final List<Score> oldResults = gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
         oldResults.add(score);
-        oldResults.forEach(sc -> System.out.println(sc.toString()));
         final String newScore = this.gsonWrite.toJson(oldResults);
         try (FileWriter file = new FileWriter(this.scoreFile)) {
             file.write(newScore);

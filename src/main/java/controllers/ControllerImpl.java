@@ -65,7 +65,7 @@ public final class ControllerImpl implements Controller {
     private void initPlayers() {
         for (final var player : PlayerType.values()) {
             this.lastSpawn.put(player, System.currentTimeMillis());
-            this.selectedLane.put(player, laneNumber / 2);
+            this.selectedLane.put(player, this.laneNumber / 2);
             this.selectedUnit.put(player, 0);
             this.timers.put(player, new PlayerTimer(gameView, player));
         }
@@ -207,7 +207,6 @@ public final class ControllerImpl implements Controller {
         if (this.timerIsOver) {
             this.controlEndTime();
         }
-            // System.out.println(isOver() ? getWinner().get() + " WON" : "");
     }
 
     @Override
