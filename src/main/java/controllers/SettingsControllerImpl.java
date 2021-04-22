@@ -4,44 +4,51 @@ import view.GameModeSelection;
 import view.ScenarioViewType;
 import view.constants.ViewConstants;
 
-public final class GameSettingsController {
+public final class SettingsControllerImpl implements SettingsController {
 
     private ScenarioViewType scenario;
     private int laneNumber;
     private int timerDuration;
     private final GameModeSelection viewSettings;
 
-    public GameSettingsController() {
+    public SettingsControllerImpl() {
         this.scenario = ScenarioViewType.SCENARIO_1;
         this.laneNumber = ViewConstants.DEFAULT_LANE;
         this.timerDuration = ViewConstants.DEFAULT_TIMER;
         this.viewSettings = new GameModeSelection(this);
     }
 
+    @Override
     public ScenarioViewType getScenario() {
         return this.scenario;
     }
 
+    @Override
     public int getLaneNumber() {
         return this.laneNumber;
     }
 
+    @Override
     public int getTimerDuration() {
         return this.timerDuration;
     }
 
+    @Override
     public void setScenario(final ScenarioViewType scenario) {
         this.scenario = scenario;
     }
 
+    @Override
     public void setLaneNumber(final int laneNumber) {
         this.laneNumber = laneNumber;
     }
 
+    @Override
     public void setTimerDuration(final int timerDuration) {
         this.timerDuration = timerDuration;
     }
 
+    @Override
     public GameModeSelection getView() {
         return this.viewSettings;
     }

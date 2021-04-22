@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import controllers.ControllerImpl;
-import controllers.GameSettingsController;
+import controllers.SettingsController;
 import view.constants.ViewConstants;
 import view.sound.Music;
 import view.constants.ResourcesConstants;
@@ -47,11 +47,11 @@ public class GameModeSelection extends Region implements ViewInterface {
 
     private final Label labelSettingsSelected;
 
-    private final GameSettingsController settingsManager;
+    private final SettingsController settingsManager;
 
     private final ViewFactory factory = new ViewFactoryImpl();
 
-    public GameModeSelection(final GameSettingsController settingsManager) {
+    public GameModeSelection(final SettingsController settingsManager) {
         this.settingsManager = settingsManager;
         this.labelSettingsSelected = new Label();
         this.updateSettings();
