@@ -1,17 +1,21 @@
 package controllers;
 
+import view.GameModeSelection;
 import view.ScenarioViewType;
+import view.constants.ViewConstants;
 
 public final class GameSettingsController {
 
     private ScenarioViewType scenario;
     private int laneNumber;
     private int timerDuration;
+    private final GameModeSelection viewSettings;
 
-    public GameSettingsController(final ScenarioViewType scenario, final int laneNumber, final int timerDuration) {
-        this.scenario = scenario;
-        this.laneNumber = laneNumber;
-        this.timerDuration = timerDuration;
+    public GameSettingsController() {
+        this.scenario = ScenarioViewType.SCENARIO_1;
+        this.laneNumber = ViewConstants.DEFAULT_LANE;
+        this.timerDuration = ViewConstants.DEFAULT_TIMER;
+        this.viewSettings = new GameModeSelection(this);
     }
 
     public ScenarioViewType getScenario() {
@@ -36,5 +40,15 @@ public final class GameSettingsController {
 
     public void setTimerDuration(final int timerDuration) {
         this.timerDuration = timerDuration;
+    }
+
+    public GameModeSelection getView() {
+        return this.viewSettings;
+    }
+
+    @Override
+    public String toString() {
+        return "SELECTED SCENARIO: " + this.scenario.getDescription() + "\n NUMBER OF LANES: " + this.laneNumber
+                + "\n SELECTED TIMER: " + this.timerDuration + "MINS";
     }
 }

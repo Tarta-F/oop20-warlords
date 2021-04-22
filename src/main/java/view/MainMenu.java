@@ -1,6 +1,8 @@
 package view;
 
 import java.io.IOException;
+
+import controllers.GameSettingsController;
 import view.constants.ViewConstants;
 import view.sound.Music;
 import view.sound.Sounds;
@@ -91,10 +93,10 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         /*Button VERSUS. */
         final Button versus = this.factory.createButton("VERSUS", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         versus.setOnMouseClicked(e -> {
-            final GameModeSelection sceneGameModeSelection = new GameModeSelection();
+            final GameSettingsController settingsManager = new GameSettingsController();
             try {
                 Music.getMusic().playButtonSound();
-                pane.getChildren().setAll(sceneGameModeSelection.createPane());
+                pane.getChildren().setAll(settingsManager.getView().createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import controllers.ControllerImpl;
+import controllers.GameSettingsController;
 import view.constants.ViewConstants;
 import view.sound.Music;
 import view.constants.ResourcesConstants;
@@ -30,10 +31,6 @@ import javafx.scene.layout.VBox;
  */
 public class GameModeSelection extends Region implements ViewInterface {
 
-    private ScenarioViewType scenario;
-    private int laneNumber;
-    private int timerDuration;
-    private final Label labelSettingsSelected;
     private static final double TEXTFIELD_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
     private static final double TEXTFIELD_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
     private static final double BUTTONS_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
@@ -48,21 +45,21 @@ public class GameModeSelection extends Region implements ViewInterface {
     private static final double VBOX_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
     private static final double VBOX_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
 
+    private final Label labelSettingsSelected;
+
+    private final GameSettingsController settingsManager;
+
     private final ViewFactory factory = new ViewFactoryImpl();
 
-    public GameModeSelection() {
-        /*Set up the "default" settings. */
-        this.scenario = ScenarioViewType.SCENARIO_1;
-        this.laneNumber = ViewConstants.DEFAULT_LANE;
-        this.timerDuration = ViewConstants.DEFAULT_TIMER;
+    public GameModeSelection(final GameSettingsController settingsManager) {
+        this.settingsManager = settingsManager;
         this.labelSettingsSelected = new Label();
         this.updateSettings();
     }
 
     /**Method to upgrade the label that sum up selected settings. */
     private void updateSettings() {
-        this.labelSettingsSelected.setText("SELECTED SCENARIO: " + this.scenario.getDescription() + "\n NUMBER OF LANES: " + this.laneNumber
-                + "\n SELECTED TIMER: " + this.timerDuration + "MINS");
+        this.labelSettingsSelected.setText(this.settingsManager.toString());
     }
 
     /**Method that limit the players names length. */
@@ -110,7 +107,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             buttonScenario.put(scenarioButtons, s);
             scenarioButtons.setOnMouseClicked(e -> {
                 Music.getMusic().playButtonSound();
-                this.scenario = s;
+                this.settingsManager.setScenario(s);
                 updateSettings();
             });
             scenarioList.add(scenarioButtons);
@@ -124,7 +121,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             buttonLane.put(laneButtons, i);
             laneButtons.setOnMouseClicked(e -> {
                 Music.getMusic().playButtonSound();
-                this.laneNumber = buttonLane.get(laneButtons);
+                this.settingsManager.setLaneNumber(buttonLane.get(laneButtons));
                 updateSettings();
             });
         }
@@ -143,7 +140,7 @@ public class GameModeSelection extends Region implements ViewInterface {
             buttonTimer.put(timerButtons, i);
             timerButtons.setOnMouseClicked(e -> {
                 Music.getMusic().playButtonSound();
-                this.timerDuration = buttonTimer.get(timerButtons);
+                this.settingsManager.setTimerDuration(buttonTimer.get(timerButtons));
                 updateSettings();
             });
         }
@@ -167,8 +164,8 @@ public class GameModeSelection extends Region implements ViewInterface {
         /*Button START. */
         final Button start = this.factory.createButton("START", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
         start.setOnMouseClicked(e -> {
-           final ControllerImpl contr = new ControllerImpl(this.laneNumber, this.timerDuration, this.scenario, 
-                   playerName1.getText(), playerName2.getText());
+           final ControllerImpl contr = new ControllerImpl(this.settingsManager.getLaneNumber(), this.settingsManager.getTimerDuration(),
+                   this.settingsManager.getScenario(), playerName1.getText(), playerName2.getText());
            Music.getMusic().startMatchSound();
            try {
                pane.getChildren().setAll(contr.getView().createPane());
