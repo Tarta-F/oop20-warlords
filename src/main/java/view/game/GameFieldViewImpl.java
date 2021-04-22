@@ -65,9 +65,7 @@ public final class GameFieldViewImpl implements GameFieldView {
     private void createGrid() {
         IntStream.range(0, this.nCols).forEach(c -> {
             IntStream.range(0, this.nRow).forEach(r -> {
-                final ImageView cell = new ImageView(ground);
-                cell.setFitWidth(CELL_W);
-                cell.setFitHeight(CELL_H);
+                final ImageView cell = this.factory.createImageView(ground, CELL_W, CELL_H);
                 GridPane.setConstraints(cell, c, r);
                 this.gridPane.getChildren().add(cell);
             });

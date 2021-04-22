@@ -9,7 +9,10 @@ public enum ScenarioViewType {
     SCENARIO_2("SAND", "/Sand.jpg", "/sandGrid.png"),
 
     /**Scenario 3 images. */
-    SCENARIO_3("FIRE", "/lavaTexture.jpg", "/blackDirt.png");
+    SCENARIO_3("FIRE", "/lavaTexture.jpg", "/blackDirt.png"),
+
+    /**Scenario 4 images. */
+    SCENARIO_4("FOREST", "/forest.png", "/nothing.png");
 
     private final String description;
     private final String backgroundPath;

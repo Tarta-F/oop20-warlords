@@ -17,7 +17,6 @@ import model.unit.UnitType;
 import view.game.GameView;
 import view.ScenarioViewType;
 import view.game.GameViewImpl;
-import view.sound.Music;
 
 public final class ControllerImpl implements Controller {
 
@@ -37,6 +36,7 @@ public final class ControllerImpl implements Controller {
     private final IOController ioContr;
     private final String player1Name;
     private final String player2Name;
+    private final GameLoopImpl gl;
 
     public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
@@ -147,7 +147,7 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public void spawnUnit(final PlayerType player) {
+    public boolean spawnUnit(final PlayerType player) {
       final int unitIndex = this.selectedUnit.get(player);
       final long timeWaited = System.currentTimeMillis() - this.lastSpawn.get(player);
       final UnitType unitToSpawn = UnitType.values()[unitIndex];
@@ -157,8 +157,9 @@ public final class ControllerImpl implements Controller {
         this.field.addUnit(lane, new UnitImpl(unitToSpawn, player));
         gameView.show(Converter.convertMap(this.field.getUnits()));
         this.resetPlayerTimer(player);
-        Music.getMusic().playSpawnSound();
+        return true;
       }
+      return false;
     }
 
     @Override
@@ -203,7 +204,7 @@ public final class ControllerImpl implements Controller {
         if (this.isOver()) {
             this.gameView.winnerBoxResult(this.getPlayerName(getWinner().get()));
             this.stopAndWriteScore(this.getScore(PlayerType.PLAYER1), getScore(PlayerType.PLAYER2));
-        } 
+        }
         if (this.timerIsOver) {
             this.controlEndTime();
         }
@@ -259,4 +260,3 @@ public final class ControllerImpl implements Controller {
         this.stopAndWriteScore(p1score, p2score);
     }
 }
-
