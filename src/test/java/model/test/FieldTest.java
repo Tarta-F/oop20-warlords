@@ -89,8 +89,8 @@ public class FieldTest {
 
         field.update();
 
-        assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1).get());
-        assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1).get());
+        assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1));
+        assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1));
     }
 
 }

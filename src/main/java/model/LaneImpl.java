@@ -110,7 +110,7 @@ public final class LaneImpl implements Lane {
     public Map<Unit, Integer> getUnits() {
         return this.units.entrySet().stream()
                 .filter(e -> e.getKey().isAlive())
-                .map(e -> Pair.of(e.getKey(), e.getValue().getValue()))
+                .map(e -> Pair.of(e.getKey(), e.getValue().getCount()))
                 .map(p -> p.getLeft().getPlayer().equals(PlayerType.PLAYER1) 
                         ? p : Pair.of(p.getLeft(), this.lenght - p.getRight() - 1))
                 .collect(Collectors.toUnmodifiableMap(Pair::getLeft, Pair::getRight));
@@ -122,8 +122,8 @@ public final class LaneImpl implements Lane {
     }
 
     @Override
-    public Integer getScore(final PlayerType player) {
-        return this.scores.get(player).getValue();
+    public int getScore(final PlayerType player) {
+        return this.scores.get(player).getCount();
     }
 
     @Override
