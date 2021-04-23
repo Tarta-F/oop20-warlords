@@ -7,24 +7,6 @@ import view.ScenarioViewType;
  */
 public final class GameConstants {
 
-    /** Lane number for practice. */
-    public static final int ONE_LANE = 1;
-
-    /** Lane number for easy mode. */
-    public static final int THREE_LANES = 3;
-
-    /** Lane number for hard mode. */
-    public static final int FIVE_LANES = 5;
-
-    /**Default lane number. */
-    public static final int DEFAULT_LANE = FIVE_LANES;
-
-    /**Default Scenario Type. */
-    public static final ScenarioViewType DEFAULT_SCENARIO = ScenarioViewType.SCENARIO_4;
-
-    /**Default game timer. */
-    public static final int DEFAULT_TIMER = 3;
-
     /** Cell number for each lane. */
     public static final int CELLS_NUM = 20;
 
@@ -48,6 +30,15 @@ public final class GameConstants {
 
     /** Difference between lane number settings. */
     public static final int LANE_STEP = 2;
+
+    /**Default lane number. */
+    public static final int DEFAULT_LANE = MAX_LANE;
+
+    /**Default Scenario Type. */
+    public static final ScenarioViewType DEFAULT_SCENARIO = ScenarioViewType.SCENARIO_1;
+
+    /**Default game timer. */
+    public static final int DEFAULT_TIMER = 3;
 
     private GameConstants() { }
 }

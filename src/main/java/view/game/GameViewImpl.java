@@ -56,7 +56,7 @@ public final class GameViewImpl extends Region implements GameView {
     private static final double BORDERPANE_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_1_3);
     private static final double BORDERPANE_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_1_3);
     private static final double PADDING = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_60);
-    private static final double LABEL_PLAYER_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
+    private static final double LABEL_PLAYER_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_10);
 
     private final ViewFactory factory = new ViewFactoryImpl();
 
