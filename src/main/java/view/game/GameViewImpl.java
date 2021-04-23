@@ -60,7 +60,7 @@ public final class GameViewImpl extends Region implements GameView {
 
     private final ViewFactory factory = new ViewFactoryImpl();
 
-    private final GameFieldView field;
+    private final FieldView field;
     private final int laneNumber;
     private final Image scenario;
 
@@ -106,7 +106,7 @@ public final class GameViewImpl extends Region implements GameView {
     public GameViewImpl(final int laneNumber, final int cellsNUmber, final String background, final String ground) {
         this.laneNumber = laneNumber;
         this.scenario = new Image(this.getClass().getResourceAsStream(background));
-        this.field = new GameFieldViewImpl(laneNumber, cellsNUmber, ground);
+        this.field = new FieldViewImpl(laneNumber, cellsNUmber, ground);
     }
 
     /**
