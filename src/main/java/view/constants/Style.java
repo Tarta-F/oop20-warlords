@@ -1,6 +1,6 @@
-package view;
+package view.constants;
 
-import view.constants.ViewConstants;
+import view.ViewResolution;
 
 /**
  * This class contain the various CSS codes that we use for the appearance of the elements in the view.

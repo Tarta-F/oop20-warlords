@@ -10,7 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import constants.PlayerType;
 import model.unit.Unit;
 import model.unit.UnitType;
-import view.UnitViewType;
+import view.game.UnitViewType;
 
 /**
  * This class offers static methods for {@link Controller} class.

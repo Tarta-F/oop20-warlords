@@ -13,8 +13,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
-import model.Score;
-import model.ScoreImpl;
+import model.score.Score;
+import model.score.ScoreImpl;
 
 public class IOControllerImpl implements IOController {
 

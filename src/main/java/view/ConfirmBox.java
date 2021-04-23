@@ -1,5 +1,6 @@
 package view;
 
+import view.constants.Style;
 import view.constants.ViewConstants;
 import view.sound.Music;
 import javafx.scene.Scene;

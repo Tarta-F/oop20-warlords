@@ -7,6 +7,7 @@ import controllers.io.IOControllerImpl;
 import view.constants.ViewConstants;
 import view.sound.Music;
 import view.constants.ResourcesConstants;
+import view.constants.Style;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;

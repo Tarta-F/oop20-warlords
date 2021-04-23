@@ -1,4 +1,4 @@
-package controllers;
+package controllers.settings;
 
 import view.GameModeSelection;
 import view.ScenarioViewType;

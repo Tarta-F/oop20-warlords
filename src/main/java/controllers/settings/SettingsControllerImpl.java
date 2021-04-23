@@ -1,4 +1,4 @@
-package controllers;
+package controllers.settings;
 
 import constants.GameConstants;
 import view.GameModeSelection;

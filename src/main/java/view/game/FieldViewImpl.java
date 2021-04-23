@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
-import view.UnitViewType;
 import view.ViewFactory;
 import view.ViewFactoryImpl;
 import view.ViewResolution;

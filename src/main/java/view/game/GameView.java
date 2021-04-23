@@ -7,7 +7,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import constants.PlayerType;
 import controllers.Controller;
-import view.UnitViewType;
 import view.ViewClose;
 import view.ViewInterface;
 

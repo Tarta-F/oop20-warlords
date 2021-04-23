@@ -1,4 +1,4 @@
-package model;
+package model.score;
 
 public final class ScoreImpl implements Score {
     private String player1Name;

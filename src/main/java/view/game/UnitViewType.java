@@ -1,4 +1,4 @@
-package view;
+package view.game;
 
 import java.util.concurrent.TimeUnit;
 

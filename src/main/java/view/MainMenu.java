@@ -2,12 +2,13 @@ package view;
 
 import java.io.IOException;
 
-import controllers.SettingsController;
-import controllers.SettingsControllerImpl;
+import controllers.settings.SettingsController;
+import controllers.settings.SettingsControllerImpl;
 import view.constants.ViewConstants;
 import view.sound.Music;
 import view.sound.Sounds;
 import view.constants.ResourcesConstants;
+import view.constants.Style;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

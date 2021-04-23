@@ -14,7 +14,7 @@ import controllers.timer.PlayerTimer;
 import controllers.timer.Timer;
 import model.Field;
 import model.FieldImpl;
-import model.ScoreImpl;
+import model.score.ScoreImpl;
 import model.unit.UnitImpl;
 import model.unit.UnitType;
 import view.game.GameView;
