@@ -53,21 +53,20 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         /*Creation of the Stage, Scene and all their preferences. */
         Music.getMusic().play(Sounds.MENU);
         final Stage window = primaryStage;
-        
+
+        /*Background. */
         final Media media = new Media(getClass().getResource(ResourcesConstants.MENU).toExternalForm());
         final MediaPlayer player = new  MediaPlayer(media);
         player.setAutoPlay(true);
-        player.setOnEndOfMedia(new Runnable() {
-            public void run() {
+        player.setOnEndOfMedia(() -> {
                 player.seek(Duration.ZERO);
-            }
         });
         final MediaView viewer = this.factory.createMediaView(player, PANE_W, PANE_H);
-        
+
+        /*Pane. */
         final Pane pane = new Pane();
-        pane.getChildren().add(viewer);
-        pane.getChildren().add(this.createPane());
-        
+        pane.getChildren().addAll(viewer, this.createPane());
+
         final Scene scene = new Scene(pane, PANE_W, PANE_H);
         scene.getStylesheets().add(MainMenu.class.getResource("/listView.css").toExternalForm());
         window.setScene(scene);
