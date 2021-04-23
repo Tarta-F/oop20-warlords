@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import constants.GameConstants;
 import controllers.ControllerImpl;
 import controllers.SettingsController;
@@ -77,6 +76,14 @@ public class GameModeSelection extends Region implements ViewInterface {
         });
     }
 
+    /** Utility method to extract the List of button from a Map. */
+    private List<Button> getButtons(final Map<Button, Integer> map) {
+        return map.entrySet().stream()
+                .sorted((a, b) -> a.getValue() - b.getValue())
+                .map(e -> e.getKey())
+                .collect(Collectors.toList());
+    }
+
     @Override
     public final Parent createPane() throws IOException {
         /*Pane. */
@@ -117,7 +124,7 @@ public class GameModeSelection extends Region implements ViewInterface {
 
         /*Buttons LANE. Associate a button to a number of lane. */
         final Map<Button, Integer> buttonLane = new HashMap<>();
-        for (int i = 1; i < ViewConstants.N_BUTTON_6; i += 2) {
+        for (int i = GameConstants.MIN_LANE; i <= GameConstants.MAX_LANE; i = i + GameConstants.LANE_STEP) {
             final Button laneButtons = this.factory.createButton("LANE'S NUMBER: " + i, Style.BUTTON_1,
                     BUTTONS_W, BUTTONS_H);
             buttonLane.put(laneButtons, i);
@@ -127,15 +134,10 @@ public class GameModeSelection extends Region implements ViewInterface {
                 this.updateSettings();
             });
         }
-        final List<Button> listLane = buttonLane.entrySet().stream()
-                .sorted((a, b) -> a.getValue() - b.getValue())
-                .map(e -> e.getKey())
-                .collect(Collectors.toList());
 
         /*Buttons TIMER. Associate a button to a different timer (Game duration). */
         final Map<Button, Integer> buttonTimer = new HashMap<>();
 
-        //for (int i = ViewConstants.N_BUTTON_3 + 2; i < ViewConstants.N_BUTTON_16; i += ViewConstants.N_BUTTON_3 + 2) {
         for (int i = GameConstants.MIN_TIMER; i <= GameConstants.TIMER_MAX; i = i + GameConstants.TIMER_STEP) {
             final Button timerButtons = this.factory.createButton(i + " MINUTES", Style.BUTTON_1, 
                     BUTTONS_W, BUTTONS_H);
@@ -146,10 +148,6 @@ public class GameModeSelection extends Region implements ViewInterface {
                 this.updateSettings();
             });
         }
-        final List<Button> listTimer = buttonTimer.entrySet().stream()
-                .sorted((a, b) -> a.getValue() - b.getValue())
-                .map(e -> e.getKey())
-                .collect(Collectors.toList());
 
         /*Button BACK. */
         final Button back = this.factory.createButton("BACK", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
@@ -194,11 +192,11 @@ public class GameModeSelection extends Region implements ViewInterface {
 
         final HBox laneBox = this.factory.createHBox(LAYOUT_HBOX_W);
         laneBox.getChildren().add(lane);
-        laneBox.getChildren().addAll(listLane);
+        laneBox.getChildren().addAll(this.getButtons(buttonLane));
 
         final HBox timerBox = this.factory.createHBox(LAYOUT_HBOX_W);
         timerBox.getChildren().add(timer);
-        timerBox.getChildren().addAll(listTimer);
+        timerBox.getChildren().addAll(this.getButtons(buttonTimer));
 
         final HBox namesBox = this.factory.createHBox(LAYOUT_HBOX_W);
         namesBox.setAlignment(Pos.CENTER);

@@ -3,7 +3,7 @@ package view;
 public enum ScenarioViewType {
 
     /**Scenario 1 images. */
-    SCENARIO_1("GRASS", "/grass.png", "/rocks.png"),
+//    SCENARIO_1("GRASS", "/grass.png", "/rocks.png"),
 
     /**Scenario 2 images. */
     SCENARIO_2("SAND", "/Sand.jpg", "/sandGrid.png"),

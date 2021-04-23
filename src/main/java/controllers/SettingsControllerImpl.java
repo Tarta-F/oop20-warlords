@@ -1,8 +1,8 @@
 package controllers;
 
+import constants.GameConstants;
 import view.GameModeSelection;
 import view.ScenarioViewType;
-import view.constants.ViewConstants;
 
 public final class SettingsControllerImpl implements SettingsController {
 
@@ -12,9 +12,9 @@ public final class SettingsControllerImpl implements SettingsController {
     private final GameModeSelection viewSettings;
 
     public SettingsControllerImpl() {
-        this.scenario = ScenarioViewType.SCENARIO_1;
-        this.laneNumber = ViewConstants.DEFAULT_LANE;
-        this.timerDuration = ViewConstants.DEFAULT_TIMER;
+        this.scenario = GameConstants.DEFAULT_SCENARIO;
+        this.laneNumber = GameConstants.DEFAULT_LANE;
+        this.timerDuration = GameConstants.DEFAULT_TIMER;
         this.viewSettings = new GameModeSelection(this);
     }
 
