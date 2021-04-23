@@ -13,7 +13,7 @@ public interface Counter {
     /**
      * @return the current value
      */
-    int getValue();
+    int getCount();
 
     /**
      * Sets the value to the inital one.

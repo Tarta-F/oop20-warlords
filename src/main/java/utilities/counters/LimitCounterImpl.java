@@ -33,7 +33,7 @@ public class LimitCounterImpl extends CounterImpl implements LimitCounter {
      */
     @Override
     public boolean isOver() {
-        return super.getValue() >= this.limit;
+        return super.getCount() >= this.limit;
     }
 
 }

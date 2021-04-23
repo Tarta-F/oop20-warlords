@@ -45,7 +45,7 @@ public interface Lane {
      * @return 
      *      the numbers of units that have received the enemy base by this lane, if there are any
      */
-    Integer getScore(PlayerType player);
+    int getScore(PlayerType player);
 
     /**
      * Updates every {@link Unit} in this lane with attack, score or move.

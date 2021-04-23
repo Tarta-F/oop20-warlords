@@ -63,8 +63,6 @@ public final class GameViewImpl extends Region implements GameView {
     private final GameFieldView field;
     private final int laneNumber;
     private final Image scenario;
-    private final String player1Name;
-    private final String player2Name;
 
     private final List<ImageView> listArrowP1 = new ArrayList<>();
     private final List<ImageView> listArrowP2 = new ArrayList<>();
@@ -105,23 +103,21 @@ public final class GameViewImpl extends Region implements GameView {
     private final Image arrowP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_ARROW));
     private final Image selectedArrowP2  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.P2_SELECTED_ARROW));
 
-    public GameViewImpl(final int laneNumber, final int cellsNUmber, final String background, final String ground,
-            final String player1Name, final String player2Name) {
+    public GameViewImpl(final int laneNumber, final int cellsNUmber, final String background, final String ground) {
         this.laneNumber = laneNumber;
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
         this.scenario = new Image(this.getClass().getResourceAsStream(background));
         this.field = new GameFieldViewImpl(laneNumber, cellsNUmber, ground);
     }
 
     /**
-     * Method to return on main menu with a confirm box. 
-     * @param actual pane 
+     * Method to return on main menu with a confirm box.
+     * @param actual pane
      * */
     private void returnMainMenu(final Pane pane) {
         final boolean answer = ConfirmBox.display("Quitting", "Return to main menu?", "YES", "NO", "");
         if (answer) {
             final MainMenu scenaMenu = new MainMenu();
+            this.observer.stopGame();
             try {
                 Music.getMusic().play(Sounds.MENU);
                 pane.getChildren().setAll(scenaMenu.createPane());
@@ -131,7 +127,7 @@ public final class GameViewImpl extends Region implements GameView {
         }
     }
     /**
-    * Method to return on main menu with a confirm box. 
+    * Method to return on main menu with a confirm box.
     * @param message1 String
     * @param message2 String
     * @param player String
@@ -224,11 +220,11 @@ public final class GameViewImpl extends Region implements GameView {
 
         /*List of Labels for the respawn time of players units. */
         for (final var type : UnitViewType.values()) {
-            final Label label = this.factory.createLabel(type.getWaitingTime() + " sec", Style.LABEL, 
+            final Label label = this.factory.createLabel(type.getWaitingTime() + " sec", Style.LABEL,
                     RESPAWN_LABEL_W, RESPAWN_LABEL_H);
             label.setTextFill(Color.RED);
             unitBoxes.put(type, label);
-            if (type.getPlayer().equals(PlayerType.PLAYER1)) { 
+            if (type.getPlayer().equals(PlayerType.PLAYER1)) {
                 unit1ListLabel.add(label);
             } else {
                 unit2ListLabel.add(label);
@@ -237,7 +233,7 @@ public final class GameViewImpl extends Region implements GameView {
 
         /*Settings for the player labels, with name and score of the player. */
         for (final var type : PlayerType.values()) {
-            final Label score = this.factory.createLabel("SCORE " + this.getPlayerName(type) + ": 0", Style.LABEL,
+            final Label score = this.factory.createLabel("SCORE " + this.observer.getPlayerName(type) + ": 0", Style.LABEL,
                     LABEL_PLAYER_W, LABEL_H);
             labelsScore.put(type, score);
         }
@@ -265,7 +261,7 @@ public final class GameViewImpl extends Region implements GameView {
         topMenu.getChildren().addAll(vBoxplayer2);
 
         final HBox bottomMenu = this.factory.createHBox(BOTTOMMENU_W, PADDING);
-        bottomMenu.getChildren().addAll(this.labelsScore.get(PlayerType.PLAYER1), menu, stopMusic, exit, 
+        bottomMenu.getChildren().addAll(this.labelsScore.get(PlayerType.PLAYER1), menu, stopMusic, exit,
                 this.labelsScore.get(PlayerType.PLAYER2));
 
         final VBox leftMenu = this.factory.createVBox(LEFT_RIGTH_MENU_H);
@@ -375,7 +371,7 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void updateScorePlayer(final PlayerType player, final int score) {
-        this.labelsScore.get(player).setText("SCORE " + this.getPlayerName(player) + ": " + score);
+        Platform.runLater(() -> this.labelsScore.get(player).setText("SCORE " + this.observer.getPlayerName(player) + ": " + score));
     }
 
     @Override
@@ -387,6 +383,7 @@ public final class GameViewImpl extends Region implements GameView {
     public void closeProgram(final Pane pane) {
         final boolean answer = ConfirmBox.display("Quitting", "Do you want to quit?", "YES", "NO", "");
         if (answer) {
+            this.observer.stopGame();
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();
         }
@@ -394,30 +391,24 @@ public final class GameViewImpl extends Region implements GameView {
 
     @Override
     public void show(final EnumMap<UnitViewType, List<Pair<Integer, Integer>>> units) {
-        this.field.clear();
-        units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
+        Platform.runLater(() -> {
+            this.field.clear();
+            units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));
+        });
     }
 
     @Override
     public void winnerBoxResult(final String player) {
         Music.getMusic().musicStop();
         Music.getMusic().playVictorySound();
-        this.resultBox("winner", " HAS WON", player);
+        Platform.runLater(() -> this.resultBox("Winner", " HAS WON", player));
     }
 
     @Override
     public void drawBoxResult(final String scores) {
         Music.getMusic().musicStop();
         Music.getMusic().playDrawSound();
-        this.resultBox("draw", " DRAW", scores);
+        Platform.runLater(() -> this.resultBox("Draw", " DRAW! ", scores));
     }
 
-    @Override
-    public String getPlayerName(final PlayerType player) {
-        if (player.equals(PlayerType.PLAYER1)) {
-            return this.player1Name;
-        } else {
-            return this.player2Name;
-        }
-    }
 }

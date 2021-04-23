@@ -53,18 +53,5 @@ public final class ViewConstants {
     /**Number of BUTTON in the GameModeSelection. */
     public static final int N_BUTTON_6 = 6;
 
-    /**Number of BUTTON in the GameModeSelection. */
-    public static final int N_BUTTON_16 = 16;
-
-    /**Default LANES in GameModeSelection. */
-    public static final int DEFAULT_LANE = 5;
-
-    /**Default TIMER in GameModeSelection. */
-    public static final int DEFAULT_TIMER = 5;
-
-    /**RESPAWN timer for the units. */
-    public static final int RESPAWN_TIMER = 6;
-
-
     private ViewConstants() { }
 }
