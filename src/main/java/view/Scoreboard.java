@@ -6,7 +6,6 @@ import controllers.io.IOController;
 import controllers.io.IOControllerImpl;
 import view.constants.ViewConstants;
 import view.sound.Music;
-import view.constants.ResourcesConstants;
 import view.constants.Style;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,8 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -49,15 +46,11 @@ public class Scoreboard extends Region implements ViewInterface {
     @Override
     public final Parent createPane() throws IOException {
 
-        /* Gettings scores from I/O Controller */
+        /* Getting scores from I/O Controller */
         final List<String> resultsList = this.ioController.readScore();
 
         /*Pane. */
         final Pane pane = new Pane();
-
-        /*Background. */
-        final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.GAME_SETTINGS));
-        final ImageView scoreboardBackground = this.factory.createImageView(backgroundImg, BORDERPANE_W, BORDERPANE_H);
 
         /*Button MAIN MENU. */
         final Button mainMenu = this.factory.createButton("MAIN MENU", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
@@ -101,7 +94,6 @@ public class Scoreboard extends Region implements ViewInterface {
         borderPane.setCenter(scoreboard);
 
         borderPane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
-        pane.getChildren().add(scoreboardBackground);
         pane.getChildren().addAll(borderPane);
 
         return pane;

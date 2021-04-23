@@ -41,9 +41,9 @@ public class GameTutorial extends Region implements ViewInterface {
         /*Pane. */
         final Pane pane = new Pane();
 
-        /*Background. */
-        final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.GAME_TUTORIAL));
-        final ImageView tutorialBackground = this.factory.createImageView(backgroundImg, BORDERPANE_W, BORDERPANE_H);
+        /*ImageView TUTORIAL. */
+        final Image tutorialImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.GAME_TUTORIAL));
+        final ImageView tutorialImgView = this.factory.createImageView(tutorialImg, BORDERPANE_W, BORDERPANE_H);
 
         /*Button MAIN MENU. */
         final Button mainMenu = this.factory.createButton("MAIN MENU", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
@@ -91,7 +91,7 @@ public class GameTutorial extends Region implements ViewInterface {
        borderPane.setBottom(backMenu);
        borderPane.setRight(infoMenu);
        borderPane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
-       pane.getChildren().add(tutorialBackground);
+       pane.getChildren().add(tutorialImgView);
        pane.getChildren().addAll(borderPane);
 
        return pane;

@@ -125,6 +125,7 @@ public final class GameViewImpl extends Region implements GameView {
             }
         }
     }
+
     /**
     * Method to return on main menu with a confirm box.
     * @param message1 String

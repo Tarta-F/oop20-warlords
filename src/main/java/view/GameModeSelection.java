@@ -11,7 +11,6 @@ import controllers.ControllerImpl;
 import controllers.settings.SettingsController;
 import view.constants.ViewConstants;
 import view.sound.Music;
-import view.constants.ResourcesConstants;
 import view.constants.Style;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,8 +20,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -100,10 +97,6 @@ public class GameModeSelection extends Region implements ViewInterface {
         playerName2.setPrefSize(TEXTFIELD_W, TEXTFIELD_H);
         playerName2.setStyle(Style.TEXT);
         addTextLimiter(playerName2, 10);
-
-        /*BackGroung. */
-        final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.GAME_SETTINGS));
-        final ImageView background = this.factory.createImageView(backgroundImg, VBOX_W, VBOX_H);
 
         /*Buttons. */
         /*Buttons SCENARIO. */
@@ -213,7 +206,7 @@ public class GameModeSelection extends Region implements ViewInterface {
         vBox.setPrefSize(VBOX_W, VBOX_H);
         vBox.getChildren().addAll(scenarioBox, laneBox, timerBox, namesBox, backStartBox);
 
-        pane.getChildren().addAll(background, vBox);
+        pane.getChildren().addAll(vBox);
 
         return pane;
     }
