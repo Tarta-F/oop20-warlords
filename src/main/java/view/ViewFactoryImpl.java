@@ -9,6 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 /**
  * Basic implementation of {@link ViewFactory}.
@@ -68,7 +70,15 @@ public final class ViewFactoryImpl implements ViewFactory {
         final ImageView imageView = new ImageView(image);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
-
         return imageView;
     }
+
+    @Override
+    public MediaView createMediaView(final MediaPlayer mediaPlayer, final double width, final double height) {
+        final MediaView mediaView = new MediaView(mediaPlayer);
+        mediaView.setFitWidth(width);
+        mediaView.setFitHeight(height);
+        return mediaView;
+    }
+
 }

@@ -21,7 +21,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * This class implements the Main Menu of the view and is used as unique window for the view.
@@ -49,7 +53,21 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         /*Creation of the Stage, Scene and all their preferences. */
         Music.getMusic().play(Sounds.MENU);
         final Stage window = primaryStage;
-        final Pane pane = new Pane(this.createPane());
+        
+        final Media media = new Media(getClass().getResource(ResourcesConstants.MENU).toExternalForm());
+        final MediaPlayer player = new  MediaPlayer(media);
+        player.setAutoPlay(true);
+        player.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                player.seek(Duration.ZERO);
+            }
+        });
+        final MediaView viewer = this.factory.createMediaView(player, PANE_W, PANE_H);
+        
+        final Pane pane = new Pane();
+        pane.getChildren().add(viewer);
+        pane.getChildren().add(this.createPane());
+        
         final Scene scene = new Scene(pane, PANE_W, PANE_H);
         scene.getStylesheets().add(MainMenu.class.getResource("/listView.css").toExternalForm());
         window.setScene(scene);
@@ -65,10 +83,6 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
     public Parent createPane() throws IOException {
         /*Pane. */
         final Pane pane = new Pane();
-
-        /*Background and Image. */
-        final Image backgroundImg  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.MENU));
-        final ImageView menuBackGround = this.factory.createImageView(backgroundImg, PANE_W, PANE_H);
 
         final Image logoImage  = new Image(this.getClass().getResourceAsStream(ResourcesConstants.LOGO));
         final ImageView logo = this.factory.createImageView(logoImage, LOGO_W, LOGO_H);
@@ -150,7 +164,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         borderPane.setPrefSize(BORDERPANE_W, BORDERPANE_H);
         borderPane.setLeft(leftVBox);
         borderPane.setRight(rigthVBox);
-        pane.getChildren().addAll(menuBackGround, borderPane);
+        pane.getChildren().add(borderPane);
 
         return pane;
     }

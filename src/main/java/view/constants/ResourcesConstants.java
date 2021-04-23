@@ -91,10 +91,10 @@ public final class ResourcesConstants {
     public static final String GAME_TUTORIAL = SEP + "GameSettingsTUTORIAL.png";
 
     /**PATH Image MainMenu background. */
-    public static final String MENU = SEP + "menu.png";
+    public static final String MENU = SEP + "Menu.mp4";
 
     /**PATH Image MainMenu logo. */
-    public static final String LOGO = SEP + "logo.png";
+    public static final String LOGO = SEP + "Logo.png";
 
     /**PATH music. */
     public static final String MUSIC = SEP + "Main_menu_music.mp3";

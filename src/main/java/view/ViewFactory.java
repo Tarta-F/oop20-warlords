@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 /**
  * Factory to create view elements.
@@ -94,4 +96,15 @@ public interface ViewFactory {
      */
     ImageView createImageView(Image image, double width, double height);
 
+    /**
+     * @param mediaPlayer
+     *      media player that pass in {@link MediaView}
+     * @param width
+     *      width of the {@link MediaView}
+     * @param height
+     *      height of the {@link MediaView}
+     * @return
+     *      a {@link MediaView} with the given dimensions 
+     * */
+    MediaView createMediaView(MediaPlayer mediaPlayer, double width, double height);
 }
