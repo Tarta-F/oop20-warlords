@@ -13,7 +13,8 @@ import javafx.util.Duration;
 public final class Music {
 
     private static final Music SINGLETON = new Music();
-    private static final double VOLUME = 0.5;
+    private static final double VOLUME = 0.3;
+    private static final double VOLUME2 = 0.5;
 
     private final EnumMap<Sounds, MediaPlayer> soundMedias = new EnumMap<>(Sounds.class);
 
@@ -111,7 +112,7 @@ public final class Music {
     public void playSound(final Sounds sound) {
         this.soundMedias.putIfAbsent(sound, this.getMediaPlayer(sound.getPath()));
         SINGLETON.currentSound = new MediaPlayer(this.soundMedias.get(sound).getMedia());
-
+        SINGLETON.currentSound.setVolume(VOLUME2);
         SINGLETON.currentSound.setOnEndOfMedia(() -> SINGLETON.currentSound.seek(Duration.UNKNOWN));
         if (!SINGLETON.stop) {
             SINGLETON.currentSound.play();

@@ -407,7 +407,7 @@ public final class GameViewImpl extends Region implements GameView {
     public void drawBoxResult(final String scores) {
         Music.getMusic().musicStop();
         Music.getMusic().playDrawSound();
-        Platform.runLater(() -> this.resultBox("Draw", " DRAW! ", scores));
+        Platform.runLater(() -> this.resultBox("Draw", "   DRAW! ", scores));
     }
 
 }
