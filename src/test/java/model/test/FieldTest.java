@@ -31,7 +31,7 @@ public class FieldTest {
 
     @BeforeEach
     public final void initField() {
-        this.field = new FieldImpl(GameConstants.CELLS_NUM, GameConstants.THREE_LANES);
+        this.field = new FieldImpl(GameConstants.CELLS_NUM, 3);
         unit1 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER1);
         unit2 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER2);
 
@@ -89,8 +89,8 @@ public class FieldTest {
 
         field.update();
 
-        assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1).get());
-        assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1).get());
+        assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1));
+        assertEquals(Integer.valueOf(1), field.getScore(PlayerType.PLAYER1));
     }
 
 }

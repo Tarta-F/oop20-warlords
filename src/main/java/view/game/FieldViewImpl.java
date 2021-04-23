@@ -14,9 +14,9 @@ import view.ViewResolution;
 import view.constants.ViewConstants;
 
 /** 
- * Basic implementation of {@link GameFieldView}.
+ * Basic implementation of {@link FieldView}.
  */
-public final class GameFieldViewImpl implements GameFieldView {
+public final class FieldViewImpl implements FieldView {
 
     private static final String MESSAGE_OVER_ROWS = "Image exceed row limits";
     private static final String MESSAGE_OVER_COLUMNS = "Image exceed column limits";
@@ -36,7 +36,7 @@ public final class GameFieldViewImpl implements GameFieldView {
     private final EnumMap<UnitViewType, Image> unitImageTable = new EnumMap<>(UnitViewType.class);
 
     /**
-     * Creates a {@link GameFieldView} with the given dimensions and background.
+     * Creates a {@link FieldView} with the given dimensions and background.
      * 
      * @param nRow
      *      number of rows of the field
@@ -47,7 +47,7 @@ public final class GameFieldViewImpl implements GameFieldView {
      * @throws IllegalArgumentException
      *       if one of the dimension given is negative
      */
-    public GameFieldViewImpl(final int nRow, final int nCols, final String ground) { //final Optional<Image> scenario
+    public FieldViewImpl(final int nRow, final int nCols, final String ground) {
         if (nRow < 0 || nCols < 0) {
             throw new IllegalArgumentException(MESSAGE_NEGATIVE_DIMENSIONS);
         }

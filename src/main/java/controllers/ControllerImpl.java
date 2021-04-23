@@ -1,13 +1,20 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Optional;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import constants.GameConstants;
 import constants.PlayerType;
-import javafx.application.Platform;
+import controllers.io.IOController;
+import controllers.io.IOControllerImpl;
+import controllers.timer.GameTimer;
+import controllers.timer.PlayerTimer;
+import controllers.timer.Timer;
+import model.Field;
 import model.FieldImpl;
+import model.ScoreImpl;
 import model.unit.UnitImpl;
 import model.unit.UnitType;
 import view.game.GameView;
@@ -16,45 +23,61 @@ import view.game.GameViewImpl;
 
 public final class ControllerImpl implements Controller {
 
+    private static final long REFRESH_RATE = 500;
+    private boolean timerIsOver;
+    private final int laneNumber;
     private final EnumMap<PlayerType, Long> lastSpawn = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, Integer> selectedLane = new EnumMap<>(PlayerType.class);
     private final EnumMap<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
-    private final EnumMap<PlayerType, PlayerTimer> timers = new EnumMap<>(PlayerType.class);
-
+    private final EnumMap<PlayerType, Timer> timers = new EnumMap<>(PlayerType.class);
     private final GameView gameView;
-    private final FieldImpl field;
-    private final int laneNumber;
+    private final Field field;
     private Optional<PlayerType> winner;
-
     private final ScheduledThreadPoolExecutor thrEx;
-    private final GameLoopImpl gl;
+    private final GameLoopImpl gameLoop;
+    private final Timer gameTimer;
+    private final IOController ioContr;
+    private final String player1Name;
+    private final String player2Name;
 
     public ControllerImpl(final int laneNumber, final int mins, final ScenarioViewType scenario,
             final String player1Name, final String player2Name) {
 
-        this.gameView = new GameViewImpl(laneNumber, GameConstants.CELLS_NUM, scenario.getBackgroundPath(), 
-                scenario.getGroundPath(), player1Name, player2Name);
+        this.gameView = new GameViewImpl(laneNumber, GameConstants.CELLS_NUM, scenario.getBackgroundPath(),
+                scenario.getGroundPath());
         this.gameView.setObserver(this);
         this.laneNumber = laneNumber;
         this.winner = Optional.empty();
         this.field = new FieldImpl(GameConstants.CELLS_NUM, laneNumber);
-        new Thread(new GameTimer(mins, this.gameView)).start();
+        this.gameTimer = new GameTimer(mins, this.gameView, this);
+        this.ioContr = new IOControllerImpl();
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
+        new Thread(this.gameTimer).start();
+        this.initPlayers();
+        this.timers.forEach((p, t) -> new Thread(t).start());
+        /* Instance GameLoop */
+        this.gameLoop = new GameLoopImpl(this);
+        this.thrEx = new ScheduledThreadPoolExecutor(1);
+        this.startLoop();
+    }
 
+    /**
+     * Utility method that inizialize variables for each Player.
+     */
+    private void initPlayers() {
         for (final var player : PlayerType.values()) {
             this.lastSpawn.put(player, System.currentTimeMillis());
             this.selectedLane.put(player, laneNumber / 2);
             this.selectedUnit.put(player, 0);
             this.timers.put(player, new PlayerTimer(gameView, player));
         }
-        this.timers.forEach((p, t) -> new Thread(t).start());
-        /** Instance GameLoop */
-        this.gl = new GameLoopImpl(this);
-        this.thrEx = new ScheduledThreadPoolExecutor(1);
-        this.startLoop();
     }
-
+    /**
+     * Repeat the {@link #update()} after {@link #REFRESH_RATE} seconds.
+     */
     private void startLoop() {
-        this.thrEx.scheduleWithFixedDelay(gl, 0, 1000 / 2, TimeUnit.MILLISECONDS);
+        this.thrEx.scheduleWithFixedDelay(gameLoop, 0, REFRESH_RATE, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -82,7 +105,47 @@ public final class ControllerImpl implements Controller {
      * @param player to reset the timer
      */
     private void resetPlayerTimer(final PlayerType player) {
-        this.timers.get(player).resetTimer();
+        this.timers.get(player).reset();
+    }
+    /**
+     * Stop the game and write on a file the score of the match.
+     */
+    private void stopAndWriteScore(final int scoreP1, final int scoreP2) {
+        this.stopGame();
+        this.writeScore(scoreP1, scoreP2);
+    }
+
+    public String getPlayer1Name() {
+        return player1Name;
+    }
+
+    public String getPlayer2Name() {
+        return player2Name;
+    }
+
+    @Override
+    public Optional<PlayerType> getWinner() {
+        return this.winner;
+    }
+
+    @Override
+    public int getScore(final PlayerType player) {
+        return this.field.getScore(player);
+    }
+
+    @Override
+    public GameView getView() {
+        return this.gameView;
+    }
+
+    @Override
+    public void setTimerIsOver() {
+        this.timerIsOver = true;
+    }
+
+    @Override
+    public boolean isTimerOver() {
+        return this.timerIsOver;
     }
 
     @Override
@@ -117,7 +180,6 @@ public final class ControllerImpl implements Controller {
         this.gameView.updateSelectLane(player, currentIndex, nextIndex);
     }
 
-
     @Override
     public void controlNextUnit(final PlayerType player) {
         final int currentIndex = this.selectedUnit.get(player);
@@ -135,31 +197,19 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public GameView getView() {
-        return this.gameView;
-    }
-
-    @Override
     public void update() {
         this.field.update();
-        Platform.runLater(() -> {
-            this.gameView.show(Converter.convertMap(this.field.getUnits()));
-            for (final var player : PlayerType.values()) {
-                this.gameView.updateScorePlayer(player, this.getScore(player));
-            }
-            if (isOver()) {
-                this.gameView.winnerBoxResult(this.gameView.getPlayerName(getWinner().get()));
-                //System.out.println(isOver() ? getWinner().get() + " WON" : "");
-            } /*else if ("00:00".equals(this.gameView.getTimer())) {
-                if (this.getScore(PlayerType.PLAYER1) < this.getScore(PlayerType.PLAYER2)) {
-                    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER2));
-                } else if (this.getScore(PlayerType.PLAYER1) == this.getScore(PlayerType.PLAYER2)) {
-                    this.gameView.winnerBoxResult("DRAW!");
-                } else {
-                    this.gameView.winnerBoxResult(this.gameView.getPlayerName(PlayerType.PLAYER1));
-                }
-            }*/
-        });
+        this.gameView.show(Converter.convertMap(this.field.getUnits()));
+        for (final var player : PlayerType.values()) {
+            this.gameView.updateScorePlayer(player, this.getScore(player));
+        }
+        if (this.isOver()) {
+            this.gameView.winnerBoxResult(this.getPlayerName(getWinner().get()));
+            this.stopAndWriteScore(this.getScore(PlayerType.PLAYER1), getScore(PlayerType.PLAYER2));
+        }
+        if (this.timerIsOver) {
+            this.controlEndTime();
+        }
     }
 
     @Override
@@ -168,12 +218,46 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public Optional<PlayerType> getWinner() {
-        return this.winner;
+    public void stopGame() {
+        this.timers.forEach((p, t) -> t.stop());
+        this.gameTimer.stop();
+        this.thrEx.shutdown();
     }
 
     @Override
-    public int getScore(final PlayerType player) {
-        return this.field.getScore(player).orElseGet(() -> Integer.valueOf(0));
+    public boolean timeOut() {
+        return this.timerIsOver;
+    }
+
+    /**
+     * Get player NAME.
+     * @param player PlayerType
+     * @return String -name of the player.
+     * */
+    public String getPlayerName(final PlayerType player) {
+        return player.equals(PlayerType.PLAYER1) ? this.player1Name : this.player2Name;
+    }
+
+    private void writeScore(final int scoreP1, final int scoreP2) {
+        try {
+            this.ioContr.writeNewScore(new ScoreImpl(this.player1Name, this.player2Name, scoreP1, scoreP2));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void controlEndTime() {
+        final int p1score = this.getScore(PlayerType.PLAYER1);
+        final int p2score = this.getScore(PlayerType.PLAYER2);
+        if (p1score == p2score) {
+            this.gameView.drawBoxResult(p1score + " - " + p2score);
+        } else {
+            if (p1score > p2score) {
+                this.gameView.winnerBoxResult(getPlayerName(PlayerType.PLAYER1));
+            } else {
+                this.gameView.winnerBoxResult(getPlayerName(PlayerType.PLAYER2));
+            }
+        }
+        this.stopAndWriteScore(p1score, p2score);
     }
 }

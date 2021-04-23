@@ -1,6 +1,9 @@
 package view;
 
 import java.io.IOException;
+
+import controllers.SettingsController;
+import controllers.SettingsControllerImpl;
 import view.constants.ViewConstants;
 import view.sound.Music;
 import view.sound.Sounds;
@@ -53,7 +56,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         window.setResizable(false);
         window.setOnCloseRequest(e -> {
             e.consume();
-            closeProgram(pane);
+            /* Disabled for a safe exit.*/ 
         });
     }
 
@@ -91,10 +94,10 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         /*Button VERSUS. */
         final Button versus = this.factory.createButton("VERSUS", Style.BUTTON_1, BUTTONS_W, BUTTONS_H);
         versus.setOnMouseClicked(e -> {
-            final GameModeSelection sceneGameModeSelection = new GameModeSelection();
+            final SettingsController settingsManager = new SettingsControllerImpl();
             try {
                 Music.getMusic().playButtonSound();
-                pane.getChildren().setAll(sceneGameModeSelection.createPane());
+                pane.getChildren().setAll(settingsManager.getView().createPane());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -153,7 +156,7 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
 
     @Override
     public void closeProgram(final Pane pane) {
-        final boolean answer = ConfirmBox.display("quitting", "Do you want to quit?", "YES", "NO", "");
+        final boolean answer = ConfirmBox.display("Quitting", "Do you want to quit?", "YES", "NO", "");
         if (answer) {
             final Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();

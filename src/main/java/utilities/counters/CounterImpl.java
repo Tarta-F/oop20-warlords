@@ -27,7 +27,7 @@ public class CounterImpl implements Counter {
      * {@inheritDoc}
      */
     @Override
-    public int getValue() {
+    public int getCount() {
         return this.value;
     }
 

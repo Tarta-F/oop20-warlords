@@ -42,8 +42,7 @@ public final class ConfirmBox {
         final Stage window = new Stage();
 
         /*Label. */
-        final Label label = new Label();
-        label.setText(player + message);
+        final Label label = new Label(player + message);
         label.setAlignment(Pos.CENTER);
         label.setPrefSize(LABEL_W, LABEL_H);
         label.setStyle(Style.LABEL);

@@ -1,15 +1,11 @@
 package model;
 
 import java.util.Collections;
-
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import org.apache.commons.lang3.tuple.Pair;
-
 import constants.PlayerType;
 import model.unit.Unit;
 
@@ -55,10 +51,10 @@ public final class FieldImpl implements Field {
     }
 
     @Override
-    public Optional<Integer> getScore(final PlayerType player) {
+    public int getScore(final PlayerType player) {
         return this.lanes.stream()
                 .map(l -> l.getScore(player))
-                .reduce(Integer::sum);
+                .reduce(Integer::sum).orElse(0).intValue();
     }
 
     @Override

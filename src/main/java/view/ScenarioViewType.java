@@ -37,7 +37,7 @@ public enum ScenarioViewType {
         return this.groundPath;
     }
 
-    /** 
+    /**
      * Method to get DESCRIPTION of the scenario.
      * @return description of the Scenario
      */

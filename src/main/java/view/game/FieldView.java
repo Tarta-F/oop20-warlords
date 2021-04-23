@@ -8,7 +8,7 @@ import view.UnitViewType;
 /** 
  * This interface models the GameField used in the {@link GameView} using a {@link GridPane}.
  */
-public interface GameFieldView {
+public interface FieldView {
 
     /**
      * @return 
