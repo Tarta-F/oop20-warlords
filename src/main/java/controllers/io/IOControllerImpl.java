@@ -16,7 +16,7 @@ import com.google.gson.stream.JsonReader;
 import model.score.Score;
 import model.score.ScoreImpl;
 
-public class IOControllerImpl implements IOController {
+public final class IOControllerImpl implements IOController {
 
     private static final String MSG = "No result detected.";
     private static final String FILE_PATH = System.getProperty("user.home") + File.separator + "WarlordsScore.json";
@@ -29,28 +29,6 @@ public class IOControllerImpl implements IOController {
         this.scoreFile = new File(FILE_PATH);
         this.gsonRead = new Gson();
         this.gsonWrite = new GsonBuilder().setPrettyPrinting().create();
-    }
-
-    @Override
-    public final List<String> readScore() throws IOException {
-        if (this.scoreFile.exists()) {
-            final JsonReader reader = new JsonReader(new FileReader(this.scoreFile));
-            final List<Score> oldResults = this.gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
-            final List<String> resultList = new ArrayList<>();
-            oldResults.forEach(sc -> resultList.add(sc.toString()));
-            return resultList;
-        } else {
-           return List.of(MSG);
-        }
-    }
-
-    @Override
-    public final void writeNewScore(final Score score) throws IOException {
-        if (this.scoreFile.exists()) {
-            this.readAndWriteNew(score);
-        } else if (this.scoreFile.createNewFile()) {
-            this.writeFirstScore(score);
-        }
     }
 
     private void writeFirstScore(final Score score) {
@@ -74,5 +52,38 @@ public class IOControllerImpl implements IOController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<String> readScore() throws IOException {
+        if (this.scoreFile.exists()) {
+            final JsonReader reader = new JsonReader(new FileReader(this.scoreFile));
+            final List<Score> oldResults = this.gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
+            final List<String> resultList = new ArrayList<>();
+            oldResults.forEach(sc -> resultList.add(sc.toString()));
+            return resultList;
+        } else {
+           return List.of(MSG);
+        }
+    }
+
+    @Override
+    public void writeNewScore(final Score score) throws IOException {
+        if (this.scoreFile.exists()) {
+            this.readAndWriteNew(score);
+        } else if (this.scoreFile.createNewFile()) {
+            this.writeFirstScore(score);
+        }
+    }
+
+    @Override
+    public void clearFile() {
+        if (this.scoreFile.exists()) {
+            try {
+               this.scoreFile.delete();
+           } catch (SecurityException e) {
+               e.printStackTrace();
+           }
+        } 
     }
 }

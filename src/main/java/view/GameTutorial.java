@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 
+import constants.GameConstants;
 import view.constants.ViewConstants;
 import view.sound.Music;
 import view.constants.ResourcesConstants;
@@ -61,15 +62,14 @@ public class GameTutorial extends Region implements ViewInterface {
         final Label info = this.factory.createLabel("", Style.LABEL, LABEL_W, LABEL_H);
         info.setAlignment(Pos.TOP_CENTER);
         info.setText("\n\n"
-                + "battle info:\n\n"
+                + "Battle info:\n\n"
                 + "-When the unit icon is glowing it means it is selected.\n\n"
                 + "-When the arrow icon is glowing it means you selected that\n"
                 + "lane as unit's spawn.\n\n"
                 + "-Under the unit icon there is the spawning time.\n\n"
                 + "-When the spawning time reach 0 you can spawn the unit.\n\n"
-                + "-Each player has 8HP.\n\n"
-                + "-When enemy HP reach 0 you win.\n\n"
-                + "-In order to make the enemy lose HP you need to reach\n"
+                + "-Each player has its own Score and win the game when \n" + GameConstants.SCORE_TO_WIN + " is reached.\n\n"
+                + "-In order to increase your score you need to reach\n"
                 + "the enemy spawn with 1 of your unit.\n\n"
                 + "-At the top there is the timer.\n\n"
                 + "-When the timer reach 0 the battle will result in a win or a draw.\n\n"
