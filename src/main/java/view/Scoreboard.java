@@ -36,6 +36,7 @@ public class Scoreboard extends Region implements ViewInterface {
     private static final double LISTVIEW_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_2);
     private static final double LABEL_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_7);
     private static final double LABEL_H = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
+    private static final double LAYOUT_HBOX_W = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
 
     private final IOController ioController;
     private final ViewFactory factory;
@@ -47,7 +48,7 @@ public class Scoreboard extends Region implements ViewInterface {
 
     @Override
     public final Parent createPane() throws IOException {
-
+        final MainMenu sceneMenu = new MainMenu();
         /* Gettings scores from I/O Controller */
         final List<String> resultsList = this.ioController.readScore();
 
@@ -61,7 +62,18 @@ public class Scoreboard extends Region implements ViewInterface {
         /*Button MAIN MENU. */
         final Button mainMenu = this.factory.createButton("MAIN MENU", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
         mainMenu.setOnMouseClicked(e -> {
-            final MainMenu sceneMenu = new MainMenu();
+            try {
+                Music.getMusic().playButtonSound();
+                pane.getChildren().setAll(sceneMenu.createPane());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        /* Button Clear */
+        final Button clear = this.factory.createButton("CLEAR SCORES", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
+        clear.setOnMouseClicked(e -> {
+            this.ioController.clearFile();
             try {
                 Music.getMusic().playButtonSound();
                 pane.getChildren().setAll(sceneMenu.createPane());
@@ -83,10 +95,10 @@ public class Scoreboard extends Region implements ViewInterface {
         scoreboard.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> e.consume());
 
         /*Layout. */
-        final HBox backMenu = new HBox();
+        final HBox backMenu = new HBox(LAYOUT_HBOX_W);
         backMenu.setAlignment(Pos.CENTER);
         backMenu.setPadding(new Insets(0, 0, LAYOUT_PADDING_H_1, 0));
-        backMenu.getChildren().add(mainMenu);
+        backMenu.getChildren().addAll(mainMenu, clear);
 
         final HBox topMenu = new HBox();
         topMenu.setAlignment(Pos.CENTER);
