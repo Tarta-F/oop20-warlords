@@ -31,7 +31,7 @@ public class FieldTest {
 
     @BeforeEach
     public final void initField() {
-        this.field = new FieldImpl(GameConstants.CELLS_NUM, GameConstants.THREE_LANES);
+        this.field = new FieldImpl(GameConstants.CELLS_NUM, 3);
         unit1 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER1);
         unit2 = new UnitImpl(UnitType.SWORDSMEN, PlayerType.PLAYER2);
 
