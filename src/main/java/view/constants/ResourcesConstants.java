@@ -77,11 +77,23 @@ public final class ResourcesConstants {
     public static final String P2_SELECTED_ARROW = SEP + "SelectedArrowPlayer2.png";
 
     /*Grid Images. */
-    /**PATH Image grid ground. */
-    public static final String GROUND = SEP + "Ground.png";
+    /**PATH Image ground for scenario 1. */
+    public static final String GROUND = SEP + "forest.png";
+
+    /**PATH Image grid ground for scenario 1. */
+    public static final String GROUND_GRID_1 = SEP + "nothing.png";
 
     /**PATH Image grid ground for scenario 2. */
-    public static final String GROUND_2 = SEP + "Ground2.png";
+    public static final String GROUND_2 = SEP + "Sand.jpg";
+
+    /**PATH Image grid ground for scenario 1. */
+    public static final String GROUND_GRID_2 = SEP + "sandGrid.png";
+
+    /**PATH Image grid ground for scenario 3. */
+    public static final String GROUND_3 = SEP + "lavaTexture.jpg";
+
+    /**PATH Image grid ground for scenario 1. */
+    public static final String GROUND_GRID_3 = SEP + "blackDirt.png";
 
     /*Other Scenes. */
     /**PATH Image GameModeSelection background. */
