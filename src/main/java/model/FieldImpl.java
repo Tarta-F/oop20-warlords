@@ -12,7 +12,7 @@ import model.unit.Unit;
 /**
  * Basic implementation of {@link Field}.
  */
-public final class FieldImpl implements Field {
+public class FieldImpl implements Field {
 
     private final List<Lane> lanes;
     private final int cellsNumber;
@@ -37,6 +37,9 @@ public final class FieldImpl implements Field {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * To subclass this method safely a {@link Unit} needs to be added to the specified {@link Lane} number.
+     */
     @Override
     public void addUnit(final int laneIndex, final Unit unit) {
         if (laneIndex < 0 || laneIndex >= this.lanes.size()) {
@@ -46,19 +49,19 @@ public final class FieldImpl implements Field {
     }
 
     @Override
-    public List<Lane> getLanes() {
+    public final List<Lane> getLanes() {
         return Collections.unmodifiableList(this.lanes);
     }
 
     @Override
-    public int getScore(final PlayerType player) {
+    public final int getScore(final PlayerType player) {
         return this.lanes.stream()
                 .map(l -> l.getScore(player))
                 .reduce(Integer::sum).orElse(0).intValue();
     }
 
     @Override
-    public Map<Unit, Pair<Integer, Integer>> getUnits() {
+    public final Map<Unit, Pair<Integer, Integer>> getUnits() {
         return this.lanes.stream()
                 .flatMap(l -> l.getUnits().entrySet().stream()
                         .map(e -> Pair.of(e.getKey(), Pair.of(e.getValue(), lanes.indexOf(l)))))
@@ -66,22 +69,22 @@ public final class FieldImpl implements Field {
     }
 
     @Override
-    public void update() {
+    public final void update() {
         this.lanes.forEach(Lane::update);
     }
 
     @Override
-    public int getLaneNumber() {
+    public final int getLaneNumber() {
         return this.laneNumber;
     }
 
     @Override
-    public int getCellsNumber() {
+    public final int getCellsNumber() {
         return this.cellsNumber;
     }
 
     @Override
-    public void resetScore() {
+    public final void resetScore() {
         this.lanes.forEach(Lane::resetScore);
     }
 

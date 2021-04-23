@@ -21,7 +21,7 @@ import utilities.counters.LimitMultiCounterImpl;
 /** 
  * Basic implementation of {@link Lane}.
  */
-public final class LaneImpl implements Lane {
+public class LaneImpl implements Lane {
 
     private final int lenght;
     private final Map<Unit, LimitMultiCounter> units;
@@ -90,13 +90,16 @@ public final class LaneImpl implements Lane {
         this.units.get(unit).multiIncrement(unit.getStep());
     }
 
+    /**
+     * To subclass this method safely a {@link Unit} needs to be added to this object.
+     */
     @Override
     public void addUnit(final Unit unit) {
         this.units.put(unit, new LimitMultiCounterImpl(this.lenght - 1));
     }
 
     @Override
-    public Set<Unit> getUnitsAtPosition(final int position) {
+    public final Set<Unit> getUnitsAtPosition(final int position) {
         if (!this.isLegalPosition(position)) {
             throw new IndexOutOfBoundsException(MESSAGE_OUT_OF_LANE);
         }
@@ -107,7 +110,7 @@ public final class LaneImpl implements Lane {
     }
 
     @Override
-    public Map<Unit, Integer> getUnits() {
+    public final Map<Unit, Integer> getUnits() {
         return this.units.entrySet().stream()
                 .filter(e -> e.getKey().isAlive())
                 .map(e -> Pair.of(e.getKey(), e.getValue().getCount()))
@@ -117,22 +120,25 @@ public final class LaneImpl implements Lane {
     }
 
     @Override
-    public int getLenght() {
+    public final int getLenght() {
         return this.lenght;
     }
 
     @Override
-    public int getScore(final PlayerType player) {
+    public final int getScore(final PlayerType player) {
         return this.scores.get(player).getCount();
     }
 
     @Override
-    public void resetScore() {
+    public final void resetScore() {
         for (final PlayerType player : PlayerType.values()) {
             this.scores.get(player).reset();
         }
     }
 
+    /**
+     * To subclass this method safely dead {@link Unit}s need to be removed.
+     */
     @Override
     public void update() {
         final Iterator<Entry<Unit, LimitMultiCounter>> unitsIterator = this.units.entrySet().iterator();
