@@ -224,10 +224,7 @@ public final class ControllerImpl implements Controller {
         this.thrEx.shutdown();
     }
 
-    @Override
-    public boolean timeOut() {
-        return this.timerIsOver;
-    }
+
 
     /**
      * Get player NAME.

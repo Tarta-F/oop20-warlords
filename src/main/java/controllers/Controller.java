@@ -57,12 +57,16 @@ public interface Controller {
     boolean spawnUnit(PlayerType playerType);
 
     /**
-     * Controls if the game is over.
-     * @return true if the game is over
+     * Controls if the game is over because a player wins.
+     * @return true if there is a winner, false otherwise.
      */
     boolean isOver();
-    //TODO
-    boolean timeOut();
+
+    /**
+     * Controls if the timer is ended up.
+     * @return true if timer is over, false otherwise.
+     */
+    boolean isTimerOver();
 
     /**
      * Updates the model and print the result on the GameView.
@@ -80,9 +84,10 @@ public interface Controller {
      */
     void stopGame();
 
-    //TODO
+    /**
+     * @param player
+     * @return The name of the player
+     */
     String getPlayerName(PlayerType player);
-
-    boolean isTimerOver();
 
 }
