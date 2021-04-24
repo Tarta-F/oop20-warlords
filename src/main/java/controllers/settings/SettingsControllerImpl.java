@@ -10,12 +10,36 @@ public final class SettingsControllerImpl implements SettingsController {
     private int laneNumber;
     private int timerDuration;
     private final GameModeSelection viewSettings;
+    private String player1Name;
+    private String player2Name;
 
     public SettingsControllerImpl() {
         this.scenario = GameConstants.DEFAULT_SCENARIO;
         this.laneNumber = GameConstants.DEFAULT_LANE;
         this.timerDuration = GameConstants.DEFAULT_TIMER;
+        this.player1Name = "Player 1";
+        this.player2Name = "Player 2";
         this.viewSettings = new GameModeSelection(this);
+    }
+
+    @Override
+    public String getPlayer1Name() {
+        return this.player1Name;
+    }
+
+    @Override
+    public String getPlayer2Name() {
+        return this.player2Name;
+    }
+
+    @Override
+    public void setPlayer1Name(final String playerName) {
+        this.player1Name = playerName;
+    }
+
+    @Override
+    public void setPlayer2Name(final String playerName) {
+        this.player2Name = playerName;
     }
 
     @Override

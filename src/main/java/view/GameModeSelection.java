@@ -158,8 +158,13 @@ public class GameModeSelection extends Region implements ViewInterface {
         /*Button START. */
         final Button start = this.factory.createButton("START", Style.BUTTON_2, BUTTONS_W, BUTTONS_H);
         start.setOnMouseClicked(e -> {
+           if (!this.settingsManager.getPlayer1Name().equals(playerName1.getText()) 
+                   || !this.settingsManager.getPlayer2Name().equals(playerName2.getText())) {
+               this.settingsManager.setPlayer1Name(playerName1.getText());
+               this.settingsManager.setPlayer2Name(playerName2.getText());
+           }
            final ControllerImpl contr = new ControllerImpl(this.settingsManager.getLaneNumber(), this.settingsManager.getTimerDuration(),
-                   this.settingsManager.getScenario(), playerName1.getText(), playerName2.getText());
+                   this.settingsManager.getScenario(), this.settingsManager.getPlayer1Name(), this.settingsManager.getPlayer2Name());
            Music.getMusic().startMatchSound();
            try {
                pane.getChildren().setAll(contr.getView().createPane());
