@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
 import constants.PlayerType;
-import controllers.Controller;
+import controllers.Observer;
 import view.ViewClose;
 import view.ViewInterface;
 
@@ -59,7 +59,7 @@ public interface GameView extends ViewClose, ViewInterface {
      * Method to set the Observer.
      * @param observer Controller
      * */
-    void setObserver(Controller observer);
+    void setObserver(Observer observer);
 
     /**
      * Method to draw a unit in the grid.

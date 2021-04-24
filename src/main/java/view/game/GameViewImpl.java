@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.EnumMap;
 import org.apache.commons.lang3.tuple.Pair;
 import constants.PlayerType;
-import controllers.Controller;
+import controllers.Observer;
 import view.ConfirmBox;
 import view.MainMenu;
 import view.ViewClose;
@@ -80,7 +80,7 @@ public final class GameViewImpl extends Region implements GameView, ViewInterfac
     private List<Image> unitSelectedP2;
     private List<Image> unitImageP2;
     private Label timer;
-    private Controller observer;
+    private Observer observer;
     private Pane pane;
 
     /*Sets of all Images used. */
@@ -377,7 +377,7 @@ public final class GameViewImpl extends Region implements GameView, ViewInterfac
     }
 
     @Override
-    public void setObserver(final Controller observer) {
+    public void setObserver(final Observer observer) {
         this.observer = observer;
     }
 

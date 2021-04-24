@@ -21,7 +21,7 @@ import view.game.GameView;
 import view.ScenarioViewType;
 import view.game.GameViewImpl;
 
-public final class ControllerImpl implements Controller {
+public final class ControllerImpl implements Controller, Observer {
 
     private static final long REFRESH_RATE = 500;
     private boolean timerIsOver;
