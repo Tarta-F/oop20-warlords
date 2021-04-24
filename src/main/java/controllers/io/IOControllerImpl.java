@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-
 import model.score.Score;
 import model.score.ScoreImpl;
 
@@ -52,7 +51,7 @@ public final class IOControllerImpl implements IOController {
                 file.write(newScore);
                 file.flush();
             }
-       }    catch (IOException e) {
+        }    catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -67,7 +66,7 @@ public final class IOControllerImpl implements IOController {
                 return resultList;
             }
         } else {
-           return List.of(MSG);
+            return List.of(MSG);
         }
     }
 
