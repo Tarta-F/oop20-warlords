@@ -164,7 +164,6 @@ public final class MainMenu extends Application implements ViewInterface, ViewCl
         borderPane.setLeft(leftVBox);
         borderPane.setRight(rigthVBox);
         pane.getChildren().add(borderPane);
-
         return pane;
     }
 
