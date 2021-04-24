@@ -86,7 +86,7 @@ public final class ControllerImpl implements Controller {
      * @return true if the player has won
      */
     private boolean hasWin(final PlayerType player) {
-        if (this.getScore(player) == GameConstants.SCORE_TO_WIN) {
+        if (this.getScore(player) >= GameConstants.SCORE_TO_WIN) {
             this.winner = Optional.ofNullable(player);
             return true;
         }
