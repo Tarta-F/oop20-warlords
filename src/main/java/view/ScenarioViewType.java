@@ -1,15 +1,16 @@
 package view;
 
+import view.constants.ResourcesConstants;
 public enum ScenarioViewType {
 
     /**Scenario 1 images. */
-    SCENARIO_1("FOREST", "/forest.png", "/nothing.png"),
+    SCENARIO_1("FOREST", ResourcesConstants.GROUND, ResourcesConstants.GROUND_GRID_1),
 
     /**Scenario 2 images. */
-    SCENARIO_2("SAND", "/Sand.jpg", "/sandGrid.png"),
+    SCENARIO_2("SAND", ResourcesConstants.GROUND_2, ResourcesConstants.GROUND_GRID_2),
 
     /**Scenario 3 images. */
-    SCENARIO_3("FIRE", "/lavaTexture.jpg", "/blackDirt.png");
+    SCENARIO_3("FIRE", ResourcesConstants.GROUND_3, ResourcesConstants.GROUND_GRID_3);
 
     private final String description;
     private final String backgroundPath;
