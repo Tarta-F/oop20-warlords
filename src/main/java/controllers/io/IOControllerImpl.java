@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-
 import model.score.Score;
 import model.score.ScoreImpl;
 
@@ -32,7 +32,7 @@ public final class IOControllerImpl implements IOController {
     }
 
     private void writeFirstScore(final Score score) {
-        final List<Score> list = new ArrayList<>(List.of(score));
+        final List<Score> list = List.of(score);
         final String addFirst = this.gsonWrite.toJson(list);
         try (FileWriter file = new FileWriter(this.scoreFile)) {
             file.write(addFirst); 
@@ -43,13 +43,15 @@ public final class IOControllerImpl implements IOController {
     }
 
     private void readAndWriteNew(final Score score) throws FileNotFoundException {
-        final JsonReader reader = new JsonReader(new FileReader(this.scoreFile));
-        final List<Score> oldResults = gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
-        oldResults.add(score);
-        final String newScore = this.gsonWrite.toJson(oldResults);
-        try (FileWriter file = new FileWriter(this.scoreFile)) {
-            file.write(newScore);
-        } catch (IOException e) {
+        try (JsonReader reader = new JsonReader(new FileReader(this.scoreFile))) {
+            final List<Score> oldResults = gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
+            oldResults.add(score);
+            final String newScore = this.gsonWrite.toJson(oldResults);
+            try (FileWriter file = new FileWriter(this.scoreFile)) {
+                file.write(newScore);
+                file.flush();
+            }
+        }    catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -57,13 +59,14 @@ public final class IOControllerImpl implements IOController {
     @Override
     public List<String> readScore() throws IOException {
         if (this.scoreFile.exists()) {
-            final JsonReader reader = new JsonReader(new FileReader(this.scoreFile));
-            final List<Score> oldResults = this.gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
-            final List<String> resultList = new ArrayList<>();
-            oldResults.forEach(sc -> resultList.add(sc.toString()));
-            return resultList;
+            try (JsonReader reader = new JsonReader(new FileReader(this.scoreFile))) {
+                final List<Score> oldResults = this.gsonRead.fromJson(reader, SCORE_TYPE); // contains the whole Score list
+                final List<String> resultList = new ArrayList<>();
+                oldResults.forEach(sc -> resultList.add(sc.toString()));
+                return resultList;
+            }
         } else {
-           return List.of(MSG);
+            return List.of(MSG);
         }
     }
 
@@ -78,12 +81,10 @@ public final class IOControllerImpl implements IOController {
 
     @Override
     public void clearFile() {
-        if (this.scoreFile.exists()) {
-            try {
-               this.scoreFile.delete();
-           } catch (SecurityException e) {
-               e.printStackTrace();
-           }
-        } 
+        try {
+            Files.deleteIfExists(this.scoreFile.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

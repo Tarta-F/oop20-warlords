@@ -1,4 +1,4 @@
 /**
- * This package provides classes and interfaces for game timers.
+ * Provides classes and interfaces for game timers.
  */
 package controllers.timer;
