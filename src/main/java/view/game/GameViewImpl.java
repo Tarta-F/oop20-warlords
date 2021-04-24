@@ -9,8 +9,10 @@ import constants.PlayerType;
 import controllers.Controller;
 import view.ConfirmBox;
 import view.MainMenu;
+import view.ViewClose;
 import view.ViewFactory;
 import view.ViewFactoryImpl;
+import view.ViewInterface;
 import view.ViewResolution;
 import view.constants.ViewConstants;
 import view.sound.Music;
@@ -37,7 +39,7 @@ import javafx.stage.Stage;
 /**
  * This class is the BattleField game view.
  */
-public final class GameViewImpl extends Region implements GameView {
+public final class GameViewImpl extends Region implements GameView, ViewInterface, ViewClose {
 
     private static final double UNIT_ICON_WIDTH = ViewResolution.screenResolutionWidth(ViewConstants.DIVISOR_15);
     private static final double UNIT_ICON_HEIGHT = ViewResolution.screenResolutionHeight(ViewConstants.DIVISOR_15);
