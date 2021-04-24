@@ -42,13 +42,13 @@ public final  class UnitConstants {
 
     /*ARCHER. */
     /**HP of the unit type ARCHER. */
-    public static final int ARCHER_HP = 10;
+    public static final int ARCHER_HP = 8;
 
     /**DMG(damage) of the unit type ARCHER. */
     public static final int ARCHER_DMG = 2;
 
     /**RANGE(attack range) of the unit type ARCHER. */
-    public static final int ARCHER_RANGE = 6;
+    public static final int ARCHER_RANGE = 5;
 
     /**TIMER(time of respawn) of the unit type ARCHER. */
     public static final int ARCHER_TIMER = 3000;
