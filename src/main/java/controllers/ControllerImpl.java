@@ -223,9 +223,6 @@ public final class ControllerImpl implements Controller, Observer {
         this.gameTimer.stop();
         this.thrEx.shutdown();
     }
-
-
-
     /**
      * Get player NAME.
      * @param player PlayerType
