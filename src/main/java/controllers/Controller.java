@@ -21,6 +21,12 @@ public interface Controller {
     GameView getView();
 
     /**
+     * Set the View used by this Controller.
+     * @param gameView the new GameView of this Controller
+     */
+    void setView(GameView gameView);
+
+    /**
      * Set the variable that show if the {@link GameTimer}'s time is ended up.
      */
     void setTimerIsOver();

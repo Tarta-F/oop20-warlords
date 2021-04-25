@@ -56,6 +56,12 @@ public interface GameView extends ViewClose, ViewInterface {
     void updateScorePlayer(PlayerType player, int score);
 
     /**
+     * Method to get the Observer.
+     * @return the observer Controller used by this object
+     * */
+    Observer getoObserver();
+
+    /**
      * Method to set the Observer.
      * @param observer Controller
      * */

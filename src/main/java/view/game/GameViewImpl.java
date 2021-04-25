@@ -377,6 +377,11 @@ public final class GameViewImpl extends Region implements GameView, ViewInterfac
     }
 
     @Override
+    public Observer getoObserver() {
+        return this.observer;
+    }
+
+    @Override
     public void setObserver(final Observer observer) {
         this.observer = observer;
     }

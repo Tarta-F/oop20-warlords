@@ -31,7 +31,7 @@ public final class ControllerImpl implements Controller, Observer {
     private final Map<PlayerType, Integer> selectedLane = new EnumMap<>(PlayerType.class);
     private final Map<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
     private final Map<PlayerType, Timer> timers = new EnumMap<>(PlayerType.class);
-    private final GameView gameView;
+    private GameView gameView;
     private final Field field;
     private Optional<PlayerType> winner;
     private final ScheduledThreadPoolExecutor thrEx;
@@ -137,6 +137,11 @@ public final class ControllerImpl implements Controller, Observer {
     @Override
     public GameView getView() {
         return this.gameView;
+    }
+
+    @Override
+    public void setView(final GameView gameView) {
+        this.gameView = gameView;
     }
 
     @Override
@@ -252,4 +257,5 @@ public final class ControllerImpl implements Controller, Observer {
         }
         this.stopAndWriteScore(p1score, p2score);
     }
+
 }
