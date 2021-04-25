@@ -1,6 +1,7 @@
 package view.game;
 
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.tuple.Pair;
 import javafx.scene.image.Image;
@@ -32,7 +33,7 @@ public final class FieldViewImpl implements FieldView {
     private final Image ground;
     private final ViewFactory factory = new ViewFactoryImpl();
 
-    private final EnumMap<UnitViewType, Image> unitImageTable = new EnumMap<>(UnitViewType.class);
+    private final Map<UnitViewType, Image> unitImageTable = new EnumMap<>(UnitViewType.class);
 
     /**
      * Creates a {@link FieldView} with the given dimensions and background.

@@ -3,6 +3,7 @@ package view.game;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.EnumMap;
 import org.apache.commons.lang3.tuple.Pair;
 import constants.PlayerType;
@@ -72,8 +73,8 @@ public final class GameViewImpl extends Region implements GameView, ViewInterfac
     private final List<Label> unit1ListLabel = new ArrayList<>();
     private final List<Label> unit2ListLabel = new ArrayList<>();
 
-    private final EnumMap<UnitViewType, Label> unitBoxes = new EnumMap<>(UnitViewType.class);
-    private final EnumMap<PlayerType, Label> labelsScore = new EnumMap<>(PlayerType.class);
+    private final Map<UnitViewType, Label> unitBoxes = new EnumMap<>(UnitViewType.class);
+    private final Map<PlayerType, Label> labelsScore = new EnumMap<>(PlayerType.class);
 
     private List<Image> unitSelectedP1;
     private List<Image> unitImageP1;
@@ -392,7 +393,7 @@ public final class GameViewImpl extends Region implements GameView, ViewInterfac
     }
 
     @Override
-    public void show(final EnumMap<UnitViewType, List<Pair<Integer, Integer>>> units) {
+    public void show(final Map<UnitViewType, List<Pair<Integer, Integer>>> units) {
         Platform.runLater(() -> {
             this.field.clear();
             units.forEach((unit, positions) -> positions.forEach(p -> this.field.add(unit, p)));

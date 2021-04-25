@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -26,10 +27,10 @@ public final class ControllerImpl implements Controller {
     private static final long REFRESH_RATE = 500;
     private boolean timerIsOver;
     private final int laneNumber;
-    private final EnumMap<PlayerType, Long> lastSpawn = new EnumMap<>(PlayerType.class);
-    private final EnumMap<PlayerType, Integer> selectedLane = new EnumMap<>(PlayerType.class);
-    private final EnumMap<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
-    private final EnumMap<PlayerType, Timer> timers = new EnumMap<>(PlayerType.class);
+    private final Map<PlayerType, Long> lastSpawn = new EnumMap<>(PlayerType.class);
+    private final Map<PlayerType, Integer> selectedLane = new EnumMap<>(PlayerType.class);
+    private final Map<PlayerType, Integer> selectedUnit = new EnumMap<>(PlayerType.class);
+    private final Map<PlayerType, Timer> timers = new EnumMap<>(PlayerType.class);
     private final GameView gameView;
     private final Field field;
     private Optional<PlayerType> winner;

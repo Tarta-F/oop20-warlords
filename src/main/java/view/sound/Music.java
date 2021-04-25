@@ -2,6 +2,7 @@ package view.sound;
 
 import java.net.URISyntaxException;
 import java.util.EnumMap;
+import java.util.Map;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -16,7 +17,7 @@ public final class Music {
     private static final double VOLUME = 0.3;
     private static final double VOLUME2 = 0.5;
 
-    private final EnumMap<Sounds, MediaPlayer> soundMedias = new EnumMap<>(Sounds.class);
+    private final Map<Sounds, MediaPlayer> soundMedias = new EnumMap<>(Sounds.class);
 
     private MediaPlayer currentMusic;
     private MediaPlayer currentSound;
