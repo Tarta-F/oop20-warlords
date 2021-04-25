@@ -6,26 +6,6 @@ import view.ScenarioViewType;
 public interface SettingsController {
 
     /**
-     * @return the player 1 default name.
-     * */
-    String getPlayer1Name();
-
-    /**
-     * @return the player 2 default name.
-     * */
-    String getPlayer2Name();
-
-    /**
-     * @param playerName 1 new name.
-     * */
-    void setPlayer1Name(String playerName);
-
-    /**
-     * @param playerName 2 new name.
-     * */
-    void setPlayer2Name(String playerName);
-
-    /**
      * @return the {@link ScenarioViewType} currently selected.
      */
     ScenarioViewType getScenario();
@@ -62,5 +42,23 @@ public interface SettingsController {
      * @return the related view.
      */
     GameModeSelection getView();
+    /**
+     * @return the player 1 default name.
+     * */
+    String getPlayer1Name();
 
+    /**
+     * @return the player 2 default name.
+     * */
+    String getPlayer2Name();
+
+    /**
+     * @param playerName 1 new name.
+     * */
+    void setPlayer1Name(String playerName);
+
+    /**
+     * @param playerName 2 new name.
+     * */
+    void setPlayer2Name(String playerName);
 }

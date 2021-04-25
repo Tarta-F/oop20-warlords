@@ -23,26 +23,6 @@ public final class SettingsControllerImpl implements SettingsController {
     }
 
     @Override
-    public String getPlayer1Name() {
-        return this.player1Name;
-    }
-
-    @Override
-    public String getPlayer2Name() {
-        return this.player2Name;
-    }
-
-    @Override
-    public void setPlayer1Name(final String playerName) {
-        this.player1Name = playerName;
-    }
-
-    @Override
-    public void setPlayer2Name(final String playerName) {
-        this.player2Name = playerName;
-    }
-
-    @Override
     public ScenarioViewType getScenario() {
         return this.scenario;
     }
@@ -75,6 +55,26 @@ public final class SettingsControllerImpl implements SettingsController {
     @Override
     public GameModeSelection getView() {
         return this.viewSettings;
+    }
+    
+    @Override
+    public String getPlayer1Name() {
+        return this.player1Name;
+    }
+
+    @Override
+    public String getPlayer2Name() {
+        return this.player2Name;
+    }
+
+    @Override
+    public void setPlayer1Name(final String playerName) {
+        this.player1Name = playerName;
+    }
+
+    @Override
+    public void setPlayer2Name(final String playerName) {
+        this.player2Name = playerName;
     }
 
     @Override
