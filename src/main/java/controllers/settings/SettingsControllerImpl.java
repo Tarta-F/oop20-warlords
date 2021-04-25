@@ -56,7 +56,7 @@ public final class SettingsControllerImpl implements SettingsController {
     public GameModeSelection getView() {
         return this.viewSettings;
     }
-    
+
     @Override
     public String getPlayer1Name() {
         return this.player1Name;
