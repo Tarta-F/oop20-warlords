@@ -1,7 +1,7 @@
 package view.game;
 
-import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -65,7 +65,7 @@ public interface GameView extends ViewClose, ViewInterface {
      * Method to draw a unit in the grid.
      * @param units EnumMap<UnitViewType, List<Pair<Integer, Integer>>>
      * */
-    void show(EnumMap<UnitViewType, List<Pair<Integer, Integer>>> units);
+    void show(Map<UnitViewType, List<Pair<Integer, Integer>>> units);
 
     /**
      * Method to change scene or close the program at the end of the game.

@@ -50,10 +50,10 @@ public final class Converter {
      * @param modelMap 
      *      the {@link Map} of the {@link Unit} and their positions
      * @return 
-     *      the {@link EnumMap} for the {@link GameView}
+     *      the {@link Map} for the {@link GameView}
      */
-    public static EnumMap<UnitViewType, List<Pair<Integer, Integer>>> convertMap(final Map<Unit, Pair<Integer, Integer>> modelMap) {
-        final EnumMap<UnitViewType, List<Pair<Integer, Integer>>> viewMap = new EnumMap<>(UnitViewType.class);
+    public static Map<UnitViewType, List<Pair<Integer, Integer>>> convertMap(final Map<Unit, Pair<Integer, Integer>> modelMap) {
+        final Map<UnitViewType, List<Pair<Integer, Integer>>> viewMap = new EnumMap<>(UnitViewType.class);
         modelMap.forEach((k, v) -> {
             final UnitViewType unitView = convertUnit(k);
             if (!viewMap.containsKey(unitView)) {

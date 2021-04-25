@@ -1,5 +1,6 @@
 package model;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class LaneImpl implements Lane {
     public LaneImpl(final int lenght) {
         this.lenght = lenght;
         this.units = new HashMap<>();
-        this.scores = new HashMap<>();
+        this.scores = new EnumMap<>(PlayerType.class);
         this.scores.put(PlayerType.PLAYER1, new CounterImpl());
         this.scores.put(PlayerType.PLAYER2, new CounterImpl());
     }

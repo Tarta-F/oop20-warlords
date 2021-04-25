@@ -11,7 +11,7 @@ public final class GameConstants {
     public static final int CELLS_NUM = 20;
 
     /** The necessary score to win. */
-    public static final int SCORE_TO_WIN = 1;
+    public static final int SCORE_TO_WIN = 5;
 
     /** Minimum minutes of game duration. */
     public static final int MIN_TIMER = 1;

@@ -73,8 +73,8 @@ public class GameTutorial extends Region implements ViewInterface {
                 + "the enemy spawn with 1 of your unit.\n\n"
                 + "-At the top there is the timer.\n\n"
                 + "-When the timer reach 0 the battle will result in a win or a draw.\n\n"
-                + "-You win if you have more HP than the enemy.\n\n"
-                + "-You draw if you have the same HP as the enemy.");
+                + "-You win if you have more score than the enemy.\n\n"
+                + "-You draw if you have the same score as the enemy.");
 
         /*Layout. */
         final VBox infoMenu = new VBox();
